@@ -14,7 +14,7 @@ export default function Header() {
           <a href="#comments">نظرات</a>
           <a href="#blog">وبلاگ</a>
         </nav>
-        <BrandButton href="#consult" variant="teal" size="btn-sm" rotate="rotate-minus3">
+        <BrandButton href="#consult" variant="amber" size="btn-sm" rotate="rotate-minus3">
           مشاوره رایگان
         </BrandButton>
       </div>

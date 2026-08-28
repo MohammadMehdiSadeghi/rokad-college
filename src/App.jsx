@@ -1,6 +1,7 @@
 import Header from "./sections/Header.jsx";
 import Hero from "./sections/Hero.jsx";
 import PromoCards from "./sections/PromoCards.jsx";
+import PromoCards2 from "./sections/PromoCards2.jsx";
 import PromoSection from "./sections/PromoSection.jsx";
 import Features from "./sections/Features.jsx";
 import Courses from "./sections/Courses.jsx";
@@ -17,6 +18,7 @@ export default function App() {
       <main>
         <Hero />
         <PromoCards />
+        <PromoCards2 />
         <PromoSection />
         <Features />
         <Courses />

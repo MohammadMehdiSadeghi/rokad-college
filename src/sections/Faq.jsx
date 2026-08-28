@@ -4,18 +4,19 @@ import BrandButton from "../components/BrandButton.jsx";
 import RotatedHeading from "../components/RotatedHeading.jsx";
 
 export default function Faq() {
-  const [open, setOpen] = useState(0);
+  const [open, setOpen] = useState(null);
+
   return (
-    <section className="section" id="faq" style={{ background: "var(--teal-light)" }}>
+    <section className="section" id="faq" style={{ background: "var(--white)" }}>
       <div className="bg-pattern">
         <img src="/assets/Shared/Patterns/Ecosystem-Pattern.png" alt="" aria-hidden="true" />
       </div>
       <div className="container section-inner">
         <div className="text-center" style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto" }}>
-          <span className="tag tag-teal" style={{ marginBottom: "var(--space-6)" }}>سوالات متداول</span>
+          <span className="tag tag-amber" style={{ marginBottom: "var(--space-6)" }}>سوالات متداول</span>
           <RotatedHeading words="پرسش‌هایی که قبل از شروع داری" className="t-section" color="var(--navy)" />
         </div>
-        <div className="mx-auto" style={{ maxWidth: 860, display: "grid", gap: "var(--space-4)" }}>
+        <div className="mx-auto" style={{ maxWidth: 820, display: "grid", gap: "var(--space-4)" }}>
           {faqs.map((item, i) => {
             const isOpen = open === i;
             return (
@@ -23,19 +24,26 @@ export default function Faq() {
                 key={item.q}
                 className="relative"
                 style={{
-                  background: isOpen ? "var(--teal)" : "#fff",
+                  background: isOpen ? "var(--college)" : "#fff",
                   border: "2.75px solid var(--ink)",
                   borderRadius: "0 22px 0 22px",
-                  padding: isOpen ? "var(--space-6)" : "var(--space-4) var(--space-6)",
-                  transition: "background 0.2s ease",
+                  padding: isOpen ? "var(--space-5) var(--space-6)" : "var(--space-4) var(--space-6)",
+                  transition: "background 0.25s ease",
                 }}
               >
                 <button
-                  onClick={() => setOpen(isOpen ? -1 : i)}
+                  onClick={() => setOpen(isOpen ? null : i)}
                   style={{
-                    display: "flex", width: "100%", alignItems: "center", justifyContent: "space-between",
-                    gap: "var(--space-4)", textAlign: "right", padding: "var(--space-3) 0",
-                    color: isOpen ? "#fff" : "var(--ink)", fontSize: 18, fontWeight: 900,
+                    display: "flex",
+                    width: "100%",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "var(--space-4)",
+                    textAlign: "right",
+                    padding: "var(--space-2) 0",
+                    color: isOpen ? "#fff" : "var(--ink)",
+                    fontSize: 16,
+                    fontWeight: 900,
                   }}
                   aria-expanded={isOpen}
                 >
@@ -43,21 +51,44 @@ export default function Faq() {
                   <span
                     aria-hidden="true"
                     style={{
-                      width: 40, height: 40, flexShrink: 0, display: "grid", placeItems: "center",
-                      background: "var(--ink-faq)", color: "#fff", border: "2px solid var(--ink)",
-                      borderRadius: "0 14px 0 14px", transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-                      transition: "transform 0.2s",
+                      width: 38,
+                      height: 38,
+                      flexShrink: 0,
+                      display: "grid",
+                      placeItems: "center",
+                      background: isOpen ? "rgba(255,255,255,0.25)" : "var(--ink-faq)",
+                      color: "#fff",
+                      border: "2px solid var(--ink)",
+                      borderRadius: "0 14px 0 14px",
+                      fontSize: 20,
+                      lineHeight: 1,
+                      transition: "transform 0.25s ease, background 0.25s ease",
+                      transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
                     }}
-                  >＋</span>
+                  >
+                    +
+                  </span>
                 </button>
                 {isOpen && (
-                  <p className="t-sm" style={{ paddingBottom: "var(--space-3)", lineHeight: 1.9, color: "#fff" }}>{item.a}</p>
+                  <p
+                    className="t-sm"
+                    style={{
+                      paddingTop: "var(--space-4)",
+                      lineHeight: 1.9,
+                      color: "rgba(255,255,255,0.95)",
+                      borderTop: "1.5px solid rgba(255,255,255,0.3)",
+                    }}
+                  >
+                    {item.a}
+                  </p>
                 )}
               </div>
             );
           })}
-          <div className="text-center" style={{ marginTop: "var(--space-6)" }}>
-            <BrandButton href="#consult" variant="navy" rotate="rotate-3">{faqCta}</BrandButton>
+          <div className="text-center" style={{ marginTop: "var(--space-8)" }}>
+            <BrandButton href="#consult" variant="amber" rotate="rotate-3">
+              {faqCta}
+            </BrandButton>
           </div>
         </div>
       </div>
