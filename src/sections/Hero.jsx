@@ -2,7 +2,6 @@ import { hero } from "../data/content.js";
 import BrandButton from "../components/BrandButton.jsx";
 
 const pattern = "/assets/Hero/Hero-Pattern.png";
-const character = "/assets/Hero/hero-character.png";
 
 // word-by-word gentle alternating rotation for the long headline
 const headlineWords = hero.title.split(" ").map((t, i) => ({
@@ -36,25 +35,18 @@ export default function Hero() {
             style={{ opacity: 0.18 }}
           />
 
-          {/* character image — positioned bottom-left on desktop (RTL), bottom-right on mobile */}
-          <img
-            src={character}
-            alt="منتور رکاد"
-            className="absolute bottom-0 left-0 w-[48%] max-w-[340px] h-[94%] select-none pointer-events-none"
-            style={{ maxWidth: "none", zIndex: 1 }}
-          />
-
-          {/* headline — word by word rotated */}
+          {/* headline — word by word rotated, right-aligned for RTL */}
           <div className="absolute right-[4%] top-[10%] w-[62%] z-20">
-            <div className="headline" style={{ justifyContent: "flex-end" }}>
+            <div className="headline" style={{ justifyContent: "flex-end", marginBottom: 24 }}>
               {headlineWords.map((w, i) => (
                 <span
-                  key={i}
+                  key="i"
                   className="word t-hero"
                   style={{
                     color: "#fff",
                     transform: `rotate(${w.deg}deg)`,
                     fontWeight: 950,
+                    display: "inline-block",
                   }}
                 >
                   {w.text}
@@ -65,9 +57,10 @@ export default function Hero() {
               className="t-body"
               style={{
                 color: "rgba(255,255,255,0.93)",
-                marginTop: 20,
+                marginTop: 0,
                 maxWidth: "38ch",
                 fontWeight: 600,
+                lineHeight: 1.75,
               }}
             >
               {hero.text}
@@ -75,7 +68,7 @@ export default function Hero() {
           </div>
 
           {/* buttons */}
-          <div className="absolute right-[4%] bottom-[8%] z-20 flex flex-wrap gap-4">
+          <div className="absolute right-[4%] bottom-[12%] z-20 flex flex-wrap gap-4">
             <BrandButton href="#courses" variant="white" rotate="rotate-plus">
               {hero.primaryCta}
             </BrandButton>
@@ -85,7 +78,7 @@ export default function Hero() {
           </div>
 
           {/* trust ribbon — amber accent, positioned bottom-right */}
-          <div className="absolute bottom-[4%] right-[2%] w-[48%] max-w-[340px] z-10">
+          <div className="absolute bottom-[4%] right-[2%] z-10">
             {/* back layer */}
             <div
               className="absolute"
@@ -107,11 +100,12 @@ export default function Hero() {
                 border: "2px solid var(--ink)",
                 padding: "10px 16px",
                 overflow: "hidden",
+                whiteSpace: "nowrap",
               }}
             >
               <p
                 className="t-label"
-                style={{ color: "var(--college-dark)", fontWeight: 900, whiteSpace: "nowrap" }}
+                style={{ color: "var(--college-dark)", fontWeight: 900 }}
               >
                 {hero.caption}
               </p>
