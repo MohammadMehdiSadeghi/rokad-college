@@ -26,6 +26,7 @@ export default function PromoCards() {
                 radius={t.radius}
                 rotate={t.rotate}
                 style={{ minHeight: 210 }}
+                className="hover-lift animate-fade-in-up"
               >
                 <div style={{ padding: "var(--space-5) var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
                   <div

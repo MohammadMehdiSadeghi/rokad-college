@@ -17,6 +17,7 @@ export default function Blogs() {
               backColor="var(--ink)"
               radius="cut-tl-br"
               rotate={i % 2 ? "rotate-3" : "rotate-minus3"}
+              className="hover-lift animate-fade-in-up"
             >
               <div
                 style={{

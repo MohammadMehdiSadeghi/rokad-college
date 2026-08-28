@@ -18,7 +18,7 @@ export default function Hero() {
       <div className="container section-inner">
         {/* Hero card — college amber primary */}
         <div
-          className="relative overflow-hidden"
+          className="relative overflow-hidden animate-fade-in-up"
           style={{
             background: "linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%)",
             borderRadius: "var(--r-2xl)",
@@ -35,12 +35,37 @@ export default function Hero() {
             style={{ opacity: 0.18 }}
           />
 
+          {/* decorative shapes */}
+          <div
+            className="absolute animate-float"
+            style={{
+              top: "15%",
+              left: "8%",
+              width: 80,
+              height: 80,
+              borderRadius: "20px 0 20px 0",
+              background: "rgba(255,255,255,0.1)",
+              transform: "rotate(15deg)",
+            }}
+          />
+          <div
+            className="absolute animate-float delay-2"
+            style={{
+              bottom: "20%",
+              left: "15%",
+              width: 60,
+              height: 60,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.08)",
+            }}
+          />
+
           {/* headline — word by word rotated, right-aligned for RTL */}
           <div className="absolute right-[4%] top-[10%] w-[62%] z-20">
             <div className="headline" style={{ justifyContent: "flex-end", marginBottom: 24 }}>
               {headlineWords.map((w, i) => (
                 <span
-                  key="i"
+                  key={i}
                   className="word t-hero"
                   style={{
                     color: "#fff",
@@ -78,7 +103,7 @@ export default function Hero() {
           </div>
 
           {/* trust ribbon — amber accent, positioned bottom-right */}
-          <div className="absolute bottom-[4%] right-[2%] z-10">
+          <div className="absolute bottom-[4%] right-[2%] z-10 animate-scale-in delay-3">
             {/* back layer */}
             <div
               className="absolute"

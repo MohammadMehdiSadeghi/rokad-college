@@ -35,11 +35,14 @@ export default function PromoSection() {
                 {promoSection.text}
               </p>
               <p
-                className="t-card"
+                className="t-card gradient-text"
                 style={{
-                  color: "var(--college-dark)",
                   marginBlock: "var(--space-8)",
                   fontWeight: 900,
+                  background: "linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
                 }}
               >
                 {promoSection.highlight}

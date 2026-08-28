@@ -22,13 +22,15 @@ export default function Faq() {
             return (
               <div
                 key={item.q}
-                className="relative"
+                className="relative animate-fade-in-up"
                 style={{
                   background: isOpen ? "var(--college)" : "#fff",
                   border: "2.75px solid var(--ink)",
                   borderRadius: "0 22px 0 22px",
                   padding: isOpen ? "var(--space-5) var(--space-6)" : "var(--space-4) var(--space-6)",
-                  transition: "background 0.25s ease",
+                  transition: "background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
+                  transform: isOpen ? "translateY(-2px)" : "none",
+                  boxShadow: isOpen ? "0 8px 30px rgba(248, 164, 29, 0.25)" : "none",
                 }}
               >
                 <button
@@ -62,7 +64,7 @@ export default function Faq() {
                       borderRadius: "0 14px 0 14px",
                       fontSize: 20,
                       lineHeight: 1,
-                      transition: "transform 0.25s ease, background 0.25s ease",
+                      transition: "transform 0.3s ease, background 0.3s ease",
                       transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
                     }}
                   >
@@ -71,7 +73,7 @@ export default function Faq() {
                 </button>
                 {isOpen && (
                   <p
-                    className="t-sm"
+                    className="t-sm animate-slide-down"
                     style={{
                       paddingTop: "var(--space-4)",
                       lineHeight: 1.9,

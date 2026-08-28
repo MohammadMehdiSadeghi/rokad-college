@@ -17,6 +17,7 @@ export default function Features() {
               backColor="var(--ink)"
               radius="cut-tl-br"
               rotate={i % 2 ? "rotate-3" : "rotate-minus3"}
+              className="hover-lift animate-fade-in-up"
             >
               {/* wrapper needs relative for the absolute badge */}
               <div className="relative" style={{ padding: "var(--space-6)", minHeight: 230, display: "flex", flexDirection: "column" }}>

@@ -16,14 +16,13 @@ export default function PromoCards2() {
                 : "var(--accent)"
               }
               radius={i % 2 === 0 ? "cut-tl-br" : "cut-tr-bl"}
-              // Match rokad-web StatCard rotation snap values:
-              //   0→rotate-[1deg], 1→-rotate-[1deg], 2→rotate-[2.5deg], 3→-rotate-[2deg]
               rotate={
                 i === 0 ? "rotate-1"
                 : i === 1 ? "rotate-minus1"
                 : i === 2 ? "rotate-2.5"
                 : "rotate-minus2.5"
               }
+              className="hover-lift animate-fade-in-up"
             >
               <div
                 className="stat-mini"

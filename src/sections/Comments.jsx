@@ -25,7 +25,7 @@ export default function Comments() {
           {comments.items.map((c, i) => {
             const t = themes[i % themes.length];
             return (
-              <OffsetCard key={c.name} backColor={t.back} radius={t.radius} rotate={t.rotate}>
+              <OffsetCard key={c.name} backColor={t.back} radius={t.radius} rotate={t.rotate} className="hover-lift animate-fade-in-up">
                 <div style={{ padding: "var(--space-6)", minHeight: 200, display: "flex", flexDirection: "column" }}>
                   <div
                     style={{ fontSize: 42, color: t.color, lineHeight: 1, fontWeight: 950 }}
