@@ -1,5 +1,5 @@
 // Two-layer offset "sticker" card — Rokad signature.
-// Back layer is a solid rect offset down-right (RTL-correct); never box-shadow.
+// Back layer is a solid rect offset down-right (RTL-correct); this IS the shadow.
 import clsx from "../lib/clsx";
 
 export default function OffsetCard({
@@ -13,7 +13,7 @@ export default function OffsetCard({
   ...rest
 }) {
   return (
-    <div className={clsx("relative", rotate)} style={style} {...rest}>
+    <div className={clsx("offset-wrapper", rotate)} style={style} {...rest}>
       <div
         aria-hidden
         className={clsx("offset-back", radius)}

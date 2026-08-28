@@ -6,7 +6,7 @@ const pattern = "/assets/Hero/Hero-Pattern.png";
 // word-by-word gentle alternating rotation for the long headline
 const headlineWords = hero.title.split(" ").map((t, i) => ({
   text: t,
-  deg: i % 2 === 0 ? (i % 4 === 0 ? 2 : -2) : i % 3 === 0 ? 3 : -1,
+  deg: i % 2 === 0 ? (i % 4 === 0 ? 1.5 : -1.5) : i % 3 === 0 ? 2 : -1,
 }));
 
 export default function Hero() {
@@ -23,7 +23,7 @@ export default function Hero() {
             background: "linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%)",
             borderRadius: "var(--r-2xl)",
             minHeight: 480,
-            boxShadow: "0 1.25rem 3.75rem -1.25rem rgba(186,123,22,0.35)",
+            boxShadow: "0 20px 60px rgba(186,123,22,0.3), 0 8px 24px rgba(186,123,22,0.2)",
           }}
         >
           {/* pattern overlay inside card */}
@@ -59,6 +59,18 @@ export default function Hero() {
               background: "rgba(255,255,255,0.08)",
             }}
           />
+          <div
+            className="absolute animate-float delay-4"
+            style={{
+              top: "40%",
+              left: "25%",
+              width: 40,
+              height: 40,
+              borderRadius: "12px 0 12px 0",
+              background: "rgba(255,255,255,0.06)",
+              transform: "rotate(45deg)",
+            }}
+          />
 
           {/* headline — word by word rotated, right-aligned for RTL */}
           <div className="absolute right-[4%] top-[10%] w-[62%] z-20">
@@ -72,6 +84,7 @@ export default function Hero() {
                     transform: `rotate(${w.deg}deg)`,
                     fontWeight: 950,
                     display: "inline-block",
+                    transition: "transform 0.3s ease",
                   }}
                 >
                   {w.text}
@@ -94,10 +107,10 @@ export default function Hero() {
 
           {/* buttons */}
           <div className="absolute right-[4%] bottom-[12%] z-20 flex flex-wrap gap-4">
-            <BrandButton href="#courses" variant="white" rotate="rotate-plus">
+            <BrandButton href="#courses" variant="white" rotate="rotate-1">
               {hero.primaryCta}
             </BrandButton>
-            <BrandButton href="#consult" variant="navy" rotate="rotate-minus">
+            <BrandButton href="#consult" variant="navy" rotate="rotate-minus1">
               {hero.secondaryCta}
             </BrandButton>
           </div>

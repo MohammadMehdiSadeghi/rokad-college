@@ -80,7 +80,34 @@
   --r-lg:   17px;
   --r-xl:   24px;
   --r-2xl:  34px;
+  --r-3xl:  48px;
   --r-pill: 40px;
+
+  /* Shadows — layered for depth */
+  --shadow-xs:    0 1px 2px rgba(41,40,39,0.06);
+  --shadow-sm:    0 2px 4px rgba(41,40,39,0.08);
+  --shadow-md:    0 4px 12px rgba(41,40,39,0.10);
+  --shadow-lg:    0 8px 24px rgba(41,40,39,0.12);
+  --shadow-xl:    0 12px 40px rgba(41,40,39,0.15);
+  --shadow-2xl:   0 20px 60px rgba(41,40,39,0.18);
+  --shadow-card:  4px 4px 0 var(--ink);
+  --shadow-card-hover: 6px 6px 0 var(--ink);
+  --shadow-college: 0 8px 32px rgba(248,164,29,0.25);
+  --shadow-college-lg: 0 16px 48px rgba(248,164,29,0.35);
+  --shadow-navy:  0 8px 32px rgba(33,41,90,0.25);
+  --shadow-teal:  0 8px 32px rgba(88,189,175,0.25);
+  --shadow-accent: 0 8px 32px rgba(224,25,91,0.25);
+  --shadow-inner: inset 0 2px 4px rgba(41,40,39,0.08);
+
+  /* Rotation steps — refined increments */
+  --rot-0:   0deg;
+  --rot-xs:  0.5deg;
+  --rot-sm:  1deg;
+  --rot-md:  1.5deg;
+  --rot-lg:  2deg;
+  --rot-xl:  2.5deg;
+  --rot-2xl: 3deg;
+  --rot-3xl: 4deg;
 
   /* Spacing */
   --space-1:  4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
@@ -511,13 +538,18 @@ ul { list-style: none; }
 
 /* =============================================
    Offset "sticker" card (signature)
+   The offset-back IS the shadow — no box-shadow needed.
 ============================================= */
+.offset-wrapper {
+  position: relative;
+}
 .offset-back {
   position: absolute;
   top: 5px; left: 5px;
   width: 100%; height: 100%;
   background: var(--shadow-ink);
   z-index: 0;
+  transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .offset-card {
   position: relative;
@@ -525,63 +557,103 @@ ul { list-style: none; }
   border: 2.75px solid var(--ink);
   z-index: 10;
   height: 100%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Hover: offset-back moves further, card lifts — NO box-shadow */
+.offset-wrapper:hover .offset-back {
+  top: 8px;
+  left: 8px;
+}
+.offset-wrapper:hover .offset-card {
+  transform: translateY(-3px);
 }
 /* Asymmetric cut-corner radius classes */
 .cut-tl-br { border-radius: var(--r-xl) 0 var(--r-xl) 0; }
 .cut-tr-bl { border-radius: 0 var(--r-xl) 0 var(--r-xl); }
 .cut-tl    { border-radius: var(--r-2xl) 0 0 0; }
 .cut-br    { border-radius: 0 0 var(--r-2xl) 0; }
+/* Extended cut-corner variants */
+.cut-tl-br-lg { border-radius: var(--r-2xl) 0 var(--r-2xl) 0; }
+.cut-tr-bl-lg { border-radius: 0 var(--r-2xl) 0 var(--r-2xl); }
+.cut-tl-xl    { border-radius: var(--r-3xl) 0 0 0; }
+.cut-br-xl    { border-radius: 0 0 var(--r-3xl) 0; }
 
 /* =============================================
    Brand buttons (two-layer, rotated)
 ============================================= */
-.btn-wrap { position: relative; display: inline-flex; }
-.btn-wrap .offset-back { top: 4px; left: 4px; }
+.btn-wrap { position: relative; display: inline-flex; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-wrap:hover { transform: translateY(-3px); }
+.btn-wrap .offset-back { top: 4px; left: 4px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-wrap:hover .offset-back { top: 7px; left: 7px; }
 .btn {
   position: relative; z-index: 10;
   display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
   font-weight: 800; font-size: 15px; line-height: 1; white-space: nowrap;
   padding: 12px 26px; border-radius: var(--r-md);
   border: 2.75px solid var(--ink);
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
 }
-.btn:hover  { transform: translateY(-2px) rotate(0deg); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+.btn:hover  { transform: translateY(-2px) rotate(0deg); box-shadow: var(--shadow-lg); }
+.btn:active { transform: translateY(0px); box-shadow: var(--shadow-xs); }
 
 .btn-primary   { background: var(--navy);   color: #fff; }
+.btn-primary:hover { background: #1a2247; }
 .btn-teal      { background: var(--teal);   color: #fff; }
+.btn-teal:hover { background: var(--teal-dark); }
 .btn-amber     { background: var(--college); color: #fff; }
-.btn-amber:hover{ background: var(--college-dark); }
+.btn-amber:hover{ background: var(--college-dark); box-shadow: var(--shadow-college); }
 .btn-white     { background: #fff;          color: var(--navy); }
+.btn-white:hover { background: var(--college-light); }
 .btn-ghost     { background: transparent;   color: var(--navy); border-color: var(--navy); }
-.btn-ghost:hover{ background: var(--navy);  color: #fff; }
+.btn-ghost:hover{ background: var(--navy);  color: #fff; box-shadow: var(--shadow-navy); }
 .btn-sm { padding: 9px 18px; font-size: 13px; border-radius: var(--r-sm); }
 
 /* =============================================
-   Rotation utilities
+   Rotation utilities — refined increments
 ============================================= */
+.rotate-xs     { transform: rotate(0.5deg); }
 .rotate-1      { transform: rotate(1deg); }
+.rotate-1\.5   { transform: rotate(1.5deg); }
 .rotate-2      { transform: rotate(2deg); }
 .rotate-2\.5   { transform: rotate(2.5deg); }
 .rotate-3      { transform: rotate(3deg); }
+.rotate-3\.5   { transform: rotate(3.5deg); }
 .rotate-4      { transform: rotate(4deg); }
+.rotate-4\.5   { transform: rotate(4.5deg); }
+.rotate-5      { transform: rotate(5deg); }
 .rotate-minus  { transform: rotate(-1.5deg); }
+.rotate-minus-xs { transform: rotate(-0.5deg); }
 .rotate-minus1 { transform: rotate(-1deg); }
+.rotate-minus1\.5 { transform: rotate(-1.5deg); }
 .rotate-minus2 { transform: rotate(-2deg); }
 .rotate-minus2\.5 { transform: rotate(-2.5deg); }
 .rotate-minus3 { transform: rotate(-3deg); }
+.rotate-minus3\.5 { transform: rotate(-3.5deg); }
 .rotate-minus4 { transform: rotate(-4deg); }
+.rotate-minus4\.5 { transform: rotate(-4.5deg); }
+.rotate-minus5 { transform: rotate(-5deg); }
 
 /* =============================================
    Tag / pill
 ============================================= */
 .tag {
   display: inline-block; font-size: 13px; font-weight: 700; line-height: 1.35;
-  padding: 4px 12px; border-radius: var(--r-sm); border: 1.5px solid;
+  padding: 5px 14px; border-radius: var(--r-sm); border: 1.5px solid;
+  transition: all 0.2s ease;
+}
+.tag:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-xs);
 }
 .tag-amber  { color: var(--college-dark); background: var(--college-light); border-color: var(--college); }
+.tag-amber:hover { background: var(--college); color: #fff; }
 .tag-teal   { color: var(--teal-dark);    background: var(--teal-light);    border-color: var(--teal); }
+.tag-teal:hover { background: var(--teal); color: #fff; }
 .tag-navy   { color: var(--navy);         background: var(--bg-lavender);   border-color: var(--navy); }
+.tag-navy:hover { background: var(--navy); color: #fff; }
 .tag-magenta{ color: var(--accent-text);  background: var(--bg-blush);      border-color: var(--accent); }
+.tag-magenta:hover { background: var(--accent); color: #fff; }
 
 /* =============================================
    Icon badge
@@ -590,6 +662,11 @@ ul { list-style: none; }
   width: 52px; height: 52px; border-radius: var(--r-lg) 0 var(--r-lg) 0;
   display: grid; place-items: center; font-size: 24px; flex-shrink: 0;
   background: var(--college-light); border: 2px solid var(--college); color: var(--college-dark);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.icon-badge:hover {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: var(--shadow-college);
 }
 
 /* =============================================
@@ -597,17 +674,23 @@ ul { list-style: none; }
 ============================================= */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(254, 246, 232, 0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1.5px solid rgba(248, 164, 29, 0.22);
+  background: rgba(254, 246, 232, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1.5px solid rgba(248, 164, 29, 0.2);
+  box-shadow: 0 2px 20px rgba(248, 164, 29, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+.site-header:hover {
+  box-shadow: 0 4px 30px rgba(248, 164, 29, 0.12);
 }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-3); }
 .nav-links {
   display: flex; align-items: center; gap: var(--space-6);
   font-size: 14px; font-weight: 600; color: var(--navy);
 }
-.nav-links a { transition: color 0.18s ease; }
-.nav-links a:hover { color: var(--college-dark); }
+.nav-links a { transition: color 0.2s ease, transform 0.2s ease; }
+.nav-links a:hover { color: var(--college-dark); transform: translateY(-1px); }
 @media (max-width: 900px) { .nav-links { display: none; } }
 
 /* Mobile menu button */
@@ -696,8 +779,30 @@ ul { list-style: none; }
 /* =============================================
    Footer
 ============================================= */
-.site-footer { background: var(--navy); color: var(--bg-lavender); padding-block: var(--space-16); }
-.site-footer a:hover { color: var(--college); }
+.site-footer {
+  background: linear-gradient(180deg, var(--navy) 0%, #1a2247 100%);
+  color: var(--bg-lavender);
+  padding-block: var(--space-16);
+  position: relative;
+  overflow: hidden;
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--college), var(--teal), var(--accent), var(--college));
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.site-footer a { transition: color 0.2s ease, transform 0.2s ease; display: inline-block; }
+.site-footer a:hover { color: var(--college); transform: translateX(3px); }
 
 /* =============================================
    Grid
@@ -718,15 +823,24 @@ ul { list-style: none; }
 ============================================= */
 .stat-mini {
   display: flex; flex-direction: column; align-items: center;
-  text-align: center; gap: var(--space-2);
+  text-align: center; gap: var(--space-3);
+  padding: var(--space-4);
 }
 .stat-mini .num {
   font-weight: 950; font-size: 48px; line-height: 1;
   color: var(--college-dark);
+  transition: transform 0.3s ease;
+}
+.stat-mini:hover .num {
+  transform: scale(1.05);
 }
 .stat-mini .lbl {
   font-weight: 700; font-size: 14px; line-height: 1.4;
   color: var(--ink);
+  transition: color 0.2s ease;
+}
+.stat-mini:hover .lbl {
+  color: var(--college-dark);
 }
 
 /* =============================================
@@ -849,8 +963,8 @@ a:focus-visible, button:focus-visible {
 .delay-6 { animation-delay: 0.6s; }
 
 /* Hover effects */
-.hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.hover-lift:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
+.hover-lift { transition: transform 0.3s ease; }
+.hover-lift:hover { transform: translateY(-3px); }
 
 .hover-glow { transition: box-shadow 0.3s ease; }
 .hover-glow:hover { box-shadow: 0 0 30px rgba(248, 164, 29, 0.4); }

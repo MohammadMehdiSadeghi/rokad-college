@@ -7,13 +7,13 @@ export default function PromoSection() {
   return (
     <section className="section" id="about">
       <div className="container section-inner">
-        <OffsetCard backColor="var(--college)" radius="cut-tl-br" rotate="rotate-minus3">
+        <OffsetCard backColor="var(--college)" radius="cut-tl-br-lg" rotate="rotate-minus2">
           <div
             style={{
               background: "var(--white)",
               padding: "var(--space-12) var(--space-10)",
               border: "2.75px solid var(--ink)",
-              borderRadius: "0 21px 0 21px",
+              borderRadius: "0 28px 0 28px",
             }}
           >
             <div className="text-center" style={{ maxWidth: 860, marginInline: "auto" }}>
@@ -35,7 +35,7 @@ export default function PromoSection() {
                 {promoSection.text}
               </p>
               <p
-                className="t-card gradient-text"
+                className="t-card"
                 style={{
                   marginBlock: "var(--space-8)",
                   fontWeight: 900,
@@ -48,7 +48,7 @@ export default function PromoSection() {
                 {promoSection.highlight}
               </p>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <BrandButton href="#about" variant="amber" rotate="rotate-3">
+                <BrandButton href="#about" variant="amber" rotate="rotate-2">
                   {promoSection.cta}
                 </BrandButton>
               </div>

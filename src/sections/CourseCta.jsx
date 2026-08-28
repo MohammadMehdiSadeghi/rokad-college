@@ -3,7 +3,7 @@ import BrandButton from "../components/BrandButton.jsx";
 
 export default function CourseCta() {
   return (
-    <section className="section" id="path" style={{ background: "var(--college)", position: "relative", overflow: "hidden" }}>
+    <section className="section" id="path" style={{ background: "linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%)", position: "relative", overflow: "hidden" }}>
       {/* Decorative shapes */}
       <div
         className="absolute animate-float"
@@ -12,7 +12,7 @@ export default function CourseCta() {
           right: "5%",
           width: 100,
           height: 100,
-          borderRadius: "20px 0 20px 0",
+          borderRadius: "24px 0 24px 0",
           background: "rgba(255,255,255,0.08)",
           transform: "rotate(20deg)",
         }}
@@ -40,6 +40,18 @@ export default function CourseCta() {
           transform: "translate(-50%, -50%)",
         }}
       />
+      <div
+        className="absolute animate-float delay-5"
+        style={{
+          top: "30%",
+          left: "20%",
+          width: 60,
+          height: 60,
+          borderRadius: "16px 0 16px 0",
+          background: "rgba(255,255,255,0.05)",
+          transform: "rotate(45deg)",
+        }}
+      />
 
       <div className="container section-inner" style={{ position: "relative", zIndex: 10 }}>
         <div className="text-center" style={{ maxWidth: 720, marginInline: "auto" }}>
@@ -50,7 +62,7 @@ export default function CourseCta() {
             {courseCta.text}
           </p>
           <div className="animate-scale-in delay-3">
-            <BrandButton href="#courses" variant="white" rotate="rotate-3">
+            <BrandButton href="#courses" variant="white" rotate="rotate-1.5">
               {courseCta.cta}
             </BrandButton>
           </div>

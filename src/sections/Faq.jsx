@@ -24,13 +24,13 @@ export default function Faq() {
                 key={item.q}
                 className="relative animate-fade-in-up"
                 style={{
-                  background: isOpen ? "var(--college)" : "#fff",
+                  background: isOpen ? "linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%)" : "#fff",
                   border: "2.75px solid var(--ink)",
-                  borderRadius: "0 22px 0 22px",
+                  borderRadius: isOpen ? "0 24px 0 24px" : "0 18px 0 18px",
                   padding: isOpen ? "var(--space-5) var(--space-6)" : "var(--space-4) var(--space-6)",
-                  transition: "background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
-                  transform: isOpen ? "translateY(-2px)" : "none",
-                  boxShadow: isOpen ? "0 8px 30px rgba(248, 164, 29, 0.25)" : "none",
+                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  transform: isOpen ? "translateY(-3px)" : "none",
+                  boxShadow: isOpen ? "0 12px 40px rgba(248, 164, 29, 0.3)" : "var(--shadow-xs)",
                 }}
               >
                 <button
@@ -61,10 +61,10 @@ export default function Faq() {
                       background: isOpen ? "rgba(255,255,255,0.25)" : "var(--ink-faq)",
                       color: "#fff",
                       border: "2px solid var(--ink)",
-                      borderRadius: "0 14px 0 14px",
+                      borderRadius: isOpen ? "0 14px 0 14px" : "0 10px 0 10px",
                       fontSize: 20,
                       lineHeight: 1,
-                      transition: "transform 0.3s ease, background 0.3s ease",
+                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                       transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
                     }}
                   >
@@ -88,7 +88,7 @@ export default function Faq() {
             );
           })}
           <div className="text-center" style={{ marginTop: "var(--space-8)" }}>
-            <BrandButton href="#consult" variant="amber" rotate="rotate-3">
+            <BrandButton href="#consult" variant="amber" rotate="rotate-2">
               {faqCta}
             </BrandButton>
           </div>

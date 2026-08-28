@@ -2,11 +2,11 @@ import { comments } from "../data/content.js";
 import OffsetCard from "../components/OffsetCard.jsx";
 import RotatedHeading from "../components/RotatedHeading.jsx";
 
-// theme colors cycle: college/amber / navy / magenta
+// Refined rotations and shadows for comment cards
 const themes = [
-  { back: "var(--college)", border: "var(--college)", color: "var(--college-dark)", radius: "cut-tl-br", rotate: "rotate-minus3" },
-  { back: "var(--navy)",    border: "var(--navy)",    color: "var(--navy)",        radius: "cut-tr-bl", rotate: "rotate-3" },
-  { back: "var(--accent)",  border: "var(--accent)",  color: "var(--accent-text)", radius: "cut-tl-br", rotate: "rotate-minus3" },
+  { back: "var(--college)", border: "var(--college)", color: "var(--college-dark)", radius: "cut-tl-br", rotate: "rotate-minus2" },
+  { back: "var(--navy)",    border: "var(--navy)",    color: "var(--navy)",        radius: "cut-tr-bl", rotate: "rotate-2" },
+  { back: "var(--accent)",  border: "var(--accent)",  color: "var(--accent-text)", radius: "cut-tl-br", rotate: "rotate-minus1.5" },
 ];
 
 export default function Comments() {
@@ -25,7 +25,7 @@ export default function Comments() {
           {comments.items.map((c, i) => {
             const t = themes[i % themes.length];
             return (
-              <OffsetCard key={c.name} backColor={t.back} radius={t.radius} rotate={t.rotate} className="hover-lift animate-fade-in-up">
+              <OffsetCard key={c.name} backColor={t.back} radius={t.radius} rotate={t.rotate} className="animate-fade-in-up">
                 <div style={{ padding: "var(--space-6)", minHeight: 200, display: "flex", flexDirection: "column" }}>
                   <div
                     style={{ fontSize: 42, color: t.color, lineHeight: 1, fontWeight: 950 }}

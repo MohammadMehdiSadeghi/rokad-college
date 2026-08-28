@@ -2,11 +2,12 @@ import { promoCards } from "../data/content.js";
 import OffsetCard from "../components/OffsetCard.jsx";
 
 // Theme cycles: college(amber) → navy → teal → accent(magenta)
+// Refined rotations for each card
 const themeByIndex = [
-  { back: "var(--college)",      border: "var(--college)",      tag: "tag-amber",  radius: "cut-tl-br", rotate: "rotate-minus3" },
-  { back: "var(--navy)",         border: "var(--navy)",         tag: "tag-navy",   radius: "cut-tr-bl", rotate: "rotate-3" },
-  { back: "var(--teal)",         border: "var(--teal)",         tag: "tag-teal",   radius: "cut-tl-br", rotate: "rotate-minus3" },
-  { back: "var(--accent)",       border: "var(--accent)",       tag: "tag-magenta",radius: "cut-tr-bl", rotate: "rotate-3" },
+  { back: "var(--college)",      border: "var(--college)",      tag: "tag-amber",  radius: "cut-tl-br", rotate: "rotate-minus2" },
+  { back: "var(--navy)",         border: "var(--navy)",         tag: "tag-navy",   radius: "cut-tr-bl", rotate: "rotate-2" },
+  { back: "var(--teal)",         border: "var(--teal)",         tag: "tag-teal",   radius: "cut-tl-br", rotate: "rotate-minus1.5" },
+  { back: "var(--accent)",       border: "var(--accent)",       tag: "tag-magenta",radius: "cut-tr-bl", rotate: "rotate-1.5" },
 ];
 
 export default function PromoCards() {
@@ -26,7 +27,7 @@ export default function PromoCards() {
                 radius={t.radius}
                 rotate={t.rotate}
                 style={{ minHeight: 210 }}
-                className="hover-lift animate-fade-in-up"
+                className="animate-fade-in-up"
               >
                 <div style={{ padding: "var(--space-5) var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
                   <div
