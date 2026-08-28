@@ -2,12 +2,11 @@ import { promoCards } from "../data/content.js";
 import OffsetCard from "../components/OffsetCard.jsx";
 
 // Theme cycles: college(amber) → navy → teal → accent(magenta)
-// Refined rotations for each card
 const themeByIndex = [
-  { back: "var(--college)",      border: "var(--college)",      tag: "tag-amber",  radius: "cut-tl-br", rotate: "rotate-minus2" },
-  { back: "var(--navy)",         border: "var(--navy)",         tag: "tag-navy",   radius: "cut-tr-bl", rotate: "rotate-2" },
-  { back: "var(--teal)",         border: "var(--teal)",         tag: "tag-teal",   radius: "cut-tl-br", rotate: "rotate-minus1.5" },
-  { back: "var(--accent)",       border: "var(--accent)",       tag: "tag-magenta",radius: "cut-tr-bl", rotate: "rotate-1.5" },
+  { back: "var(--college)", tag: "tag-amber",  radius: "cut-tl-br", rotate: "rotate-minus1" },
+  { back: "var(--navy)",    tag: "tag-navy",   radius: "cut-tr-bl", rotate: "rotate-1" },
+  { back: "var(--teal)",    tag: "tag-teal",   radius: "cut-tl-br", rotate: "rotate-minus1" },
+  { back: "var(--accent)",  tag: "tag-magenta",radius: "cut-tr-bl", rotate: "rotate-1" },
 ];
 
 export default function PromoCards() {
@@ -26,20 +25,29 @@ export default function PromoCards() {
                 backColor={t.back}
                 radius={t.radius}
                 rotate={t.rotate}
-                style={{ minHeight: 210 }}
                 className="animate-fade-in-up"
               >
-                <div style={{ padding: "var(--space-5) var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+                <div
+                  style={{
+                    padding: "var(--space-5) var(--space-6)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "var(--space-4)",
+                  }}
+                >
+                  {/* Icon badge */}
                   <div
                     className="icon-badge"
                     style={{
                       background: t.back,
-                      border: `2px solid ${t.border}`,
+                      border: `2px solid ${t.back}`,
                       color: i === 0 ? "#fff" : "var(--college-dark)",
                     }}
                   >
                     {c.icon}
                   </div>
+
+                  {/* Title */}
                   <h3
                     className="t-card"
                     style={{
@@ -50,7 +58,16 @@ export default function PromoCards() {
                   >
                     {c.title}
                   </h3>
-                  <p className="t-sm" style={{ color: "var(--ink-subtle)", lineHeight: 1.8, flex: 1 }}>
+
+                  {/* Description */}
+                  <p
+                    className="t-sm"
+                    style={{
+                      color: "var(--ink-subtle)",
+                      lineHeight: 1.8,
+                      flex: 1,
+                    }}
+                  >
                     {c.text}
                   </p>
                 </div>

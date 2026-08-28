@@ -1,152 +1,84 @@
 import { hero } from "../data/content.js";
-import BrandButton from "../components/BrandButton.jsx";
 
 const pattern = "/assets/Hero/Hero-Pattern.png";
 
-// word-by-word gentle alternating rotation for the long headline
-const headlineWords = hero.title.split(" ").map((t, i) => ({
-  text: t,
-  deg: i % 2 === 0 ? (i % 4 === 0 ? 1.5 : -1.5) : i % 3 === 0 ? 2 : -1,
-}));
-
 export default function Hero() {
   return (
-    <section className="section" id="hero" style={{ paddingTop: "var(--space-8)" }}>
-      <div className="bg-pattern">
-        <img src={pattern} alt="" aria-hidden="true" />
-      </div>
-      <div className="container section-inner">
-        {/* Hero card — college amber primary */}
-        <div
-          className="relative overflow-hidden animate-fade-in-up"
-          style={{
-            background: "linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%)",
-            borderRadius: "var(--r-2xl)",
-            minHeight: 480,
-            boxShadow: "0 20px 60px rgba(186,123,22,0.3), 0 8px 24px rgba(186,123,22,0.2)",
-          }}
-        >
-          {/* pattern overlay inside card */}
-          <img
-            src={pattern}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0.18 }}
-          />
+    <section className="hero-section" id="hero">
+      <div className="container">
+        <div className="hero-grid">
+          {/* Right column — Text content (RTL) */}
+          <div className="hero-content">
+            {/* Pre-title badge */}
+            <span className="hero-badge animate-fade-in-up">
+              {hero.preTitle}
+            </span>
 
-          {/* decorative shapes */}
-          <div
-            className="absolute animate-float"
-            style={{
-              top: "15%",
-              left: "8%",
-              width: 80,
-              height: 80,
-              borderRadius: "20px 0 20px 0",
-              background: "rgba(255,255,255,0.1)",
-              transform: "rotate(15deg)",
-            }}
-          />
-          <div
-            className="absolute animate-float delay-2"
-            style={{
-              bottom: "20%",
-              left: "15%",
-              width: 60,
-              height: 60,
-              borderRadius: "50%",
-              background: "rgba(255,255,255,0.08)",
-            }}
-          />
-          <div
-            className="absolute animate-float delay-4"
-            style={{
-              top: "40%",
-              left: "25%",
-              width: 40,
-              height: 40,
-              borderRadius: "12px 0 12px 0",
-              background: "rgba(255,255,255,0.06)",
-              transform: "rotate(45deg)",
-            }}
-          />
+            {/* Main headline */}
+            <h1 className="hero-title animate-fade-in-up delay-1">
+              {hero.title}
+            </h1>
 
-          {/* headline — word by word rotated, right-aligned for RTL */}
-          <div className="absolute right-[4%] top-[10%] w-[62%] z-20">
-            <div className="headline" style={{ justifyContent: "flex-end", marginBottom: 24 }}>
-              {headlineWords.map((w, i) => (
-                <span
-                  key={i}
-                  className="word t-hero"
-                  style={{
-                    color: "#fff",
-                    transform: `rotate(${w.deg}deg)`,
-                    fontWeight: 950,
-                    display: "inline-block",
-                    transition: "transform 0.3s ease",
-                  }}
-                >
-                  {w.text}
-                </span>
-              ))}
-            </div>
-            <p
-              className="t-body"
-              style={{
-                color: "rgba(255,255,255,0.93)",
-                marginTop: 0,
-                maxWidth: "38ch",
-                fontWeight: 600,
-                lineHeight: 1.75,
-              }}
-            >
+            {/* Subtitle */}
+            <p className="hero-subtitle animate-fade-in-up delay-2">
+              {hero.subtitle}
+            </p>
+
+            {/* Description */}
+            <p className="hero-text animate-fade-in-up delay-3">
               {hero.text}
             </p>
+
+            {/* CTA buttons */}
+            <div className="hero-buttons animate-fade-in-up delay-4">
+              <a href="#courses" className="btn btn-primary btn-hero">
+                {hero.primaryCta}
+              </a>
+              <a href="#consult" className="btn btn-ghost btn-hero">
+                {hero.secondaryCta}
+              </a>
+            </div>
+
+            {/* Stats row */}
+            <div className="hero-stats animate-fade-in-up delay-5">
+              {hero.stats.map((s, i) => (
+                <div key={i} className="hero-stat">
+                  <span className="hero-stat-num">{s.num}</span>
+                  <span className="hero-stat-label">{s.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* buttons */}
-          <div className="absolute right-[4%] bottom-[12%] z-20 flex flex-wrap gap-4">
-            <BrandButton href="#courses" variant="white" rotate="rotate-1">
-              {hero.primaryCta}
-            </BrandButton>
-            <BrandButton href="#consult" variant="navy" rotate="rotate-minus1">
-              {hero.secondaryCta}
-            </BrandButton>
-          </div>
+          {/* Left column — Visual (RTL: appears on left) */}
+          <div className="hero-visual animate-fade-in-up delay-2">
+            {/* Main card with pattern */}
+            <div className="hero-card">
+              <img
+                src={pattern}
+                alt=""
+                aria-hidden="true"
+                className="hero-card-pattern"
+              />
+              {/* Floating shapes */}
+              <div className="hero-shape hero-shape-1" />
+              <div className="hero-shape hero-shape-2" />
+              <div className="hero-shape hero-shape-3" />
+              {/* Badge */}
+              <div className="hero-card-badge">
+                <span className="hero-card-badge-icon">🎓</span>
+                <span className="hero-card-badge-text">یادگیری مهارت‌محور</span>
+              </div>
+            </div>
 
-          {/* trust ribbon — amber accent, positioned bottom-right */}
-          <div className="absolute bottom-[4%] right-[2%] z-10 animate-scale-in delay-3">
-            {/* back layer */}
-            <div
-              className="absolute"
-              style={{
-                top: 5,
-                left: 5,
-                width: "100%",
-                height: "100%",
-                background: "var(--college-dark)",
-                borderRadius: "0 0 24px 0",
-              }}
-            />
-            {/* front layer */}
-            <div
-              className="relative"
-              style={{
-                background: "var(--college-light)",
-                borderRadius: "0 0 24px 0",
-                border: "2px solid var(--ink)",
-                padding: "10px 16px",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <p
-                className="t-label"
-                style={{ color: "var(--college-dark)", fontWeight: 900 }}
-              >
-                {hero.caption}
-              </p>
+            {/* Floating mini cards */}
+            <div className="hero-mini-card hero-mini-1 animate-float">
+              <span>🛠️</span>
+              <span>پروژه واقعی</span>
+            </div>
+            <div className="hero-mini-card hero-mini-2 animate-float delay-3">
+              <span>🚀</span>
+              <span>ورود به بازار کار</span>
             </div>
           </div>
         </div>

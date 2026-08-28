@@ -1,39 +1,54 @@
 import { promoSection } from "../data/content.js";
 import OffsetCard from "../components/OffsetCard.jsx";
-import BrandButton from "../components/BrandButton.jsx";
 import RotatedHeading from "../components/RotatedHeading.jsx";
 
 export default function PromoSection() {
   return (
     <section className="section" id="about">
       <div className="container section-inner">
-        <OffsetCard backColor="var(--college)" radius="cut-tl-br-lg" rotate="rotate-minus2">
+        <OffsetCard
+          backColor="var(--college)"
+          radius="cut-tl-br"
+          rotate="rotate-minus1"
+        >
+          {/* Card content — NO extra border, NO extra borderRadius */}
           <div
             style={{
-              background: "var(--white)",
               padding: "var(--space-12) var(--space-10)",
-              border: "2.75px solid var(--ink)",
-              borderRadius: "0 28px 0 28px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <div className="text-center" style={{ maxWidth: 860, marginInline: "auto" }}>
+            <div className="text-center" style={{ maxWidth: 860 }}>
+              {/* Badge */}
               <span
                 className="tag tag-amber"
-                style={{ marginBottom: "var(--space-6)" }}
+                style={{ marginBottom: "var(--space-4)", display: "inline-block" }}
               >
                 درباره کالج رکاد
               </span>
+
+              {/* Title */}
               <RotatedHeading
                 words={promoSection.title}
                 className="t-section"
                 color="var(--navy)"
               />
+
+              {/* Description */}
               <p
                 className="t-body mx-auto"
-                style={{ color: "var(--ink)", marginTop: "var(--space-6)", maxWidth: "72ch" }}
+                style={{
+                  color: "var(--ink)",
+                  marginTop: "var(--space-6)",
+                  maxWidth: "72ch",
+                }}
               >
                 {promoSection.text}
               </p>
+
+              {/* Highlight text */}
               <p
                 className="t-card"
                 style={{
@@ -47,11 +62,15 @@ export default function PromoSection() {
               >
                 {promoSection.highlight}
               </p>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <BrandButton href="#about" variant="amber" rotate="rotate-2">
-                  {promoSection.cta}
-                </BrandButton>
-              </div>
+
+              {/* CTA button */}
+              <a
+                href="#about"
+                className="btn btn-amber"
+                style={{ padding: "14px 32px", fontSize: 16 }}
+              >
+                {promoSection.cta}
+              </a>
             </div>
           </div>
         </OffsetCard>

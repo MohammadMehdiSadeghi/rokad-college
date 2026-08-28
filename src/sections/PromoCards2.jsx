@@ -1,12 +1,12 @@
 import { stats } from "../data/content.js";
 import OffsetCard from "../components/OffsetCard.jsx";
 
-// Refined rotation values for stat cards
+// Subtle rotations for stat cards
 const statRotations = [
-  { rotate: "rotate-xs",    radius: "cut-tl-br" },
-  { rotate: "rotate-minus-xs", radius: "cut-tr-bl" },
-  { rotate: "rotate-1.5",   radius: "cut-tl-br" },
-  { rotate: "rotate-minus-1.5", radius: "cut-tr-bl" },
+  { rotate: "rotate-xs",        radius: "cut-tl-br" },
+  { rotate: "rotate-minus-xs",  radius: "cut-tr-bl" },
+  { rotate: "rotate-xs",        radius: "cut-tl-br" },
+  { rotate: "rotate-minus-xs",  radius: "cut-tr-bl" },
 ];
 
 export default function PromoCards2() {
