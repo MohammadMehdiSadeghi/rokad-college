@@ -6,7 +6,7 @@ export default function Features() {
   return (
     <section className="section" id="features">
       <div className="container section-inner">
-        <div className="text-center" style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto" }}>
+        <div className="text-center mx-auto" style={{ marginBottom: "var(--space-12)", maxWidth: 760 }}>
           <span className="tag tag-amber" style={{ marginBottom: "var(--space-6)" }}>ویژگی‌های کالج رکاد</span>
           <RotatedHeading words="یادگیری که از کلاس فراتر می‌رود" className="t-section" color="var(--navy)" />
         </div>
@@ -18,23 +18,14 @@ export default function Features() {
               radius="cut-tl-br"
               rotate={i % 2 ? "rotate-3" : "rotate-minus3"}
             >
-              <div
-                style={{
-                  background: i === 0 ? "var(--college-light)" : "var(--bg-neutral)",
-                  padding: "var(--space-6)",
-                  minHeight: 230,
-                  display: "flex",
-                  flexDirection: "column",
-                  border: "2.75px solid var(--ink)",
-                  borderRadius: "0 21px 0 21px",
-                }}
-              >
+              {/* wrapper needs relative for the absolute badge */}
+              <div className="relative" style={{ padding: "var(--space-6)", minHeight: 230, display: "flex", flexDirection: "column" }}>
                 {/* index number overlay */}
                 <span
+                  className="absolute select-none"
                   style={{
-                    position: "absolute",
                     top: 12,
-                    left: 12,
+                    right: 12,
                     fontFamily: "var(--font)",
                     fontWeight: 950,
                     fontSize: 26,

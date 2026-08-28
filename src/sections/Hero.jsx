@@ -36,11 +36,11 @@ export default function Hero() {
             style={{ opacity: 0.18 }}
           />
 
-          {/* character image — positioned bottom-right in RTL */}
+          {/* character image — positioned bottom-left on desktop (RTL), bottom-right on mobile */}
           <img
             src={character}
             alt="منتور رکاد"
-            className="absolute bottom-0 right-0 h-[94%] w-auto select-none pointer-events-none"
+            className="absolute bottom-0 left-0 w-[48%] max-w-[340px] h-[94%] select-none pointer-events-none"
             style={{ maxWidth: "none", zIndex: 1 }}
           />
 
@@ -84,8 +84,9 @@ export default function Hero() {
             </BrandButton>
           </div>
 
-          {/* trust ribbon — amber accent */}
-          <div className="absolute bottom-[4%] left-[3%] w-[48%] max-w-[340px] z-10">
+          {/* trust ribbon — amber accent, positioned bottom-right */}
+          <div className="absolute bottom-[4%] right-[2%] w-[48%] max-w-[340px] z-10">
+            {/* back layer */}
             <div
               className="absolute"
               style={{
@@ -97,6 +98,7 @@ export default function Hero() {
                 borderRadius: "0 0 24px 0",
               }}
             />
+            {/* front layer */}
             <div
               className="relative"
               style={{

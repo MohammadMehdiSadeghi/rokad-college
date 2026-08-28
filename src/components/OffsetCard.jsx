@@ -1,5 +1,7 @@
 // Two-layer offset "sticker" card — Rokad signature.
 // Back layer is a solid rect offset down-right (RTL-correct); never box-shadow.
+import clsx from "../lib/clsx";
+
 export default function OffsetCard({
   children,
   className = "",
@@ -11,13 +13,13 @@ export default function OffsetCard({
   ...rest
 }) {
   return (
-    <div className={`relative ${rotate}`} style={style} {...rest}>
+    <div className={clsx("relative", rotate)} style={style} {...rest}>
       <div
-        aria-hidden="true"
-        className={`offset-back ${radius}`}
+        aria-hidden
+        className={clsx("offset-back", radius)}
         style={{ background: backColor, top: shadowOffset, left: shadowOffset }}
       />
-      <div className={`offset-card ${radius} ${className}`}>{children}</div>
+      <div className={clsx("offset-card", radius, className)}>{children}</div>
     </div>
   );
 }

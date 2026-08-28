@@ -1,4 +1,6 @@
 // Two-layer brand button with the Rokad offset-shadow + tilt signature.
+import clsx from "../lib/clsx";
+
 export default function BrandButton({
   children,
   href = "#",
@@ -13,11 +15,12 @@ export default function BrandButton({
     white: "btn-white",
     amber: "btn-amber",
     ghost: "btn-ghost",
-  }[variant];
+  }[variant] ?? "btn-primary";
+
   return (
-    <span className={`btn-wrap ${rotate}`}>
-      <div aria-hidden="true" className="offset-back" style={{ background: "var(--shadow-ink)" }} />
-      <a href={href} className={`btn ${variantClass} ${size} ${className}`}>
+    <span className={clsx("btn-wrap", rotate)}>
+      <div aria-hidden className="offset-back" style={{ background: "var(--shadow-ink)" }} />
+      <a href={href} className={clsx("btn", variantClass, size, className)}>
         {children}
       </a>
     </span>
