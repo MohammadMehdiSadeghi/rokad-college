@@ -1153,7 +1153,8 @@ a:focus-visible, button:focus-visible {
 .hero-stat {
   display: flex;
   flex-direction: column;
-  gap: 2px;}
+  gap: 2px;
+}
 .hero-stat-num {
   font-size: 28px;
   font-weight: 950;
