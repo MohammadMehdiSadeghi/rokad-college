@@ -39,30 +39,59 @@ export default function Blogs() {
                 {/* Card content */}
                 <div
                   style={{
-                    padding: "var(--space-6)",
-                    minHeight: 240,
+                    padding: "var(--space-5)",
+                    minHeight: 300,
                     display: "flex",
                     flexDirection: "column",
+                    paddingTop: 0,
                   }}
                 >
-                  {/* Icon badge */}
-                  <div
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: "14px 0 14px 0",
-                      background: "var(--college-light)",
-                      border: "2px solid var(--college)",
-                      display: "grid",
-                      placeItems: "center",
-                      fontSize: 20,
-                      marginBottom: "var(--space-4)",
-                      flexShrink: 0,
-                    }}
-                    aria-hidden="true"
-                  >
-                    ✏️
-                  </div>
+                  {/* Blog cover image */}
+                  {b.image ? (
+                    <div
+                      style={{
+                        width: "100%",
+                        height: 170,
+                        marginBottom: "var(--space-5)",
+                        borderRadius: "var(--r-lg)",
+                        overflow: "hidden",
+                        background: "var(--bg-neutral)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <img
+                        src={b.image}
+                        alt={b.title}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          transition: "transform 0.4s ease",
+                          display: "block",
+                        }}
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : (
+                    /* Icon badge fallback (if no image) */
+                    <div
+                      style={{
+                        width: 44,
+                        height: 44,
+                        borderRadius: "14px 0 14px 0",
+                        background: "var(--college-light)",
+                        border: "2px solid var(--college)",
+                        display: "grid",
+                        placeItems: "center",
+                        fontSize: 20,
+                        marginBottom: "var(--space-4)",
+                        flexShrink: 0,
+                      }}
+                      aria-hidden="true"
+                    >
+                      ✏️
+                    </div>
+                  )}
 
                   {/* Title */}
                   <h3
