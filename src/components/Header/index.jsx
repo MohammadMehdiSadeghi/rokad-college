@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Logo from "../components/Logo.jsx";
+import Logo from "../Logo.jsx";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);

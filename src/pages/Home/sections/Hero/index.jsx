@@ -1,4 +1,4 @@
-import { hero } from "../data/content.js";
+import { hero } from "@/data/content.js";
 
 const pattern = "/assets/Hero/Hero-Pattern.png";
 

@@ -1,5 +1,5 @@
-import { courseCta } from "../data/content.js";
-import BrandButton from "../components/BrandButton.jsx";
+import { courseCta } from "@/data/content.js";
+import BrandButton from "@/components/BrandButton.jsx";
 
 export default function CourseCta() {
   return (

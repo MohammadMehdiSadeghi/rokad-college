@@ -1,6 +1,6 @@
-import { blogs } from "../data/content.js";
-import OffsetCard from "../components/OffsetCard.jsx";
-import RotatedHeading from "../components/RotatedHeading.jsx";
+import { blogs } from "@/data/content.js";
+import OffsetCard from "@/components/OffsetCard.jsx";
+import RotatedHeading from "@/components/RotatedHeading.jsx";
 
 // Subtle rotations for blog cards
 const blogRotations = [

@@ -1,6 +1,6 @@
-import { comments } from "../data/content.js";
-import OffsetCard from "../components/OffsetCard.jsx";
-import RotatedHeading from "../components/RotatedHeading.jsx";
+import { comments } from "@/data/content.js";
+import OffsetCard from "@/components/OffsetCard.jsx";
+import RotatedHeading from "@/components/RotatedHeading.jsx";
 
 // Subtle rotations and colors for comment cards
 const themes = [
