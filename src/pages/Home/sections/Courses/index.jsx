@@ -17,113 +17,6 @@ const courseRotations = [
 
 const ITEMS_PER_PAGE = 6;
 
-// Skeleton card component
-function CourseSkeleton({ rotation }) {
-  return (
-    <OffsetCard
-      backColor="var(--ink)"
-      radius={rotation.radius}
-      rotate={rotation.rotate}
-      className="animate-scale-in"
-    >
-      <div
-        style={{
-          padding: "var(--space-6)",
-          minHeight: 340,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* Image skeleton */}
-        <div
-          style={{
-            width: "100%",
-            height: 160,
-            marginBottom: "var(--space-5)",
-            borderRadius: "var(--r-lg)",
-            background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
-            backgroundSize: "200% 100%",
-            animation: "skeletonShimmer 1.5s ease-in-out infinite",
-          }}
-        />
-        
-        {/* Category tag skeleton */}
-        <div
-          style={{
-            width: "fit-content",
-            height: 28,
-            marginBottom: "var(--space-4)",
-            borderRadius: "var(--r-sm)",
-            background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
-            backgroundSize: "200% 100%",
-            animation: "skeletonShimmer 1.5s ease-in-out infinite",
-          }}
-        />
-        
-        {/* Title skeleton */}
-        <div
-          style={{
-            width: "70%",
-            height: 28,
-            marginBottom: "var(--space-3)",
-            borderRadius: "var(--r-sm)",
-            background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
-            backgroundSize: "200% 100%",
-            animation: "skeletonShimmer 1.5s ease-in-out infinite",
-          }}
-        />
-        
-        {/* Description skeleton lines */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-          <div
-            style={{
-              width: "100%",
-              height: 16,
-              borderRadius: "var(--r-xs)",
-              background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
-              backgroundSize: "200% 100%",
-              animation: "skeletonShimmer 1.5s ease-in-out infinite",
-            }}
-          />
-          <div
-            style={{
-              width: "85%",
-              height: 16,
-              borderRadius: "var(--r-xs)",
-              background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
-              backgroundSize: "200% 100%",
-              animation: "skeletonShimmer 1.5s ease-in-out infinite",
-            }}
-          />
-          <div
-            style={{
-              width: "60%",
-              height: 16,
-              borderRadius: "var(--r-xs)",
-              background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
-              backgroundSize: "200% 100%",
-              animation: "skeletonShimmer 1.5s ease-in-out infinite",
-            }}
-          />
-        </div>
-        
-        {/* CTA skeleton */}
-        <div
-          style={{
-            width: "fit-content",
-            height: 40,
-            marginTop: "auto",
-            borderRadius: "var(--r-sm)",
-            background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
-            backgroundSize: "200% 100%",
-            animation: "skeletonShimmer 1.5s ease-in-out infinite",
-          }}
-        />
-      </div>
-    </OffsetCard>
-  );
-}
-
 // Course card component (memoized to prevent unnecessary re-renders)
 const CourseCard = ({ course, index }) => {
   const rot = courseRotations[index % courseRotations.length];
@@ -231,44 +124,53 @@ export default function Courses() {
   }, [currentPage]);
 
   const handlePageChange = (page) => {
-    if (page < 1 || page > totalPages || page === currentPage) return;
+    if (page < 1 || page > totalPages || page === currentPage || isTransitioning) return;
     
+    // Step 1: fade out
     setIsTransitioning(true);
     
-    // Small delay for transition effect, then change page
     setTimeout(() => {
+      // Step 2: swap content
       setCurrentPage(page);
+      
       // Scroll to section top
       const section = document.getElementById("courses");
       if (section) {
-        const offset = 80; // header height
         window.scrollTo({ 
-          top: section.offsetTop - offset, 
+          top: section.offsetTop - 80, 
           behavior: "smooth" 
         });
       }
-      setIsTransitioning(false);
-    }, 150);
+      
+      // Step 3: fade in after content renders
+      requestAnimationFrame(() => {
+        setIsTransitioning(false);
+      });
+    }, 250);
   };
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "ArrowLeft" && currentPage < totalPages) handlePageChange(currentPage + 1);
-      if (e.key === "ArrowRight" && currentPage > 1) handlePageChange(currentPage - 1);
+      setCurrentPage((prev) => {
+        if (e.key === "ArrowLeft" && prev < totalPages) {
+          handlePageChange(prev + 1);
+          return prev;
+        }
+        if (e.key === "ArrowRight" && prev > 1) {
+          handlePageChange(prev - 1);
+          return prev;
+        }
+        return prev;
+      });
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentPage, totalPages]);
+  }, [totalPages]);
 
   return (
-    <section className="section" id="courses" style={{ background: "var(--college-light)" }}>
-      <style jsx>{`
-        @keyframes skeletonShimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        .pagination-btn {
+    <section className="section" id="courses" style={{ background: "var(--college-light)" }}>        <style>{`
+        .courses-pagination-btn {
           min-width: 44px;
           height: 44px;
           display: inline-flex;
@@ -283,26 +185,26 @@ export default function Courses() {
           cursor: pointer;
           transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .pagination-btn:hover:not(:disabled) {
+        .courses-pagination-btn:hover:not(:disabled) {
           background: var(--college);
           color: var(--white);
           transform: translateY(-2px);
           box-shadow: var(--shadow-college);
         }
-        .pagination-btn:disabled {
+        .courses-pagination-btn:disabled {
           opacity: 0.4;
           cursor: not-allowed;
         }
-        .pagination-btn.active {
+        .courses-pagination-btn.active {
           background: var(--college);
           color: var(--white);
           box-shadow: var(--shadow-college);
         }
-        .pagination-btn:focus-visible {
+        .courses-pagination-btn:focus-visible {
           outline: 2px solid var(--college);
           outline-offset: 2px;
         }
-        .pagination-ellipsis {
+        .courses-pagination-ellipsis {
           color: var(--ink-subtle);
           padding: 0 var(--space-2);
         }
@@ -315,7 +217,7 @@ export default function Courses() {
         {/* Section header */}
         <div
           className="text-center"
-          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto" }}
+          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", alignItems: "center" }}
         >
           <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
             دوره‌های کالج رکاد
@@ -327,28 +229,21 @@ export default function Courses() {
           />
         </div>
 
-        {/* Course cards grid - with fixed height during transition to prevent layout shift */}
+        {/* Course cards grid */}
         <div
           ref={gridRef}
           className="grid-3"
           style={{
             gap: "var(--space-6)",
-            minHeight: isTransitioning && gridRef.current ? gridRef.current.offsetHeight : "auto",
-            opacity: isTransitioning ? 0.5 : 1,
-            transition: "opacity 0.15s ease, min-height 0.15s ease",
+            opacity: isTransitioning ? 0 : 1,
+            transform: isTransitioning ? "translateY(12px)" : "translateY(0)",
+            transition: "opacity 0.25s ease, transform 0.25s ease",
           }}
           aria-live="polite"
         >
-          {!isTransitioning ? (
-            paginatedCourses.map((c, i) => (
-              <CourseCard key={c.title} course={c} index={i} />
-            ))
-          ) : (
-            // Show skeletons during transition
-            Array.from({ length: ITEMS_PER_PAGE }, (_, i) => (
-              <CourseSkeleton key={`skeleton-${i}`} rotation={courseRotations[i % courseRotations.length]} />
-            ))
-          )}
+          {paginatedCourses.map((c, i) => (
+            <CourseCard key={c.title} course={c} index={i} />
+          ))}
         </div>
 
         {/* Numeric Pagination - styled like site buttons */}
@@ -369,7 +264,7 @@ export default function Courses() {
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1 || isTransitioning}
-              className="pagination-btn"
+              className="courses-pagination-btn"
               aria-label="صفحه قبلی"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: "rotate(180deg)" }}>
@@ -405,13 +300,13 @@ export default function Courses() {
               return pages;
             })().map((page, idx) => (
               page === "..." ? (
-                <span key={`ellipsis-${idx}`} className="pagination-ellipsis" aria-hidden="true">…</span>
+                <span key={`ellipsis-${idx}`} className="courses-pagination-ellipsis" aria-hidden="true">…</span>
               ) : (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
                   disabled={isTransitioning}
-                  className={clsx("pagination-btn", currentPage === page && "active")}
+                  className={clsx("courses-pagination-btn", currentPage === page && "active")}
                   aria-label={`صفحه ${page}`}
                   aria-current={currentPage === page ? "page" : undefined}
                 >
@@ -424,7 +319,7 @@ export default function Courses() {
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages || isTransitioning}
-              className="pagination-btn"
+              className="courses-pagination-btn"
               aria-label="صفحه بعدی"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

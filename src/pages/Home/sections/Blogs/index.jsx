@@ -119,7 +119,7 @@ export default function Blogs() {
         {/* ===== HEADER — matches other college sections ===== */}
         <div
           className="text-center"
-          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto" }}
+          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", alignItems: "center" }}
         >
           <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
             وبلاگ رکاد

@@ -7,9 +7,10 @@ export default function PromoSection() {
     <section className="section" id="about">
       <div className="container section-inner">
         <OffsetCard
-          backColor="var(--college)"
+          backColor="var(--navy)"
           radius="cut-tl-br"
-          rotate="rotate-minus1"
+          rotate=""
+          shadowOffset={6}
         >
           {/* Card content — NO extra border, NO extra borderRadius */}
           <div
@@ -20,7 +21,7 @@ export default function PromoSection() {
               alignItems: "center",
             }}
           >
-            <div className="text-center" style={{ maxWidth: 860 }}>
+            <div className="text-center" style={{ maxWidth: 860, display: "flex", flexDirection: "column", alignItems: "center" }}>
               {/* Badge */}
               <span
                 className="tag tag-amber"

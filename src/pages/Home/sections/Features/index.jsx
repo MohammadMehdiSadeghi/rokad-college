@@ -1,6 +1,7 @@
 import { features } from "@/data/content.js";
 import OffsetCard from "@/components/OffsetCard.jsx";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
+import clsx from "@/lib/clsx";
 
 // Refined rotations for feature cards — very subtle
 const featureRotations = [
@@ -15,7 +16,7 @@ export default function Features() {
     <section className="section" id="features">
       <div className="container section-inner">
         {/* Section header */}
-        <div className="text-center mx-auto" style={{ marginBottom: "var(--space-12)", maxWidth: 760 }}>
+        <div className="text-center mx-auto" style={{ marginBottom: "var(--space-12)", maxWidth: 760, display: "flex", flexDirection: "column", alignItems: "center" }}>
           <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
             ویژگی‌های کالج رکاد
           </span>
@@ -48,7 +49,7 @@ export default function Features() {
                 >
                   {/* Badge */}
                   <span
-                    className="tag tag-amber"
+                    className={clsx("tag", f.tagClass)}
                     style={{
                       alignSelf: "flex-start",
                       marginBottom: "var(--space-4)",

@@ -68,10 +68,9 @@ function FaqItem({ item, isOpen, onToggle }) {
             fontWeight: 700,
             lineHeight: 1,
             transition: "all 0.3s ease",
-            transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
           }}
         >
-          +
+          {isOpen ? "×" : "+"}
         </span>
       </button>
 
@@ -112,7 +111,7 @@ export default function Faq() {
         {/* Section header */}
         <div
           className="text-center"
-          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto" }}
+          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", alignItems: "center" }}
         >
           <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
             سوالات متداول

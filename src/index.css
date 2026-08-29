@@ -943,17 +943,17 @@ ul { list-style: none; }
 ============================================= */
 html {
   scrollbar-width: thin;
-  scrollbar-color: var(--teal) transparent;
+  scrollbar-color: var(--college) transparent;
 }
 ::-webkit-scrollbar { width: 0.625rem; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--teal);
+  background-color: var(--college);
   border-radius: 0.625rem;
   border: 0.125rem solid transparent;
   background-clip: content-box;
 }
-::-webkit-scrollbar-thumb:hover { background-color: var(--teal-dark); background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background-color: var(--college-dark); background-clip: content-box; }
 
 /* Focus visible */
 a:focus-visible, button:focus-visible {
