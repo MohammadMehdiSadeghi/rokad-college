@@ -51,11 +51,40 @@ export default function Courses() {
                 <div
                   style={{
                     padding: "var(--space-6)",
-                    minHeight: 250,
+                    minHeight: 340,
                     display: "flex",
                     flexDirection: "column",
                   }}
                 >
+                  {/* Image / Illustration */}
+                  {c.image && (
+                    <div
+                      style={{
+                        width: "100%",
+                        height: 160,
+                        marginBottom: "var(--space-5)",
+                        borderRadius: "var(--r-lg)",
+                        overflow: "hidden",
+                        background: "var(--bg-neutral)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <img
+                        src={c.image}
+                        alt={c.title}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          transition: "transform 0.4s ease",
+                        }}
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+
                   {/* Category tag */}
                   <span
                     className={`tag ${c.tagClass}`}

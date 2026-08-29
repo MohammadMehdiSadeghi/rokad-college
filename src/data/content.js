@@ -35,15 +35,15 @@ export const features = [
 
 export const courses = [
   // فناوری اطلاعات
-  { category: "فناوری اطلاعات", tagClass: "tag-teal", title: "طراحی سایت با وردپرس", text: "از آشنایی با وردپرس تا طراحی و مدیریت سایت‌های حرفه‌ای؛ مهارتی کاربردی برای شروع فعالیت در دنیای وب.", cta: "مشاهده دوره" },
-  { category: "فناوری اطلاعات", tagClass: "tag-teal", title: "برنامه‌نویسی فرانت‌اند", text: "با HTML، CSS و JavaScript وارد دنیای توسعه وب شو و ساخت صفحات و رابط‌های کاربری حرفه‌ای را یاد بگیر.", cta: "مشاهده دوره" },
-  { category: "فناوری اطلاعات", tagClass: "tag-teal", title: "سئو و بهینه‌سازی سایت", text: "یاد بگیر چگونه سایت‌ها را برای موتورهای جست‌وجو بهینه کنی و مسیر حرفه‌ای خودت را در حوزه SEO شروع کنی.", cta: "مشاهده دوره" },
+  { category: "فناوری اطلاعات", tagClass: "tag-teal", title: "طراحی سایت با وردپرس", text: "از آشنایی با وردپرس تا طراحی و مدیریت سایت‌های حرفه‌ای؛ مهارتی کاربردی برای شروع فعالیت در دنیای وب.", cta: "مشاهده دوره", image: "/assets/StatCard/blue.png" },
+  { category: "فناوری اطلاعات", tagClass: "tag-teal", title: "برنامه‌نویسی فرانت‌اند", text: "با HTML، CSS و JavaScript وارد دنیای توسعه وب شو و ساخت صفحات و رابط‌های کاربری حرفه‌ای را یاد بگیر.", cta: "مشاهده دوره", image: "/assets/StatCard/teal.png" },
+  { category: "فناوری اطلاعات", tagClass: "tag-teal", title: "سئو و بهینه‌سازی سایت", text: "یاد بگیر چگونه سایت‌ها را برای موتورهای جست‌وجو بهینه کنی و مسیر حرفه‌ای خودت را در حوزه SEO شروع کنی.", cta: "مشاهده دوره", image: "/assets/StatCard/green.png" },
   // گرافیک
-  { category: "گرافیک", tagClass: "tag-magenta", title: "فتوشاپ و طراحی گرافیک", text: "اصول طراحی را یاد بگیر و با Photoshop ایده‌هایت را به طرح‌های حرفه‌ای و قابل ارائه تبدیل کن.", cta: "مشاهده دوره" },
-  { category: "گرافیک", tagClass: "tag-magenta", title: "تدوین و موشن گرافیک", text: "با ابزارهای حرفه‌ای تدوین و ساخت محتوای ویدیویی مانند Premiere و After Effects آشنا شو.", cta: "مشاهده دوره" },
+  { category: "گرافیک", tagClass: "tag-magenta", title: "فتوشاپ و طراحی گرافیک", text: "اصول طراحی را یاد بگیر و با Photoshop ایده‌هایت را به طرح‌های حرفه‌ای و قابل ارائه تبدیل کن.", cta: "مشاهده دوره", image: "/assets/StatCard/pink.png" },
+  { category: "گرافیک", tagClass: "tag-magenta", title: "تدوین و موشن گرافیک", text: "با ابزارهای حرفه‌ای تدوین و ساخت محتوای ویدیویی مانند Premiere و After Effects آشنا شو.", cta: "مشاهده دوره", image: "/assets/StatCard/magenta.png" },
   // زبان و MBA
-  { category: "زبان و MBA", tagClass: "tag-amber", title: "زبان انگلیسی (General & IELTS)", text: "از یادگیری زبان انگلیسی از پایه تا آمادگی آزمون آیلتس؛ مسیر حرفه‌ای خودت را گسترش بده.", cta: "مشاهده دوره" },
-  { category: "زبان و MBA", tagClass: "tag-amber", title: "MBA و مهارت‌های مدیریتی", text: "مهارت‌های مدیریتی، کارآفرینی و کسب‌وکار را یاد بگیر و برای نقش‌های رهبری آماده شو.", cta: "مشاهده دوره" },
+  { category: "زبان و MBA", tagClass: "tag-amber", title: "زبان انگلیسی (General & IELTS)", text: "از یادگیری زبان انگلیسی از پایه تا آمادگی آزمون آیلتس؛ مسیر حرفه‌ای خودت را گسترش بده.", cta: "مشاهده دوره", image: "/assets/StatCard/yellow.png" },
+  { category: "زبان و MBA", tagClass: "tag-amber", title: "MBA و مهارت‌های مدیریتی", text: "مهارت‌های مدیریتی، کارآفرینی و کسب‌وکار را یاد بگیر و برای نقش‌های رهبری آماده شو.", cta: "مشاهده دوره", image: "/assets/StatCard/orange.png" },
 ];
 
 export const courseCta = {
