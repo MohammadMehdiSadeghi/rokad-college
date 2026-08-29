@@ -35,7 +35,7 @@ export default function Hero() {
                 {hero.primaryCta}
               </a>
               <a href="#consult" className="btn btn-ghost btn-hero">
-                {hero.secondaryCta}
+                {hero.secondaryCta} hjkjfhsdfhjksfhk
               </a>
             </div>
 
