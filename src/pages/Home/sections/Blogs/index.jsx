@@ -1,150 +1,207 @@
-import { blogs } from "@/data/content.js";
-import OffsetCard from "@/components/OffsetCard.jsx";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+import { useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { A11y } from "swiper/modules";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/common/Icons";
 
-// Subtle rotations for blog cards
-const blogRotations = [
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
-  { rotate: "rotate-1",      radius: "cut-tr-bl" },
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
+import "swiper/css";
+
+const blogImg = "/assets/Blogs/blog-card-cover.png";
+const patternBg = "/assets/Pattern/layout-pattern.png";
+
+const posts = [
+  {
+    tag: "همه دانش‌آموزان",
+    date: "تابستان ۱۴۰۵",
+    title: "چطور برای فرزندمون رشته‌ی هنرستان رو انتخاب کنیم؟",
+    body: "یه راهنمای عملی برای والدین که می‌خوان بهترین تصمیم رو برای آینده‌ی تحصیلی فرزندشون بگیرن.",
+  },
+  {
+    tag: "دانش‌آموزان هنرستان",
+    date: "تابستان ۱۴۰۵",
+    title: "چطور برای اولین‌بار وارد بازار کار شی؟",
+    body: "قدم‌به‌قدم با تجربه‌ی فارغ‌التحصیلای رکاد که رزومه‌شون رو ساختن و اولین قرارداد کاریشون رو گرفتن.",
+  },
+  {
+    tag: "خانواده‌ها",
+    date: "بهار ۱۴۰۵",
+    title: "استعدادسنجی؛ اولین قدم مسیر شخصی‌سازی‌شده",
+    body: "چرا رکاد قبل از شروع هر چیزی، اول می‌شینه پای حرفت تا مسیر رشدت رو دقیق طراحی کنه.",
+  },
+  {
+    tag: "دانش‌آموزان هنرستان",
+    date: "بهار ۱۴۰۵",
+    title: "ساخت پروژه‌ی اول؛ از ایده تا اجرا",
+    body: "چطور یه پروژه‌ی واقعی رو از صفر شروع کنیم و تا انتها با انگیزه پیش ببریمش.",
+  },
+  {
+    tag: "خانواده‌ها",
+    date: "زمستان ۱۴۰۴",
+    title: "نقش والدین در انتخاب مسیر شغلی فرزند",
+    body: "چه‌جوری بدون فشار زیاد، کنار فرزندمون باشیم تا خودش مسیرش رو پیدا کنه.",
+  },
+  {
+    tag: "همه دانش‌آموزان",
+    date: "زمستان ۱۴۰۴",
+    title: "مهارت‌هایی که هر هنرجو باید قبل از فارغ‌التحصیلی یاد بگیره",
+    body: "لیستی از مهارت‌های عملی که تفاوت رزومه‌ی قوی و ضعیف رو مشخص می‌کنه.",
+  },
 ];
 
-export default function Blogs() {
+function BlogCard({ tag, date, title, body, rotation = 0 }) {
   return (
-    <section className="section" id="blog">
-      <div className="container section-inner">
-        {/* Section header */}
-        <div
-          className="text-center"
-          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto" }}
-        >
-          <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
-            وبلاگ رکاد
-          </span>
-          <RotatedHeading words={blogs.title} className="t-section" color="var(--navy)" />
+    <div
+      className="blog-carousel-card"
+      style={{
+        width: "100%",
+        maxWidth: "44rem",
+        marginInline: "auto",
+        transform: `rotate(${rotation}deg)`,
+      }}
+    >
+      {/* Shadow */}
+      <div
+        aria-hidden="true"
+        className="blog-card-shadow"
+        style={{
+          top: "0.3125rem",
+          left: "0.3125rem",
+          height: "25.625rem",
+        }}
+      />
+
+      {/* Card */}
+      <article className="blog-carousel-article">
+        {/* Image */}
+        <img
+          src={blogImg}
+          alt={title}
+          loading="lazy"
+          className="blog-card-img"
+        />
+
+        {/* Content */}
+        <div className="blog-card-content">
+          <h4 className="blog-card-title">{title}</h4>
+
+          <p className="blog-card-body">{body}</p>
+
+          {/* Divider */}
+          <div className="blog-card-footer">
+            <span className="blog-card-date">{date}</span>
+
+            <span className="blog-card-tag">{tag}</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  );
+}
+
+export default function Blogs() {
+  const swiperRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  return (
+    <section className="blogs-section" id="blog" dir="rtl">
+      {/* Background pattern */}
+      <div className="blogs-pattern">
+        <img
+          src={patternBg}
+          alt=""
+          aria-hidden="true"
+          draggable="false"
+          className="blogs-pattern-img"
+        />
+      </div>
+
+      <div className="blogs-inner">
+        {/* ===== HEADER ===== */}
+        <div className="blogs-header">
+          <h2 className="blogs-heading">
+            <span className="blogs-word rotate-3">تازه‌های</span>
+            <span className="blogs-word-nav -rotate-3">اکوسیستم</span>
+            <span className="blogs-word rotate-3">و</span>
+            <span className="blogs-word-magenta rotate-3">آموزش</span>
+          </h2>
+
+          {/* Button */}
+          <div className="blogs-btn-wrap">
+            <div aria-hidden="true" className="blogs-btn-shadow" />
+            <a href="#" className="blogs-btn">
+              همه مقالات
+            </a>
+          </div>
         </div>
 
-        {/* Blog cards grid */}
-        <div className="grid-3">
-          {blogs.items.map((b, i) => {
-            const rot = blogRotations[i % blogRotations.length];
-            return (
-              <OffsetCard
-                key={b.title}
-                backColor="var(--ink)"
-                radius={rot.radius}
-                rotate={rot.rotate}
-                className="animate-fade-in-up"
-              >
-                {/* Card content */}
-                <div
-                  style={{
-                    padding: "var(--space-5)",
-                    minHeight: 300,
-                    display: "flex",
-                    flexDirection: "column",
-                    paddingTop: 0,
-                  }}
-                >
-                  {/* Blog cover image */}
-                  {b.image ? (
-                    <div
-                      style={{
-                        width: "100%",
-                        height: 170,
-                        marginBottom: "var(--space-5)",
-                        borderRadius: "var(--r-lg)",
-                        overflow: "hidden",
-                        background: "var(--bg-neutral)",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <img
-                        src={b.image}
-                        alt={b.title}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          transition: "transform 0.4s ease",
-                          display: "block",
-                        }}
-                        loading="lazy"
-                      />
-                    </div>
-                  ) : (
-                    /* Icon badge fallback (if no image) */
-                    <div
-                      style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: "14px 0 14px 0",
-                        background: "var(--college-light)",
-                        border: "2px solid var(--college)",
-                        display: "grid",
-                        placeItems: "center",
-                        fontSize: 20,
-                        marginBottom: "var(--space-4)",
-                        flexShrink: 0,
-                      }}
-                      aria-hidden="true"
-                    >
-                      ✏️
-                    </div>
-                  )}
+        {/* ===== CAROUSEL ===== */}
+        <div className="blogs-carousel-row">
+          {/* Previous */}
+          <div className="blogs-nav-btn-wrap blog-prev">
+            <div aria-hidden="true" className="blogs-nav-shadow" />
+            <button
+              type="button"
+              aria-label="پست قبلی"
+              onClick={() => swiperRef.current?.slidePrev()}
+              className="blogs-nav-btn"
+            >
+              <ChevronRightIcon className="blogs-nav-icon" />
+            </button>
+          </div>
 
-                  {/* Title */}
-                  <h3
-                    className="t-card"
-                    style={{
-                      color: "var(--ink)",
-                      marginBottom: "var(--space-3)",
-                      fontWeight: 900,
-                      lineHeight: 1.25,
-                    }}
-                  >
-                    {b.title}
-                  </h3>
+          {/* Swiper */}
+          <div className="blogs-swiper-wrap">
+            <Swiper
+              modules={[A11y]}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+              onSlideChange={(swiper) => {
+                setActiveIndex(swiper.realIndex);
+              }}
+              dir="rtl"
+              spaceBetween={40}
+              slidesPerView={1}
+              loop={true}
+              breakpoints={{
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 2 },
+                1280: { slidesPerView: 3 },
+              }}
+              className="blogs-swiper"
+            >
+              {posts.map((post, index) => {
+                const rotation = index % 2 === 0 ? -1 : 1;
+                return (
+                  <SwiperSlide key={`${post.title}-${index}`}>
+                    <BlogCard {...post} rotation={rotation} />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
 
-                  {/* Description */}
-                  <p
-                    className="t-sm"
-                    style={{
-                      color: "var(--ink-subtle)",
-                      marginBottom: "var(--space-4)",
-                      lineHeight: 1.8,
-                      flex: 1,
-                    }}
-                  >
-                    {b.text}
-                  </p>
+          {/* Next */}
+          <div className="blogs-nav-btn-wrap blog-next">
+            <div aria-hidden="true" className="blogs-nav-shadow" />
+            <button
+              type="button"
+              aria-label="پست بعدی"
+              onClick={() => swiperRef.current?.slideNext()}
+              className="blogs-nav-btn"
+            >
+              <ChevronLeftIcon className="blogs-nav-icon" />
+            </button>
+          </div>
+        </div>
 
-                  {/* Date */}
-                  {b.date && (
-                    <p
-                      className="t-sm"
-                      style={{
-                        color: "var(--college-dark)",
-                        fontWeight: 700,
-                        marginBottom: "var(--space-3)",
-                      }}
-                    >
-                      {b.date}
-                    </p>
-                  )}
-
-                  {/* CTA button */}
-                  <a
-                    href="#blog"
-                    className="btn btn-ghost btn-sm"
-                    style={{ alignSelf: "flex-start", marginTop: "auto" }}
-                  >
-                    {b.cta}
-                  </a>
-                </div>
-              </OffsetCard>
-            );
-          })}
+        {/* ===== MOBILE PROGRESS ===== */}
+        <div className="blogs-mobile-progress">
+          <div className="blogs-progress-track">
+            <div
+              className="blogs-progress-fill"
+              style={{ width: `${((activeIndex + 1) / posts.length) * 100}%` }}
+            />
+          </div>
         </div>
       </div>
     </section>
