@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { courses } from "@/data/content.js";
 import OffsetCard from "@/components/OffsetCard.jsx";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
+import clsx from "@/lib/clsx";
 
 // Subtle rotations for course cards
 const courseRotations = [
@@ -16,8 +17,212 @@ const courseRotations = [
 
 const ITEMS_PER_PAGE = 6;
 
+// Skeleton card component
+function CourseSkeleton({ rotation }) {
+  return (
+    <OffsetCard
+      backColor="var(--ink)"
+      radius={rotation.radius}
+      rotate={rotation.rotate}
+      className="animate-scale-in"
+    >
+      <div
+        style={{
+          padding: "var(--space-6)",
+          minHeight: 340,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Image skeleton */}
+        <div
+          style={{
+            width: "100%",
+            height: 160,
+            marginBottom: "var(--space-5)",
+            borderRadius: "var(--r-lg)",
+            background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
+            backgroundSize: "200% 100%",
+            animation: "skeletonShimmer 1.5s ease-in-out infinite",
+          }}
+        />
+        
+        {/* Category tag skeleton */}
+        <div
+          style={{
+            width: "fit-content",
+            height: 28,
+            marginBottom: "var(--space-4)",
+            borderRadius: "var(--r-sm)",
+            background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
+            backgroundSize: "200% 100%",
+            animation: "skeletonShimmer 1.5s ease-in-out infinite",
+          }}
+        />
+        
+        {/* Title skeleton */}
+        <div
+          style={{
+            width: "70%",
+            height: 28,
+            marginBottom: "var(--space-3)",
+            borderRadius: "var(--r-sm)",
+            background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
+            backgroundSize: "200% 100%",
+            animation: "skeletonShimmer 1.5s ease-in-out infinite",
+          }}
+        />
+        
+        {/* Description skeleton lines */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+          <div
+            style={{
+              width: "100%",
+              height: 16,
+              borderRadius: "var(--r-xs)",
+              background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
+              backgroundSize: "200% 100%",
+              animation: "skeletonShimmer 1.5s ease-in-out infinite",
+            }}
+          />
+          <div
+            style={{
+              width: "85%",
+              height: 16,
+              borderRadius: "var(--r-xs)",
+              background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
+              backgroundSize: "200% 100%",
+              animation: "skeletonShimmer 1.5s ease-in-out infinite",
+            }}
+          />
+          <div
+            style={{
+              width: "60%",
+              height: 16,
+              borderRadius: "var(--r-xs)",
+              background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
+              backgroundSize: "200% 100%",
+              animation: "skeletonShimmer 1.5s ease-in-out infinite",
+            }}
+          />
+        </div>
+        
+        {/* CTA skeleton */}
+        <div
+          style={{
+            width: "fit-content",
+            height: 40,
+            marginTop: "auto",
+            borderRadius: "var(--r-sm)",
+            background: "linear-gradient(90deg, var(--bg-neutral) 25%, var(--bg-lavender) 50%, var(--bg-neutral) 75%)",
+            backgroundSize: "200% 100%",
+            animation: "skeletonShimmer 1.5s ease-in-out infinite",
+          }}
+        />
+      </div>
+    </OffsetCard>
+  );
+}
+
+// Course card component (memoized to prevent unnecessary re-renders)
+const CourseCard = ({ course, index }) => {
+  const rot = courseRotations[index % courseRotations.length];
+  return (
+    <OffsetCard
+      key={course.title}
+      backColor="var(--ink)"
+      radius={rot.radius}
+      rotate={rot.rotate}
+      className="animate-fade-in-up"
+    >
+      <div
+        style={{
+          padding: "var(--space-6)",
+          minHeight: 340,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* Image / Illustration */}
+        {course.image && (
+          <div
+            style={{
+              width: "100%",
+              height: 160,
+              marginBottom: "var(--space-5)",
+              borderRadius: "var(--r-lg)",
+              overflow: "hidden",
+              background: "var(--bg-neutral)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={course.image}
+              alt={course.title}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                transition: "transform 0.4s ease",
+              }}
+              loading="lazy"
+            />
+          </div>
+        )}
+
+        {/* Category tag */}
+        <span
+          className={clsx("tag", course.tagClass)}
+          style={{ alignSelf: "flex-start", marginBottom: "var(--space-4)" }}
+        >
+          {course.category}
+        </span>
+
+        {/* Title */}
+        <h3
+          className="t-card"
+          style={{
+            color: "var(--ink)",
+            marginBottom: "var(--space-3)",
+            fontWeight: 900,
+            lineHeight: 1.25,
+          }}
+        >
+          {course.title}
+        </h3>
+
+        {/* Description */}
+        <p
+          className="t-sm"
+          style={{
+            color: "var(--ink-subtle)",
+            marginBottom: "var(--space-6)",
+            lineHeight: 1.8,
+            flex: 1,
+          }}
+        >
+          {course.text}
+        </p>
+
+        {/* CTA button */}
+        <a
+          href="#courses"
+          className={clsx("btn", "btn-ghost", "btn-sm")}
+          style={{ alignSelf: "flex-start", marginTop: "auto" }}
+        >
+          {course.cta}
+        </a>
+      </div>
+    </OffsetCard>
+  );
+};
+
 export default function Courses() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const gridRef = useRef(null);
 
   const totalPages = useMemo(() => Math.ceil(courses.length / ITEMS_PER_PAGE), []);
   const paginatedCourses = useMemo(() => {
@@ -26,14 +231,83 @@ export default function Courses() {
   }, [currentPage]);
 
   const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
+    if (page < 1 || page > totalPages || page === currentPage) return;
+    
+    setIsTransitioning(true);
+    
+    // Small delay for transition effect, then change page
+    setTimeout(() => {
       setCurrentPage(page);
-      window.scrollTo({ top: document.getElementById("courses")?.offsetTop - 80 || 0, behavior: "smooth" });
-    }
+      // Scroll to section top
+      const section = document.getElementById("courses");
+      if (section) {
+        const offset = 80; // header height
+        window.scrollTo({ 
+          top: section.offsetTop - offset, 
+          behavior: "smooth" 
+        });
+      }
+      setIsTransitioning(false);
+    }, 150);
   };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowLeft" && currentPage < totalPages) handlePageChange(currentPage + 1);
+      if (e.key === "ArrowRight" && currentPage > 1) handlePageChange(currentPage - 1);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentPage, totalPages]);
 
   return (
     <section className="section" id="courses" style={{ background: "var(--college-light)" }}>
+      <style jsx>{`
+        @keyframes skeletonShimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        .pagination-btn {
+          min-width: 44px;
+          height: 44px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid var(--college);
+          border-radius: var(--r-md);
+          font-weight: 700;
+          font-size: 14px;
+          color: var(--college);
+          background: transparent;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pagination-btn:hover:not(:disabled) {
+          background: var(--college);
+          color: var(--white);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-college);
+        }
+        .pagination-btn:disabled {
+          opacity: 0.4;
+          cursor: not-allowed;
+        }
+        .pagination-btn.active {
+          background: var(--college);
+          color: var(--white);
+          box-shadow: var(--shadow-college);
+        }
+        .pagination-btn:focus-visible {
+          outline: 2px solid var(--college);
+          outline-offset: 2px;
+        }
+        .pagination-ellipsis {
+          color: var(--ink-subtle);
+          padding: 0 var(--space-2);
+        }
+      `}</style>
+
       <div className="bg-pattern">
         <img src="/assets/Hero/Hero-Pattern.png" alt="" aria-hidden="true" />
       </div>
@@ -53,104 +327,31 @@ export default function Courses() {
           />
         </div>
 
-        {/* Course cards grid */}
-        <div className="grid-3" style={{ gap: "var(--space-6)" }}>
-          {paginatedCourses.map((c, i) => {
-            const rot = courseRotations[i % courseRotations.length];
-            return (
-              <OffsetCard
-                key={c.title}
-                backColor="var(--ink)"
-                radius={rot.radius}
-                rotate={rot.rotate}
-                className="animate-fade-in-up"
-              >
-                <div
-                  style={{
-                    padding: "var(--space-6)",
-                    minHeight: 340,
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  {/* Image / Illustration */}
-                  {c.image && (
-                    <div
-                      style={{
-                        width: "100%",
-                        height: 160,
-                        marginBottom: "var(--space-5)",
-                        borderRadius: "var(--r-lg)",
-                        overflow: "hidden",
-                        background: "var(--bg-neutral)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <img
-                        src={c.image}
-                        alt={c.title}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          transition: "transform 0.4s ease",
-                        }}
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
-
-                  {/* Category tag */}
-                  <span
-                    className={`tag ${c.tagClass}`}
-                    style={{ alignSelf: "flex-start", marginBottom: "var(--space-4)" }}
-                  >
-                    {c.category}
-                  </span>
-
-                  {/* Title */}
-                  <h3
-                    className="t-card"
-                    style={{
-                      color: "var(--ink)",
-                      marginBottom: "var(--space-3)",
-                      fontWeight: 900,
-                      lineHeight: 1.25,
-                    }}
-                  >
-                    {c.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p
-                    className="t-sm"
-                    style={{
-                      color: "var(--ink-subtle)",
-                      marginBottom: "var(--space-6)",
-                      lineHeight: 1.8,
-                      flex: 1,
-                    }}
-                  >
-                    {c.text}
-                  </p>
-
-                  {/* CTA button */}
-                  <a
-                    href="#courses"
-                    className="btn btn-ghost btn-sm"
-                    style={{ alignSelf: "flex-start", marginTop: "auto" }}
-                  >
-                    {c.cta}
-                  </a>
-                </div>
-              </OffsetCard>
-            );
-          })}
+        {/* Course cards grid - with fixed height during transition to prevent layout shift */}
+        <div
+          ref={gridRef}
+          className="grid-3"
+          style={{
+            gap: "var(--space-6)",
+            minHeight: isTransitioning && gridRef.current ? gridRef.current.offsetHeight : "auto",
+            opacity: isTransitioning ? 0.5 : 1,
+            transition: "opacity 0.15s ease, min-height 0.15s ease",
+          }}
+          aria-live="polite"
+        >
+          {!isTransitioning ? (
+            paginatedCourses.map((c, i) => (
+              <CourseCard key={c.title} course={c} index={i} />
+            ))
+          ) : (
+            // Show skeletons during transition
+            Array.from({ length: ITEMS_PER_PAGE }, (_, i) => (
+              <CourseSkeleton key={`skeleton-${i}`} rotation={courseRotations[i % courseRotations.length]} />
+            ))
+          )}
         </div>
 
-        {/* Numeric Pagination */}
+        {/* Numeric Pagination - styled like site buttons */}
         {totalPages > 1 && (
           <nav
             className="pagination"
@@ -167,67 +368,68 @@ export default function Courses() {
             {/* Previous button */}
             <button
               onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="page-btn"
-              style={{
-                padding: "var(--space-2) var(--space-4)",
-                border: "1px solid var(--college)",
-                borderRadius: "var(--r-md)",
-                background: currentPage === 1 ? "transparent" : "var(--college)",
-                color: currentPage === 1 ? "var(--college)" : "var(--white)",
-                cursor: currentPage === 1 ? "not-allowed" : "pointer",
-                fontWeight: 600,
-                opacity: currentPage === 1 ? 0.5 : 1,
-                transition: "all 0.2s ease",
-              }}
+              disabled={currentPage === 1 || isTransitioning}
+              className="pagination-btn"
               aria-label="صفحه قبلی"
             >
-              قبلی
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: "rotate(180deg)" }}>
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
             </button>
 
-            {/* Page numbers */}
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`page-btn ${currentPage === page ? "active" : ""}`}
-                style={{
-                  minWidth: 44,
-                  height: 44,
-                  border: "1px solid var(--college)",
-                  borderRadius: "var(--r-md)",
-                  background: currentPage === page ? "var(--college)" : "transparent",
-                  color: currentPage === page ? "var(--white)" : "var(--college)",
-                  fontWeight: currentPage === page ? 700 : 600,
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
-                }}
-                aria-label={`صفحه ${page}`}
-                aria-current={currentPage === page ? "page" : undefined}
-              >
-                {page}
-              </button>
+            {/* Page numbers - show all if <= 7, otherwise smart ellipsis */}
+            {(() => {
+              const pages = [];
+              const maxVisible = 7;
+              
+              if (totalPages <= maxVisible) {
+                // Show all pages
+                for (let i = 1; i <= totalPages; i++) pages.push(i);
+              } else {
+                // Always show first, last, current ±2
+                const show = new Set([1, totalPages, currentPage]);
+                for (let i = -2; i <= 2; i++) {
+                  const p = currentPage + i;
+                  if (p > 1 && p < totalPages) show.add(p);
+                }
+                const sorted = Array.from(show).sort((a, b) => a - b);
+                
+                // Add ellipsis where gaps exist
+                for (let i = 0; i < sorted.length; i++) {
+                  if (i > 0 && sorted[i] - sorted[i - 1] > 1) {
+                    pages.push("...");
+                  }
+                  pages.push(sorted[i]);
+                }
+              }
+              return pages;
+            })().map((page, idx) => (
+              page === "..." ? (
+                <span key={`ellipsis-${idx}`} className="pagination-ellipsis" aria-hidden="true">…</span>
+              ) : (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  disabled={isTransitioning}
+                  className={clsx("pagination-btn", currentPage === page && "active")}
+                  aria-label={`صفحه ${page}`}
+                  aria-current={currentPage === page ? "page" : undefined}
+                >
+                  {page}
+                </button>
+              )
             ))}
 
             {/* Next button */}
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="page-btn"
-              style={{
-                padding: "var(--space-2) var(--space-4)",
-                border: "1px solid var(--college)",
-                borderRadius: "var(--r-md)",
-                background: currentPage === totalPages ? "transparent" : "var(--college)",
-                color: currentPage === totalPages ? "var(--college)" : "var(--white)",
-                cursor: currentPage === totalPages ? "not-allowed" : "pointer",
-                fontWeight: 600,
-                opacity: currentPage === totalPages ? 0.5 : 1,
-                transition: "all 0.2s ease",
-              }}
+              disabled={currentPage === totalPages || isTransitioning}
+              className="pagination-btn"
               aria-label="صفحه بعدی"
             >
-              بعدی
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
             </button>
           </nav>
         )}
