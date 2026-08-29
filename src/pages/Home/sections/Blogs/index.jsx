@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y } from "swiper/modules";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/common/Icons";
+import RotatedHeading from "@/components/RotatedHeading.jsx";
 
 import "swiper/css";
 
@@ -115,22 +116,19 @@ export default function Blogs() {
       </div>
 
       <div className="blogs-inner">
-        {/* ===== HEADER ===== */}
-        <div className="blogs-header">
-          <h2 className="blogs-heading">
-            <span className="blogs-word rotate-3">تازه‌های</span>
-            <span className="blogs-word-nav -rotate-3">اکوسیستم</span>
-            <span className="blogs-word rotate-3">و</span>
-            <span className="blogs-word-magenta rotate-3">آموزش</span>
-          </h2>
-
-          {/* Button */}
-          <div className="blogs-btn-wrap">
-            <div aria-hidden="true" className="blogs-btn-shadow" />
-            <a href="#" className="blogs-btn">
-              همه مقالات
-            </a>
-          </div>
+        {/* ===== HEADER — matches other college sections ===== */}
+        <div
+          className="text-center"
+          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto" }}
+        >
+          <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
+            وبلاگ رکاد
+          </span>
+          <RotatedHeading
+            words="از وبلاگ رکاد بخوان"
+            className="t-section"
+            color="var(--navy)"
+          />
         </div>
 
         {/* ===== CAROUSEL ===== */}
