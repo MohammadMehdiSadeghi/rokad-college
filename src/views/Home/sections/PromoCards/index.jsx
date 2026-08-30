@@ -17,7 +17,7 @@ const smallLabels = ["اساتید متخصص", "آموزش پروژه‌محو�
 const headingWords = [
   { text: "اینجا", deg: -1.5 },
   { text: "فقط", deg: 2 },
-  { text: "آموزش", deg: -3 },
+  { text: "آموزش", deg: -3, color: "var(--college)" },
   { text: "نمی‌بینی", deg: 1.5 },
 ];
 
@@ -30,7 +30,6 @@ export default function PromoCards() {
       <div className="container section-inner">
         {/* Section header — sample structure */}
         <div className="section-head">
-          <span className="eyebrow-tag">چرا کالج رُکاد؟</span>
           <RotatedHeading words={headingWords} className="t-section" />
           <p className="section-sub">مهارت یاد می‌گیری، تجربه می‌سازی و برای آیندهٔ حرفه‌ای آماده می‌شوی.</p>
         </div>

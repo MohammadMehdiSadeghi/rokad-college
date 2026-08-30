@@ -23,16 +23,6 @@ export default function PathSection() {
       <div className="container section-inner path-wrap">
         {/* Copy column */}
         <div className="path-copy">
-          {/* Eyebrow sticker (sample: white front, college-dark border, college shadow, rotated -2.5deg) */}
-          <OffsetCard
-            backColor="var(--college)"
-            radius="cut-tr-bl"
-            rotate="rotate-minus2.5"
-            shadowOffset={3}
-            className="path-eyebrow"
-          >
-            <span className="eyebrow-front">مسیر واقعی یادگیری</span>
-          </OffsetCard>
           <RotatedHeading words={headingWords} className="t-section" />
           <p className="path-text">{promoSection.text}</p>
           <strong className="path-highlight">{promoSection.highlight}</strong>
@@ -41,12 +31,13 @@ export default function PathSection() {
           </a>
         </div>
 
-        {/* Path board — navy sticker with amber shadow */}
+        {/* Path board — navy card with amber shadow */}
         <OffsetCard
-          backColor="var(--college)"
-          radius="path-board-radius"
+          backColor="var(--navy)"
+          borderColor="var(--navy)"
+          radius="cut-tr-bl"
           rotate="rotate-2"
-          shadowOffset={7}
+          shadowOffset={5}
         >
           <div className="path-board-inner">
             <div className="path-line" aria-hidden="true" />

@@ -1855,13 +1855,16 @@ a:focus-visible, button:focus-visible {
 .path-copy { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
 /* Eyebrow sticker (sample: white front, college-dark border, college shadow) — className lands ON the card */
 .path-eyebrow { margin-bottom: var(--space-2); }
-.path-eyebrow {
+.path-eyebrow .offset-back {
+  border-radius: 0 !important;
+}
+.path-eyebrow .offset-card {
   background: #fff;
   border-color: var(--college-dark);
-  border-radius: 0 12px 0 12px;
+  border-radius: 0 !important;
   padding: .3rem .9rem;
 }
-.path-eyebrow .eyebrow-front {
+.path-eyebrow-front {
   font-size: 14px;
   font-weight: 800;
   color: var(--college-dark);
@@ -1888,22 +1891,23 @@ a:focus-visible, button:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
-  color: var(--college-dark);
+  color: var(--college);
   font-weight: 900;
   font-size: 15px;
   transform: rotate(2deg);
   transition: .2s;
   text-decoration: none;
 }
-.text-link:hover { transform: rotate(0); }
+.text-link:hover { transform: rotate(0); color: var(--college-dark); }
 .text-link svg { flex: none; }
 .path-board-inner {
   position: relative;
   padding: 2.2rem;
-  background: var(--navy);
-  color: #fff;
-  border: 2.75px solid var(--ink);
+  background: var(--white);
+  color: var(--ink);
   min-height: 420px;
+  overflow: hidden;
+  border-radius: 0 var(--r-xl) 0 var(--r-xl);
 }
 @media (max-width: 600px) { .path-board-inner { padding: 1.4rem; } }
 .path-board-radius {
@@ -1914,7 +1918,7 @@ a:focus-visible, button:focus-visible {
   right: 53px;
   top: 56px;
   bottom: 56px;
-  border-right: 2px dashed rgba(255,255,255,.3);
+  border-right: 2px dashed rgba(33,41,90,.2);
 }
 .path-step {
   position: relative;
@@ -1932,7 +1936,7 @@ a:focus-visible, button:focus-visible {
   place-items: center;
   background: var(--college);
   color: var(--navy);
-  border: 2px solid #fff;
+  border: 2px solid var(--navy);
   border-radius: 0 13px 0 13px;
   font-weight: 950;
   transform: rotate(-3deg);
