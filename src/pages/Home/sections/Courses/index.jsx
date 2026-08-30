@@ -132,7 +132,7 @@ export default function Courses() {
   return (
     <section className="section v2-courses" id="courses" style={{ background: "var(--bg-college-tint)" }}>
       <div className="container section-inner">
-        <div className="head" style={{ textAlign: "center", maxWidth: 820, margin: "0 auto 3.5rem" }}>
+        <div className="head" style={{ textAlign: "center", maxWidth: 820, margin: "0 auto 2rem" }}>
           <span className="eyebrow">
             <span className="dot" />
             لیست دوره‌های تخصصی
@@ -152,18 +152,10 @@ export default function Courses() {
           ))}
         </div>
 
-        <div className="cta-footer" style={{ marginTop: 35, textAlign: "center" }}>
-          <p style={{ fontSize: 15, fontWeight: 600, color: "var(--ink-subtle)", margin: "0 0 1rem" }}>هنوز مطمئن نیستی کدام دوره برای توست؟</p>
-          <a href="#courses" className="btn-all" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", background: "var(--ink)", color: "#fff", padding: "1rem 1.75rem", borderRadius: ".9rem", cornerShape: "squircle", WebkitCornerShape: "squircle", fontWeight: 900, fontSize: 15.5, textDecoration: "none", border: "2px solid var(--ink)", transform: "rotate(-1.5deg)", boxShadow: "4px 4px 0 0 var(--college-normal)", transition: "all .25s ease" }}>
-            مشاهده همه دوره‌ها
-            <ArrowIcon width={16} height={16} />
-          </a>
-        </div>
-
         {totalPages > 1 && (
           <nav className="pagination" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "var(--space-2)", marginTop: "var(--space-8)", flexWrap: "wrap" }} aria-label="صفحات دوره‌ها">
             <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1 || isTransitioning} className="courses-pagination-btn" aria-label="صفحه قبلی">
-              <ChevronLeftIcon width={20} height={20} />
+              <ChevronRightIcon width={20} height={20} />
             </button>
             {(() => {
               const pages = [];
@@ -185,10 +177,18 @@ export default function Courses() {
               )
             )}
             <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages || isTransitioning} className="courses-pagination-btn" aria-label="صفحه بعدی">
-              <ChevronRightIcon width={20} height={20} />
+              <ChevronLeftIcon width={20} height={20} />
             </button>
           </nav>
         )}
+
+        <div className="cta-footer" style={{ marginTop: 35, textAlign: "center" }}>
+          <p style={{ fontSize: 15, fontWeight: 600, color: "var(--ink-subtle)", margin: "0 0 1rem" }}>هنوز مطمئن نیستی کدام دوره برای توست؟</p>
+          <a href="#courses" className="btn-all">
+            مشاهده همه دوره‌ها
+            <ArrowIcon width={16} height={16} />
+          </a>
+        </div>
       </div>
     </section>
   );

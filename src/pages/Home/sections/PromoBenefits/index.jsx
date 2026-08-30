@@ -34,7 +34,7 @@ const CheckIcon = () => (
   </svg>
 );
 
-export default function PromoCards() {
+export default function PromoBenefits() {
   return (
     <section className="section promo-v5" id="promo" style={{ background: "var(--bg-college-tint)" }}>
       <div className="container section-inner">

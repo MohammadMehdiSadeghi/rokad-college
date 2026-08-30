@@ -1,85 +1,117 @@
-import { hero } from "@/data/content.js";
+import { ArrowIcon, ChevronLeftIcon } from "@/common/Icons";
 
-const pattern = "/assets/Hero/Hero-Pattern.png";
+/* ---- Course list items ---- */
+const courses = [
+  { title: "طراحی سایت با وردپرس", sub: "۱۲ هفته • IT", cls: "" },
+  { title: "برنامه‌نویسی فرانت‌اند", sub: "۱۶ هفته • IT", cls: "" },
+  { title: "سئو و بهینه‌سازی سایت", sub: "۸ هفته • IT", cls: "s" },
+  { title: "فتوشاپ و طراحی گرافیک", sub: "۱۰ هفته • گرافیک", cls: "g" },
+  { title: "مسیر زبان و MBA", sub: "۴ ماه • بین‌المللی", cls: "l" },
+];
+
+/* ---- SVG icons per course ---- */
+const courseIcons = [
+  <svg key="0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 2v10l7-7"/></svg>,
+  <svg key="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+  <svg key="2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>,
+  <svg key="3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a10 10 0 1 1 10-10c0 2-1.5 3-3 3h-3a3 3 0 0 0-3 3c0 1.5 1 2 1 3a2 2 0 0 1-2 1z"/></svg>,
+  <svg key="4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M3 5h12M9 3v2m1 9.5A18 18 0 0 1 6.4 9M12.75 5C11.8 10.8 8 15.6 3 18.1"/><path d="M11 21l5-10 5 10M13 17h6"/></svg>,
+];
+
+/* ---- Icon colors per course ---- */
+const iconColors = ["", "", "var(--navy)", "var(--female)", "var(--ecosystem)"];
 
 export default function Hero() {
   return (
-    <section className="hero-section" id="hero">
-      <div className="container">
-        <div className="hero-grid">
-          {/* Right column — Text content (RTL) */}
-          <div className="hero-content">
-            {/* Pre-title badge */}
-            <span className="hero-badge animate-fade-in-up">
-              {hero.preTitle}
-            </span>
+    <section className="hero-v5" id="hero" style={{ background: "var(--bg-college-tint)" }}>
+      {/* Dot pattern */}
+      <div className="hero-v5-pattern" aria-hidden="true" />
 
-            {/* Main headline */}
-            <h1 className="hero-title animate-fade-in-up delay-1">
-              {hero.title}
-            </h1>
+      <div className="container hero-v5-grid">
+        {/* Left — Content */}
+        <div className="hero-v5-content">
+          <span className="eyebrow-pill">
+            <span className="dot" />
+            اولین هنرستان استارتاپی ایران
+          </span>
 
-            {/* Subtitle */}
-            <p className="hero-subtitle animate-fade-in-up delay-2">
-              {hero.subtitle}
-            </p>
+          <h1>
+            <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>مهارت</span>{" "}
+            <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--college)" }}>امروزت،</span>
+            <br />
+            <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>آینده</span>{" "}
+            <span style={{ display: "inline-block", position: "relative" }}>
+              شغلی
+              <span style={{ position: "absolute", left: 0, right: 0, bottom: "15%", height: "35%", background: "linear-gradient(180deg, transparent 65%, var(--college) 65%)", pointerEvents: "none" }} />
+            </span>{" "}
+            <span style={{ display: "inline-block", transform: "rotate(2deg)" }}>فردات</span>
+            <br />
+            <span style={{ display: "inline-block", transform: "rotate(-2deg)" }}>را می‌سازد.</span>
+          </h1>
 
-            {/* Description */}
-            <p className="hero-text animate-fade-in-up delay-3">
-              {hero.text}
-            </p>
+          <p className="hero-v5-lead">
+            در کالج رکاد از یادگیری شروع کن، برای آینده آماده شو. با یک کلیک، ببین کدام دوره برای مسیر تو مناسب است.
+          </p>
 
-            {/* CTA buttons */}
-            <div className="hero-buttons animate-fade-in-up delay-4">
-              <a href="#courses" className="btn btn-primary btn-hero">
-                {hero.primaryCta}
-              </a>
-              <a href="#consult" className="btn btn-ghost btn-hero">
-                {hero.secondaryCta} hjkjfhsdfhjksfhk
-              </a>
-            </div>
-
-            {/* Stats row */}
-            <div className="hero-stats animate-fade-in-up delay-5">
-              {hero.stats.map((s, i) => (
-                <div key={i} className="hero-stat">
-                  <span className="hero-stat-num">{s.num}</span>
-                  <span className="hero-stat-label">{s.label}</span>
-                </div>
-              ))}
-            </div>
+          <div className="hero-v5-actions">
+            <a href="#courses" className="hero-v5-btn-primary">
+              مشاهده دوره‌ها
+              <ArrowIcon width={16} height={16} />
+            </a>
+            <a href="#consult" className="hero-v5-btn-ghost">
+              مشاورهٔ رایگان
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" width={16} height={16}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </a>
           </div>
 
-          {/* Left column — Visual (RTL: appears on left) */}
-          <div className="hero-visual animate-fade-in-up delay-2">
-            {/* Main card with pattern */}
-            <div className="hero-card">
-              <img
-                src={pattern}
-                alt=""
-                aria-hidden="true"
-                className="hero-card-pattern"
-              />
-              {/* Floating shapes */}
-              <div className="hero-shape hero-shape-1" />
-              <div className="hero-shape hero-shape-2" />
-              <div className="hero-shape hero-shape-3" />
-              {/* Badge */}
-              <div className="hero-card-badge">
-                <span className="hero-card-badge-icon">🎓</span>
-                <span className="hero-card-badge-text">یادگیری مهارت‌محور</span>
-              </div>
+          <span className="hero-v5-sub">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" width={16} height={16}><polyline points="20 6 9 17 4 12"/></svg>
+            از یادگیری شروع کن، برای آینده آماده شو.
+          </span>
+
+          {/* Trust avatars */}
+          <div className="hero-v5-trust">
+            <div className="hero-v5-avatars">
+              <div className="hero-v5-av" style={{ background: "var(--college)" }}>ن.م</div>
+              <div className="hero-v5-av" style={{ background: "var(--ecosystem)" }}>ا.ص</div>
+              <div className="hero-v5-av" style={{ background: "var(--female)", color: "#fff" }}>س.ر</div>
+              <div className="hero-v5-av" style={{ background: "var(--navy)", color: "#fff" }}>ر.ح</div>
+              <div className="hero-v5-av hero-v5-av-plus">+۱۸۰</div>
+            </div>
+            <div className="hero-v5-trust-txt">
+              +۱۸۰ هنرجو در حال یادگیری
+              <small>پیوستن به جدیدترین ورودی‌های کالج</small>
+            </div>
+          </div>
+        </div>
+
+        {/* Right — Course catalog panel */}
+        <div className="hero-v5-panel-wrap">
+          <div className="hero-v5-panel">
+            <div className="hero-v5-panel-head">
+              <h4>دوره‌های پیشنهادی</h4>
+              <span className="hero-v5-cnt">۶ دوره فعال</span>
             </div>
 
-            {/* Floating mini cards */}
-            <div className="hero-mini-card hero-mini-1 animate-float">
-              <span>🛠️</span>
-              <span>پروژه واقعی</span>
-            </div>
-            <div className="hero-mini-card hero-mini-2 animate-float delay-3">
-              <span>🚀</span>
-              <span>ورود به بازار کار</span>
-            </div>
+            {courses.map((c, i) => (
+              <a key={c.title} href="#courses" className={`hero-v5-course ${c.cls}`}>
+                <div className="hero-v5-course-ic" style={iconColors[i] ? { background: iconColors[i] } : {}}>
+                  {courseIcons[i]}
+                </div>
+                <div className="hero-v5-course-info">
+                  <div className="hero-v5-course-t">{c.title}</div>
+                  <div className="hero-v5-course-s">{c.sub}</div>
+                </div>
+                <div className="hero-v5-course-arr">
+                  <ChevronLeftIcon width={12} height={12} />
+                </div>
+              </a>
+            ))}
+
+            <a href="#courses" className="hero-v5-all">
+              مشاهدهٔ همه دوره‌ها
+              <ArrowIcon width={14} height={14} />
+            </a>
           </div>
         </div>
       </div>
