@@ -3,6 +3,8 @@ import Hero from "./pages/Home/sections/Hero/index.jsx";
 import PromoBenefits from "./pages/Home/sections/PromoBenefits/index.jsx";
 import About from "./pages/Home/sections/About/index.jsx";
 import StatsTicker from "./pages/Home/sections/StatsTicker/index.jsx";
+import Features from "./pages/Home/sections/Features/index.jsx";
+import PathSection from "./pages/Home/sections/PathSection/index.jsx";
 import Courses from "./pages/Home/sections/Courses/index.jsx";
 import CourseCta from "./pages/Home/sections/CourseCta/index.jsx";
 import Faq from "./pages/Home/sections/Faq/index.jsx";
@@ -19,6 +21,8 @@ export default function App() {
         <PromoBenefits />
         <About />
         <StatsTicker />
+        <Features />
+        <PathSection />
         <Courses />
         <CourseCta />
         <Faq />

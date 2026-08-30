@@ -2192,7 +2192,7 @@ a:focus-visible, button:focus-visible {
   content: ""; position: absolute; inset: 0;
   top: 5px; left: 5px; right: -5px; bottom: -5px;
   background: var(--ink); z-index: 0;
-  border-radius: inherit;
+  border-radius: 0 2rem 0 2rem;
   transition: transform .35s ease;
 }
 .v2-stack:hover { transform: translate(-3px, -3px); }
@@ -2242,7 +2242,7 @@ a:focus-visible, button:focus-visible {
   padding: .35rem .6rem;
   border-radius: .5rem;
   corner-shape: squircle; -webkit-corner-shape: squircle;
-  font-family: monospace;
+  font-family: var(--font);
 }
 .v2-cover .v2-num span { color: var(--cat); }
 
@@ -2312,11 +2312,10 @@ a:focus-visible, button:focus-visible {
   corner-shape: squircle; -webkit-corner-shape: squircle;
   font-weight: 900; font-size: 15.5px; text-decoration: none;
   border: 2px solid var(--ink);
-  transform: rotate(-1.5deg);
   box-shadow: 4px 4px 0 0 var(--college-normal);
   transition: all .25s ease;
 }
-.btn-all:hover { background: var(--college-normal); color: var(--ink); transform: rotate(0deg) scale(1.04); box-shadow: 5px 5px 0 0 var(--ink); }
+.btn-all:hover { background: var(--college-normal); color: var(--ink); transform: scale(1.04); box-shadow: 5px 5px 0 0 var(--ink); }
 .btn-all svg { width: 16px; height: 16px; }
 
 /* ---- Pagination buttons ---- */
