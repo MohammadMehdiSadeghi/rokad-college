@@ -1,4 +1,4 @@
-// Rokad wordmark — navy "رُکاد" + amber "COLLEGE" accent (college-primary branding).
+// Rokad wordmark — navy "رکاد" + amber "COLLEGE" accent (college-primary branding).
 export default function Logo({ withWord = true, size = 40 }) {
   return (
     <a
@@ -34,7 +34,7 @@ export default function Logo({ withWord = true, size = 40 }) {
           <strong
             style={{ fontSize: 20, color: "var(--navy)", fontWeight: 950 }}
           >
-            رُکاد
+            رکاد
           </strong>
           <span
             style={{

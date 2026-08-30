@@ -100,7 +100,7 @@ export default function Hero() {
           <aside className="trust-ribbon">
             <span className="trust-back" aria-hidden="true" />
             <div className="trust-front">
-              <b>کالج مهارت‌محور رُکاد</b>
+              <b>کالج مهارت‌محور رکاد</b>
               <span>آموزش کاربردی · پروژه واقعی · مسیر شغلی</span>
               <ArrowIcon />
             </div>

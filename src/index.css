@@ -857,11 +857,7 @@ ul { list-style: none; }
 /* =============================================
    FINAL CTA — navy left + amber right (sample banner)
 ============================================= */
-.final-cta {
-  background: var(--navy);
-  padding: 0;
-  overflow: hidden;
-}
+
 .final-cta-wrap {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -963,8 +959,16 @@ ul { list-style: none; }
   0% { background-position: -200% center; }
   100% { background-position: 200% center; }
 }
-.site-footer a { transition: color 0.2s ease, transform 0.2s ease; display: inline-block; }
-.site-footer a:hover { color: var(--college); transform: translateX(3px); }
+.site-footer a { transition: color 0.2s ease; display: inline-block; }
+.site-footer a:hover { color: var(--college); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
+.footer-grid > div > p { max-width: 370px; font-size: 14px; margin-top: 1rem; color: rgba(255,255,255,.75); }
+.footer-grid h3 { font-size: 16px; color: #fff; margin-bottom: .8rem; }
+.footer-grid > div > a:not(.brand) { display: block; font-size: 13px; margin: .45rem 0; color: rgba(255,255,255,.75); }
+.socials { display: flex; gap: .5rem; margin-top: .5rem; }
+.socials a { width: 36px; height: 36px; display: grid; place-items: center; background: rgba(255,255,255,.12); border-radius: 0 10px 0 10px; color: rgba(255,255,255,.75); }
+.socials a:hover { color: var(--college); background: rgba(255,255,255,.2); }
+.copyright { border-top: 1px dashed rgba(255,255,255,.18); margin-top: 2rem; padding-top: 1.2rem; text-align: center; font-size: 11px; color: rgba(255,255,255,.5); }
 
 /* =============================================
    Grid
@@ -1821,7 +1825,7 @@ a:focus-visible, button:focus-visible {
   margin-top: var(--space-4);
   color: var(--ink);
 }
-.section-head .t-section .word:nth-child(3) { color: var(--college-dark); }
+
 .section-sub {
   max-width: 520px;
   margin: var(--space-4) auto 0;
@@ -2000,14 +2004,16 @@ a:focus-visible, button:focus-visible {
 .lab-p { margin: 1.4rem 0; color: rgba(255,255,255,.7); font-size: 16px; line-height: 1.8; }
 /* Eyebrow sticker (sample: amber front, navy text, rot -2.5deg) — className lands ON the card */
 .lab-eyebrow { margin-bottom: var(--space-3); }
-.lab-eyebrow {
+.lab-eyebrow .offset-back {
+  border-radius: 0 5px 0 5px !important;
+}
+.lab-eyebrow .offset-card {
   background: var(--college);
-  color: var(--navy);
   border-color: var(--ink);
-  border-radius: 0 12px 0 12px;
+  border-radius: 0 5px 0 5px !important;
   padding: .35rem 1rem;
 }
-.lab-eyebrow .eyebrow-front { font-size: 14px; font-weight: 800; white-space: nowrap; }
+.lab-eyebrow .eyebrow-front { font-size: 14px; font-weight: 800; white-space: nowrap; color: var(--ink); }
 .lab-list { display: grid; gap: 1rem; }
 .lab-list li { display: flex; align-items: center; gap: .8rem; }
 .lab-list > li > svg { font-size: 1.4rem; color: var(--college); flex: none; width: 22px; height: 22px; }
@@ -2182,6 +2188,7 @@ a:focus-visible, button:focus-visible {
 /* =============================================
    BLOG (مجله رکاد)
 ============================================= */
+.blog-section { background: var(--lavender); }
 .blog-grid {
   display: grid;
   grid-template-columns: 1.4fr .9fr;
@@ -2192,6 +2199,7 @@ a:focus-visible, button:focus-visible {
   display: grid;
   grid-template-columns: 1fr 1.15fr;
   min-height: 100%;
+  overflow: hidden;
 }
 @media (max-width: 900px) { .blog-feature-inner { grid-template-columns: 1fr; } }
 .blog-art {
@@ -2201,6 +2209,40 @@ a:focus-visible, button:focus-visible {
   display: grid;
   place-items: center;
   overflow: hidden;
+  border-radius: 0 var(--r-2xl) 0 0;
+}
+.art-badge {
+  position: absolute;
+  z-index: 3;
+  top: 1rem;
+  right: 1rem;
+  background: #fff;
+  color: var(--college-dark);
+  border: 2px solid var(--ink);
+  border-radius: 0 12px 0 12px;
+  padding: .3rem .7rem;
+  font-size: 11px;
+  transform: rotate(2deg);
+}
+.art-shape {
+  position: absolute;
+  border: 3px solid var(--navy);
+  background: var(--teal);
+}
+.art-shape-one {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  right: -45px;
+  bottom: -40px;
+}
+.art-shape-two {
+  width: 110px;
+  height: 110px;
+  left: -25px;
+  top: 40px;
+  transform: rotate(30deg);
+  background: #fff;
 }
 @media (max-width: 600px) { .blog-art { min-height: 260px; } }
 .blog-art > svg {
@@ -2272,7 +2314,7 @@ a:focus-visible, button:focus-visible {
 /* =============================================
    FINAL CTA
 ============================================= */
-.final-cta { background: var(--college); overflow: clip; }
+.final-cta { background: var(--college); padding-block: 5rem; overflow: clip; }
 .final-label {
   display: inline-block;
   background: #fff;
@@ -2295,36 +2337,57 @@ a:focus-visible, button:focus-visible {
   color: var(--college-darker);
   font-size: 16px;
   margin-bottom: var(--space-8);
+  text-align: center;
 }
-.btn-final {
-  background: var(--navy);
-  color: #fff;
-  border: 2.75px solid var(--ink);
-  border-radius: 0 18px 0 18px;
-  padding: 16px 40px;
-  font-size: 18px;
-  font-weight: 900;
+.final-inner { position: relative; z-index: 2; text-align: center; }
+.final-btn-wrap {
+  display: inline-block;
+  position: relative;
   transform: rotate(-1.5deg);
   transition: transform .3s;
+  margin: 0 auto;
 }
-.btn-final:hover { transform: translateY(-3px) rotate(0deg); }
-.btn-final svg { flex: none; }
+.final-btn-wrap:hover { transform: translateY(-3px) rotate(0deg); }
+.final-btn-back {
+  position: absolute;
+  top: 5px; left: 5px;
+  width: 100%; height: 100%;
+  background: var(--ink);
+  border-radius: 0 18px 0 18px;
+}
+.final-btn-front {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--navy);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 0 18px 0 18px;
+  padding: .8rem 1.8rem;
+  font-size: 18px;
+  font-weight: 900;
+}
+.final-btn-front svg { flex: none; }
 
 /* =============================================
    COURSES — sample-styled cards + callout
 ============================================= */
-.course-callout { margin-top: var(--space-12); }
-.course-callout .offset-card {
-  background: var(--college);
-  border: 2.75px solid var(--ink);
-}
+.course-callout { margin-top: 3rem; }
 .course-callout-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-8);
+  gap: 2rem;
   padding: 1.4rem 1.7rem;
+  background: var(--college);
+  border: 2px solid var(--ink);
+  border-radius: 0 var(--r-xl) 0 var(--r-xl);
 }
+.course-callout .ccopy small { color: var(--ink); font-size: 11px; font-weight: 700; }
+.course-callout .ccopy strong { color: var(--ink); font-size: 22px; font-weight: 950; }
+.course-callout .ccopy p { color: var(--ink); font-size: 13px; opacity: 0.85; }
 @media (max-width: 640px) {
   .course-callout-inner { flex-direction: column; align-items: flex-start; gap: var(--space-6); }
 }
@@ -2339,7 +2402,7 @@ a:focus-visible, button:focus-visible {
   gap: .5rem;
   background: var(--navy);
   color: #fff;
-  border: 2.75px solid var(--ink);
+  border: 2px solid var(--ink);
   border-radius: 0 14px 0 14px;
   padding: .7rem 1.2rem;
   font-weight: 900;
@@ -2357,15 +2420,56 @@ a:focus-visible, button:focus-visible {
 .faq-layout { display: grid; grid-template-columns: 5fr 7fr; gap: var(--space-8); align-items: start; }
 @media (max-width: 1023px) { .faq-layout { grid-template-columns: 1fr; } }
 .consult-card { position: sticky; top: 110px; }
-.align-start { text-align: right; margin-bottom: var(--space-6); }
-.faq-list { display: grid; gap: var(--space-4); }
-.faq-item .offset-card { background: var(--white); border-width: 2.75px; overflow: hidden; transition: background 0.3s ease; }
-.faq-item.is-open .offset-card { background: var(--teal); }
-.faq-question { width: 100%; padding: var(--space-4) var(--space-5); display: flex; justify-content: space-between; align-items: center; text-align: right; font-size: 15px; font-weight: 800; color: var(--ink); background: transparent; border: none; cursor: pointer; font-family: inherit; }
-.faq-question-btn { width: 38px; height: 38px; flex: none; display: grid; place-items: center; color: #fff; background: var(--ink-faq); border-radius: 0 15px 0 15px; transition: transform 0.3s ease; border: 2px solid var(--ink); }
-.faq-item.is-open .faq-question-btn { transform: rotate(180deg); background: #fff; color: var(--ink-faq); }
+.consult-card { position: sticky; top: 110px; }
+.consult-card-inner {
+  padding: 2.3rem 1.7rem;
+  background: var(--college);
+  border: 3.5px solid var(--ink);
+  border-radius: 0 var(--r-2xl) 0 var(--r-2xl);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.consult-icon {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: var(--college);
+  border: 2px solid var(--ink);
+  border-radius: 0 18px 0 18px;
+  margin-bottom: 1rem;
+}
+.consult-card h2 { font-size: 29px; line-height: 1.35; font-weight: 950; color: var(--ink); margin-bottom: 1rem; }
+.consult-card p { margin: 1rem 0 1.5rem; color: var(--college-darker); font-size: 15px; line-height: 1.7; }
+.consult-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--navy);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 0 14px 0 14px;
+  padding: .65rem 1.2rem;
+  font-weight: 800;
+  font-size: 15px;
+  white-space: nowrap;
+}
+.align-start { text-align: right; margin-bottom: 2rem; }
+.faq-list { display: grid; gap: 1rem; }
+.faq-item {
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: 0 var(--r-xl) 0 var(--r-xl);
+  overflow: hidden;
+  transition: background 0.3s ease;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.faq-item.is-open { background: var(--teal); }
+.faq-question { width: 100%; padding: 1.1rem 1.3rem; display: flex; justify-content: space-between; align-items: center; text-align: right; font-size: 15px; font-weight: 800; color: var(--ink); background: transparent; border: none; cursor: pointer; font-family: inherit; }
+.faq-question-btn { width: 38px; height: 38px; flex: none; display: grid; place-items: center; color: #fff; background: #3d3b3a; border-radius: 0 15px 0 15px; transition: transform 0.3s ease; border: 2px solid var(--ink); }
+.faq-item.is-open .faq-question-btn { transform: rotate(180deg); background: #fff; color: #3d3b3a; }
 .faq-answer { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.5s ease-in-out, opacity 0.5s; }
 .faq-answer > div { overflow: hidden; }
-.faq-answer p { padding: 0 var(--space-5) var(--space-4); font-size: 13px; color: #fff; transition: color 0.3s ease; }
+.faq-answer p { padding: 0 1.3rem 1.2rem; font-size: 13px; color: #fff; }
 .faq-item.is-open .faq-answer { grid-template-rows: 1fr; opacity: 1; }
 .faq-item.is-open .faq-answer p { color: var(--ink); }

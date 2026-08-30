@@ -4,45 +4,41 @@ export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="site-footer" id="consult">
-      <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: "var(--space-8)" }}>
-          <div>
-            <Logo withWord />
-            <p className="t-sm" style={{ color: "var(--bg-lavender)", marginTop: "var(--space-4)", maxWidth: "34ch" }}>
-              آینده از اینجا شروع می‌شود. در کالج رکاد از پایه تا حرفه‌ای، با پروژه و همراهی اساتید، برای بازار کار آماده شو.
-            </p>
-          </div>
-          <div>
-            <h4 className="t-label" style={{ color: "var(--college)", marginBottom: "var(--space-4)" }}>دوره‌ها</h4>
-            <ul style={{ display: "grid", gap: "var(--space-3)", fontSize: "14px" }}>
-              <li><a href="#courses" className="hover-lift">فناوری اطلاعات</a></li>
-              <li><a href="#courses" className="hover-lift">گرافیک</a></li>
-              <li><a href="#courses" className="hover-lift">زبان</a></li>
-              <li><a href="#courses" className="hover-lift">MBA</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="t-label" style={{ color: "#fff", marginBottom: "var(--space-4)" }}>لینک‌ها</h4>
-            <ul style={{ display: "grid", gap: "var(--space-3)", fontSize: "14px" }}>
-              <li><a href="#promo" className="hover-lift">چرا رکاد</a></li>
-              <li><a href="#features" className="hover-lift">ویژگی‌ها</a></li>
-              <li><a href="#faq" className="hover-lift">سوالات</a></li>
-              <li><a href="#blog" className="hover-lift">وبلاگ</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="t-label" style={{ color: "#fff", marginBottom: "var(--space-4)" }}>تماس</h4>
-            <ul style={{ display: "grid", gap: "var(--space-3)", fontSize: "14px" }}>
-              <li><a href="#consult" className="hover-lift">مشاوره رایگان</a></li>
-              <li><a href="#consult" className="hover-lift">ارتباط با ما</a></li>
-              <li><a href="#comments" className="hover-lift">نظرات هنرجویان</a></li>
-            </ul>
+      <div className="container footer-grid">
+        <div>
+          <Logo withWord />
+          <p>یادگیری کاربردی، تجربهٔ واقعی و مسیری روشن برای آیندهٔ حرفه‌ای.</p>
+        </div>
+        <div>
+          <h3>کالج</h3>
+          <a href="#promo">درباره کالج</a>
+          <a href="#courses">دوره‌ها</a>
+          <a href="#faq">سوالات پرتکرار</a>
+        </div>
+        <div>
+          <h3>ارتباط</h3>
+          <a href="#consult">مشاوره رایگان</a>
+          <a href="#consult">تماس با ما</a>
+          <div className="socials">
+            <a href="#" aria-label="اینستاگرام">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="#" aria-label="لینکدین">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
           </div>
         </div>
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.12)", marginTop: "var(--space-8)", paddingTop: "var(--space-6)", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "var(--space-2)", fontSize: "13px", color: "var(--bg-lavender)" }}>
-          <span>© {year} کالج رکاد (ROKAD College). تمامی حقوق محفوظ است.</span>
-          <span>ساخته‌شده با عشق برای یادگیری بهتر</span>
-        </div>
+      </div>
+      <div className="container copyright">
+        © {year} کالج رکاد — همهٔ حقوق محفوظ است.
       </div>
     </footer>
   );

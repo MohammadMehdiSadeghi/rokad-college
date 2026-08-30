@@ -29,7 +29,7 @@ export default function LabSection() {
         >
           <div className="lab-visual-inner">
             <div className="lab-header">
-              <span><FlaskIcon width={20} height={20} /> لَب مهارت رُکاد</span>
+              <span><FlaskIcon width={20} height={20} /> لَب مهارت رکاد</span>
               <small>PROJECT 01</small>
             </div>
             <div className="lab-canvas">
@@ -46,16 +46,6 @@ export default function LabSection() {
 
         {/* Copy column */}
         <div className="lab-copy">
-          {/* Eyebrow sticker (sample: amber front, navy text, amber shadow, rot -2.5deg) */}
-          <OffsetCard
-            backColor="var(--college)"
-            radius="cut-tr-bl"
-            rotate="rotate-minus2.5"
-            shadowOffset={3}
-            className="lab-eyebrow"
-          >
-            <span className="eyebrow-front">فراتر از کلاس</span>
-          </OffsetCard>
           <RotatedHeading words={headingWords} className="lab-title" color="#fff" />
           <p className="lab-p">
             در «لَب مهارت» آموخته‌هایت را به خروجی واقعی تبدیل می‌کنی. پروژه تعریف می‌شود،

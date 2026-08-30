@@ -1,10 +1,10 @@
-import OffsetCard from "@/Components/OffsetCard.jsx";
 import { ArrowIcon } from "@/Components/Icons";
 
 export default function FinalCta() {
   return (
     <section className="section final-cta">
-      <div className="container section-inner" style={{ textAlign: "center" }}>
+      <div className="hero-pattern" aria-hidden="true" />
+      <div className="container final-inner">
         <span className="final-label">یک قدم تا شروع</span>
         <h2 className="final-title">
           <span className="final-word" style={{ "--r": "-3deg" }}>یادگیری</span>{" "}
@@ -13,8 +13,11 @@ export default function FinalCta() {
           <span className="final-word" style={{ "--r": "3deg" }}>شروع کن.</span>
         </h2>
         <p className="final-text">مسیر حرفه‌ای بعدی تو می‌تواند از همین انتخاب ساده شروع شود.</p>
-        <a href="#courses" className="btn btn-final">
-          <ArrowIcon width={18} height={18} /> مشاهده همه دوره‌ها
+        <a href="#courses" className="final-btn-wrap">
+          <span className="final-btn-back" />
+          <span className="final-btn-front">
+            مشاهده همه دوره‌ها <ArrowIcon width={16} height={16} />
+          </span>
         </a>
       </div>
     </section>

@@ -14,7 +14,7 @@ function initial(name) { return (name || "؟").trim().charAt(0); }
 const headingWords = [
   { text: "تجربهٔ", deg: -1.5 },
   { text: "کسانی که با", deg: 2 },
-  { text: "رُکاد", deg: -3 },
+  { text: "رکاد", deg: -3, color: "var(--college)" },
   { text: "شروع کردند", deg: 1.5 },
 ];
 
@@ -23,7 +23,6 @@ export default function Testimonials() {
     <section className="section" id="comments" style={{ background: "var(--bg-neutral)" }}>
       <div className="container section-inner">
         <div className="section-head">
-          <span className="eyebrow-tag">صدای هنرجوها</span>
           <RotatedHeading words={headingWords} className="t-section" />
           <p className="section-sub" style={{ maxWidth: 560 }}>{comments.text}</p>
         </div>

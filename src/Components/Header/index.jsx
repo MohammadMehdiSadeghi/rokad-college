@@ -16,10 +16,10 @@ export default function Header() {
     <header className="college-header">
       <nav className="college-navbar" aria-label="ناوبری اصلی">
         {/* Brand — right side (RTL) */}
-        <a className="college-brand" href="#hero-section" aria-label="کالج رُکاد، صفحه اصلی">
+        <a className="college-brand" href="#hero-section" aria-label="کالج رکاد، صفحه اصلی">
           <span className="college-brand-mark" aria-hidden="true">ر</span>
           <span className="college-brand-copy">
-            <b>کالج رُکاد</b>
+            <b>کالج رکاد</b>
             <small>آینده از اینجا شروع می‌شود</small>
           </span>
         </a>

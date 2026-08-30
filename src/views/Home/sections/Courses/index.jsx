@@ -26,8 +26,8 @@ const CourseCard = ({ course, index }) => {
   return (
     <OffsetCard
       key={course.title}
-      backColor={style.theme}
-      borderColor={style.theme}
+      backColor="var(--ink)"
+      borderColor="var(--ink)"
       radius={style.radius}
       rotate={style.rotate}
       className="animate-fade-in-up"
@@ -190,6 +190,8 @@ export default function Courses() {
         }
         .courses-pagination-btn:focus-visible { outline: 2px solid var(--college); outline-offset: 2px; }
         .courses-pagination-ellipsis { color: var(--ink-subtle); padding: 0 var(--space-2); }
+
+
       `}</style>
 
       <div className="bg-pattern">
@@ -198,8 +200,7 @@ export default function Courses() {
       <div className="container section-inner">
         {/* Section header — sample structure */}
         <div className="section-head">
-          <span className="eyebrow-tag">دوره‌های کالج</span>
-          <RotatedHeading words="مسیر یادگیری خودت را پیدا کن" className="t-section" />
+          <RotatedHeading words={[{ text: "مسیر", deg: -1.5 }, { text: "یادگیری", deg: 2, color: "var(--college)" }, { text: "خودت", deg: -3, color: "var(--college)" }, { text: "را پیدا کن", deg: 1.5 }]} className="t-section" />
           <p className="section-sub">دوره‌های تخصصی رکاد را ببین و مهارتی را انتخاب کن که می‌تواند قدم بعدی تو باشد.</p>
         </div>
 
@@ -293,26 +294,19 @@ export default function Courses() {
           </nav>
         )}
 
-        {/* Course callout — sample structure */}
-        <OffsetCard
-          className="course-callout"
-          backColor="var(--navy)"
-          radius="cut-tl-br"
-          rotate="rotate-minus1"
-          shadowOffset={6}
-          style={{ marginTop: "var(--space-12)" }}
-        >
+        {/* Course callout — sticker card (matches reference design) */}
+        <div className="course-callout">
           <div className="course-callout-inner">
             <div className="ccopy">
               <small>هنوز مطمئن نیستی؟</small>
               <strong>{courseCta.title}</strong>
               <p>{courseCta.text}</p>
             </div>
-            <a className="btn btn-navypill" href="#consult">
+            <a className="btn-navypill" href="#consult">
               {courseCta.cta} <ArrowIcon width={16} height={16} />
             </a>
           </div>
-        </OffsetCard>
+        </div>
       </div>
     </section>
   );
