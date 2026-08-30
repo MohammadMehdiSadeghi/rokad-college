@@ -1,0 +1,261 @@
+/* =============================================
+   ABOUT — V2 · Timeline / Journey (خط زمانی مسیر یادگیری)
+   Tailwind-based (Tailwind v4)
+   Structure mirrors OffsetCard (site signature):
+   .abt-step > .abt-card (colored face) + ::after (dark offset back)
+   ============================================= */
+@reference "tailwindcss";
+
+/* ---- Section shell ---- */
+.abt-section {
+  @apply relative;
+  padding: 80px 72px;
+  background: var(--white);
+}
+/* Dot pattern overlay */
+.abt-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(41,40,39,.06) 1.2px, transparent 1.3px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ---- Inner grid ---- */
+.abt-inner {
+  @apply relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+/* ---- Left side (text) — in RTL this is the right column ---- */
+.abt-side {}
+
+/* Eyebrow tag */
+.abt-eyebrow {
+  @apply inline-flex items-center gap-2;
+  background: var(--college-light);
+  border: 2px dashed var(--college);
+  color: var(--college-dark);
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+.abt-eyebrow::before {
+  content: "\2726"; /* ✦ */
+}
+
+/* Title */
+.abt-title {
+  @apply font-black;
+  margin: 0 0 18px;
+  font-size: 42px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.abt-title .hl {
+  @apply inline-block;
+  background: var(--college);
+  padding: 2px 14px;
+  border-radius: 12px;
+  border: 2.5px solid var(--ink);
+  transform: rotate(-1.5deg);
+}
+
+/* Body text */
+.abt-body {
+  color: var(--ink-faq);
+  font-size: 16px;
+  line-height: 1.9;
+  font-weight: 600;
+  margin: 0 0 24px;
+  max-width: 440px;
+}
+.abt-body strong {
+  color: var(--navy);
+  font-weight: 900;
+}
+
+/* Foot row */
+.abt-foot {
+  @apply flex items-center flex-wrap;
+  gap: 20px;
+  margin-top: 8px;
+}
+.abt-foot .abt-signature {
+  transform: rotate(-2deg);
+}
+
+/* ---- Button (custom, matching design V2) ---- */
+.abt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 16px;
+  padding: 16px 30px;
+  border-radius: 14px;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  transition: transform .25s ease-out;
+  background: var(--college);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.abt-btn:hover {
+  transform: rotate(0) scale(1.04);
+}
+
+/* ---- Signature ---- */
+.abt-signature {
+  @apply inline-flex flex-col;
+  gap: 2px;
+}
+.abt-signature svg {
+  width: 110px;
+  height: auto;
+  color: var(--navy);
+}
+.abt-signature .who {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ink-subtle);
+  letter-spacing: .5px;
+}
+
+/* ---- Right side: Vertical timeline ---- */
+.abt-timeline {
+  @apply relative;
+  padding-right: 56px;
+}
+/* Dashed vertical rail — sits BEHIND cards & circles (z-index:0),
+   cards/nodes paint above it. Adjust here if you want it moved. */
+.abt-timeline::before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 24px;
+  bottom: 24px;
+  border-right: 3px dashed var(--college);
+  z-index: 0;
+}
+
+/* Step wrapper — carries the dark offset back (::after) behind the card */
+.abt-step {
+  @apply relative;
+  margin-bottom: 20px;
+}
+/* Dark offset "shadow" back — site signature ink block, BEHIND the card */
+.abt-step::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -5px;
+  right: 5px;
+  bottom: -5px;
+  background: var(--shadow-ink);
+  z-index: 0;
+}
+
+/* Card face — colored, sits ABOVE the back layer */
+.abt-card {
+  @apply relative;
+  z-index: 1;
+  padding: 18px 22px;
+  border: 2.5px solid var(--ink);
+}
+
+/* Step variants — MAIN color on the card face */
+.abt-step.n1 { transform: rotate(-1deg); }
+.abt-step.n1::after { border-radius: 22px 4px 22px 4px; }
+.abt-step.n1 .abt-card { border-radius: 22px 4px 22px 4px; background: var(--college); }
+
+.abt-step.n2 { transform: rotate(1deg); }
+.abt-step.n2::after { border-radius: 4px 22px 4px 22px; }
+.abt-step.n2 .abt-card { border-radius: 4px 22px 4px 22px; background: var(--navy); }
+
+.abt-step.n3 { transform: rotate(-.5deg); }
+.abt-step.n3::after { border-radius: 22px 4px 22px 4px; }
+.abt-step.n3 .abt-card { border-radius: 22px 4px 22px 4px; background: var(--accent); }
+
+.abt-step.n4 { transform: rotate(1deg); }
+.abt-step.n4::after { border-radius: 4px 22px 4px 22px; }
+.abt-step.n4 .abt-card { border-radius: 4px 22px 4px 22px; background: var(--teal); }
+
+/* Circle node — white disc, colored number, above the rail */
+.abt-step .node {
+  position: absolute;
+  top: 20px;
+  right: -70px;
+  width: 48px;
+  height: 48px;
+  background: var(--white);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  z-index: 2;
+}
+.abt-step.n1 .node { color: var(--college-dark); }
+.abt-step.n2 .node { color: var(--navy); }
+.abt-step.n3 .node { color: var(--accent); }
+.abt-step.n4 .node { color: var(--teal-dark); }
+
+/* Step text — white on colored card */
+.abt-card h4 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--white);
+}
+.abt-card p {
+  margin: 0;
+  color: var(--white);
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 600;
+  opacity: .92;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+  .abt-section {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+  .abt-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+@media (max-width: 600px) {
+  .abt-timeline {
+    padding-right: 36px;
+  }
+  .abt-timeline::before {
+    right: -2px;
+  }
+  .abt-step .node {
+    width: 36px;
+    height: 36px;
+    right: -56px;
+    font-size: 13px;
+  }
+}

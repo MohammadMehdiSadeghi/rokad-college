@@ -2,7 +2,7 @@ import Header from "./Components/Header/index.jsx";
 import Hero from "./pages/Home/sections/Hero/index.jsx";
 import PromoCards from "./pages/Home/sections/PromoCards/index.jsx";
 import PromoCards2 from "./pages/Home/sections/PromoCards2/index.jsx";
-import PromoSection from "./pages/Home/sections/PromoSection/index.jsx";
+import About from "./pages/Home/sections/About/index.jsx";
 import Features from "./pages/Home/sections/Features/index.jsx";
 import Courses from "./pages/Home/sections/Courses/index.jsx";
 import CourseCta from "./pages/Home/sections/CourseCta/index.jsx";
@@ -19,7 +19,7 @@ export default function App() {
         <Hero />
         <PromoCards />
         <PromoCards2 />
-        <PromoSection />
+        <About />
         <Features />
         <Courses />
         <CourseCta />
