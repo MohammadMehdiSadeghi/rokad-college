@@ -1059,7 +1059,7 @@ a:focus-visible, button:focus-visible {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%);
+  background: linear-gradient(135deg, var(--college) 0%, #fbb23f 55%, #f9c15f 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1109,7 +1109,7 @@ a:focus-visible, button:focus-visible {
   position: absolute;
   top: 7px; left: 7px;
   width: 100%; height: 100%;
-  background: var(--college-dark);
+  background: var(--college-mid);
   border-radius: var(--r-2xl);
   z-index: 0;
 }
@@ -1124,7 +1124,7 @@ a:focus-visible, button:focus-visible {
   padding: 4.5rem 5rem;
   border: 2.75px solid var(--ink);
   border-radius: var(--r-2xl);
-  background: linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%);
+  background: linear-gradient(135deg, var(--college) 0%, #fbb23f 55%, #f9c15f 100%);
   overflow: hidden;
 }
 .hero-shell-pattern {
