@@ -6,6 +6,7 @@ export default function OffsetCard({
   children,
   className = "",
   backColor = "var(--shadow-ink)",
+  borderColor = "var(--ink)",
   radius = "cut-tl-br",
   rotate = "rotate-3",
   shadowOffset = 5,
@@ -30,7 +31,10 @@ export default function OffsetCard({
         className={clsx("offset-back", radius, animationClasses)}
         style={{ background: backColor, top: shadowOffset, left: shadowOffset }}
       />
-      <div className={clsx("offset-card", radius, animationClasses, cardOnlyClasses)}>
+      <div
+        className={clsx("offset-card", radius, animationClasses, cardOnlyClasses)}
+        style={{ borderColor }}
+      >
         {children}
       </div>
     </div>

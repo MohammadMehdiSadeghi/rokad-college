@@ -23,6 +23,7 @@ export default function PromoCards() {
               <OffsetCard
                 key={c.title}
                 backColor={t.back}
+                borderColor={t.back}
                 radius={t.radius}
                 rotate={t.rotate}
                 className="animate-fade-in-up"

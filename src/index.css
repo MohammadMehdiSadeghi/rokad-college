@@ -40,11 +40,11 @@
     --ink-faq: #3d3b3a;
 
   /* ---- Accent Colors ---- */
-  --teal:       #58bdaf;
+  --teal:       #59bbaf;
   --teal-alt:   #59bbaf;
-  --teal-dark:  #347e75;
-  --teal-light: #e4f4f2;
-  --teal-wordmark: #4bb5a8;
+  --teal-dark:  #438c83;
+  --teal-light: #eef8f7;
+  --teal-wordmark: #59bbaf;
   --accent:     #e0195b;       /* magenta */
   --accent-text:#ce1754;
   --purple:     #4f215a;
@@ -97,7 +97,7 @@
   --shadow-college: 0 8px 32px rgba(248,164,29,0.25);
   --shadow-college-lg: 0 16px 48px rgba(248,164,29,0.35);
   --shadow-navy:  0 8px 32px rgba(33,41,90,0.25);
-  --shadow-teal:  0 8px 32px rgba(88,189,175,0.25);
+  --shadow-teal:  0 8px 32px rgba(89,187,175,0.25);
   --shadow-accent: 0 8px 32px rgba(224,25,91,0.25);
   --shadow-inner: inset 0 2px 4px rgba(41,40,39,0.08);
 
@@ -1136,15 +1136,20 @@ a:focus-visible, button:focus-visible {
 }
 .hero-buttons {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-5);
   flex-wrap: wrap;
   margin-top: var(--space-2);
+  align-items: center;
 }
 .btn-hero {
   padding: 14px 32px;
   font-size: 16px;
   border-radius: var(--r-md);
 }
+.hero-buttons .btn-primary { transform: rotate(-1.5deg); }
+.hero-buttons .btn-ghost   { transform: rotate(1.5deg); }
+.hero-buttons .btn-primary:hover,
+.hero-buttons .btn-ghost:hover { transform: translateY(-3px) rotate(0deg); }
 .hero-stats {
   display: flex;
   gap: var(--space-8);
