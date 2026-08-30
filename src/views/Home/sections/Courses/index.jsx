@@ -1,86 +1,81 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { courses } from "@/data/content.js";
+import { courses, courseCta } from "@/data/content.js";
 import OffsetCard from "@/Components/OffsetCard.jsx";
 import RotatedHeading from "@/Components/RotatedHeading.jsx";
 import clsx from "@/lib/clsx";
+import {
+  WordpressIcon, CodeIcon, SearchChartIcon, PaletteIcon, FilmIcon, ChartLineIcon, ArrowIcon,
+} from "@/Components/Icons";
 
-// Subtle rotations for course cards
-const courseRotations = [
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
-  { rotate: "rotate-1",      radius: "cut-tr-bl" },
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
-  { rotate: "rotate-1",      radius: "cut-tr-bl" },
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
-  { rotate: "rotate-1",      radius: "cut-tr-bl" },
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
+// Theme + icon per course (sample structure: category pill + icon in course-top)
+const courseStyles = [
+  { icon: WordpressIcon, theme: "var(--college)", radius: "cut-tl-br", rotate: "rotate-minus1" },
+  { icon: CodeIcon, theme: "var(--teal)", radius: "cut-tr-bl", rotate: "rotate-1" },
+  { icon: SearchChartIcon, theme: "var(--navy)", radius: "cut-tl-br", rotate: "rotate-minus1" },
+  { icon: PaletteIcon, theme: "var(--accent)", radius: "cut-tr-bl", rotate: "rotate-1" },
+  { icon: FilmIcon, theme: "var(--teal)", radius: "cut-tl-br", rotate: "rotate-minus1" },
+  { icon: ChartLineIcon, theme: "var(--college)", radius: "cut-tr-bl", rotate: "rotate-1" },
 ];
 
 const ITEMS_PER_PAGE = 6;
 
-// Course card component (memoized to prevent unnecessary re-renders)
+// Course card — sample structure: course-top (category pill + icon), title, text, CTA
 const CourseCard = ({ course, index }) => {
-  const rot = courseRotations[index % courseRotations.length];
+  const style = courseStyles[index % courseStyles.length];
+  const Icon = style.icon;
   return (
     <OffsetCard
       key={course.title}
-      backColor="var(--ink)"
-      radius={rot.radius}
-      rotate={rot.rotate}
+      backColor={style.theme}
+      borderColor={style.theme}
+      radius={style.radius}
+      rotate={style.rotate}
       className="animate-fade-in-up"
     >
       <div
         style={{
           padding: "var(--space-6)",
-          minHeight: 340,
+          minHeight: 300,
           display: "flex",
           flexDirection: "column",
         }}
       >
-        {/* Image / Illustration */}
-        {course.image && (
-          <div
+        {/* course-top: category pill + icon */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderBottom: "2px dashed #e2e2e2",
+            paddingBottom: "var(--space-4)",
+            marginBottom: "var(--space-5)",
+          }}
+        >
+          <span
             style={{
-              width: "100%",
-              height: 160,
-              marginBottom: "var(--space-5)",
-              borderRadius: "var(--r-lg)",
-              overflow: "hidden",
-              background: "var(--bg-neutral)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              background: `color-mix(in srgb, ${style.theme} 12%, white)`,
+              color: style.theme,
+              border: `1px solid ${style.theme}`,
+              borderRadius: 10,
+              padding: ".25rem .7rem",
+              fontSize: 11,
+              fontWeight: 700,
             }}
           >
-            <img
-              src={course.image}
-              alt={course.title}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                transition: "transform 0.4s ease",
-              }}
-              loading="lazy"
-            />
-          </div>
-        )}
-
-        {/* Category tag */}
-        <span
-          className={clsx("tag", course.tagClass)}
-          style={{ alignSelf: "flex-start", marginBottom: "var(--space-4)" }}
-        >
-          {course.category}
-        </span>
+            {course.category}
+          </span>
+          <Icon width={24} height={24} style={{ color: style.theme }} />
+        </div>
 
         {/* Title */}
         <h3
           className="t-card"
           style={{
             color: "var(--ink)",
+            fontWeight: 950,
+            lineHeight: 1.3,
+            fontSize: 20,
             marginBottom: "var(--space-3)",
-            fontWeight: 900,
-            lineHeight: 1.25,
           }}
         >
           {course.title}
@@ -91,21 +86,29 @@ const CourseCard = ({ course, index }) => {
           className="t-sm"
           style={{
             color: "var(--ink-subtle)",
-            marginBottom: "var(--space-6)",
             lineHeight: 1.8,
+            marginBottom: "var(--space-6)",
             flex: 1,
           }}
         >
           {course.text}
         </p>
 
-        {/* CTA button */}
+        {/* CTA link */}
         <a
-          href="#courses"
-          className={clsx("btn", "btn-ghost", "btn-sm")}
-          style={{ alignSelf: "flex-start", marginTop: "auto" }}
+          href="#consult"
+          style={{
+            marginTop: "auto",
+            color: style.theme,
+            fontSize: 14,
+            fontWeight: 900,
+            display: "flex",
+            alignItems: "center",
+            gap: ".4rem",
+            alignSelf: "flex-start",
+          }}
         >
-          {course.cta}
+          {course.cta} <ArrowIcon width={15} height={15} />
         </a>
       </div>
     </OffsetCard>
@@ -125,27 +128,14 @@ export default function Courses() {
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages || page === currentPage || isTransitioning) return;
-    
-    // Step 1: fade out
     setIsTransitioning(true);
-    
     setTimeout(() => {
-      // Step 2: swap content
       setCurrentPage(page);
-      
-      // Scroll to section top
       const section = document.getElementById("courses");
       if (section) {
-        window.scrollTo({ 
-          top: section.offsetTop - 80, 
-          behavior: "smooth" 
-        });
+        window.scrollTo({ top: section.offsetTop - 80, behavior: "smooth" });
       }
-      
-      // Step 3: fade in after content renders
-      requestAnimationFrame(() => {
-        setIsTransitioning(false);
-      });
+      requestAnimationFrame(() => setIsTransitioning(false));
     }, 250);
   };
 
@@ -169,7 +159,8 @@ export default function Courses() {
   }, [totalPages]);
 
   return (
-    <section className="section" id="courses" style={{ background: "var(--college-light)" }}>        <style>{`
+    <section className="section" id="courses" style={{ background: "var(--college-light)" }}>
+      <style>{`
         .courses-pagination-btn {
           min-width: 44px;
           height: 44px;
@@ -191,42 +182,25 @@ export default function Courses() {
           transform: translateY(-2px);
           box-shadow: var(--shadow-college);
         }
-        .courses-pagination-btn:disabled {
-          opacity: 0.4;
-          cursor: not-allowed;
-        }
+        .courses-pagination-btn:disabled { opacity: 0.4; cursor: not-allowed; }
         .courses-pagination-btn.active {
           background: var(--college);
           color: var(--white);
           box-shadow: var(--shadow-college);
         }
-        .courses-pagination-btn:focus-visible {
-          outline: 2px solid var(--college);
-          outline-offset: 2px;
-        }
-        .courses-pagination-ellipsis {
-          color: var(--ink-subtle);
-          padding: 0 var(--space-2);
-        }
+        .courses-pagination-btn:focus-visible { outline: 2px solid var(--college); outline-offset: 2px; }
+        .courses-pagination-ellipsis { color: var(--ink-subtle); padding: 0 var(--space-2); }
       `}</style>
 
       <div className="bg-pattern">
         <img src="/assets/Hero/Hero-Pattern.png" alt="" aria-hidden="true" />
       </div>
       <div className="container section-inner">
-        {/* Section header */}
-        <div
-          className="text-center"
-          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", alignItems: "center" }}
-        >
-          <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
-            دوره‌های کالج رکاد
-          </span>
-          <RotatedHeading
-            words="از فناوری و گرافیک تا زبان و مدیریت"
-            className="t-section"
-            color="var(--navy)"
-          />
+        {/* Section header — sample structure */}
+        <div className="section-head">
+          <span className="eyebrow-tag">دوره‌های کالج</span>
+          <RotatedHeading words="مسیر یادگیری خودت را پیدا کن" className="t-section" />
+          <p className="section-sub">دوره‌های تخصصی رکاد را ببین و مهارتی را انتخاب کن که می‌تواند قدم بعدی تو باشد.</p>
         </div>
 
         {/* Course cards grid */}
@@ -260,7 +234,6 @@ export default function Courses() {
             }}
             aria-label="صفحات دوره‌ها"
           >
-            {/* Previous button */}
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1 || isTransitioning}
@@ -272,28 +245,20 @@ export default function Courses() {
               </svg>
             </button>
 
-            {/* Page numbers - show all if <= 7, otherwise smart ellipsis */}
             {(() => {
               const pages = [];
               const maxVisible = 7;
-              
               if (totalPages <= maxVisible) {
-                // Show all pages
                 for (let i = 1; i <= totalPages; i++) pages.push(i);
               } else {
-                // Always show first, last, current ±2
                 const show = new Set([1, totalPages, currentPage]);
                 for (let i = -2; i <= 2; i++) {
                   const p = currentPage + i;
                   if (p > 1 && p < totalPages) show.add(p);
                 }
                 const sorted = Array.from(show).sort((a, b) => a - b);
-                
-                // Add ellipsis where gaps exist
                 for (let i = 0; i < sorted.length; i++) {
-                  if (i > 0 && sorted[i] - sorted[i - 1] > 1) {
-                    pages.push("...");
-                  }
+                  if (i > 0 && sorted[i] - sorted[i - 1] > 1) pages.push("...");
                   pages.push(sorted[i]);
                 }
               }
@@ -315,7 +280,6 @@ export default function Courses() {
               )
             ))}
 
-            {/* Next button */}
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages || isTransitioning}
@@ -328,6 +292,27 @@ export default function Courses() {
             </button>
           </nav>
         )}
+
+        {/* Course callout — sample structure */}
+        <OffsetCard
+          className="course-callout"
+          backColor="var(--navy)"
+          radius="cut-tl-br"
+          rotate="rotate-minus1"
+          shadowOffset={6}
+          style={{ marginTop: "var(--space-12)" }}
+        >
+          <div className="course-callout-inner">
+            <div className="ccopy">
+              <small>هنوز مطمئن نیستی؟</small>
+              <strong>{courseCta.title}</strong>
+              <p>{courseCta.text}</p>
+            </div>
+            <a className="btn btn-navypill" href="#consult">
+              {courseCta.cta} <ArrowIcon width={16} height={16} />
+            </a>
+          </div>
+        </OffsetCard>
       </div>
     </section>
   );

@@ -1,86 +1,110 @@
 import { hero } from "@/data/content.js";
+import OffsetCard from "@/Components/OffsetCard.jsx";
+import RotatedHeading from "@/Components/RotatedHeading.jsx";
+import {
+  SparklesIcon, LayerGroupIcon, CommentsIcon, TrendUpIcon,
+  CodeIcon, PenRulerIcon, BriefcaseIcon, CheckCircleIcon, ArrowIcon,
+} from "@/Components/Icons";
 
 const pattern = "/assets/Hero/Hero-Pattern.png";
+const trustPattern = "/assets/Hero/TrustSection-Pattern.png";
+
+const kicker = "ثبت‌نام دوره‌های جدید باز است";
+
+const titleWords = [
+  { text: "آینده", deg: -1.5 },
+  { text: "از", deg: 2 },
+  { text: "اینجا", deg: -3 },
+  { text: "شروع", deg: 1.5 },
+  { text: "می‌شود!", deg: 2.5 },
+];
+
+const chips = [
+  { icon: CodeIcon, label: "فناوری", color: "var(--navy)", rot: "-3deg", top: "12%", right: "0" },
+  { icon: PenRulerIcon, label: "گرافیک", color: "var(--accent)", rot: "2deg", bottom: "15%", right: "2%" },
+  { icon: BriefcaseIcon, label: "کسب‌وکار", color: "var(--teal-dark)", rot: "3deg", top: "18%", left: "-1%" },
+  { icon: CheckCircleIcon, label: "پروژه واقعی", color: "var(--college-dark)", rot: "-1.5deg", bottom: "8%", left: "5%" },
+];
 
 export default function Hero() {
   return (
     <section className="hero-section" id="hero">
       <div className="container">
-        <div className="hero-grid">
-          {/* Right column — Text content (RTL) */}
-          <div className="hero-content">
-            {/* Pre-title badge */}
-            <span className="hero-badge animate-fade-in-up">
-              {hero.preTitle}
-            </span>
+        {/* Big amber sticker card — the Hero shell */}
+        <div className="hero-shell">
+          <div aria-hidden="true" className="hero-shell-back" />
+          <div className="hero-shell-card">
+            <img src={pattern} alt="" aria-hidden="true" className="hero-shell-pattern" />
 
-            {/* Main headline */}
-            <h1 className="hero-title animate-fade-in-up delay-1">
-              {hero.title}
-            </h1>
+            {/* Text column (RTL: right) */}
+            <div className="hero-content">
+              <span className="hero-kicker">
+                <SparklesIcon width={15} height={15} />
+                {kicker}
+              </span>
+              <p className="hero-brandline">{hero.preTitle} — {hero.subtitle}</p>
+              <RotatedHeading as="h1" words={titleWords} className="hero-title" />
+              <p className="hero-text">{hero.text}</p>
 
-            {/* Subtitle */}
-            <p className="hero-subtitle animate-fade-in-up delay-2">
-              {hero.subtitle}
-            </p>
-
-            {/* Description */}
-            <p className="hero-text animate-fade-in-up delay-3">
-              {hero.text}
-            </p>
-
-            {/* CTA buttons */}
-            <div className="hero-buttons animate-fade-in-up delay-4">
-              <a href="#courses" className="btn btn-primary btn-hero">
-                {hero.primaryCta}
-              </a>
-              <a href="#consult" className="btn btn-ghost btn-hero">
-                {hero.secondaryCta}
-              </a>
-            </div>
-
-            {/* Stats row */}
-            <div className="hero-stats animate-fade-in-up delay-5">
-              {hero.stats.map((s, i) => (
-                <div key={i} className="hero-stat">
-                  <span className="hero-stat-num">{s.num}</span>
-                  <span className="hero-stat-label">{s.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Left column — Visual (RTL: appears on left) */}
-          <div className="hero-visual animate-fade-in-up delay-2">
-            {/* Main card with pattern */}
-            <div className="hero-card">
-              <img
-                src={pattern}
-                alt=""
-                aria-hidden="true"
-                className="hero-card-pattern"
-              />
-              {/* Floating shapes */}
-              <div className="hero-shape hero-shape-1" />
-              <div className="hero-shape hero-shape-2" />
-              <div className="hero-shape hero-shape-3" />
-              {/* Badge */}
-              <div className="hero-card-badge">
-                <span className="hero-card-badge-icon">🎓</span>
-                <span className="hero-card-badge-text">یادگیری مهارت‌محور</span>
+              <div className="hero-buttons">
+                <a href="#courses" className="btn btn-primary btn-hero">
+                  <LayerGroupIcon width={17} height={17} /> {hero.primaryCta}
+                </a>
+                <a href="#consult" className="btn btn-white btn-hero">
+                  <CommentsIcon width={17} height={17} /> {hero.secondaryCta}
+                </a>
               </div>
+
+              <p className="hero-note">
+                <span className="double-dot" /> از یادگیری شروع کن، برای آینده آماده شو.
+              </p>
             </div>
 
-            {/* Floating mini cards */}
-            <div className="hero-mini-card hero-mini-1 animate-float">
-              <span>🛠️</span>
-              <span>پروژه واقعی</span>
-            </div>
-            <div className="hero-mini-card hero-mini-2 animate-float delay-3">
-              <span>🚀</span>
-              <span>ورود به بازار کار</span>
+            {/* Visual column: orbit + career card + chips */}
+            <div className="hero-visual" aria-label="نمایش مسیر رشد مهارتی">
+              <div className="visual-orbit orbit-one" />
+              <div className="visual-orbit orbit-two" />
+
+              <OffsetCard
+                className="career-card"
+                backColor="var(--navy)"
+                radius="cut-tl-br-lg"
+                rotate="rotate-2"
+                shadowOffset={7}
+              >
+                <div className="career-card-inner">
+                  <span className="career-label">مسیر حرفه‌ای تو</span>
+                  <span className="career-icon"><TrendUpIcon /></span>
+                  <strong>یاد بگیر<br />بساز<br /><em>وارد بازار شو!</em></strong>
+                  <div className="career-progress"><span /></div>
+                  <small>از صفر تا حرفه‌ای</small>
+                </div>
+              </OffsetCard>
+
+              {chips.map((chip, i) => {
+                const Icon = chip.icon;
+                return (
+                  <span key={i} className="float-chip" style={{
+                    top: chip.top, right: chip.right, left: chip.left, bottom: chip.bottom,
+                    "--chip-rot": chip.rot, "--chip-color": chip.color,
+                  }}>
+                    <Icon width={14} height={14} />
+                    {chip.label}
+                  </span>
+                );
+              })}
             </div>
           </div>
+
+          {/* Trust ribbon */}
+          <aside className="trust-ribbon">
+            <span className="trust-back" aria-hidden="true" />
+            <div className="trust-front">
+              <b>کالج مهارت‌محور رُکاد</b>
+              <span>آموزش کاربردی · پروژه واقعی · مسیر شغلی</span>
+              <ArrowIcon />
+            </div>
+          </aside>
         </div>
       </div>
     </section>

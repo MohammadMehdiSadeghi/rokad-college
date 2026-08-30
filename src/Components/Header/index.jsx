@@ -13,11 +13,11 @@ export default function Header() {
         {/* Desktop nav — hidden on mobile */}
         <nav className="nav-links">
           <a href="#promo" onClick={() => setMobileOpen(false)}>چرا رکاد</a>
-          <a href="#features" onClick={() => setMobileOpen(false)}>ویژگی‌ها</a>
+          <a href="#path" onClick={() => setMobileOpen(false)}>مسیر یادگیری</a>
           <a href="#courses" onClick={() => setMobileOpen(false)}>دوره‌ها</a>
+          <a href="#lab" onClick={() => setMobileOpen(false)}>لَب مهارت</a>
           <a href="#faq" onClick={() => setMobileOpen(false)}>سوالات</a>
           <a href="#comments" onClick={() => setMobileOpen(false)}>نظرات</a>
-          <a href="#blog" onClick={() => setMobileOpen(false)}>وبلاگ</a>
         </nav>
 
         {/* Desktop CTA — hidden on mobile */}
@@ -44,11 +44,11 @@ export default function Header() {
       <div className={`mobile-dropdown ${mobileOpen ? "mobile-dropdown--open" : ""}`}>
         <nav className="mobile-dropdown-inner">
           <a href="#promo" onClick={() => setMobileOpen(false)}>چرا رکاد</a>
-          <a href="#features" onClick={() => setMobileOpen(false)}>ویژگی‌ها</a>
+          <a href="#path" onClick={() => setMobileOpen(false)}>مسیر یادگیری</a>
           <a href="#courses" onClick={() => setMobileOpen(false)}>دوره‌ها</a>
+          <a href="#lab" onClick={() => setMobileOpen(false)}>لَب مهارت</a>
           <a href="#faq" onClick={() => setMobileOpen(false)}>سوالات</a>
           <a href="#comments" onClick={() => setMobileOpen(false)}>نظرات</a>
-          <a href="#blog" onClick={() => setMobileOpen(false)}>وبلاگ</a>
           <a href="#consult" onClick={() => setMobileOpen(false)} className="btn btn-sm btn-ghost" style={{ marginTop: "8px", width: "100%", justifyContent: "center" }}>
             مشاوره رایگان
           </a>
