@@ -40,19 +40,19 @@
     --ink-faq: #3d3b3a;
 
   /* ---- Accent Colors ---- */
-  --teal:       #59bbaf;
-  --teal-alt:   #59bbaf;
-  --teal-dark:  #438c83;
-  --teal-light: #eef8f7;
-  --teal-wordmark: #59bbaf;
+  --teal:       #58bdaf;
+  --teal-alt:   #58bdaf;
+  --teal-dark:  #58bdaf;
+  --teal-light: #e4f4f2;
+  --teal-wordmark: #58bdaf;
   --accent:     #e0195b;       /* magenta */
   --accent-text:#ce1754;
   --purple:     #4f215a;
 
   /* ---- Ecosystem / Male / Female / Club ---- */
-  --ecosystem-light: #eef8f7;
-  --ecosystem-normal:#59bbaf;
-  --ecosystem-dark:  #438c83;
+  --ecosystem-light: #e4f4f2;
+  --ecosystem-normal:#58bdaf;
+  --ecosystem-dark:  #58bdaf;
   --male-light:      #e9eae2;
   --male-normal:     #202a5a;
   --male-dark:       #182044;
@@ -97,7 +97,7 @@
   --shadow-college: 0 8px 32px rgba(248,164,29,0.25);
   --shadow-college-lg: 0 16px 48px rgba(248,164,29,0.35);
   --shadow-navy:  0 8px 32px rgba(33,41,90,0.25);
-  --shadow-teal:  0 8px 32px rgba(89,187,175,0.25);
+  --shadow-teal:  0 8px 32px rgba(88,189,175,0.25);
   --shadow-accent: 0 8px 32px rgba(224,25,91,0.25);
   --shadow-inner: inset 0 2px 4px rgba(41,40,39,0.08);
 
