@@ -1,70 +1,100 @@
-import { courseCta } from "@/data/content.js";
-import BrandButton from "@/components/BrandButton.jsx";
+/* CTA-5 — Ticket / Coupon style (V5) */
+
+const ctaMeta = [
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" aria-hidden="true">
+        <path d="M3 7h18M3 12h18M3 17h18" />
+      </svg>
+    ),
+    text: (
+      <>
+        <strong>۴ دپارتمان</strong> تخصصی
+      </>
+    ),
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" aria-hidden="true">
+        <path d="M12 2v6M12 22v-6M2 12h6M22 12h-6" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    ),
+    text: (
+      <>
+        <strong>+۵۰</strong> دوره پروژه‌محور
+      </>
+    ),
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" aria-hidden="true">
+        <path d="M20 6L9 17l-5-5" />
+      </svg>
+    ),
+    text: (
+      <>
+        پشتیبانی <strong>تا بازار کار</strong>
+      </>
+    ),
+  },
+];
 
 export default function CourseCta() {
   return (
-    <section className="section" id="path" style={{ background: "linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%)", position: "relative", overflow: "hidden" }}>
-      {/* Decorative shapes */}
-      <div
-        className="absolute animate-float"
-        style={{
-          top: "10%",
-          right: "5%",
-          width: 100,
-          height: 100,
-          borderRadius: "24px 0 24px 0",
-          background: "rgba(255,255,255,0.08)",
-          transform: "rotate(20deg)",
-        }}
-      />
-      <div
-        className="absolute animate-float delay-3"
-        style={{
-          bottom: "15%",
-          left: "8%",
-          width: 80,
-          height: 80,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.06)",
-        }}
-      />
-      <div
-        className="absolute"
-        style={{
-          top: "50%",
-          left: "50%",
-          width: 300,
-          height: 300,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.04)",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
-      <div
-        className="absolute animate-float delay-5"
-        style={{
-          top: "30%",
-          left: "20%",
-          width: 60,
-          height: 60,
-          borderRadius: "16px 0 16px 0",
-          background: "rgba(255,255,255,0.05)",
-          transform: "rotate(45deg)",
-        }}
-      />
+    <section
+      className="section"
+      id="path"
+      style={{ background: "#faf8f2", position: "relative", overflow: "hidden" }}
+    >
+      <div className="container section-inner">
+        <div className="cta5-wrap">
+          {/* Ticket card */}
+          <div className="cta5">
+            {/* Main part */}
+            <div className="cta5-main">
+              <span className="cta5-eyebrow">آینده از اینجا شروع می‌شود...</span>
+              <h3 className="cta5-title">
+                مسیر یادگیری <span className="hl">خودت</span>
+                <br />
+                را پیدا کن.
+              </h3>
+              <p className="cta5-desc">
+                یاد بگیر، تجربه کن، مهارت بساز و آینده‌ات را از همین امروز
+                شروع کن. مهارت امروزت، آینده شغلی فردات را می‌سازد.
+              </p>
+              <div className="cta5-meta">
+                {ctaMeta.map((m, i) => (
+                  <div className="item" key={i}>
+                    <span className="ic">{m.icon}</span>
+                    <div>{m.text}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-      <div className="container section-inner" style={{ position: "relative", zIndex: 10 }}>
-        <div className="text-center" style={{ maxWidth: 720, marginInline: "auto" }}>
-          <h2 className="t-section animate-fade-in-up" style={{ color: "#fff", marginBottom: "var(--space-4)", fontWeight: 950 }}>
-            {courseCta.title}
-          </h2>
-          <p className="t-body mx-auto animate-fade-in-up delay-2" style={{ color: "rgba(255,255,255,0.9)", marginBottom: "var(--space-8)" }}>
-            {courseCta.text}
-          </p>
-          <div className="animate-scale-in delay-3">
-            <BrandButton href="#courses" variant="white" rotate="rotate-1.5">
-              {courseCta.cta}
-            </BrandButton>
+            {/* Perforated divider */}
+            <div className="cta5-perf">
+              <span className="line" />
+            </div>
+
+            {/* Stub */}
+            <div className="cta5-stub">
+              <span className="pin">۱۰۰٪ رایگان</span>
+              <span className="tag">CONSULTATION</span>
+              <div className="big">
+                مشاوره‌ی
+                <br />
+                رایگان
+              </div>
+              <a href="#consult" className="btn">درخواست بده ←</a>
+              <div className="code">ROKAD · COLLEGE</div>
+            </div>
+          </div>
+
+          {/* Bottom action row */}
+          <div className="cta5-actions">
+            <a href="#courses" className="btn">مشاهده همه دوره‌ها ←</a>
           </div>
         </div>
       </div>

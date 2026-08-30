@@ -1,205 +1,167 @@
-import { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y } from "swiper/modules";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/common/Icons";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+/* V3 — Editorial Magazine */
 
-import "swiper/css";
-
-const blogImg = "/assets/Blogs/blog-card-cover.png";
-const patternBg = "/assets/Pattern/layout-pattern.png";
-
-const posts = [
+const articles = [
   {
-    tag: "همه دانش‌آموزان",
-    date: "تابستان ۱۴۰۵",
-    title: "چطور برای فرزندمون رشته‌ی هنرستان رو انتخاب کنیم؟",
-    body: "یه راهنمای عملی برای والدین که می‌خوان بهترین تصمیم رو برای آینده‌ی تحصیلی فرزندشون بگیرن.",
+    num: "۰۱",
+    glyph: "✦",
+    cat: "مسیر شغلی",
+    readTime: "۸ دقیقه مطالعه",
+    title: "از یک هنرجوی صفر تا اولین قرارداد فریلنسری",
+    excerpt:
+      "روایت‌های واقعی از هنرجویانی که در کمتر از یک سال، درآمد ماهانه‌شان را از صفر به میلیون‌ها تومان رساندند.",
+    author: "کیارش رضایی",
+    initial: "ک",
   },
   {
-    tag: "دانش‌آموزان هنرستان",
-    date: "تابستان ۱۴۰۵",
-    title: "چطور برای اولین‌بار وارد بازار کار شی؟",
-    body: "قدم‌به‌قدم با تجربه‌ی فارغ‌التحصیلای رکاد که رزومه‌شون رو ساختن و اولین قرارداد کاریشون رو گرفتن.",
+    num: "۰۲",
+    glyph: "</>",
+    cat: "فرانت‌اند",
+    readTime: "۱۲ دقیقه مطالعه",
+    title: "چرا JavaScript هنوز اولویت اول تازه‌واردهاست؟",
+    excerpt:
+      "مقایسهٔ بازار کار و طول یادگیری بین جاوااسکریپت، پایتون و PHP در ایران — به‌همراه دادهٔ واقعی از آگهی‌های استخدام.",
+    author: "مریم صالحی",
+    initial: "م",
   },
   {
-    tag: "خانواده‌ها",
-    date: "بهار ۱۴۰۵",
-    title: "استعدادسنجی؛ اولین قدم مسیر شخصی‌سازی‌شده",
-    body: "چرا رکاد قبل از شروع هر چیزی، اول می‌شینه پای حرفت تا مسیر رشدت رو دقیق طراحی کنه.",
+    num: "۰۳",
+    glyph: "✎",
+    cat: "گرافیک",
+    readTime: "۶ دقیقه مطالعه",
+    title: "هفت اشتباه رایج در طراحی لوگو که برند شما را می‌کشد",
+    excerpt:
+      "راهنمایی برای طراحان تازه‌کار و صاحبان کسب‌وکار: چه وقت لوگو کار نمی‌کند و چطور آن را تشخیص دهیم.",
+    author: "ایمان کریمی",
+    initial: "ا",
   },
   {
-    tag: "دانش‌آموزان هنرستان",
-    date: "بهار ۱۴۰۵",
-    title: "ساخت پروژه‌ی اول؛ از ایده تا اجرا",
-    body: "چطور یه پروژه‌ی واقعی رو از صفر شروع کنیم و تا انتها با انگیزه پیش ببریمش.",
-  },
-  {
-    tag: "خانواده‌ها",
-    date: "زمستان ۱۴۰۴",
-    title: "نقش والدین در انتخاب مسیر شغلی فرزند",
-    body: "چه‌جوری بدون فشار زیاد، کنار فرزندمون باشیم تا خودش مسیرش رو پیدا کنه.",
-  },
-  {
-    tag: "همه دانش‌آموزان",
-    date: "زمستان ۱۴۰۴",
-    title: "مهارت‌هایی که هر هنرجو باید قبل از فارغ‌التحصیلی یاد بگیره",
-    body: "لیستی از مهارت‌های عملی که تفاوت رزومه‌ی قوی و ضعیف رو مشخص می‌کنه.",
+    num: "۰۴",
+    glyph: "◐",
+    cat: "MBA و زبان",
+    readTime: "۱۰ دقیقه مطالعه",
+    title: "آیا MBA برای نسل جوان ایران ارزش سرمایه‌گذاری دارد؟",
+    excerpt:
+      "یک نگاه صادقانه به بازگشت سرمایهٔ MBA در بازار کار امروز ایران، بر اساس گفتگو با ۲۰ فارغ‌التحصیل رکاد.",
+    author: "نگار موسوی",
+    initial: "ن",
   },
 ];
 
-function BlogCard({ tag, date, title, body, rotation = 0 }) {
-  return (
-    <div
-      className="blog-carousel-card"
-      style={{
-        width: "100%",
-        maxWidth: "44rem",
-        marginInline: "auto",
-        transform: `rotate(${rotation}deg)`,
-      }}
-    >
-      {/* Shadow */}
-      <div
-        aria-hidden="true"
-        className="blog-card-shadow"
-        style={{
-          top: "0.3125rem",
-          left: "0.3125rem",
-          height: "25.625rem",
-        }}
-      />
-
-      {/* Card */}
-      <article className="blog-carousel-article">
-        {/* Image */}
-        <img
-          src={blogImg}
-          alt={title}
-          loading="lazy"
-          className="blog-card-img"
-        />
-
-        {/* Content */}
-        <div className="blog-card-content">
-          <h4 className="blog-card-title">{title}</h4>
-
-          <p className="blog-card-body">{body}</p>
-
-          {/* Divider */}
-          <div className="blog-card-footer">
-            <span className="blog-card-date">{date}</span>
-
-            <span className="blog-card-tag">{tag}</span>
-          </div>
-        </div>
-      </article>
-    </div>
-  );
-}
-
 export default function Blogs() {
-  const swiperRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
   return (
-    <section className="blogs-section" id="blog" dir="rtl">
-      {/* Background pattern */}
-      <div className="blogs-pattern">
-        <img
-          src={patternBg}
-          alt=""
-          aria-hidden="true"
-          draggable="false"
-          className="blogs-pattern-img"
-        />
-      </div>
-
-      <div className="blogs-inner">
-        {/* ===== HEADER — matches other college sections ===== */}
-        <div
-          className="text-center"
-          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", alignItems: "center" }}
-        >
-          <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
-            وبلاگ رکاد
-          </span>
-          <RotatedHeading
-            words="از وبلاگ رکاد بخوان"
-            className="t-section"
-            color="var(--navy)"
-          />
-        </div>
-
-        {/* ===== CAROUSEL ===== */}
-        <div className="blogs-carousel-row">
-          {/* Previous */}
-          <div className="blogs-nav-btn-wrap blog-prev">
-            <div aria-hidden="true" className="blogs-nav-shadow" />
-            <button
-              type="button"
-              aria-label="پست قبلی"
-              onClick={() => swiperRef.current?.slidePrev()}
-              className="blogs-nav-btn"
-            >
-              <ChevronRightIcon className="blogs-nav-icon" />
-            </button>
+    <section className="section mag-section" id="blog">
+      <div className="container section-inner">
+        {/* Section heading */}
+        <div className="mag-head">
+          <div className="left">
+            <span className="mag-eyebrow">شمارهٔ ۱۲ · مرداد ۱۴۰۴</span>
+            <h2 className="mag-title">
+              <span className="w w1">تیتر</span>
+              <span className="w w2">اول</span>
+              <span className="w w3">این ماه</span>
+            </h2>
+            <p className="mag-desc">
+              یک ماهنامهٔ فشرده از بهترین مقاله‌ها، مصاحبه‌ها و تحلیل‌های آموزشی
+              رکاد. مطالعه‌ای که در پنج دقیقه شروع می‌شود و در بازار کار
+              به‌کار می‌آید.
+            </p>
           </div>
-
-          {/* Swiper */}
-          <div className="blogs-swiper-wrap">
-            <Swiper
-              modules={[A11y]}
-              onSwiper={(swiper) => {
-                swiperRef.current = swiper;
-              }}
-              onSlideChange={(swiper) => {
-                setActiveIndex(swiper.realIndex);
-              }}
-              dir="rtl"
-              spaceBetween={40}
-              slidesPerView={1}
-              loop={true}
-              breakpoints={{
-                640: { slidesPerView: 2 },
-                1024: { slidesPerView: 2 },
-                1280: { slidesPerView: 3 },
-              }}
-              className="blogs-swiper"
-            >
-              {posts.map((post, index) => {
-                const rotation = index % 2 === 0 ? -1 : 1;
-                return (
-                  <SwiperSlide key={`${post.title}-${index}`}>
-                    <BlogCard {...post} rotation={rotation} />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          </div>
-
-          {/* Next */}
-          <div className="blogs-nav-btn-wrap blog-next">
-            <div aria-hidden="true" className="blogs-nav-shadow" />
-            <button
-              type="button"
-              aria-label="پست بعدی"
-              onClick={() => swiperRef.current?.slideNext()}
-              className="blogs-nav-btn"
-            >
-              <ChevronLeftIcon className="blogs-nav-icon" />
-            </button>
+          <div className="right">
+            <a href="#consult" className="mag-btn">
+                          <svg
+                            className="arrow"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M12 5v14M5 12h14" />
+                          </svg>
+                          دنبال‌کردن مجله
+            </a>
           </div>
         </div>
 
-        {/* ===== MOBILE PROGRESS ===== */}
-        <div className="blogs-mobile-progress">
-          <div className="blogs-progress-track">
-            <div
-              className="blogs-progress-fill"
-              style={{ width: `${((activeIndex + 1) / posts.length) * 100}%` }}
-            />
+        {/* Cards grid */}
+        <div className="mag-grid">
+          {articles.map((a) => (
+            <article className="mag-card" key={a.num}>
+              <div className="shadow" />
+              <div className="body">
+                <div className="cover">
+                  <span className="num">{a.num}</span>
+                  <span className="glyph-lg">{a.glyph}</span>
+                </div>
+                <div className="info">
+                  <div className="cat-row">
+                    <span className="cat">{a.cat}</span>
+                    <span className="read-time">{a.readTime}</span>
+                  </div>
+                  <h3>{a.title}</h3>
+                  <p>{a.excerpt}</p>
+                  <div className="foot">
+                    <div className="author-mini">
+                      <span className="dot">{a.initial}</span>
+                      <span>{a.author}</span>
+                    </div>
+                    <a href="#blog" className="go">
+                      مطالعه
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M15 6l-6 6 6 6" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Archive strip */}
+        <div className="mag-archive">
+          <div className="info">
+            <h4>۱۲۴ مقالهٔ منتشرشده تا امروز</h4>
+            <p>
+              پیشرفت مسیر انتشار محتوای سالانهٔ ما — هدف ۲۰۰ مقاله تا پایان
+              ۱۴۰۴.
+            </p>
+            <div className="progress">
+              <div className="track">
+                <div className="fill" />
+              </div>
+              <div className="pct">۶۲٪ کامل شد</div>
+            </div>
           </div>
+          <a
+            href="#blog"
+            className="mag-btn"
+            style={{ background: "var(--college)", color: "var(--ink)" }}
+          >
+            مرور آرشیو
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              style={{ width: 16, height: 16 }}
+            >
+              <path d="M15 6l-6 6 6 6" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>

@@ -1,148 +1,157 @@
-import { useState, useRef, useEffect } from "react";
-import { faqs, faqCta } from "@/data/content.js";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+import { useState } from "react";
 
-function FaqItem({ item, isOpen, onToggle }) {
-  const contentRef = useRef(null);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setHeight(isOpen ? contentRef.current.scrollHeight : 0);
-    }
-  }, [isOpen]);
-
-  return (
-    <div
-      className="faq-item"
-      style={{
-        background: isOpen ? "var(--college)" : "var(--white)",
-        border: "2.75px solid var(--ink)",
-        borderRadius: "0 20px 0 20px",
-        overflow: "hidden",
-        transition: "background 0.3s ease, box-shadow 0.3s ease",
-        boxShadow: isOpen
-          ? "0 8px 32px rgba(248, 164, 29, 0.25)"
-          : "0 2px 8px rgba(0,0,0,0.04)",
-      }}
-    >
-      {/* Question button */}
-      <button
-        onClick={onToggle}
-        className="faq-question"
-        aria-expanded={isOpen}
-        style={{
-          display: "flex",
-          width: "100%",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "var(--space-4)",
-          textAlign: "right",
-          padding: "var(--space-5) var(--space-6)",
-          color: isOpen ? "#fff" : "var(--ink)",
-          fontSize: 16,
-          fontWeight: 800,
-          lineHeight: 1.5,
-          cursor: "pointer",
-          background: "none",
-          border: "none",
-          fontFamily: "inherit",
-        }}
-      >
-        <span style={{ flex: 1 }}>{item.q}</span>
-        {/* Plus/Minus icon */}
-        <span
-          className="faq-icon"
-          aria-hidden="true"
-          style={{
-            width: 36,
-            height: 36,
-            flexShrink: 0,
-            display: "grid",
-            placeItems: "center",
-            background: isOpen ? "rgba(255,255,255,0.2)" : "var(--college-light)",
-            color: isOpen ? "#fff" : "var(--college-dark)",
-            border: `2px solid ${isOpen ? "rgba(255,255,255,0.3)" : "var(--college)"}`,
-            borderRadius: "0 12px 0 12px",
-            fontSize: 20,
-            fontWeight: 700,
-            lineHeight: 1,
-            transition: "all 0.3s ease",
-          }}
-        >
-          {isOpen ? "×" : "+"}
-        </span>
-      </button>
-
-      {/* Answer content — smooth height animation */}
-      <div
-        ref={contentRef}
-        className="faq-content"
-        style={{
-          height: height,
-          transition: "height 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            padding: "0 var(--space-6) var(--space-5)",
-            color: isOpen ? "rgba(255,255,255,0.95)" : "var(--ink-subtle)",
-            fontSize: 15,
-            lineHeight: 1.9,
-            fontWeight: 500,
-            borderTop: isOpen ? "1px solid rgba(255,255,255,0.25)" : "1px solid rgba(0,0,0,0.06)",
-            paddingTop: "var(--space-4)",
-          }}
-        >
-          {item.a}
+/* ---------- Data (FAQ-5 chat content, from the V5 design) ---------- */
+const faqChat = [
+  {
+    q: "آیا برای شرکت در دوره‌های رُکاد به پیش‌نیاز نیاز دارم؟",
+    a: (
+      <>
+        خیر <span className="faq5-typing">✓ کارشناس رُکاد</span>
+        <br />
+        دوره‌های کالج رُکاد از سطح صفر تا حرفه‌ای طراحی شده‌اند. سرفصل‌ها
+        مرحله‌به‌مرحله چیده شدن — حتی اگر هیچ آشنایی قبلی نداری، به راحتی
+        می‌تونی جلو بری.
+      </>
+    ),
+  },
+  {
+    q: "آیا دوره‌ها برای نوجوانان و دانش‌آموزان هم مناسب هستند؟",
+    a: (
+      <>
+        بله! رُکاد اولین <strong>هنرستان استارتاپی</strong> ایرانه و دوره‌های
+        اختصاصی برای نوجوانان و دانش‌آموزان داره. زبان و سبک تدریس متناسب با
+        گروه سنی انتخاب می‌شه.
+      </>
+    ),
+  },
+  {
+    q: "آیا بعد از پایان دوره مدرک دریافت می‌کنم؟",
+    a: (
+      <>
+        بله. پس از اتمام موفق دوره و ارائه‌ی پروژه‌ی پایانی، مدرک معتبر
+        رُکاد‌کالج با <strong>کد QR قابل استعلام</strong> دریافت می‌کنی —
+        کاملاً مناسب برای رزومه و لینکدین.
+      </>
+    ),
+  },
+  {
+    q: "آیا آموزش‌ها پروژه‌محور هستند؟",
+    a: (
+      <>
+        کاملاً. هنرجو در طول دوره چند <strong>پروژه‌ی واقعی</strong> انجام
+        می‌ده و در پایان یک پروژه‌ی جامع تحویل می‌ده که به‌عنوان نمونه‌کار
+        قابل ارائه‌ست.
+      </>
+    ),
+  },
+  {
+    q: "آیا در طول دوره پشتیبانی آموزشی دارم؟",
+    a: (
+      <>
+        بله، ۱۰۰٪. منتور اختصاصی، پنل هنرجویی و گروه تلگرام — پاسخ‌گویی در
+        کمتر از <strong>۲۴ ساعت</strong>.
+      </>
+    ),
+  },
+  {
+    q: "آیا رُکاد برای ورود به بازار کار هم کمک می‌کند؟",
+    a: (
+      <>
+        بله. تیم کاریابی رُکاد از رزومه‌سازی تا آماده‌سازی مصاحبه و معرفی به
+        شرکت‌های همکار کنارت هست. هنرجویان برتر مستقیم به کارفرمایان معرفی
+        می‌شن.
+      </>
+    ),
+  },
+  {
+    q: "اگر ندانم کدام دوره برای من مناسب است، چه کار کنم؟",
+    a: (
+      <>
+        کافیه <strong>مشاوره‌ی رایگان</strong> درخواست بدی. کارشناس ما با
+        توجه به علاقه، شرایط و هدف شغلی‌ات، بهترین مسیر یادگیری رو بهت پیشنهاد
+        می‌ده.
+        <div className="faq5-suggestions">
+          <a className="faq5-chip" href="#consult">درخواست مشاوره</a>
+          <a className="faq5-chip" href="#courses">دیدن دپارتمان‌ها</a>
+          <a className="faq5-chip" href="#consult">تماس با تیم</a>
         </div>
-      </div>
-    </div>
-  );
-}
+      </>
+    ),
+  },
+];
 
+/* ---------- Component ---------- */
 export default function Faq() {
-  const [open, setOpen] = useState(null);
+  // Design: first item open by default; each item toggles independently.
+  const [openItems, setOpenItems] = useState(() => new Set([0]));
+
+  const toggleItem = (i) => {
+    setOpenItems((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  };
 
   return (
     <section className="section" id="faq" style={{ background: "var(--white)" }}>
       <div className="container section-inner">
-        {/* Section header */}
-        <div
-          className="text-center"
-          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", alignItems: "center" }}
-        >
-          <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
-            سوالات متداول
-          </span>
-          <RotatedHeading
-            words="پرسش‌هایی که قبل از شروع داری"
-            className="t-section"
-            color="var(--navy)"
-          />
+        {/* Section heading */}
+        <div className="faq5-head">
+          <span className="faq5-eyebrow">پرسش‌های متداول</span>
+          <h2 className="faq5-title">
+            یه گفت‌وگوی <span className="hl">کوتاه</span> با ما.
+          </h2>
+          <p className="faq5-sub">
+            روی هر سؤال کلیک کن تا پاسخ کارشناس رُکاد رو ببینی. اگر سؤالت
+            اینجا نبود، همون پایین بپرس.
+          </p>
         </div>
 
-        {/* FAQ items */}
-        <div
-          className="mx-auto"
-          style={{ maxWidth: 820, display: "flex", flexDirection: "column", gap: "var(--space-3)" }}
-        >
-          {faqs.map((item, i) => (
-            <FaqItem
-              key={item.q}
-              item={item}
-              isOpen={open === i}
-              onToggle={() => setOpen(open === i ? null : i)}
-            />
-          ))}
-        </div>
+        {/* Chat thread */}
+        <div className="faq5">
+          <div className="faq5-thread">
+            {faqChat.map((item, i) => (
+              <div key={item.q} className={`faq5-item${openItems.has(i) ? " open" : ""}`}>
+                {/* User question */}
+                <button
+                  type="button"
+                  className="faq5-user"
+                  onClick={() => toggleItem(i)}
+                  aria-expanded={openItems.has(i)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    width: "100%",
+                    fontFamily: "inherit",
+                    padding: 0,
+                    margin: 0,
+                    textAlign: "right",
+                  }}
+                >
+                  <div className="faq5-bubble-user">{item.q}</div>
+                  <span className="avatar">شما</span>
+                </button>
 
-        {/* CTA */}
-        <div className="text-center" style={{ marginTop: "var(--space-10)" }}>
-          <a href="#consult" className="btn btn-amber" style={{ padding: "14px 32px", fontSize: 16 }}>
-            {faqCta}
-          </a>
+                {/* Bot answer */}
+                <div className="faq5-bot-wrap">
+                  <div className="faq5-bot-clip">
+                    <div className="faq5-bot">
+                      <span className="avatar">رُ</span>
+                      <div className="faq5-bubble-bot">{item.a}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Ask box */}
+            <div className="faq5-input">
+              <div className="field">سؤال دیگه‌ای داری؟ همین‌جا بپرس...</div>
+              <a href="#consult" className="btn">درخواست مشاوره</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
