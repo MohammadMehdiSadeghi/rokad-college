@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y } from "swiper/modules";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/common/Icons";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/Components/Icons";
+import RotatedHeading from "@/Components/RotatedHeading.jsx";
 
 import "swiper/css";
 

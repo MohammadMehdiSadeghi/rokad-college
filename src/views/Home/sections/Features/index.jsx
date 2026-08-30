@@ -1,6 +1,6 @@
 import { features } from "@/data/content.js";
-import OffsetCard from "@/components/OffsetCard.jsx";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+import OffsetCard from "@/Components/OffsetCard.jsx";
+import RotatedHeading from "@/Components/RotatedHeading.jsx";
 import clsx from "@/lib/clsx";
 
 // Refined rotations for feature cards — very subtle

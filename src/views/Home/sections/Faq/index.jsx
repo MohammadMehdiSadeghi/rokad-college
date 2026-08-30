@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { faqs, faqCta } from "@/data/content.js";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+import RotatedHeading from "@/Components/RotatedHeading.jsx";
 
 function FaqItem({ item, isOpen, onToggle }) {
   const contentRef = useRef(null);

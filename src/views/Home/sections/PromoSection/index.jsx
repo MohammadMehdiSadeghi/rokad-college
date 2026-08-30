@@ -1,6 +1,6 @@
 import { promoSection } from "@/data/content.js";
-import OffsetCard from "@/components/OffsetCard.jsx";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+import OffsetCard from "@/Components/OffsetCard.jsx";
+import RotatedHeading from "@/Components/RotatedHeading.jsx";
 
 export default function PromoSection() {
   return (

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { courses } from "@/data/content.js";
-import OffsetCard from "@/components/OffsetCard.jsx";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+import OffsetCard from "@/Components/OffsetCard.jsx";
+import RotatedHeading from "@/Components/RotatedHeading.jsx";
 import clsx from "@/lib/clsx";
 
 // Subtle rotations for course cards

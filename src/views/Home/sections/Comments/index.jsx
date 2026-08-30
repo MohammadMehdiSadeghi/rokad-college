@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y } from "swiper/modules";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/common/Icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/Components/Icons";
 import { comments } from "@/data/content.js";
-import OffsetCard from "@/components/OffsetCard.jsx";
-import RotatedHeading from "@/components/RotatedHeading.jsx";
+import OffsetCard from "@/Components/OffsetCard.jsx";
+import RotatedHeading from "@/Components/RotatedHeading.jsx";
 
 import "swiper/css";
 

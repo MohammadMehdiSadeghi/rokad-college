@@ -1,5 +1,5 @@
 import { stats } from "@/data/content.js";
-import OffsetCard from "@/components/OffsetCard.jsx";
+import OffsetCard from "@/Components/OffsetCard.jsx";
 
 // Subtle rotations for stat cards
 const statRotations = [

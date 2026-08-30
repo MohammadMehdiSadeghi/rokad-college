@@ -1,5 +1,5 @@
 import { promoCards } from "@/data/content.js";
-import OffsetCard from "@/components/OffsetCard.jsx";
+import OffsetCard from "@/Components/OffsetCard.jsx";
 
 // Theme cycles: college(amber) → navy → teal → accent(magenta)
 const themeByIndex = [
