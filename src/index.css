@@ -1764,21 +1764,41 @@ a:focus-visible, button:focus-visible {
 .path-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-12);
+  gap: 6rem;
   align-items: center;
 }
-@media (max-width: 900px) { .path-wrap { grid-template-columns: 1fr; gap: var(--space-10); } }
+@media (max-width: 1023px) { .path-wrap { grid-template-columns: 1fr; gap: 3rem; } }
 .path-copy { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
 .path-copy .t-section { margin-top: var(--space-2); }
-.path-copy .t-section .word:nth-child(2) { color: var(--college-dark); }
+.path-text {
+  margin: 1.5rem 0;
+  color: var(--ink-subtle);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.8;
+}
 .path-highlight {
   display: block;
   color: var(--navy);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
   line-height: 1.7;
-  margin: var(--space-3) 0 var(--space-4);
+  margin: 0 0 1.5rem;
 }
+/* Text link (sample CTA style — not a button) */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  color: var(--college-dark);
+  font-weight: 900;
+  font-size: 15px;
+  transform: rotate(2deg);
+  transition: .2s;
+  text-decoration: none;
+}
+.text-link:hover { transform: rotate(0); }
+.text-link svg { flex: none; }
 .path-board-inner {
   position: relative;
   padding: 2.2rem;
@@ -1788,6 +1808,9 @@ a:focus-visible, button:focus-visible {
   min-height: 420px;
 }
 @media (max-width: 600px) { .path-board-inner { padding: 1.4rem; } }
+.path-board-radius {
+  border-radius: 0 2.5rem 0 2.5rem;
+}
 .path-line {
   position: absolute;
   right: 53px;
@@ -1799,9 +1822,9 @@ a:focus-visible, button:focus-visible {
   position: relative;
   z-index: 1;
   display: flex;
-  gap: var(--space-4);
+  gap: 1rem;
   align-items: center;
-  padding: .9rem 0;
+  padding: .8rem 0;
 }
 .path-step > b {
   width: 46px;

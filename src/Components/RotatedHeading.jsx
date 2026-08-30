@@ -1,5 +1,5 @@
 // Word-by-word rotated headline — a core Rokad signature.
-// Pass words as [{ text, deg }] or a plain string (auto-slight split).
+// Pass words as [{ text, deg, cls?, color? }] or a plain string (auto-slight split).
 export default function RotatedHeading({ words, as: Tag = "h2", className = "", color }) {
   const items =
     typeof words === "string"
@@ -18,10 +18,11 @@ export default function RotatedHeading({ words, as: Tag = "h2", className = "", 
       {items.map((w, i) => (
         <span
           key={i}
-          className="word"
+          className={`word ${w.cls ?? ""}`}
           style={{
             transform: `rotate(${w.deg ?? 0}deg)`,
             transition: "transform 0.3s ease",
+            color: w.color ?? undefined,
           }}
         >
           {w.text}

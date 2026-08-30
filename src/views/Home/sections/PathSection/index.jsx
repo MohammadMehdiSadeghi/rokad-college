@@ -12,7 +12,7 @@ const steps = [
 
 const headingWords = [
   { text: "برای", deg: -1.5 },
-  { text: "آینده", deg: 2 },
+  { text: "آینده", deg: 2, color: "var(--college)" },
   { text: "آماده", deg: -3 },
   { text: "می‌شوی.", deg: 1.5 },
 ];
@@ -25,19 +25,17 @@ export default function PathSection() {
         <div className="path-copy">
           <span className="eyebrow-tag">مسیر واقعی یادگیری</span>
           <RotatedHeading words={headingWords} className="t-section" />
-          <p className="t-body" style={{ color: "var(--ink-subtle)", marginTop: "var(--space-6)", lineHeight: 1.8 }}>
-            {promoSection.text}
-          </p>
+          <p className="path-text">{promoSection.text}</p>
           <strong className="path-highlight">{promoSection.highlight}</strong>
-          <a className="btn btn-amber" href="#courses" style={{ padding: "13px 28px", fontSize: 15 }}>
+          <a className="text-link" href="#courses">
             {promoSection.cta} <ArrowIcon width={16} height={16} />
           </a>
         </div>
 
-        {/* Path board — navy sticker */}
+        {/* Path board — navy sticker with amber shadow */}
         <OffsetCard
           backColor="var(--college)"
-          radius="cut-tr-bl"
+          radius="path-board-radius"
           rotate="rotate-2"
           shadowOffset={7}
         >
