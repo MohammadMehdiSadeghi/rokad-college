@@ -1,114 +1,75 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { courses } from "@/data/content.js";
-import OffsetCard from "@/components/OffsetCard.jsx";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
+import { ArrowIcon, ChevronLeftIcon, ChevronRightIcon } from "@/common/Icons";
 import clsx from "@/lib/clsx";
 
-// Subtle rotations for course cards
-const courseRotations = [
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
-  { rotate: "rotate-1",      radius: "cut-tr-bl" },
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
-  { rotate: "rotate-1",      radius: "cut-tr-bl" },
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
-  { rotate: "rotate-1",      radius: "cut-tr-bl" },
-  { rotate: "rotate-minus1", radius: "cut-tl-br" },
+/* ---- Category color maps (from HTML V2) ---- */
+const catColors = {
+  "فناوری اطلاعات": { bg: "var(--college-light)", fg: "var(--college-darker)", border: "var(--college-light-active)", accent: "var(--college)" },
+  "گرافیک": { bg: "#FCE8EF", fg: "#A81344", border: "#F5B8CC", accent: "var(--female)" },
+  "زبان و MBA": { bg: "#E6F5F3", fg: "#28544F", border: "#CCEAE6", accent: "var(--ecosystem)" },
+};
+
+/* ---- SVG icons for each course ---- */
+const courseIcons = [
+  <svg key="wp" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 2v10l7.07-7.07"/><path d="M22 12A10 10 0 0 0 12 2"/></svg>,
+  <svg key="fe" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+  <svg key="seo" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>,
+  <svg key="gph" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a10 10 0 1 1 10-10c0 2-1.5 3-3 3h-3a3 3 0 0 0-3 3c0 1.5 1 2 1 3a2 2 0 0 1-2 1z"/></svg>,
+  <svg key="mo" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>,
+  <svg key="lang" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 5h12M9 3v2m1 9.5A18 18 0 0 1 6.4 9M12.75 5C11.8 10.8 8 15.6 3 18.1"/><path d="M11 21l5-10 5 10M13 17h6"/></svg>,
+  <svg key="ex" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>,
 ];
 
-const ITEMS_PER_PAGE = 6;
+const durations = ["۱۲ هفته", "۱۶ هفته", "۸ هفته", "۱۰ هفته", "۱۲ هفته", "۴ ماه", "۶ ماه"];
+const courseFeatures = [
+  ["پروژه‌محور", "مدرک معتبر"], ["React", "پرتفولیو"], ["کیس‌استادی", "ابزارهای واقعی"],
+  ["Photoshop", "Illustrator"], ["Premiere", "After Effects"], ["IELTS", "MBA"], ["Canvas", "UI/UX"],
+];
+const courseTags = [
+  ["WordPress", "WooCommerce", "Elementor"], ["JavaScript", "React", "Tailwind"],
+  ["Google Analytics", "Ahrefs", "Search Console"], ["Photoshop", "Illustrator", "Figma"],
+  ["Premiere Pro", "After Effects", "DaVinci"], ["IELTS", "General English", "Business"],
+  ["Canvas", "Figma", "Prototyping"],
+];
+const toPersianNum = (n) => String(n).padStart(2, "0").replace(/\d/g, (d) => ["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"][d]);
+const ITEMS_PER_PAGE = 4;
 
-// Course card component (memoized to prevent unnecessary re-renders)
+/* ---- V2 Horizontal Card ---- */
 const CourseCard = ({ course, index }) => {
-  const rot = courseRotations[index % courseRotations.length];
+  const cat = catColors[course.category] || catColors["فناوری اطلاعات"];
+  const icon = courseIcons[index % courseIcons.length];
+  const dur = durations[index % durations.length];
+  const features = courseFeatures[index % courseFeatures.length];
+  const tags = courseTags[index % courseTags.length];
+  const num = toPersianNum(index + 1);
+
   return (
-    <OffsetCard
-      key={course.title}
-      backColor="var(--ink)"
-      radius={rot.radius}
-      rotate={rot.rotate}
-      className="animate-fade-in-up"
-    >
-      <div
-        style={{
-          padding: "var(--space-6)",
-          minHeight: 340,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* Image / Illustration */}
-        {course.image && (
-          <div
-            style={{
-              width: "100%",
-              height: 160,
-              marginBottom: "var(--space-5)",
-              borderRadius: "var(--r-lg)",
-              overflow: "hidden",
-              background: "var(--bg-neutral)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <img
-              src={course.image}
-              alt={course.title}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                transition: "transform 0.4s ease",
-              }}
-              loading="lazy"
-            />
+    <div className="v2-stack" style={{ "--cat": cat.accent, "--catBg": cat.bg, "--catFg": cat.fg, "--catBorder": cat.border }}>
+      <article className="v2-item">
+        <div className="v2-cover">
+          <span className="v2-num">{num.slice(0, 1)}<span>{num.slice(1)}</span></span>
+          <div className="v2-icon">{icon}</div>
+        </div>
+        <div className="v2-body">
+          <div className="v2-meta">
+            <span className="v2-cat-pill">{course.category}</span>
+            {features.map((f) => <span key={f}>• {f}</span>)}
           </div>
-        )}
-
-        {/* Category tag */}
-        <span
-          className={clsx("tag", course.tagClass)}
-          style={{ alignSelf: "flex-start", marginBottom: "var(--space-4)" }}
-        >
-          {course.category}
-        </span>
-
-        {/* Title */}
-        <h3
-          className="t-card"
-          style={{
-            color: "var(--ink)",
-            marginBottom: "var(--space-3)",
-            fontWeight: 900,
-            lineHeight: 1.25,
-          }}
-        >
-          {course.title}
-        </h3>
-
-        {/* Description */}
-        <p
-          className="t-sm"
-          style={{
-            color: "var(--ink-subtle)",
-            marginBottom: "var(--space-6)",
-            lineHeight: 1.8,
-            flex: 1,
-          }}
-        >
-          {course.text}
-        </p>
-
-        {/* CTA button */}
-        <a
-          href="#courses"
-          className={clsx("btn", "btn-ghost", "btn-sm")}
-          style={{ alignSelf: "flex-start", marginTop: "auto" }}
-        >
-          {course.cta}
-        </a>
-      </div>
-    </OffsetCard>
+          <h3 className="t-card">{course.title}</h3>
+          <p className="t-sm">{course.text}</p>
+          <div className="v2-tags">{tags.map((t) => <span key={t}>{t}</span>)}</div>
+        </div>
+        <div className="v2-action">
+          <div className="v2-price">
+            <div className="v2-price-lbl">مدت دوره</div>
+            <div className="v2-price-val">{dur.split(" ")[0]}<small>{dur.split(" ")[1]}</small></div>
+          </div>
+          <a href="#courses" className="v2-btn">مشاهده <ArrowIcon width={14} height={14} /></a>
+        </div>
+      </article>
+    </div>
   );
 };
 
@@ -169,162 +130,62 @@ export default function Courses() {
   }, [totalPages]);
 
   return (
-    <section className="section" id="courses" style={{ background: "var(--college-light)" }}>        <style>{`
-        .courses-pagination-btn {
-          min-width: 44px;
-          height: 44px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 2px solid var(--college);
-          border-radius: var(--r-md);
-          font-weight: 700;
-          font-size: 14px;
-          color: var(--college);
-          background: transparent;
-          cursor: pointer;
-          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .courses-pagination-btn:hover:not(:disabled) {
-          background: var(--college);
-          color: var(--white);
-          transform: translateY(-2px);
-          box-shadow: var(--shadow-college);
-        }
-        .courses-pagination-btn:disabled {
-          opacity: 0.4;
-          cursor: not-allowed;
-        }
-        .courses-pagination-btn.active {
-          background: var(--college);
-          color: var(--white);
-          box-shadow: var(--shadow-college);
-        }
-        .courses-pagination-btn:focus-visible {
-          outline: 2px solid var(--college);
-          outline-offset: 2px;
-        }
-        .courses-pagination-ellipsis {
-          color: var(--ink-subtle);
-          padding: 0 var(--space-2);
-        }
-      `}</style>
-
-      <div className="bg-pattern">
-        <img src="/assets/Hero/Hero-Pattern.png" alt="" aria-hidden="true" />
-      </div>
+    <section className="section v2-courses" id="courses" style={{ background: "var(--bg-college-tint)" }}>
       <div className="container section-inner">
-        {/* Section header */}
-        <div
-          className="text-center"
-          style={{ marginBottom: "var(--space-12)", maxWidth: 760, marginInline: "auto", display: "flex", flexDirection: "column", alignItems: "center" }}
-        >
-          <span className="tag tag-amber" style={{ marginBottom: "var(--space-4)", display: "inline-block" }}>
-            دوره‌های کالج رکاد
+        <div className="head" style={{ textAlign: "center", maxWidth: 820, margin: "0 auto 3.5rem" }}>
+          <span className="eyebrow">
+            <span className="dot" />
+            لیست دوره‌های تخصصی
           </span>
-          <RotatedHeading
-            words="از فناوری و گرافیک تا زبان و مدیریت"
-            className="t-section"
-            color="var(--navy)"
-          />
+          <RotatedHeading words="مسیر یادگیری خودت را پیدا کن" className="t-section" color="var(--navy)" />
+          <p style={{ fontSize: 16.5, lineHeight: 1.75, fontWeight: 600, color: "var(--ink-subtle)", maxWidth: 560, margin: "1rem auto 0" }}>لیست کامل دوره‌های کالج در یک نگاه — با جزئیات مدت، سرفصل و شهریه.</p>
         </div>
 
-        {/* Course cards grid */}
         <div
           ref={gridRef}
-          className="grid-3"
-          style={{
-            gap: "var(--space-6)",
-            opacity: isTransitioning ? 0 : 1,
-            transform: isTransitioning ? "translateY(12px)" : "translateY(0)",
-            transition: "opacity 0.25s ease, transform 0.25s ease",
-          }}
+          className="v2-list"
+          style={{ opacity: isTransitioning ? 0 : 1, transform: isTransitioning ? "translateY(12px)" : "translateY(0)", transition: "opacity 0.25s ease, transform 0.25s ease" }}
           aria-live="polite"
         >
           {paginatedCourses.map((c, i) => (
-            <CourseCard key={c.title} course={c} index={i} />
+            <CourseCard key={c.title} course={c} index={(currentPage - 1) * ITEMS_PER_PAGE + i} />
           ))}
         </div>
 
-        {/* Numeric Pagination - styled like site buttons */}
-        {totalPages > 1 && (
-          <nav
-            className="pagination"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "var(--space-2)",
-              marginTop: "var(--space-12)",
-              flexWrap: "wrap",
-            }}
-            aria-label="صفحات دوره‌ها"
-          >
-            {/* Previous button */}
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1 || isTransitioning}
-              className="courses-pagination-btn"
-              aria-label="صفحه قبلی"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: "rotate(180deg)" }}>
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
+        <div className="cta-footer" style={{ marginTop: 35, textAlign: "center" }}>
+          <p style={{ fontSize: 15, fontWeight: 600, color: "var(--ink-subtle)", margin: "0 0 1rem" }}>هنوز مطمئن نیستی کدام دوره برای توست؟</p>
+          <a href="#courses" className="btn-all" style={{ display: "inline-flex", alignItems: "center", gap: ".5rem", background: "var(--ink)", color: "#fff", padding: "1rem 1.75rem", borderRadius: ".9rem", cornerShape: "squircle", WebkitCornerShape: "squircle", fontWeight: 900, fontSize: 15.5, textDecoration: "none", border: "2px solid var(--ink)", transform: "rotate(-1.5deg)", boxShadow: "4px 4px 0 0 var(--college-normal)", transition: "all .25s ease" }}>
+            مشاهده همه دوره‌ها
+            <ArrowIcon width={16} height={16} />
+          </a>
+        </div>
 
-            {/* Page numbers - show all if <= 7, otherwise smart ellipsis */}
+        {totalPages > 1 && (
+          <nav className="pagination" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "var(--space-2)", marginTop: "var(--space-8)", flexWrap: "wrap" }} aria-label="صفحات دوره‌ها">
+            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1 || isTransitioning} className="courses-pagination-btn" aria-label="صفحه قبلی">
+              <ChevronLeftIcon width={20} height={20} />
+            </button>
             {(() => {
               const pages = [];
-              const maxVisible = 7;
-              
-              if (totalPages <= maxVisible) {
-                // Show all pages
-                for (let i = 1; i <= totalPages; i++) pages.push(i);
-              } else {
-                // Always show first, last, current ±2
+              if (totalPages <= 7) { for (let i = 1; i <= totalPages; i++) pages.push(i); }
+              else {
                 const show = new Set([1, totalPages, currentPage]);
-                for (let i = -2; i <= 2; i++) {
-                  const p = currentPage + i;
-                  if (p > 1 && p < totalPages) show.add(p);
-                }
+                for (let i = -2; i <= 2; i++) { const p = currentPage + i; if (p > 1 && p < totalPages) show.add(p); }
                 const sorted = Array.from(show).sort((a, b) => a - b);
-                
-                // Add ellipsis where gaps exist
-                for (let i = 0; i < sorted.length; i++) {
-                  if (i > 0 && sorted[i] - sorted[i - 1] > 1) {
-                    pages.push("...");
-                  }
-                  pages.push(sorted[i]);
-                }
+                for (let i = 0; i < sorted.length; i++) { if (i > 0 && sorted[i] - sorted[i - 1] > 1) pages.push("..."); pages.push(sorted[i]); }
               }
               return pages;
-            })().map((page, idx) => (
+            })().map((page, idx) =>
               page === "..." ? (
-                <span key={`ellipsis-${idx}`} className="courses-pagination-ellipsis" aria-hidden="true">…</span>
+                <span key={`e-${idx}`} className="courses-pagination-ellipsis" aria-hidden="true">…</span>
               ) : (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  disabled={isTransitioning}
-                  className={clsx("courses-pagination-btn", currentPage === page && "active")}
-                  aria-label={`صفحه ${page}`}
-                  aria-current={currentPage === page ? "page" : undefined}
-                >
+                <button key={page} onClick={() => handlePageChange(page)} disabled={isTransitioning} className={clsx("courses-pagination-btn", currentPage === page && "active")} aria-label={`صفحه ${page}`} aria-current={currentPage === page ? "page" : undefined}>
                   {page}
                 </button>
               )
-            ))}
-
-            {/* Next button */}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages || isTransitioning}
-              className="courses-pagination-btn"
-              aria-label="صفحه بعدی"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
+            )}
+            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages || isTransitioning} className="courses-pagination-btn" aria-label="صفحه بعدی">
+              <ChevronRightIcon width={20} height={20} />
             </button>
           </nav>
         )}
