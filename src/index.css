@@ -3,6 +3,7 @@
    Primary brand color: amber/college (#f8a41d)
    Self-hosted IRANSansX. No Google Fonts.
    ============================================================ */
+@import "tailwindcss";
 
 /* ---------- IRANSansX (self-hosted) ---------- */
 @font-face { font-family: "IRANSansX"; src: url("/fonts/IRANSansX-ThinD4.ttf") format("truetype"); font-weight: 100; font-style: normal; font-display: swap; }
