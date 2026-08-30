@@ -18,12 +18,12 @@ const headingWords = [
 export default function LabSection() {
   return (
     <section className="section lab-section" id="lab">
-      <div className="container section-inner lab-wrap">
-        {/* Visual — teal sticker with code window */}
+      <div className="container lab-layout">
+        {/* Visual — teal sticker with code window (sample: rot -2deg, amber shadow, 2.5rem radius) */}
         <OffsetCard
           className="lab-visual"
           backColor="var(--college)"
-          radius="cut-tr-bl-lg"
+          radius="lab-visual-radius"
           rotate="rotate-minus2"
           shadowOffset={8}
         >
@@ -46,9 +46,18 @@ export default function LabSection() {
 
         {/* Copy column */}
         <div className="lab-copy">
-          <span className="eyebrow-tag eyebrow-tag--college">فراتر از کلاس</span>
-          <RotatedHeading words={headingWords} className="t-section" color="#fff" />
-          <p className="t-body" style={{ color: "rgba(255,255,255,.72)", marginTop: "var(--space-6)", lineHeight: 1.85 }}>
+          {/* Eyebrow sticker (sample: amber front, navy text, amber shadow, rot -2.5deg) */}
+          <OffsetCard
+            backColor="var(--college)"
+            radius="cut-tr-bl"
+            rotate="rotate-minus2.5"
+            shadowOffset={3}
+            className="lab-eyebrow"
+          >
+            <span className="eyebrow-front">فراتر از کلاس</span>
+          </OffsetCard>
+          <RotatedHeading words={headingWords} className="lab-title" color="#fff" />
+          <p className="lab-p">
             در «لَب مهارت» آموخته‌هایت را به خروجی واقعی تبدیل می‌کنی. پروژه تعریف می‌شود،
             منتور بازخورد می‌دهد، نسخهٔ بهتر را می‌سازی و در پایان چیزی داری که می‌توانی
             با افتخار نشانش بدهی.

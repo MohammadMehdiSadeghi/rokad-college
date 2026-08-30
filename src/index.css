@@ -1853,10 +1853,9 @@ a:focus-visible, button:focus-visible {
 }
 @media (max-width: 1023px) { .path-wrap { grid-template-columns: 1fr; gap: 3rem; } }
 .path-copy { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
-/* Eyebrow sticker (sample: white front, college-dark border, college shadow) */
+/* Eyebrow sticker (sample: white front, college-dark border, college shadow) — className lands ON the card */
 .path-eyebrow { margin-bottom: var(--space-2); }
-.path-eyebrow .offset-back { background: var(--college); }
-.path-eyebrow .offset-card {
+.path-eyebrow {
   background: #fff;
   border-color: var(--college-dark);
   border-radius: 0 12px 0 12px;
@@ -1987,24 +1986,33 @@ a:focus-visible, button:focus-visible {
    LAB SECTION (لَب مهارت)
 ============================================= */
 .lab-section { background: var(--navy); color: #fff; }
-.lab-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: center; }
-@media (max-width: 900px) { .lab-wrap { grid-template-columns: 1fr; gap: var(--space-10); } }
+/* Sample layout: two equal columns, 6rem gap, centered */
+.lab-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+@media (max-width: 1023px) { .lab-layout { grid-template-columns: 1fr; gap: 3rem; } }
+@media (max-width: 639px)  { .lab-visual { order: 2; } }
+/* Copy column (sample .lab-copy) */
 .lab-copy { display: flex; flex-direction: column; align-items: flex-start; }
-.lab-copy .t-section .word:nth-child(2) { color: var(--college); }
-.eyebrow-tag--college { background: var(--college); color: var(--navy); border-color: var(--ink); }
-.lab-list { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
-.lab-list li { display: flex; align-items: center; gap: var(--space-4); }
-.lab-list > li > svg { color: var(--college); flex: none; }
-.lab-list li span { display: flex; flex-direction: column; }
-.lab-list b { font-size: 14px; color: #fff; }
-.lab-list small { font-size: 11px; color: rgba(255,255,255,.55); }
-.lab-visual {
-  --rot: -2deg;
-  --radius: 2.5rem 0 2.5rem 0;
-  --off: 8px;
-  --shadow: var(--college);
+.lab-title { font-size: clamp(28px, 4.5vw, 53px); font-weight: 950; line-height: 1.25; }
+.lab-p { margin: 1.4rem 0; color: rgba(255,255,255,.7); font-size: 16px; line-height: 1.8; }
+/* Eyebrow sticker (sample: amber front, navy text, rot -2.5deg) — className lands ON the card */
+.lab-eyebrow { margin-bottom: var(--space-3); }
+.lab-eyebrow {
+  background: var(--college);
+  color: var(--navy);
+  border-color: var(--ink);
+  border-radius: 0 12px 0 12px;
+  padding: .35rem 1rem;
 }
-.lab-visual .offset-card { background: var(--teal); }
+.lab-eyebrow .eyebrow-front { font-size: 14px; font-weight: 800; white-space: nowrap; }
+.lab-list { display: grid; gap: 1rem; }
+.lab-list li { display: flex; align-items: center; gap: .8rem; }
+.lab-list > li > svg { font-size: 1.4rem; color: var(--college); flex: none; width: 22px; height: 22px; }
+.lab-list li span { display: flex; flex-direction: column; }
+.lab-list b { font-size: 14px; }
+.lab-list small { font-size: 11px; color: rgba(255,255,255,.55); }
+/* Visual sticker (sample: rot -2deg, radius 2.5rem 0 2.5rem 0, off 8px, amber shadow) — .lab-visual IS the card */
+.lab-visual-radius { border-radius: 2.5rem 0 2.5rem 0; }
+.lab-visual { background: var(--teal); border: 3px solid var(--ink); }
 .lab-visual-inner { padding: 1.3rem; }
 .lab-header {
   display: flex;
@@ -2012,7 +2020,7 @@ a:focus-visible, button:focus-visible {
   align-items: center;
   color: var(--navy);
   font-weight: 950;
-  margin-bottom: var(--space-4);
+  margin-bottom: 1rem;
 }
 .lab-header > span { display: flex; align-items: center; gap: .4rem; }
 .lab-header small {
