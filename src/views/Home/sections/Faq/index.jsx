@@ -1,264 +1,197 @@
 import { useState } from "react";
-import { faqs, faqCta } from "@/data/content.js";
-import { PlusIcon, ChevronDownIcon } from "@/Components/Icons";
+import { faqs } from "@/data/content.js";
+import OffsetCard from "@/Components/OffsetCard.jsx";
+import { ArrowIcon, ChevronDownIcon } from "@/Components/Icons";
 
 const faqPattern = "/assets/Shared/Patterns/Ecosystem-Pattern.png";
 
-export default function Faq() {
-  const [openIndex, setOpenIndex] = useState(null);
+// Sample-style FAQ items: 3 per group
+const buildItems = () => {
+  const items = [];
+  for (let i = 0; i < faqs.length; i += 3) {
+    const batch = faqs.slice(i, i + 3);
+    items.push(
+      batch.map((item, j) => ({
+        ...item,
+        id: `${i + j}`,
+        group: Math.floor(i / 3) + 1,
+        index: j,
+      }))
+    );
+  }
+  return items;
+};
 
-  const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i));
+const faqGroups = buildItems();
+
+const groupLabels = ["دوره‌ها", "پذیرش و شرایط", "هزینه و پرداخت"];
+
+export default function Faq() {
+  const [openId, setOpenId] = useState("0");
+
+  const toggle = (id) => setOpenId((prev) => (prev === id ? null : id));
 
   return (
     <section
-      className="section relative overflow-hidden"
-      style={{ background: "var(--teal-light)", paddingBlock: "var(--space-16)" }}
+      className="section faq-section relative overflow-hidden"
       id="faq"
     >
-      {/* Pattern overlay */}
-      <div
-        className="bg-pattern absolute inset-0 pointer-events-none z-0"
-        style={{ opacity: 0.5 }}
-      >
+      {/* Pattern overlay — matches desktop sample */}
+      <div className="bg-pattern" aria-hidden="true" style={{ opacity: 0.5 }}>
         <img
           src={faqPattern}
           alt=""
-          aria-hidden="true"
-          className="w-full h-full object-cover scale-125 select-none"
+          draggable={false}
+          className="w-full h-full object-cover"
           style={{ transform: "rotate(180deg)" }}
         />
       </div>
 
-      <div className="container relative z-10" style={{ display: "grid", gridTemplateColumns: "1fr", gap: "var(--space-8)" }}>
-        {/* Title — centered on mobile, left on desktop */}
-        <div
-          className="text-center"
-          style={{
-            maxWidth: 640,
-            marginInline: "auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <span
-            className="tag tag-teal"
-            style={{ marginBottom: "var(--space-4)", display: "inline-block" }}
-          >
-            سوالات متداول
-          </span>
-          <h2
-            className="t-section"
-            style={{
-              fontWeight: 950,
-              fontSize: "clamp(28px, 5vw, 48px)",
-              lineHeight: 1.2,
-              letterSpacing: "-0.01em",
-              color: "var(--ink)",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "baseline",
-              gap: "0.25rem 0.5rem",
-            }}
-          >
-            <span className="headline" style={{ color: "var(--ink)", transform: "rotate(3deg)" }}>
-              <span className="word">پرسش‌هایی</span>
-            </span>
-            <span className="headline" style={{ color: "var(--navy)", transform: "rotate(-3deg)" }}>
-              <span className="word">که</span>
-            </span>
-            <span className="headline" style={{ color: "var(--ink)", transform: "rotate(3deg)" }}>
-              <span className="word">قبل</span>
-            </span>
-            <span className="headline" style={{ color: "var(--accent)", transform: "rotate(-2deg)" }}>
-              <span className="word">از</span>
-            </span>
-            <span className="headline" style={{ color: "var(--ink)", transform: "rotate(3deg)" }}>
-              <span className="word">شروع</span>
-            </span>
-            <span className="headline" style={{ color: "var(--ink)", transform: "rotate(-3deg)" }}>
-              <span className="word">دارید</span>
-            </span>
-            <span className="headline" style={{ color: "var(--ink)", transform: "rotate(3deg)" }}>
-              <span className="word">؟</span>
-            </span>
-          </h2>
-          <p
-            className="t-body"
-            style={{
-              color: "var(--ink-subtle)",
-              marginTop: "var(--space-4)",
-              maxWidth: 560,
-              lineHeight: 1.8,
-              fontSize: 15,
-            }}
-          >
-            انتخاب کالج یعنی انتخاب آینده. صادقانه و بدون تعارف به سوالات شما
-            درباره‌ی دوره‌ها، مدرک و مسیر حرفه‌ای پاسخ می‌دیم.
-          </p>
-        </div>
-
-        {/* FAQ items */}
-        <div
-          className="mx-auto"
-          style={{
-            maxWidth: 680,
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-3)",
-          }}
-        >
-          {faqs.map((item, i) => {
-            const isOpen = openIndex === i;
-            return (
+      <div className="container section-inner">
+        <div className="faq-layout">
+          {/* Left: Consultation CTA card — sample design */}
+          <div className="consult-card">
+            <OffsetCard
+              backColor="var(--college-dark)"
+              radius="cut-tl-br-lg"
+              rotate="rotate-minus1"
+              shadowOffset={6}
+            >
               <div
-                key={i}
-                className="transition-transform duration-300"
-                style={{ position: "relative" }}
+                style={{
+                  padding: "2.3rem 1.7rem",
+                  background: "var(--college)",
+                  border: "3.5px solid var(--ink)",
+                }}
               >
-                {/* Ink shadow back layer */}
+                {/* Icon badge */}
                 <div
-                  aria-hidden
                   style={{
-                    position: "absolute",
-                    top: "5px",
-                    left: "5px",
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "0 var(--r-xl) 0 var(--r-xl)",
-                    background: "var(--ink)",
-                    pointerEvents: "none",
-                  }}
-                />
-                {/* Main card */}
-                <div
-                  className={`transition-colors duration-300 ${isOpen ? "bg-teal" : "bg-white"}`}
-                  style={{
-                    position: "relative",
-                    zIndex: 1,
-                    borderRadius: "0 var(--r-xl) 0 var(--r-xl)",
-                    border: "2.75px solid var(--ink)",
-                    overflow: "hidden",
-                    boxShadow: isOpen ? "var(--shadow-teal)" : "none",
+                    width: 60,
+                    height: 60,
+                    display: "grid",
+                    placeItems: "center",
+                    background: "var(--navy)",
+                    color: "var(--college)",
+                    border: "2px solid var(--ink)",
+                    borderRadius: "0 18px 0 18px",
+                    fontSize: "1.4rem",
+                    marginBottom: "1rem",
+                    transform: "rotate(-2deg)",
                   }}
                 >
-                  {/* Question button */}
-                  <button
-                    type="button"
-                    onClick={() => toggle(i)}
-                    aria-expanded={isOpen}
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: "var(--space-4)",
-                      padding: "var(--space-4) var(--space-6)",
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      textAlign: "right",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    <span
-                      className="font-extrabold"
-                      style={{
-                        flex: 1,
-                        fontSize: "clamp(14px, 2.5vw, 18px)",
-                        lineHeight: 1.6,
-                        color: isOpen ? "var(--ink)" : "var(--ink)",
-                      }}
-                    >
-                      {item.q}
-                    </span>
-
-                    {/* Icon button */}
-                    <div style={{ position: "relative", flexShrink: 0, width: 36, height: 36 }}>
-                      {/* Icon back layer */}
-                      <div
-                        aria-hidden
-                        style={{
-                          position: "absolute",
-                          top: "2px",
-                          left: "2px",
-                          width: "100%",
-                          height: "100%",
-                          borderRadius: "0 16px 0 16px",
-                          background: "var(--ink)",
-                        }}
-                      />
-                      {/* Icon main */}
-                      <div
-                        className={`flex items-center justify-center transition-all duration-300 ${isOpen ? "rotate-180" : ""}`}
-                        style={{
-                          position: "relative",
-                          zIndex: 1,
-                          width: 36,
-                          height: 36,
-                          borderRadius: "0 16px 0 16px",
-                          background: isOpen ? "var(--teal)" : "var(--ink-faq)",
-                          border: `2px solid ${isOpen ? "var(--teal)" : "var(--ink)"}`,
-                          color: "#fff",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {isOpen ? (
-                          <ChevronDownIcon className="w-4 h-4" />
-                        ) : (
-                          <PlusIcon className="w-4 h-4" />
-                        )}
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Answer — CSS grid animation */}
-                  <div
-                    className={`grid transition-all duration-500 ${
-                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                    }`}
-                    style={{ perspective: 600 }}
-                  >
-                    <div className="overflow-hidden">
-                      <p
-                        className="font-medium"
-                        style={{
-                          padding: "0 var(--space-6) var(--space-5)",
-                          fontSize: 14,
-                          lineHeight: 1.9,
-                          color: "var(--ink)",
-                        }}
-                      >
-                        {item.a}
-                      </p>
-                    </div>
-                  </div>
+                  <ArrowIcon width={28} height={28} />
                 </div>
-              </div>
-            );
-          })}
-        </div>
 
-        {/* CTA */}
-        <div
-          className="text-center"
-          style={{ marginTop: "var(--space-8)" }}
-        >
-          <a
-            href="#consult"
-            className="btn btn-amber"
-            style={{
-              padding: "14px 32px",
-              fontSize: 16,
-              fontWeight: 800,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-            }}
-          >
-            {faqCta}
-          </a>
+                <h2
+                  style={{
+                    fontSize: "29px",
+                    lineHeight: "1.35",
+                    fontWeight: 950,
+                    color: "var(--ink)",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  نمی‌دونی کدوم مسیر برای تو مناسبه؟
+                </h2>
+                <p
+                  style={{
+                    margin: "1rem 0 1.5rem",
+                    color: "var(--college-darker)",
+                    fontSize: "15px",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  مشاورهای کالج رُکاد برای انتخاب مسیر مناسب کنارت هستند.
+                  با یک تماس کوتاه، مسیر رشدت رو مشخص کن.
+                </p>
+                <a
+                  href="#consult"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: ".5rem",
+                    background: "var(--navy)",
+                    color: "#fff",
+                    border: "2.75px solid var(--ink)",
+                    borderRadius: "0 14px 0 14px",
+                    padding: ".65rem 1.2rem",
+                    fontWeight: 900,
+                    fontSize: "15px",
+                    whiteSpace: "nowrap",
+                    transition: "transform .3s",
+                    transform: "rotate(1.5deg)",
+                    cursor: "pointer",
+                  }}
+                  className="consult-btn"
+                >
+                  درخواست مشاوره
+                  <ArrowIcon width={16} height={16} />
+                </a>
+              </div>
+            </OffsetCard>
+          </div>
+
+          {/* Right: FAQ content */}
+          <div className="faq-content">
+            <header className="section-head align-start">
+              <span className="eyebrow-tag">سوالات پرتکرار</span>
+              <h2 className="t-section">
+                <span style={{ "--r": "-1.5deg" }}>قبل</span>
+                <span style={{ "--r": "2deg" }}> از</span>
+                <span
+                  style={{ "--r": "-3deg", color: "var(--college-dark)" }}
+                >
+                  شروع
+                </span>
+                <span style={{ "--r": "1.5deg" }}>چه باید بدانیم؟</span>
+              </h2>
+              <p className="section-sub">
+                پاسخ سوالاتی که هنرجویان قبل از ثبت‌نام بیشتر می‌پرسند.
+              </p>
+            </header>
+
+            <div className="faq-list">
+              {faqGroups.map((group, gi) => (
+                <div key={gi} className="faq-group">
+                  <span className="faq-group-label">
+                    {groupLabels[gi] ?? `گروه ${gi + 1}`}
+                  </span>
+                  {group.map((item) => {
+                    const isOpen = openId === item.id;
+                    return (
+                      <OffsetCard
+                        key={item.id}
+                        className={`faq-item${isOpen ? " is-open" : ""}`}
+                        backColor="var(--ink)"
+                        radius="cut-tr-bl"
+                        rotate=""
+                        shadowOffset={4}
+                      >
+                        <div className="offset-card">
+                          <button
+                            className="faq-question"
+                            onClick={() => toggle(item.id)}
+                            aria-expanded={isOpen}
+                          >
+                            <span>{item.q}</span>
+                            <span className="faq-question-btn">
+                              <ChevronDownIcon width={18} height={18} />
+                            </span>
+                          </button>
+                          <div className="faq-answer">
+                            <div>
+                              <p>{item.a}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </OffsetCard>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

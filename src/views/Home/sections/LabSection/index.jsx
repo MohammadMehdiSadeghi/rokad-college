@@ -10,7 +10,7 @@ const labPoints = [
 
 const headingWords = [
   { text: "هر", deg: -1.5 },
-  { text: "مهارت", deg: 2 },
+  { text: "مهارت", deg: 2, cls: "text-college" },
   { text: "با یک", deg: -3 },
   { text: "خروجی واقعی", deg: 1.5 },
 ];
@@ -36,7 +36,7 @@ export default function LabSection() {
               <div className="canvas-window"><span /><span /><span /></div>
               <div className="canvas-code"><i /><i /><i /><i /></div>
               <div className="canvas-result">
-                <CheckCircleIcon />
+                <span className="canvas-result-icon"><CheckCircleIcon width={18} height={18} /></span>
                 <strong>پروژه آمادهٔ ارائه است!</strong>
               </div>
             </div>
