@@ -1,7 +1,6 @@
 import Header from "./Components/Header/index.jsx";
 import Hero from "./pages/Home/sections/Hero/index.jsx";
 import PromoBenefits from "./pages/Home/sections/PromoBenefits/index.jsx";
-import AboutTimeline from "./pages/Home/sections/AboutTimeline/index.jsx";
 import About from "./pages/Home/sections/About/index.jsx";
 import Features from "./pages/Home/sections/Features/index.jsx";
 import Courses from "./pages/Home/sections/Courses/index.jsx";
@@ -18,7 +17,6 @@ export default function App() {
       <main>
         <Hero />
         <PromoBenefits />
-        <AboutTimeline />
         <About />
         <Features />
         <Courses />
