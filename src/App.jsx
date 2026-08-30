@@ -17,8 +17,8 @@ export default function App() {
       <main>
         <Hero />
         <PromoBenefits />
-        <About />
         <StatsTicker />
+        <About />
         <Courses />
         <CourseCta />
         <Faq />

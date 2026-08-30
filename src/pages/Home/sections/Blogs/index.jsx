@@ -1,4 +1,5 @@
 /* V3 — Editorial Magazine */
+import PatternLayer from "@/components/PatternLayer";
 
 const articles = [
   {
@@ -50,6 +51,8 @@ const articles = [
 export default function Blogs() {
   return (
     <section className="section mag-section" id="blog">
+      {/* Background pattern (mask fade) */}
+      <PatternLayer rotate={0} />
       <div className="container section-inner">
         {/* Section heading */}
         <div className="mag-head">

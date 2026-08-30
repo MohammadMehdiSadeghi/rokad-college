@@ -1,4 +1,5 @@
 import { ArrowIcon } from "@/common/Icons";
+import PatternLayer from "@/components/PatternLayer";
 
 /* ---- Ticker items ---- */
 const tickerItems = [
@@ -21,8 +22,8 @@ const tiles = [
 export default function StatsTicker() {
   return (
     <section className="section p5-section" id="about" style={{ background: "var(--white)" }}>
-      {/* Grid pattern overlay */}
-      <div className="p5-grid-bg" aria-hidden="true" />
+      {/* Background pattern (mask fade) */}
+      <PatternLayer rotate={0} />
 
       <div className="container p5-inner">
         {/* Head */}

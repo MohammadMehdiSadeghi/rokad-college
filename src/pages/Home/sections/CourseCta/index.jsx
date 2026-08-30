@@ -1,4 +1,5 @@
 /* CTA-5 — Ticket / Coupon style (V5) */
+import PatternLayer from "@/components/PatternLayer";
 
 const ctaMeta = [
   {
@@ -47,6 +48,8 @@ export default function CourseCta() {
       id="path"
       style={{ background: "#faf8f2", position: "relative", overflow: "hidden" }}
     >
+      {/* Background pattern (mask fade) */}
+      <PatternLayer rotate={180} />
       <div className="container section-inner">
         <div className="cta5-wrap">
           {/* Ticket card */}

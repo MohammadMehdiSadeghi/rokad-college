@@ -12,17 +12,6 @@
   padding: 80px 72px;
   background: var(--white);
 }
-/* Dot pattern overlay */
-.abt-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(41,40,39,.06) 1.2px, transparent 1.3px);
-  background-size: 22px 22px;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  pointer-events: none;
-}
 
 /* ---- Inner grid ---- */
 .abt-inner {

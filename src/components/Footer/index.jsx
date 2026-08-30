@@ -92,7 +92,7 @@ export default function Footer() {
           <span className="word">شروع می‌شه.</span>
         </h3>
         <p className="f5-desc">
-          عضو خبرنامهٔ رُکاد‌کالج شو تا از دوره‌های جدید، تخفیف‌های ویژه و
+          عضو خبرنامهٔ رکاد‌کالج شو تا از دوره‌های جدید، تخفیف‌های ویژه و
           رویدادهای هنرجویی زودتر از همه با خبر بشی.
         </p>
         <form className="f5-form" onSubmit={handleSubmit}>
@@ -106,7 +106,7 @@ export default function Footer() {
           <button type="submit">عضویت رایگان</button>
         </form>
         {submitted ? (
-          <div className="f5-foot-note success">عضویتت ثبت شد! به‌زودی خبرهای رُکاد‌کالج رو می‌فرستیم. 🎉</div>
+          <div className="f5-foot-note success">عضویتت ثبت شد! به‌زودی خبرهای رکاد‌کالج رو می‌فرستیم. 🎉</div>
         ) : (
           <div className="f5-foot-note">هیچ اسپمی نمی‌فرستیم. هر زمان بخوای می‌تونی لغو کنی.</div>
         )}
@@ -117,7 +117,14 @@ export default function Footer() {
         {/* Brand */}
         <div className="f5-col f5-brand">
           <div className="f5-logo">
-            رُکاد <span className="f5-badge">کالج</span>
+            <span className="f5-logo-mark">
+              <img
+                src="/assets/Shared/Logos/logo-white-512.png"
+                alt=""
+                aria-hidden="true"
+              />
+            </span>
+            رکاد <span className="f5-badge">کالج</span>
           </div>
           <p>اولین هنرستان استارتاپی ایران. یاد بگیر، تجربه کن، مهارت بساز.</p>
         </div>
@@ -162,7 +169,7 @@ export default function Footer() {
       {/* ---------- Bottom bar ---------- */}
       <div className="f5-bottom">
         <div className="f5-copy">
-          © {toFa(year)} <strong>رُکاد‌کالج</strong> — طراحی شده با عشق.
+          © {toFa(year)} <strong>رکاد‌کالج</strong> — طراحی شده با عشق.
         </div>
         <div className="f5-socs">
           {socials.map((s) => (

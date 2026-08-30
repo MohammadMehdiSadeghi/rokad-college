@@ -1,4 +1,4 @@
-// Rokad wordmark — navy "رُکاد" + amber "COLLEGE" accent (college-primary branding).
+// Rokad wordmark — white "Sign W" logo on college background + amber "COLLEGE" accent.
 export default function Logo({ withWord = true, size = 40 }) {
   return (
     <a
@@ -18,14 +18,22 @@ export default function Logo({ withWord = true, size = 40 }) {
           boxShadow: "3px 3px 0 var(--ink), 0 4px 12px rgba(248,164,29,0.25)",
           display: "grid",
           placeItems: "center",
-          color: "#fff",
-          fontWeight: 950,
-          fontSize: size * 0.5,
-          lineHeight: 1,
+          overflow: "hidden",
+          padding: size * 0.14,
           transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
-        R
+        <img
+          src="/assets/Shared/Logos/logo-white-512.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            display: "block",
+          }}
+        />
       </span>
       {withWord && (
         <span
@@ -34,7 +42,7 @@ export default function Logo({ withWord = true, size = 40 }) {
           <strong
             style={{ fontSize: 20, color: "var(--navy)", fontWeight: 950 }}
           >
-            رُکاد
+            رکاد
           </strong>
           <span
             style={{

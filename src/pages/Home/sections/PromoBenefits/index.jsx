@@ -1,4 +1,5 @@
 import { promoCards } from "@/data/content.js";
+import PatternLayer from "@/components/PatternLayer";
 
 /* ---- Department color maps (from HTML V5) ---- */
 const deptColors = [
@@ -37,6 +38,8 @@ const CheckIcon = () => (
 export default function PromoBenefits() {
   return (
     <section className="section promo-v5" id="promo" style={{ background: "var(--bg-college-tint)" }}>
+      {/* Background pattern (mask fade) */}
+      <PatternLayer rotate={180} />
       <div className="container section-inner">
         {/* Head */}
         <div className="promo-head">

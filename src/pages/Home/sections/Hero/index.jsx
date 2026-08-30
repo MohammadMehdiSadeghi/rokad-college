@@ -1,4 +1,5 @@
 import { ArrowIcon, ChevronLeftIcon } from "@/common/Icons";
+import PatternLayer from "@/components/PatternLayer";
 
 /* ---- Course list items ---- */
 const courses = [
@@ -24,8 +25,8 @@ const iconColors = ["", "", "var(--navy)", "var(--female)", "var(--ecosystem)"];
 export default function Hero() {
   return (
     <section className="hero-v5" id="hero" style={{ background: "var(--bg-college-tint)" }}>
-      {/* Dot pattern */}
-      <div className="hero-v5-pattern" aria-hidden="true" />
+      {/* Background pattern (mask fade) */}
+      <PatternLayer rotate={0} />
 
       <div className="container hero-v5-grid">
         {/* Left — Content */}
