@@ -1109,7 +1109,7 @@ a:focus-visible, button:focus-visible {
   position: absolute;
   top: 7px; left: 7px;
   width: 100%; height: 100%;
-  background: var(--college-dark);
+  background: var(--ink);
   border-radius: var(--r-2xl);
   z-index: 0;
 }
