@@ -3,18 +3,81 @@ import PatternLayer from "@/components/PatternLayer";
 
 /* ---- Department color maps (from HTML V5) ---- */
 const deptColors = [
-  { cat: "var(--college)", catBg: "var(--college-light)", catFg: "var(--college-darker)", catBorder: "var(--college-light-active)" },
-  { cat: "var(--ecosystem)", catBg: "#E6F5F3", catFg: "#28544F", catBorder: "#CCEAE6" },
-  { cat: "var(--navy)", catBg: "#E9EAEF", catFg: "#182044", catBorder: "#BABDCC" },
-  { cat: "var(--female)", catBg: "#FCE8EF", catFg: "#A81344", catBorder: "#F5B8CC" },
+  {
+    cat: "var(--college)",
+    catBg: "var(--college-light)",
+    catFg: "var(--college-darker)",
+    catBorder: "var(--college-light-active)",
+  },
+  {
+    cat: "var(--ecosystem)",
+    catBg: "#E6F5F3",
+    catFg: "#28544F",
+    catBorder: "#CCEAE6",
+  },
+  {
+    cat: "var(--navy)",
+    catBg: "#E9EAEF",
+    catFg: "#182044",
+    catBorder: "#BABDCC",
+  },
+  {
+    cat: "var(--female)",
+    catBg: "#FCE8EF",
+    catFg: "#A81344",
+    catBorder: "#F5B8CC",
+  },
 ];
 
 /* ---- SVG icons (matching HTML V5 exactly) ---- */
 const cardIcons = [
-  <svg key="0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
-  <svg key="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>,
-  <svg key="2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>,
-  <svg key="3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>,
+  <svg
+    key="0"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+  </svg>,
+  <svg
+    key="1"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+  </svg>,
+  <svg
+    key="2"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M9 12l2 2 4-4" />
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+  </svg>,
+  <svg
+    key="3"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="8" r="7" />
+    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+  </svg>,
 ];
 
 const stepNums = ["۰۱", "۰۲", "۰۳", "۰۴"];
@@ -38,17 +101,32 @@ const checkRows = [
   ["مدرک قابل ارائه", "احراز مهارت رسمی"],
 ];
 
-const rotations = ["rotate(-.5deg)", "rotate(.5deg)", "rotate(-.3deg)", "rotate(.5deg)"];
+const rotations = [
+  "rotate(-.5deg)",
+  "rotate(.5deg)",
+  "rotate(-.3deg)",
+  "rotate(.5deg)",
+];
 
 const CheckIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.6"
+    strokeLinecap="round"
+  >
     <polyline points="20 6 9 17 4 12" />
   </svg>
 );
 
 export default function PromoBenefits() {
   return (
-    <section className="section promo-v5" id="promo" style={{ background: "var(--bg-college-tint)" }}>
+    <section
+      className="section promo-v5"
+      id="promo"
+      style={{ background: "var(--bg-college-tint)" }}
+    >
       {/* Background pattern (mask fade) */}
       <PatternLayer rotate={180} />
       <div className="container section-inner">
@@ -59,12 +137,45 @@ export default function PromoBenefits() {
             وعده‌های کالج رکاد
           </span>
           <h2 className="t-section">
-            <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>اینجا</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--college)" }}>فقط</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>آموزش</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(2deg)", color: "var(--navy)" }}>نمی‌بینی</span>
+            <span
+              style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}
+            >
+              اینجا
+            </span>{" "}
+            <span
+              style={{
+                display: "inline-block",
+                transform: "rotate(1.5deg)",
+                color: "var(--college)",
+              }}
+            >
+              فقط
+            </span>{" "}
+            <span
+              style={{ display: "inline-block", transform: "rotate(-1deg)" }}
+            >
+              آموزش
+            </span>{" "}
+            <span
+              style={{
+                display: "inline-block",
+                transform: "rotate(2deg)",
+                color: "var(--navy)",
+              }}
+            >
+              نمی‌بینی
+            </span>
           </h2>
-          <p style={{ fontSize: 17, lineHeight: 1.75, fontWeight: 600, color: "var(--ink-subtle)", maxWidth: 580, margin: "0 auto" }}>
+          <p
+            style={{
+              fontSize: 17,
+              lineHeight: 1.75,
+              fontWeight: 600,
+              color: "var(--ink-subtle)",
+              maxWidth: 580,
+              margin: "0 auto",
+            }}
+          >
             یاد بگیر، تجربه کن، مهارت بساز و آینده‌ات را از همین امروز شروع کن.
           </p>
         </div>
