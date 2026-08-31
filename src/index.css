@@ -2681,12 +2681,20 @@ a:focus-visible, button:focus-visible {
 /* Card */
 .p5-tile-card {
   position: relative; z-index: 1;
-  border: 2.5px solid var(--ink);
+  border: 2.5px solid;
   border-radius: 1.5rem 0 1.5rem 0;
   padding: 24px 18px;
   text-align: center;
   overflow: hidden;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+/* Pattern background */
+.p5-tile-bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 

@@ -107,7 +107,8 @@ export default function StatsTicker() {
             return (
               <div key={tile.num} className="p5-tile-wrap" style={{ transform: i % 2 === 0 ? "rotate(-1.5deg)" : "rotate(1.5deg)" }}>
                 <div className="p5-tile-back" style={{ background: t.border }} />
-                <div className="p5-tile-card" style={{ background: t.bg, borderColor: t.border, backgroundImage: `url(${t.img})`, backgroundSize: "cover", backgroundPosition: "center", opacity: undefined }}>
+                <div className="p5-tile-card" style={{ backgroundColor: t.bg, borderColor: t.border }}>
+                  <div className="p5-tile-bg" style={{ backgroundImage: `url(${t.img})` }} />
                   <span className="p5-tile-num" style={{ color: t.numColor }}>{tile.num}</span>
                   <span className="p5-tile-lbl" style={{ color: t.numColor }}>{tile.label}</span>
                 </div>
