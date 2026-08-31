@@ -98,7 +98,7 @@ export default function StatsTicker() {
         <div className="p5-board">
           {tiles.map((tile) => (
             <div key={tile.num} className={`p5-tile ${tile.cls}`}>
-              <img src={tile.img} alt="" aria-hidden="true" className="p5-tile-img" />
+              <img src={tile.img} alt="" aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35, pointerEvents: "none", zIndex: 0 }} />
               <span className="p5-pin" />
               <div className="p5-tile-num">{tile.num}</div>
               <div className="p5-tile-lbl">{tile.label}</div>
