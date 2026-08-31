@@ -2664,48 +2664,28 @@ a:focus-visible, button:focus-visible {
 @media (max-width: 1024px) { .p5-board { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .p5-board { grid-template-columns: 1fr; } }
 
-/* Tile wrapper */
-.p5-tile-wrap {
+.p5-tile {
+  border: 2px solid var(--ink);
+  padding: 20px 18px; text-align: center;
   position: relative;
   transition: transform .3s;
+  box-shadow: 6px 6px 0 var(--ink);
 }
-.p5-tile-wrap:hover { transform: translate(-3px, -3px) !important; }
-/* Shadow back */
-.p5-tile-back {
-  position: absolute; inset: 0;
-  top: 5px; left: 5px; right: -5px; bottom: -5px;
-  border-radius: 1.5rem 0 1.5rem 0;
-  z-index: 0;
-}
-.p5-tile-wrap:hover .p5-tile-back { transform: translate(3px, 3px); }
-/* Card */
-.p5-tile-card {
-  position: relative; z-index: 1;
-  border: 2.5px solid;
-  border-radius: 1.5rem 0 1.5rem 0;
-  padding: 24px 18px;
-  text-align: center;
-  overflow: hidden;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-}
-/* Pattern background */
-.p5-tile-bg {
-  position: absolute; inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.4;
-  pointer-events: none;
-}
+.p5-tile.t1 { border-radius: 16px 4px 16px 4px; transform: rotate(-1.5deg); background: var(--navy); }
+.p5-tile.t2 { border-radius: 4px 16px 4px 16px; transform: rotate(1.5deg); background: var(--teal); }
+.p5-tile.t3 { border-radius: 16px 4px 16px 4px; transform: rotate(-1deg); background: var(--college); }
+.p5-tile.t4 { border-radius: 4px 16px 4px 16px; transform: rotate(1deg); background: var(--female); }
 
 
 .p5-tile-num {
   font-size: 44px; font-weight: 900; line-height: 1;
   margin-bottom: 6px; letter-spacing: -1px;
+  color: #fff;
 }
 
 .p5-tile-lbl {
   font-size: 13px; font-weight: 800;
-  line-height: 1.5;
+  color: #fff; line-height: 1.5;
 }
 
 /* Pin */
