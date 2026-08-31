@@ -258,7 +258,7 @@ export default function Comments() {
             <button className="cmt3-icon-btn" onClick={prev} aria-label="قبلی">
               <Chevron right />
             </button>
-            <button className="cmt3-icon-btn college" onClick={next} aria-label="بعدی">
+            <button className="cmt3-icon-btn" onClick={next} aria-label="بعدی">
               <Chevron />
             </button>
           </div>
