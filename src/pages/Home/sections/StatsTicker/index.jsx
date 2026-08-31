@@ -31,17 +31,13 @@ export default function StatsTicker() {
         <div className="p5-head">
           <span className="p5-eyebrow">
             <span className="p5-eyebrow-dot" />
-            در همین لحظه در رکاد
+            وعده‌های کالج رکاد
           </span>
           <h2 className="t-section">
             <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>اینجا</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--college)" }}>فقط</span>{" "}
-            <span className="strike" style={{ display: "inline-block", transform: "rotate(-1deg)", position: "relative" }}>آموزش</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(2deg)", color: "var(--navy)" }}>نمی‌بینی</span>
-            <br />
-            <span>برای </span>
-            <span className="hl" style={{ display: "inline-block", background: "var(--college)", padding: "2px 14px", borderRadius: 12, border: "2.5px solid var(--ink)", transform: "rotate(-1.5deg)", color: "var(--ink)", fontWeight: 900 }}>آینده</span>
-            <span> آماده می‌شوی.</span>
+            <span style={{ display: "inline-block", transform: "rotate(0deg)", background: "var(--college)", padding: "2px 14px", borderRadius: 12, border: "2.5px solid var(--ink)", color: "var(--ink)", fontWeight: 900 }}>فقط</span>{" "}
+            <span style={{ display: "inline-block", transform: "rotate(-1deg)", color: "var(--teal-dark)" }}>آموزش</span>{" "}
+            <span style={{ display: "inline-block", transform: "rotate(2deg)" }}>نمی‌بینی</span>
           </h2>
           <p style={{ margin: "0 auto", color: "#a8abb5", fontSize: 16, lineHeight: 1.85, fontWeight: 600, maxWidth: 560 }}>
             یاد بگیر، تجربه کن، مهارت بساز و آینده‌ات را از همین امروز شروع کن.
