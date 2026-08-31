@@ -138,32 +138,18 @@ export default function PromoBenefits() {
           </span>
           <h2 className="t-section">
             <span
-              style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}
+              style={{ display: "inline-block", transform: "rotate(-1.5deg)", color: "var(--college)" }}
             >
-              اینجا
+              آینده‌ات
             </span>{" "}
             <span
               style={{
                 display: "inline-block",
-                transform: "rotate(1.5deg)",
-                color: "var(--college)",
-              }}
-            >
-              فقط
-            </span>{" "}
-            <span
-              style={{ display: "inline-block", transform: "rotate(-1deg)" }}
-            >
-              آموزش
-            </span>{" "}
-            <span
-              style={{
-                display: "inline-block",
-                transform: "rotate(2deg)",
+                transform: "rotate(1deg)",
                 color: "var(--navy)",
               }}
             >
-              نمی‌بینی
+              رو بساز
             </span>
           </h2>
           <p
