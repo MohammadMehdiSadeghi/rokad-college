@@ -133,7 +133,12 @@ export default function Faq() {
                     textAlign: "right",
                   }}
                 >
-                  <div className="faq5-bubble-user">{item.q}</div>
+                  <div className="faq5-bubble-user">
+                    {item.q}
+                    <span className="faq5-chevron">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                    </span>
+                  </div>
                   <span className="avatar">شما</span>
                 </button>
 
