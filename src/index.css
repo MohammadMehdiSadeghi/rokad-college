@@ -1475,11 +1475,7 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: var(--ink);
-  color: #fff;
-  border-radius: 50%;
+  color: var(--ink-subtle);
   transition: transform 0.3s ease;
 }
 .faq5-item.open .faq5-chevron {
