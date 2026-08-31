@@ -2454,6 +2454,14 @@ a:focus-visible, button:focus-visible {
   background-image: radial-gradient(circle at 1px 1px, rgba(41,40,39,.14) 1.5px, transparent 1.6px);
 }
 .promo-v5-header > * { position: relative; z-index: 1; }
+.promo-v5-pattern {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: .25;
+  pointer-events: none;
+  z-index: 0;
+}
 
 /* Icon in header */
 .promo-v5-icon-h {

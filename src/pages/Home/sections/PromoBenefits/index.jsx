@@ -19,6 +19,14 @@ const cardIcons = [
 
 const stepNums = ["۰۱", "۰۲", "۰۳", "۰۴"];
 
+/* ---- Pattern images ---- */
+const patterns = [
+  "/assets/Pattern/yellow.png",
+  "/assets/Pattern/green.png",
+  "/assets/Pattern/blue.png",
+  "/assets/Pattern/pink.png",
+];
+
 /* ---- Check rows per card (from HTML V5) ---- */
 const checkRows = [
   ["اساتید شاغل در بازار", "پشتیبانی آموزشی مستمر"],
@@ -77,6 +85,7 @@ export default function PromoBenefits() {
                 <article className="promo-v5-card">
                   {/* Colored Header */}
                   <div className="promo-v5-header">
+                    <img src={patterns[i]} alt="" aria-hidden="true" className="promo-v5-pattern" />
                     <div className="promo-v5-icon-h">{cardIcons[i]}</div>
                     <span className="promo-v5-num-h">{stepNums[i]}</span>
                   </div>
