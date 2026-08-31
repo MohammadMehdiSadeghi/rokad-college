@@ -56,7 +56,7 @@ export default function CourseCta() {
           <div className="cta5">
             {/* Main part */}
             <div className="cta5-main">
-              <span className="cta5-eyebrow">آینده از اینجا شروع می‌شود...</span>
+              <span className="cta5-eyebrow">آینده از اینجا شروع می‌شه...</span>
               <h3 className="cta5-title">
                 مسیر یادگیری <span className="hl">خودت</span>
                 <br />
@@ -93,11 +93,6 @@ export default function CourseCta() {
               <a href="#consult" className="btn">درخواست بده ←</a>
               <div className="code">ROKAD · COLLEGE</div>
             </div>
-          </div>
-
-          {/* Bottom action row */}
-          <div className="cta5-actions">
-            <a href="#courses" className="btn">مشاهده همه دوره‌ها ←</a>
           </div>
         </div>
       </div>

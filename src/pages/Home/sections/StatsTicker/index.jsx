@@ -54,26 +54,17 @@ export default function StatsTicker() {
             LIVE · زنده
           </span>
           <div className="p5-track">
-            {/* First set */}
-            {tickerItems.map((item, i) => (
-              <span key={`a-${i}`}>
-                <span className="p5-k">
-                  <span className="p5-n">{item.num}</span>
-                  <span style={{ color: "#fff" }}>{item.label}</span>
-                </span>
-                {i < tickerItems.length - 1 && <span className="p5-sep" />}
-              </span>
-            ))}
-            <span className="p5-sep" />
-            {/* Duplicate for seamless loop */}
-            {tickerItems.map((item, i) => (
-              <span key={`b-${i}`}>
-                <span className="p5-k">
-                  <span className="p5-n">{item.num}</span>
-                  <span style={{ color: "#fff" }}>{item.label}</span>
-                </span>
-                {i < tickerItems.length - 1 && <span className="p5-sep" />}
-              </span>
+            {/* 4 identical copies — guaranteed to fill the box at every instant */}
+            {[0, 1, 2, 3].map((copy) => (
+              <div className="p5-set" key={copy} aria-hidden={copy !== 0}>
+                {tickerItems.map((item, i) => (
+                  <span className="p5-k" key={`${copy}-${i}`}>
+                    <span className="p5-n">{item.num}</span>
+                    <span style={{ color: "#fff" }}>{item.label}</span>
+                  </span>
+                ))}
+                <span className="p5-sep" />
+              </div>
             ))}
           </div>
         </div>

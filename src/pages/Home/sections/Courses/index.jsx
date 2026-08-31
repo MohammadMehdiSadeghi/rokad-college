@@ -16,7 +16,7 @@ var courseIcons = [
   <svg key="gph" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a10 10 0 1 1 10-10c0 2-1.5 3-3 3h-3a3 3 0 0 0-3 3c0 1.5 1 2 1 3a2 2 0 0 1-2 1z"/></svg>,
 ];
 
-var durations = ["12 هفته", "16 هفته", "8 هفته", "10 هفته", "12 هفته", "4 ماه", "6 ماه"];
+var durations = ["۱۲ هفته", "۱۶ هفته", "۸ هفته", "۱۰ هفته", "۱۲ هفته", "۴ ماه", "۶ ماه"];
 var courseFeatures = [
   ["پروژه‌محور", "مدرس معتبر"], ["React", "پرتفولیو"],
   ["کی‌استاژ", "ابزارهای واقعی"],
@@ -81,15 +81,11 @@ export default function Courses() {
             <span className="dot" />
             {"لیست دوره‌های تخصصی"}
           </span>
-          <RotatedHeading words={"مسیر یادگیری خودت را پیدا کن"} className="t-section" color="var(--navy)" />
+          <RotatedHeading words={"از این دوره‌ها شغلت را بساز"} className="t-section" color="var(--navy)" />
           <p style={{ fontSize: 16.5, lineHeight: 1.75, fontWeight: 600, color: "var(--ink-subtle)", maxWidth: 560, margin: "1rem auto 0" }}>{"لیست کامل دوره‌های کالج در یک نگه — با جزئیات سرفصل و شهریه."}</p>
         </div>
         <div className="v2-list">
           {displayCourses.map(function(c, i) { return <CourseCard key={c.title} course={c} index={i} />; })}
-        </div>
-        <div className="cta-footer" style={{ marginTop: 35, textAlign: "center" }}>
-          <p style={{ fontSize: 15, fontWeight: 600, color: "var(--ink-subtle)", margin: "0 0 1rem" }}>{"هنوز مطمئن نیستی؟ دوره برای توست؟"}</p>
-          <a href="#courses" className="btn-all">{"مشاهده همه دوره‌ها"} <ArrowIcon width={16} height={16} /></a>
         </div>
       </div>
     </section>

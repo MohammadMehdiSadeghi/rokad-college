@@ -70,45 +70,50 @@ function toFa(num) {
 
 /* ---------- Component ---------- */
 export default function Footer() {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const year = getJalaliYear();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!phone.trim()) return;
     setSubmitted(true);
-    setEmail("");
+    setPhone("");
   };
 
   return (
     <footer className="footer-v5" id="consult">
-      {/* ---------- Newsletter ---------- */}
+      {/* ---------- CTA ---------- */}
       <div className="f5-newsletter">
-        <div className="f5-eyebrow">نزدیک‌تر بمون</div>
+        <div className="f5-eyebrow">قدم اول برای آینده شغلیت</div>
         <h3>
           <span className="word">آینده</span>
           <span className="word hi">از اینجا</span>
           <span className="word">شروع می‌شه.</span>
         </h3>
         <p className="f5-desc">
-          عضو خبرنامهٔ رکاد‌کالج شو تا از دوره‌های جدید، تخفیف‌های ویژه و
-          رویدادهای هنرجویی زودتر از همه با خبر بشی.
+          شماره‌ات رو بذار تا کارشناسان رکاد رایگان باهات تماس بگیرن و بهترین
+          مسیر یادگیری رو با توجه به هدف شغلیت معرفی کنن.
         </p>
         <form className="f5-form" onSubmit={handleSubmit}>
           <input
-            type="email"
+            type="tel"
             required
-            placeholder="ایمیلت رو وارد کن..."
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            dir="ltr"
+            placeholder="۰۹۱۲۳۴۵۶۷۸۹"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
-          <button type="submit">عضویت رایگان</button>
+          <button type="submit">درخواست مشاوره رایگان</button>
         </form>
+        <a href="#courses" className="f5-all-btn">
+          مشاهده همه دوره‌ها
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width={15} height={15} aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+        </a>
         {submitted ? (
-          <div className="f5-foot-note success">عضویتت ثبت شد! به‌زودی خبرهای رکاد‌کالج رو می‌فرستیم. 🎉</div>
+          <div className="f5-foot-note success">درخواستت ثبت شد! به‌زودی باهات تماس می‌گیریم. 🎉</div>
         ) : (
-          <div className="f5-foot-note">هیچ اسپمی نمی‌فرستیم. هر زمان بخوای می‌تونی لغو کنی.</div>
+          <div className="f5-foot-note">مشاوره کاملاً رایگانه — هیچ هزینه‌ای پرداخت نمی‌کنی.</div>
         )}
       </div>
 

@@ -994,6 +994,27 @@ ul { list-style: none; }
   color: var(--navy);
   font-weight: 800;
 }
+.f5-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  background: var(--college);
+  color: var(--navy);
+  border: 2.5px solid var(--ink);
+  padding: 12px 22px;
+  border-radius: 14px 0 14px 0;
+  font-weight: 900;
+  font-size: 14px;
+  box-shadow: 4px 4px 0 var(--college-dark);
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+}
+.f5-all-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0 var(--college-dark);
+  background: var(--college-dark);
+  color: var(--white);
+}
 
 /* ---------- Columns grid ---------- */
 .f5-grid {
@@ -2587,18 +2608,26 @@ a:focus-visible, button:focus-visible {
 }
 @keyframes p5-blink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
 
-/* Track (scrolling) */
+/* Track — anchored LEFT, overflows RIGHT; moves LEFT → re-enters from RIGHT */
 .p5-track {
-  flex: 1; display: flex; align-items: center; gap: 56px;
-  white-space: nowrap;
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: max-content;
+  display: flex; align-items: center;
   animation: p5-tick 30s linear infinite;
+}
+/* One identical copy of the whole item set — repeated 4× so the box is never empty */
+.p5-set {
+  display: flex; align-items: center;
+  flex-shrink: 0;
 }
 @keyframes p5-tick {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-25%); }
 }
 .p5-k {
   display: inline-flex; align-items: center; gap: 12px;
+  direction: ltr; /* عدد اول، برچسب دوم (بدون جابه‌جایی کلمات) */
   color: #fff; font-weight: 800; font-size: 16px; flex-shrink: 0;
 }
 .p5-n {
@@ -2609,6 +2638,7 @@ a:focus-visible, button:focus-visible {
   width: 6px; height: 6px;
   background: var(--amber, var(--college)); border-radius: 50%;
   flex-shrink: 0; opacity: .4;
+  margin-inline: 25px;
 }
 
 /* ---- Board ---- */
