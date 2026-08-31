@@ -34,10 +34,8 @@ export default function StatsTicker() {
             وعده‌های کالج رکاد
           </span>
           <h2 className="t-section">
-            <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>اینجا</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(0deg)", background: "var(--college)", padding: "2px 14px", borderRadius: 12, border: "2.5px solid var(--ink)", color: "var(--ink)", fontWeight: 900 }}>فقط</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(-1deg)", color: "var(--teal-dark)" }}>آموزش</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(2deg)" }}>نمی‌بینی</span>
+            <span style={{ display: "inline-block", transform: "rotate(-1.5deg)", color: "var(--college)" }}>آینده‌ات</span>{" "}
+            <span style={{ display: "inline-block", transform: "rotate(1deg)", color: "var(--navy)" }}>رو بساز</span>
           </h2>
           <p style={{ margin: "0 auto", color: "#a8abb5", fontSize: 16, lineHeight: 1.85, fontWeight: 600, maxWidth: 560 }}>
             یاد بگیر، تجربه کن، مهارت بساز و آینده‌ات را از همین امروز شروع کن.
