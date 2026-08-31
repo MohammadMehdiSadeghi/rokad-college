@@ -12,12 +12,18 @@ const tickerItems = [
   { num: "۲۴/۷", label: "پشتیبانی" },
 ];
 
-/* ---- Board tiles ---- */
-const tiles = [
-  { num: "۰۴", label: "دپارتمان تخصصی", cls: "t1", img: "/assets/Pattern/blue.png" },
-  { num: "+۸۰۰", label: "پروژه‌ی تحویل‌شده", cls: "t2", img: "/assets/Pattern/green.png" },
-  { num: "+۱۰۰", label: "استاد متخصص", cls: "t3", img: "/assets/Pattern/yellow.png" },
-  { num: "+۲۰", label: "شرکت همکار", cls: "t4", img: "/assets/Pattern/pink.png" },
+/* ---- Board tiles (rokad-web style) ---- */
+const tileThemes = [
+  { cls: "t1", bg: "#E9EAEF", border: "var(--navy)", numColor: "var(--navy)", img: "/assets/Pattern/blue.png", opacity: 0.5 },
+  { cls: "t2", bg: "#E4F4F2", border: "var(--teal)", numColor: "var(--teal-dark)", img: "/assets/Pattern/green.png", opacity: 0.5 },
+  { cls: "t3", bg: "#FEF7EC", border: "var(--college)", numColor: "var(--college-dark)", img: "/assets/Pattern/yellow.png", opacity: 0.8 },
+  { cls: "t4", bg: "#FEFAFB", border: "var(--female)", numColor: "var(--female)", img: "/assets/Pattern/pink.png", opacity: 1 },
+];
+const tileData = [
+  { num: "۰۴", label: "دپارتمان تخصصی" },
+  { num: "+۸۰۰", label: "پروژه‌ی تحویل‌شده" },
+  { num: "+۱۰۰", label: "استاد متخصص" },
+  { num: "+۲۰", label: "شرکت همکار" },
 ];
 
 export default function StatsTicker() {
@@ -96,14 +102,21 @@ export default function StatsTicker() {
 
         {/* Bulletin Board */}
         <div className="p5-board">
-          {tiles.map((tile) => (
-            <div key={tile.num} className={`p5-tile ${tile.cls}`}>
-              <img src={tile.img} alt="" aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.35, pointerEvents: "none", zIndex: 0 }} />
-              <span className="p5-pin" />
-              <div className="p5-tile-num">{tile.num}</div>
-              <div className="p5-tile-lbl">{tile.label}</div>
-            </div>
-          ))}
+          {tileData.map((tile, i) => {
+            const t = tileThemes[i];
+            return (
+              <div key={tile.num} className="p5-tile-wrap" style={{ transform: i % 2 === 0 ? "rotate(-1.5deg)" : "rotate(1.5deg)" }}>
+                <div className="p5-tile-back" style={{ background: t.border }} />
+                <div className="p5-tile-card" style={{ background: t.bg, borderColor: t.border }}>
+                  <div className="p5-tile-pattern">
+                    <img src={t.img} alt="" draggable="false" style={{ opacity: t.opacity }} />
+                  </div>
+                  <span className="p5-tile-num" style={{ color: t.numColor, position: "relative", zIndex: 2 }}>{tile.num}</span>
+                  <span className="p5-tile-lbl" style={{ color: t.numColor, position: "relative", zIndex: 2 }}>{tile.label}</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
