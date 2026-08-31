@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { ArrowIcon } from "@/common/Icons";
 import PatternLayer from "@/components/PatternLayer";
 
@@ -58,12 +59,14 @@ export default function StatsTicker() {
             {[0, 1, 2, 3].map((copy) => (
               <div className="p5-set" key={copy} aria-hidden={copy !== 0}>
                 {tickerItems.map((item, i) => (
-                  <span className="p5-k" key={`${copy}-${i}`}>
-                    <span className="p5-n">{item.num}</span>
-                    <span style={{ color: "#fff" }}>{item.label}</span>
-                  </span>
+                  <Fragment key={`${copy}-${i}`}>
+                    <span className="p5-k">
+                      <span className="p5-n">{item.num}</span>
+                      <span style={{ color: "#fff" }}>{item.label}</span>
+                    </span>
+                    <span className="p5-sep" />
+                  </Fragment>
                 ))}
-                <span className="p5-sep" />
               </div>
             ))}
           </div>
