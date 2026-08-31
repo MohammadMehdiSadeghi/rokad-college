@@ -19,12 +19,15 @@ const cardIcons = [
 
 const stepNums = ["۰۱", "۰۲", "۰۳", "۰۴"];
 
-/* ---- Pattern images ---- */
+/* ---- Pattern images —— NOTE: the files in /assets/Pattern/*.png
+   (yellow/blue/green/pink) are broken/blank in this project (all four
+   are byte-identical placeholders). The real textured versions live in
+   /assets/StatCard/*.png, so we use those instead. ---- */
 const patterns = [
-  "../../../../../public/assets/Pattern/yellow.png",
-  "/assets/Pattern/green.png",
-  "/assets/Pattern/blue.png",
-  "/assets/Pattern/pink.png",
+  "/assets/StatCard/yellow.png",
+  "/assets/StatCard/green.png",
+  "/assets/StatCard/blue.png",
+  "/assets/StatCard/pink.png",
 ];
 
 /* ---- Check rows per card (from HTML V5) ---- */
