@@ -2670,6 +2670,14 @@ a:focus-visible, button:focus-visible {
   position: relative;
   transition: transform .3s;
   box-shadow: 6px 6px 0 var(--ink);
+  overflow: hidden;
+}
+.p5-tile-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+  pointer-events: none;
 }
 .p5-tile.t1 { border-radius: 16px 4px 16px 4px; transform: rotate(-1.5deg); background: var(--navy); }
 .p5-tile.t2 { border-radius: 4px 16px 4px 16px; transform: rotate(1.5deg); background: var(--teal); }

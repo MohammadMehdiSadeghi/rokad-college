@@ -14,10 +14,10 @@ const tickerItems = [
 
 /* ---- Board tiles ---- */
 const tiles = [
-  { num: "۰۴", label: "دپارتمان تخصصی", cls: "t1" },
-  { num: "+۸۰۰", label: "پروژه‌ی تحویل‌شده", cls: "t2" },
-  { num: "+۱۰۰", label: "استاد متخصص", cls: "t3" },
-  { num: "+۲۰", label: "شرکت همکار", cls: "t4" },
+  { num: "۰۴", label: "دپارتمان تخصصی", cls: "t1", img: "/assets/Pattern/blue.png" },
+  { num: "+۸۰۰", label: "پروژه‌ی تحویل‌شده", cls: "t2", img: "/assets/Pattern/green.png" },
+  { num: "+۱۰۰", label: "استاد متخصص", cls: "t3", img: "/assets/Pattern/yellow.png" },
+  { num: "+۲۰", label: "شرکت همکار", cls: "t4", img: "/assets/Pattern/pink.png" },
 ];
 
 export default function StatsTicker() {
@@ -98,6 +98,7 @@ export default function StatsTicker() {
         <div className="p5-board">
           {tiles.map((tile) => (
             <div key={tile.num} className={`p5-tile ${tile.cls}`}>
+              <img src={tile.img} alt="" aria-hidden="true" className="p5-tile-img" />
               <span className="p5-pin" />
               <div className="p5-tile-num">{tile.num}</div>
               <div className="p5-tile-lbl">{tile.label}</div>
