@@ -21,7 +21,7 @@ const stepNums = ["۰۱", "۰۲", "۰۳", "۰۴"];
 
 /* ---- Pattern images ---- */
 const patterns = [
-  "/assets/Pattern/yellow.png",
+  "../../../../../public/assets/Pattern/yellow.png",
   "/assets/Pattern/green.png",
   "/assets/Pattern/blue.png",
   "/assets/Pattern/pink.png",
@@ -85,7 +85,16 @@ export default function PromoBenefits() {
                 <article className="promo-v5-card">
                   {/* Colored Header */}
                   <div className="promo-v5-header">
-                    <img src={patterns[i]} alt="" aria-hidden="true" className="promo-v5-pattern" />
+                    <img
+                      src={patterns[i]}
+                      alt=""
+                      aria-hidden="true"
+                      className="promo-v5-pattern"
+                      style={{
+                        opacity: 0.45,
+                        mixBlendMode: "multiply",
+                      }}
+                    />
                     <div className="promo-v5-icon-h">{cardIcons[i]}</div>
                     <span className="promo-v5-num-h">{stepNums[i]}</span>
                   </div>
