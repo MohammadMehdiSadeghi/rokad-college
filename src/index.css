@@ -728,32 +728,62 @@ ul { list-style: none; }
 ============================================= */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: transparent;
+  background: var(--white, #fff);
+  transition: background 0.45s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* V1 — floating pill wrapper */
+/* ── Desktop scrolled: floating compact pill ───────────────── */
+.site-header.scrolled {
+  background: transparent;
+  box-shadow: 0 4px 24px rgba(33,41,90,0.08);
+}
+/* V1 — pill wrapper */
 .v1-header {
-  padding: 20px 32px 0;
+  padding: 0;
+  transition: padding 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.site-header.scrolled .v1-header {
+  padding: 12px 32px 0;
 }
 .v1-header .pill {
-  max-width: 1180px;
-  margin: 0 auto;
-  background: var(--white, #fff);
-  border-radius: 22px;
-  padding: 12px 18px 12px 12px;
+  max-width: none;
+  margin: 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   gap: 16px;
-  box-shadow:
-    0 0.0625rem 0.1875rem rgba(0,0,0,0.04),
-    0 0.5rem 1.25rem rgba(33,41,90,0.05),
-    0 1.25rem 2.5rem -0.25rem rgba(33,41,90,0.06);
-  border: 1px solid rgba(41,40,39,0.06);
+  box-shadow: none;
+  border: none;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
+/* Scrolled: pill becomes floating rounded container */
+.site-header.scrolled .pill {
+  max-width: 1180px;
+  margin: 0 auto;
+  background: var(--white, #fff);
+  border-radius: 18px;
+  padding: 8px 14px 8px 8px;
+  border: 1px solid rgba(41,40,39,0.1);
+  box-shadow:
+    0 0.5rem 1.5rem rgba(33,41,90,0.12),
+    0 1.5rem 3rem -0.5rem rgba(33,41,90,0.18);
+}
+.site-header.scrolled .logo-mark {
+  transform: rotate(-3deg) scale(0.92);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.site-header.scrolled .nav-links { gap: 20px; }
+.site-header.scrolled .nav-links a { font-size: 14px; }
+.site-header.scrolled .cta-pill { padding: 9px 18px; font-size: 13.5px; }
+.site-header.scrolled .ibtn { width: 38px; height: 38px; }
+.site-header.scrolled .login-pill { padding: 8px 14px; font-size: 13px; }
 /* Desktop nav links (V1: centered, gap 26) */
 .nav-links {
   display: flex; align-items: center; gap: 26px;
   flex: 1; justify-content: center;
   font-size: 14px; font-weight: 600; color: var(--navy);
+  transition: gap 0.3s ease;
 }
 .nav-links a {
   transition: color 0.2s ease;
@@ -797,17 +827,22 @@ ul { list-style: none; }
 .ibtn:hover { transform: translateY(-2px); }
 .ibtn svg { width: 18px; height: 18px; stroke-width: 2.4; }
 
-/* Login pill (secondary — teal outline style per DS) */
+/* Login pill (secondary — navy outline style per DS) */
 .login-pill {
   display: inline-flex; align-items: center; gap: 6px;
-  background: var(--white, #fff); color: var(--sec);
+  background: var(--white, #fff); color: var(--navy);
   padding: 9px 18px; border-radius: 12px;
   font-weight: 800; font-size: 14px;
-  border: 1.5px solid var(--sec);
+  border: 1.5px solid var(--navy);
   transition: all 0.2s;
   text-decoration: none;
 }
-.login-pill:hover { background: var(--sec); color: var(--white); }
+.login-pill:hover {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+.login-pill:hover svg { color: var(--white); }
 .login-pill svg { width: 14px; height: 14px; stroke-width: 2.5; }
 
 /* Desktop-only CTA button */
@@ -817,19 +852,26 @@ ul { list-style: none; }
 /* CTA pill (navy — DS spec, rotated -3deg) */
 .cta-pill {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--sec);
+  background: var(--navy);
   color: var(--white, #fff);
   padding: 11px 22px;
   border-radius: 12px;
   font-weight: 900; font-size: 14.5px;
   transform: rotate(-3deg);
-  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, background 0.2s ease, color 0.2s ease;
   border: 2px solid var(--ink);
   box-shadow: 3px 3px 0 var(--college);
   text-decoration: none;
   white-space: nowrap;
 }
-.cta-pill:hover { transform: rotate(0) scale(1.05); }
+.cta-pill:hover {
+  transform: rotate(0) scale(1.05);
+  background: var(--college);
+  color: var(--navy);
+  border-color: var(--ink);
+  box-shadow: 3px 3px 0 var(--navy);
+}
+.cta-pill:hover svg { color: var(--navy); }
 .cta-pill svg { width: 14px; height: 14px; stroke-width: 2.5; }
 
 /* Mobile menu button — hamburger v1 */
@@ -851,6 +893,117 @@ ul { list-style: none; }
 @media (max-width: 900px) {
   .mobile-menu-btn { display: flex; }
 }
+
+/* ── Mobile (≤900px): solid one-piece bar, no floating pill ── */
+@media (max-width: 900px) {
+  .site-header {
+    background: var(--white, #fff);
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .site-header.scrolled {
+    background: var(--white, #fff);
+    border-bottom: 1.5px solid var(--ink);
+    box-shadow: none;
+  }
+  .v1-header,
+  .site-header.scrolled .v1-header {
+    padding: 0;
+  }
+  .v1-header .pill,
+  .site-header.scrolled .pill {
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    padding: 10px 16px;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  /* Search next to hamburger — on the left (end of RTL row) */
+  .v1-header .actions {
+    gap: 8px;
+    margin-inline-start: auto;
+  }
+  .v1-header .actions .ibtn,
+  .site-header.scrolled .ibtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+  /* Hide CTA pill on mobile — it lives inside the hamburger menu */
+  .cta-pill { display: none; }
+}
+
+/* ── Search panel overlay ─────────────────────────────────── */
+.search-panel {
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  z-index: 70;
+  background: var(--white, #fff);
+  border-bottom: 2px solid var(--ink);
+  box-shadow: 0 8px 30px rgba(33,41,90,0.12);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s;
+}
+.search-panel--open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+.search-panel-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.search-panel-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-neutral, #f6f6f6);
+  border: 1.5px solid var(--ink-light, #eaeae9);
+  border-radius: 14px;
+  padding: 12px 18px;
+  transition: border-color 0.2s ease;
+}
+.search-panel-field:focus-within {
+  border-color: var(--college);
+}
+.search-panel-field svg {
+  width: 18px; height: 18px;
+  stroke: var(--ink-subtle);
+  flex-shrink: 0;
+}
+.search-panel-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.search-panel-input::placeholder { color: var(--ink-subtle); }
+.search-panel-close {
+  width: 42px; height: 42px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--navy);
+  border: none;
+  border-radius: 12px;
+  color: var(--white, #fff);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.search-panel-close:hover { background: var(--college); color: var(--navy); }
+.search-panel-close svg { width: 18px; height: 18px; stroke-width: 2.4; }
 
 /* Hamburger v1 — classic 3 lines → X (amber) */
 .hb1-bars {

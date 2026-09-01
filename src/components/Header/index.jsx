@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Logo from "../Logo.jsx";
 
 // Rotations for menu links (sticker feel)
@@ -6,7 +6,37 @@ const ROTS = [-1, 0.5, -0.5, 1, -1, 0.5];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+  const searchRef = useRef(null);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const s = window.scrollY > 80;
+      if (s !== scrolled) setScrolled(s);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [scrolled]);
+
+  // Close search on Escape or click outside
+  useEffect(() => {
+    if (!searchOpen) return;
+    const onKey = (e) => { if (e.key === "Escape") setSearchOpen(false); };
+    const onClick = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target))
+        setSearchOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    if (searchInputRef.current) searchInputRef.current.focus();
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [searchOpen]);
 
   const links = [
     { t: "صفحهٔ اصلی", href: "#top" },
@@ -19,10 +49,13 @@ export default function Header() {
 
   return (
     <>
-      <header className="site-header" id="top">
+      <header
+        className={"site-header" + (scrolled ? " scrolled" : "")}
+        id="top"
+      >
         <div className="v1-header">
           <div className="pill">
-            {/* Logo — right side (RTL) */}
+            {/* Logo */}
             <Logo />
 
             {/* Desktop nav — hidden on mobile */}
@@ -39,9 +72,14 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Actions — search + login + CTA */}
+            {/* Actions */}
             <div className="actions">
-              <button className="ibtn" aria-label="جستجو">
+              {/* Search — opens panel */}
+              <button
+                className="ibtn"
+                aria-label="جستجو"
+                onClick={() => setSearchOpen(true)}
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -53,6 +91,8 @@ export default function Header() {
                   <path d="M21 21l-4.35-4.35" />
                 </svg>
               </button>
+
+              {/* Desktop-only: login + CTA */}
               <a href="#consult" className="login-pill desktop-only">
                 <svg
                   viewBox="0 0 24 24"
@@ -67,7 +107,7 @@ export default function Header() {
                 </svg>
                 ورود
               </a>
-              <a href="#consult" className="cta-pill">
+              <a href="#consult" className="cta-pill desktop-only">
                 مشاورهٔ رایگان
                 <svg
                   viewBox="0 0 24 24"
@@ -80,7 +120,7 @@ export default function Header() {
                 </svg>
               </a>
 
-              {/* Mobile hamburger v1 — classic 3 lines → X */}
+              {/* Mobile hamburger v1 */}
               <button
                 className="mobile-menu-btn"
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -98,7 +138,52 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile fullscreen amber overlay — hamburger v1 (PanelFull) */}
+      {/* Search panel overlay */}
+      <div className={`search-panel${searchOpen ? " search-panel--open" : ""}`} ref={searchRef}>
+        <div className="search-panel-inner">
+          <div className="search-panel-field">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder="جست‌وجوی دوره‌ها، اساتید، مقالات..."
+              className="search-panel-input"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  setSearchOpen(false);
+                }
+              }}
+            />
+          </div>
+          <button
+            className="search-panel-close"
+            onClick={() => setSearchOpen(false)}
+            aria-label="بستن"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile fullscreen amber overlay */}
       <div className={`hb1-panel ${mobileOpen ? "hb1-panel--open" : ""}`}>
         <div className="hb1-panel-head">
           <Logo size={28} />
