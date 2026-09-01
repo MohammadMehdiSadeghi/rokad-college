@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Logo from "../Logo.jsx";
+import SearchBox from "../SearchBox/index.jsx";
 
 /* Section IDs that match nav links */
 const sectionIds = ["promo", "features", "courses", "faq", "comments", "blog"];
@@ -50,9 +51,12 @@ export default function Header() {
           <a href="#blog" className={navLinkClass("blog")} onClick={closeMenu}>وبلاگ</a>
         </nav>
 
-        <a href="#consult" className="btn btn-sm btn-ghost desktop-only">
-          مشاوره رایگان
-        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <SearchBox />
+          <a href="#consult" className="btn btn-sm btn-ghost desktop-only">
+            مشاوره رایگان
+          </a>
+        </div>
 
         <button
           className="mobile-menu-btn"

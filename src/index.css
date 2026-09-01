@@ -3043,6 +3043,193 @@ a:focus-visible, button:focus-visible {
 .hero-v5-all:hover { background: var(--college); color: var(--ink); }
 
 /* =============================================
+   SEARCH BOX — matches Rokad design language
+   Cut-corners, offset shadows, bold borders
+============================================= */
+
+/* ─── Trigger button in header ─── */
+.sb-trigger {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: var(--r-sm);
+  font-family: inherit; font-size: 13px; font-weight: 700;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.sb-trigger:hover {
+  background: var(--college-light);
+  color: var(--ink);
+  border-color: var(--college);
+  box-shadow: 3px 3px 0 var(--college);
+  transform: translateY(-1px);
+}
+.sb-trigger svg { flex-shrink: 0; }
+.sb-trigger-text { line-height: 1; }
+.sb-kbd {
+  background: var(--bg-neutral); border: 1px solid var(--ink-light);
+  border-radius: 4px; padding: 2px 6px;
+  font-size: 11px; font-weight: 700; color: var(--ink-subtle);
+  font-family: inherit; line-height: 1;
+}
+@media (max-width: 900px) { .sb-trigger-text, .sb-kbd { display: none; } .sb-trigger { padding: 8px; } }
+
+/* ─── Overlay backdrop ─── */
+.sb-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(41, 40, 39, 0.55);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  display: flex; justify-content: center; align-items: flex-start;
+  padding-top: 10vh;
+  animation: sbFadeIn 0.2s ease;
+}
+@keyframes sbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ─── Modal ─── */
+.sb-modal {
+  width: 100%; max-width: 620px;
+  background: var(--white);
+  border: 2.75px solid var(--ink);
+  border-radius: var(--r-xl) 0 var(--r-xl) 0;
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+  animation: sbSlideIn 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  max-height: 70vh;
+  display: flex; flex-direction: column;
+}
+@keyframes sbSlideIn { from { opacity: 0; transform: translateY(-12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 600px) { .sb-modal { max-width: 95vw; margin-top: 5vh; border-radius: var(--r-lg); } }
+
+/* ─── Input row ─── */
+.sb-input-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 2px solid var(--ink-light);
+  background: var(--white);
+}
+.sb-input-ic { color: var(--college); flex-shrink: 0; }
+.sb-input {
+  flex: 1; min-width: 0;
+  border: none; outline: none; background: transparent;
+  font-family: inherit; font-size: 16px; font-weight: 700;
+  color: var(--ink); line-height: 1.5;
+}
+.sb-input::placeholder { color: var(--ink-subtle); font-weight: 500; }
+.sb-clear, .sb-close {
+  flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--ink-light); border-radius: 6px;
+  background: var(--white); color: var(--ink-subtle);
+  cursor: pointer; transition: all 0.15s ease;
+  font-family: inherit; font-weight: 700;
+}
+.sb-clear { padding: 4px; width: 28px; height: 28px; }
+.sb-close { padding: 4px 8px; font-size: 11px; height: 28px; }
+.sb-clear:hover, .sb-close:hover {
+  background: var(--ink); color: var(--white); border-color: var(--ink);
+}
+
+/* ─── Results count ─── */
+.sb-count {
+  padding: 8px 18px;
+  font-size: 12px; font-weight: 700; color: var(--ink-subtle);
+  border-bottom: 1px solid var(--ink-light);
+  background: var(--bg-neutral);
+}
+
+/* ─── Results scroll area ─── */
+.sb-results {
+  overflow-y: auto; flex: 1;
+  padding: 8px 0;
+}
+.sb-results::-webkit-scrollbar { width: 6px; }
+.sb-results::-webkit-scrollbar-track { background: transparent; }
+.sb-results::-webkit-scrollbar-thumb { background: var(--ink-light); border-radius: 3px; }
+
+/* ─── Empty state ─── */
+.sb-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px 20px; text-align: center;
+}
+.sb-empty-icon { color: var(--college); margin-bottom: 12px; opacity: 0.5; }
+.sb-empty-icon--muted { color: var(--ink-subtle); }
+.sb-empty-title { margin: 0 0 4px; font-size: 16px; font-weight: 900; color: var(--ink); }
+.sb-empty-sub { margin: 0 0 16px; font-size: 13px; font-weight: 600; color: var(--ink-subtle); }
+.sb-suggestions {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+.sb-suggestion {
+  padding: 6px 14px; border-radius: 99px;
+  border: 1.5px solid var(--college); background: var(--college-light);
+  color: var(--college-darker); font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s ease;
+  font-family: inherit;
+}
+.sb-suggestion:hover {
+  background: var(--college); color: var(--white);
+  box-shadow: 2px 2px 0 var(--college-dark);
+  transform: translateY(-1px);
+}
+
+/* ─── Group header ─── */
+.sb-group-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 18px;
+  font-size: 12px; font-weight: 900;
+  border-bottom: 1px solid var(--ink-light);
+  position: sticky; top: 0; z-index: 2;
+}
+.sb-group-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.sb-group-count {
+  margin-right: auto; /* left in RTL */
+  margin-inline-start: auto;
+  background: rgba(0,0,0,0.08); padding: 2px 8px;
+  border-radius: 99px; font-size: 11px;
+}
+
+/* ─── Result item ─── */
+.sb-result {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; padding: 10px 18px;
+  border: none; background: transparent;
+  cursor: pointer; text-align: right;
+  font-family: inherit;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.sb-result:hover { background: var(--college-light); }
+.sb-result-ic {
+  width: 38px; height: 38px; flex-shrink: 0;
+  border: 2px solid var(--ink); border-radius: var(--r-sm) 0 var(--r-sm) 0;
+  display: grid; place-items: center;
+  font-size: 16px; color: #fff;
+  transition: transform 0.2s ease;
+}
+.sb-result:hover .sb-result-ic { transform: scale(1.08) rotate(2deg); }
+.sb-result-body { flex: 1; min-width: 0; }
+.sb-result-title {
+  font-size: 14px; font-weight: 800; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  line-height: 1.4;
+}
+.sb-result-text {
+  font-size: 12px; font-weight: 600; color: var(--ink-subtle);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  line-height: 1.4; margin-top: 2px;
+}
+.sb-result-arrow {
+  flex-shrink: 0; color: var(--ink-subtle);
+  transition: transform 0.2s ease, color 0.2s ease;
+  transform: scaleX(-1); /* RTL arrow */
+}
+.sb-result:hover .sb-result-arrow { color: var(--college-dark); transform: scaleX(-1) translateX(-3px); }
+
+/* =============================================
    3D SYSTEM — lightweight, GPU-accelerated
    Adds depth & interactivity without changing design
 ============================================= */
