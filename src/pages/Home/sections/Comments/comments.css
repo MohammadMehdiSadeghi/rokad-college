@@ -173,20 +173,14 @@
   border-radius: 14px 0 14px 0;
   border: 2px solid var(--ink);
   color: var(--ink);
-  transition: transform .3s ease-out;
+  box-shadow: 2px 2px 0 var(--college); /* لایه کالج پشت دکمه — نزدیک، مثل دکمه شمارنده */
+  transition: transform .35s cubic-bezier(.4, 0, .2, 1), box-shadow .35s cubic-bezier(.4, 0, .2, 1);
   font-family: inherit;
 }
-.cmt3-icon-btn::after {
-  content: "";
-  @apply absolute;
-  top: 3px; left: 3px; right: -3px; bottom: -3px;
-  background: var(--ink);
-  border-radius: 14px 0 14px 0;
-  z-index: -1;
+.cmt3-icon-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 2px 2px 0 var(--college); /* ثابت — همیشه پشت دکمه */
 }
-.cmt3-icon-btn:hover { transform: translateY(-3px); }
-.cmt3-icon-btn.college { background: var(--college); }
-.cmt3-icon-btn.college::after { background: var(--college-dark); }
 .cmt3-icon-btn svg { width: 18px; height: 18px; }
 
 /* Responsive */
