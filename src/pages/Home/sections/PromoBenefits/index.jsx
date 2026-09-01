@@ -1,4 +1,13 @@
 import { promoCards } from "@/data/content.js";
+import PatternBackground from "@/components/PatternBackground";
+
+/* ---- Texture images from StatCard (مثل سایت اصلی رکاد) ---- */
+const textureSrcs = [
+  "/assets/StatCard/yellow.png",
+  "/assets/StatCard/green.png",
+  "/assets/StatCard/blue.png",
+  "/assets/StatCard/pink.png",
+];
 
 /* ---- Department color maps (from HTML V5) ---- */
 const deptColors = [
@@ -37,6 +46,8 @@ const CheckIcon = () => (
 export default function PromoBenefits() {
   return (
     <section className="section promo-v5" id="promo" style={{ background: "var(--bg-college-tint)" }}>
+      <PatternBackground rotate opacity={40} />
+
       <div className="container section-inner">
         {/* Head */}
         <div className="promo-head">
@@ -74,6 +85,13 @@ export default function PromoBenefits() {
                 <article className="promo-v5-card">
                   {/* Colored Header */}
                   <div className="promo-v5-header">
+                    <img
+                      src={textureSrcs[i]}
+                      alt=""
+                      aria-hidden="true"
+                      draggable="false"
+                      className="promo-v5-texture"
+                    />
                     <div className="promo-v5-icon-h">{cardIcons[i]}</div>
                     <span className="promo-v5-num-h">{stepNums[i]}</span>
                   </div>

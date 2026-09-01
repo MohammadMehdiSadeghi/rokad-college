@@ -1,4 +1,5 @@
 /* CTA-5 — Ticket / Coupon style (V5) */
+import PatternBackground from "@/components/PatternBackground";
 
 const ctaMeta = [
   {
@@ -43,11 +44,13 @@ const ctaMeta = [
 export default function CourseCta() {
   return (
     <section
-      className="section"
-      id="path"
-      style={{ background: "#faf8f2", position: "relative", overflow: "hidden" }}
-    >
-      <div className="container section-inner">
+          className="section"
+          id="path"
+          style={{ background: "#faf8f2", position: "relative", overflow: "hidden" }}
+        >
+          <PatternBackground opacity={40} />
+
+          <div className="container section-inner">
         <div className="cta5-wrap">
           {/* Ticket card */}
           <div className="cta5">

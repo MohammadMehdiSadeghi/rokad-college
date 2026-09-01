@@ -1,4 +1,5 @@
 import { ArrowIcon } from "@/common/Icons";
+import PatternBackground from "@/components/PatternBackground";
 
 /* ---- Ticker items ---- */
 const tickerItems = [
@@ -23,6 +24,7 @@ export default function StatsTicker() {
     <section className="section p5-section" id="about" style={{ background: "var(--white)" }}>
       {/* Grid pattern overlay */}
       <div className="p5-grid-bg" aria-hidden="true" />
+      <PatternBackground opacity={40} />
 
       <div className="container p5-inner">
         {/* Head */}

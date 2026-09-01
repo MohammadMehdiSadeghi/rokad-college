@@ -1,4 +1,5 @@
 /* V3 — Editorial Magazine */
+import PatternBackground from "@/components/PatternBackground";
 
 const articles = [
   {
@@ -50,7 +51,9 @@ const articles = [
 export default function Blogs() {
   return (
     <section className="section mag-section" id="blog">
-      <div className="container section-inner">
+          <PatternBackground rotate opacity={40} />
+
+          <div className="container section-inner">
         {/* Section heading */}
         <div className="mag-head">
           <div className="left">

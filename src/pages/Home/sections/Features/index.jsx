@@ -2,6 +2,7 @@ import { features } from "@/data/content.js";
 import OffsetCard from "@/components/OffsetCard.jsx";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
 import clsx from "@/lib/clsx";
+import PatternBackground from "@/components/PatternBackground";
 
 // Refined rotations for feature cards — very subtle
 const featureRotations = [
@@ -14,6 +15,8 @@ const featureRotations = [
 export default function Features() {
   return (
     <section className="section" id="features">
+      <PatternBackground opacity={40} />
+
       <div className="container section-inner">
         {/* Section header */}
         <div className="text-center mx-auto" style={{ marginBottom: "var(--space-12)", maxWidth: 760, display: "flex", flexDirection: "column", alignItems: "center" }}>

@@ -1,4 +1,5 @@
 import { ArrowIcon } from "@/common/Icons";
+import PatternBackground from "@/components/PatternBackground";
 
 /* ---- Timeline steps ---- */
 const steps = [
@@ -28,8 +29,8 @@ const CheckSvg = () => (
 export default function AboutTimeline() {
   return (
     <section className="section a2-section" id="about" style={{ background: "var(--white)" }}>
-      {/* Dot pattern overlay */}
-      <div className="a2-pattern" aria-hidden="true" />
+      {/* Background pattern — الگوی سایت اصلی */}
+      <PatternBackground rotate opacity={40} />
 
       <div className="container a2-inner">
         {/* Left side — text */}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PatternBackground from "@/components/PatternBackground";
 
 /* ---------- Data (FAQ-5 chat content, from the V5 design) ---------- */
 const faqChat = [
@@ -96,6 +97,8 @@ export default function Faq() {
 
   return (
     <section className="section" id="faq" style={{ background: "var(--white)" }}>
+      <PatternBackground rotate opacity={40} />
+
       <div className="container section-inner">
         {/* Section heading */}
         <div className="faq5-head">

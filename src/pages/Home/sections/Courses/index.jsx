@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { courses } from "@/data/content.js";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
+import PatternBackground from "@/components/PatternBackground";
 import { ArrowIcon, ChevronLeftIcon, ChevronRightIcon } from "@/common/Icons";
 import clsx from "@/lib/clsx";
 
@@ -131,6 +132,8 @@ export default function Courses() {
 
   return (
     <section className="section v2-courses" id="courses" style={{ background: "var(--bg-college-tint)" }}>
+      <PatternBackground rotate opacity={40} />
+
       <div className="container section-inner">
         <div className="head" style={{ textAlign: "center", maxWidth: 820, margin: "0 auto 2rem" }}>
           <span className="eyebrow">
