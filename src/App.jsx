@@ -18,7 +18,7 @@ export default function App() {
       <main>
         <Hero />
         <PromoBenefits />
-        <Departments />
+        <Departments layout="row3" />
         <StatsTicker />
         <About />
         <Courses />
