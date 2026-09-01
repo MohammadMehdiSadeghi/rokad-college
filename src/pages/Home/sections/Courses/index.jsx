@@ -118,7 +118,7 @@ export default function Courses() {
 
   return (
     <section className="section v2-courses" id="courses" style={{ background: "var(--bg-college-tint)" }}>
-      <PatternLayer rotate={0} />
+      <PatternLayer rotate={180} />
       <div className="container section-inner">
         <div className="head" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", maxWidth: 820, margin: "0 auto 2rem" }}>
           <span className="eyebrow">

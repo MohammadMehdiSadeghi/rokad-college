@@ -49,7 +49,7 @@ export default function CourseCta() {
       style={{ background: "#faf8f2", position: "relative", overflow: "hidden" }}
     >
       {/* Background pattern (mask fade) */}
-      <PatternLayer rotate={180} />
+      <PatternLayer rotate={0} />
       <div className="container section-inner">
         <div className="cta5-wrap">
           {/* Ticket card */}

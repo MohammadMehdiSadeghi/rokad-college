@@ -52,7 +52,7 @@ export default function Blogs() {
   return (
     <section className="section mag-section" id="blog">
       {/* Background pattern (mask fade) */}
-      <PatternLayer rotate={0} />
+      <PatternLayer rotate={180} />
       <div className="container section-inner">
         {/* Section heading */}
         <div className="mag-head">

@@ -98,7 +98,7 @@ export default function Faq() {
   return (
     <section className="section" id="faq" style={{ background: "var(--white)" }}>
       {/* Background pattern (mask fade) */}
-      <PatternLayer rotate={0} />
+      <PatternLayer rotate={180} />
       <div className="container section-inner">
         {/* Section heading */}
         <div className="faq5-head">

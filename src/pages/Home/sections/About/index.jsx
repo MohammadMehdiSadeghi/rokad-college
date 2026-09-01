@@ -32,7 +32,7 @@ export default function About() {
   return (
     <section className="abt-section" id="about">
       {/* Background pattern (mask fade) */}
-      <PatternLayer rotate={180} />
+      <PatternLayer rotate={0} />
 
       <div className="abt-inner">
         {/* Left side — text (right column in RTL) */}

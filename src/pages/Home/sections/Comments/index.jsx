@@ -176,7 +176,7 @@ export default function Comments() {
   return (
     <section className="section cmt3-section" id="comments">
       {/* Background pattern (mask fade) */}
-      <PatternLayer rotate={180} />
+      <PatternLayer rotate={0} />
       <div className="container section-inner">
         {/* Section heading */}
         <div className="sec-head" style={{ marginBottom: 44, display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>

@@ -1,6 +1,7 @@
 import Header from "./Components/Header/index.jsx";
 import Hero from "./pages/Home/sections/Hero/index.jsx";
 import PromoBenefits from "./pages/Home/sections/PromoBenefits/index.jsx";
+import Departments from "./pages/Home/sections/Departments/index.jsx";
 import About from "./pages/Home/sections/About/index.jsx";
 import StatsTicker from "./pages/Home/sections/StatsTicker/index.jsx";
 import Courses from "./pages/Home/sections/Courses/index.jsx";
@@ -17,6 +18,7 @@ export default function App() {
       <main>
         <Hero />
         <PromoBenefits />
+        <Departments />
         <StatsTicker />
         <About />
         <Courses />

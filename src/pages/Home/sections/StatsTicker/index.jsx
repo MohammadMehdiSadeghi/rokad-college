@@ -24,7 +24,7 @@ export default function StatsTicker() {
   return (
     <section className="section p5-section" id="about" style={{ background: "var(--white)" }}>
       {/* Background pattern (mask fade) */}
-      <PatternLayer rotate={0} />
+      <PatternLayer rotate={180} />
 
       <div className="container p5-inner">
         {/* Head */}
