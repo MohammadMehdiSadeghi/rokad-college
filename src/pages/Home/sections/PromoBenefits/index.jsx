@@ -1,5 +1,6 @@
 import { promoCards } from "@/data/content.js";
 import PatternLayer from "@/components/PatternLayer";
+import use3DTilt from "@/lib/use3DTilt";
 
 /* ---- Department color maps (from HTML V5) ---- */
 const deptColors = [
@@ -120,6 +121,57 @@ const CheckIcon = () => (
   </svg>
 );
 
+/* Individual promo card with 3D tilt */
+function PromoCard({ card, i }) {
+  const d = deptColors[i];
+  const tilt = use3DTilt(6, 350);
+
+  return (
+    <div
+      ref={tilt.ref}
+      className="promo-v5-stack card-tilt"
+      onMouseMove={tilt.onMouseMove}
+      onMouseLeave={tilt.onMouseLeave}
+      style={{
+        transform: rotations[i],
+        "--cat": d.cat,
+        "--catBg": d.catBg,
+        "--catFg": d.catFg,
+        "--catBorder": d.catBorder,
+      }}
+    >
+      <article className="promo-v5-card">
+        {/* Colored Header */}
+        <div className="promo-v5-header">
+          <img
+            src={patterns[i]}
+            alt=""
+            aria-hidden="true"
+            className="promo-v5-pattern"
+            style={{ opacity: 0.45, mixBlendMode: "multiply" }}
+          />
+          <div className="promo-v5-icon-h">{cardIcons[i]}</div>
+          <span className="promo-v5-num-h">{stepNums[i]}</span>
+        </div>
+
+        {/* Body */}
+        <div className="promo-v5-body">
+          <h3>{card.title}</h3>
+          <p>{card.text}</p>
+          <div className="promo-v5-checks">
+            {checkRows[i].map((row) => (
+              <div key={row} className="promo-v5-row">
+                <CheckIcon />
+                {row}
+              </div>
+            ))}
+          </div>
+        </div>
+      </article>
+    </div>
+  );
+}
+
 export default function PromoBenefits() {
   return (
     <section
@@ -168,54 +220,9 @@ export default function PromoBenefits() {
 
         {/* Grid */}
         <div className="promo-v5-grid">
-          {promoCards.map((card, i) => {
-            const d = deptColors[i];
-            return (
-              <div
-                key={card.title}
-                className="promo-v5-stack"
-                style={{
-                  transform: rotations[i],
-                  "--cat": d.cat,
-                  "--catBg": d.catBg,
-                  "--catFg": d.catFg,
-                  "--catBorder": d.catBorder,
-                }}
-              >
-                <article className="promo-v5-card">
-                  {/* Colored Header */}
-                  <div className="promo-v5-header">
-                    <img
-                      src={patterns[i]}
-                      alt=""
-                      aria-hidden="true"
-                      className="promo-v5-pattern"
-                      style={{
-                        opacity: 0.45,
-                        mixBlendMode: "multiply",
-                      }}
-                    />
-                    <div className="promo-v5-icon-h">{cardIcons[i]}</div>
-                    <span className="promo-v5-num-h">{stepNums[i]}</span>
-                  </div>
-
-                  {/* Body */}
-                  <div className="promo-v5-body">
-                    <h3>{card.title}</h3>
-                    <p>{card.text}</p>
-                    <div className="promo-v5-checks">
-                      {checkRows[i].map((row) => (
-                        <div key={row} className="promo-v5-row">
-                          <CheckIcon />
-                          {row}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              </div>
-            );
-          })}
+          {promoCards.map((card, i) => (
+            <PromoCard key={card.title} card={card} i={i} />
+          ))}
         </div>
       </div>
     </section>

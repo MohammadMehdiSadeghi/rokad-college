@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { ArrowIcon, ChevronLeftIcon } from "@/common/Icons";
 import PatternLayer from "@/components/PatternLayer";
 
@@ -23,8 +24,34 @@ const courseIcons = [
 const iconColors = ["", "", "var(--navy)", "var(--female)", "var(--ecosystem)"];
 
 export default function Hero() {
+  const heroRef = useRef(null);
+
+  // Subtle parallax: content and panel move at different rates on scroll
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const el = heroRef.current;
+        if (!el) { ticking = false; return; }
+        const y = window.scrollY;
+        const content = el.querySelector(".hero-v5-content");
+        const panel = el.querySelector(".hero-v5-panel-wrap");
+        if (content) content.style.transform = `translateY(${y * 0.12}px)`;
+        if (panel)   panel.style.transform   = `translateY(${y * 0.06}px)`;
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <section className="hero-v5" id="hero" style={{ background: "var(--bg-college-tint)" }}>
+    <section ref={heroRef} className="hero-v5" id="hero" style={{ background: "var(--bg-college-tint)", perspective: "1200px" }}>
       {/* Background pattern (mask fade) */}
       <PatternLayer rotate={0} />
 

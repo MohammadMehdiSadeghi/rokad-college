@@ -2,6 +2,7 @@ import { courses } from "@/data/content.js";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
 import PatternLayer from "@/components/PatternLayer";
 import { ArrowIcon } from "@/common/Icons";
+import use3DTilt from "@/lib/use3DTilt";
 
 var catColors = {
   "فناوری اطلاعات": { bg: "var(--college-light)", fg: "var(--college-darker)", border: "var(--college-light-active)", accent: "var(--college)" },
@@ -39,10 +40,11 @@ var CourseCard = function(props) {
   var features = courseFeatures[index % courseFeatures.length];
   var tags = courseTags[index % courseTags.length];
   var num = toPersianNum(index + 1);
+  var tilt = use3DTilt(8, 350);
 
   return (
     <div className="v2-stack" style={{ "--cat": cat.accent, "--catBg": cat.bg, "--catFg": cat.fg, "--catBorder": cat.border }}>
-      <article className="v2-item">
+      <article ref={tilt.ref} className="v2-item card-tilt" onMouseMove={tilt.onMouseMove} onMouseLeave={tilt.onMouseLeave}>
         <div className="v2-cover">
           <span className="v2-num">{num.slice(0, 1)}<span>{num.slice(1)}</span></span>
           <div className="v2-icon">{icon}</div>

@@ -3024,3 +3024,193 @@ a:focus-visible, button:focus-visible {
   margin-top: .25rem; transition: all .25s;
 }
 .hero-v5-all:hover { background: var(--college); color: var(--ink); }
+
+/* =============================================
+   3D SYSTEM — lightweight, GPU-accelerated
+   Adds depth & interactivity without changing design
+============================================= */
+
+/* --- Hero float animation (subtle parallax) --- */
+.hero-v5 .hero-v5-content,
+.hero-v5 .hero-v5-panel-wrap {
+  will-change: transform;
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) translateZ(0); }
+  50%      { transform: translateY(-6px) translateZ(4px); }
+}
+.hero-v5-panel {
+  animation: heroFloat 6s ease-in-out infinite;
+}
+
+/* --- Scroll reveal (staggered fade-in-up) --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Stagger delays for children */
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* --- 3D card tilt (interactive, JS-driven via use3DTilt) --- */
+.card-tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform-origin: center center;
+}
+.card-tilt:hover {
+  z-index: 20;
+}
+
+/* --- 3D lift on buttons (enhanced btn-wrap) --- */
+.btn-wrap {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (hover: hover) {
+  .btn-wrap:hover {
+    transform: translateY(-4px) rotate(0deg) translateZ(6px) !important;
+  }
+  .btn-wrap:hover .offset-back {
+    top: 8px;
+    left: 8px;
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* --- 3D depth on offset-card hover --- */
+@media (hover: hover) {
+  .offset-wrapper:hover .offset-card {
+    transform: translateY(-4px) translateZ(10px);
+  }
+  .offset-wrapper:hover .offset-back {
+    top: 9px;
+    left: 9px;
+  }
+}
+
+/* --- Tile 3D pop (StatsTicker board tiles) --- */
+@media (hover: hover) {
+  .p5-tile {
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .p5-tile:hover {
+    transform: translateY(-6px) translateZ(8px) rotate(0deg);
+  }
+}
+
+/* --- Course card 3D hover (v2-item) --- */
+@media (hover: hover) {
+  .v2-item {
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .v2-stack:hover .v2-item {
+    transform: translateY(-4px) translateZ(6px);
+  }
+}
+
+/* --- Promo card 3D hover --- */
+@media (hover: hover) {
+  .promo-v5-stack {
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .promo-v5-stack:hover {
+    transform: translateY(-4px) translateZ(6px) rotate(0deg) !important;
+  }
+}
+
+/* --- FAQ bubble pop --- */
+@media (hover: hover) {
+  .faq5-bubble-user {
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                background 0.2s ease, border-color 0.2s ease;
+  }
+  .faq5-user:hover .faq5-bubble-user {
+    transform: translateZ(4px) scale(1.01);
+  }
+}
+
+/* --- Blog card 3D --- */
+@media (hover: hover) {
+  .mag-card {
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .mag-card:hover {
+    transform: translateY(-4px) translateZ(6px);
+  }
+}
+
+/* --- Comment card 3D --- */
+@media (hover: hover) {
+  .cmt3-card {
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .cmt3-card:hover {
+    transform: translateY(-4px) translateZ(6px);
+  }
+}
+
+/* --- CTA ticket 3D --- */
+@media (hover: hover) {
+  .cta5 {
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .cta5:hover {
+    transform: translateY(-3px) translateZ(6px);
+  }
+  .cta5-stub {
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .cta5:hover .cta5-stub {
+    transform: rotate(-2deg) translateZ(10px);
+  }
+}
+
+/* --- Icon badge 3D --- */
+@media (hover: hover) {
+  .icon-badge {
+    transform-style: preserve-3d;
+  }
+  .icon-badge:hover {
+    transform: scale(1.08) rotate(3deg) translateZ(8px);
+  }
+}
+
+/* --- News letter card 3D --- */
+@media (hover: hover) {
+  .f5-newsletter {
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .f5-newsletter:hover {
+    transform: translateY(-3px) translateZ(6px);
+  }
+}
+
+/* --- Reduce motion for accessibility --- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; opacity: 1; transform: none; }
+  .hero-v5-panel { animation: none; }
+  .card-tilt, .btn-wrap, .offset-wrapper, .p5-tile,
+  .v2-item, .promo-v5-stack, .faq5-bubble-user,
+  .mag-card, .cmt3-card, .cta5, .icon-badge, .f5-newsletter {
+    transition: none !important;
+    transform: none !important;
+  }
+}
