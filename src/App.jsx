@@ -1,14 +1,13 @@
 import Header from "./Components/Header/index.jsx";
-import Hero from "./views/Home/sections/Hero/index.jsx";
-import PromoCards from "./views/Home/sections/PromoCards/index.jsx";
-import PathSection from "./views/Home/sections/PathSection/index.jsx";
-import NumbersSection from "./views/Home/sections/NumbersSection/index.jsx";
-import Courses from "./views/Home/sections/Courses/index.jsx";
-import LabSection from "./views/Home/sections/LabSection/index.jsx";
-import Testimonials from "./views/Home/sections/Testimonials/index.jsx";
-import BlogSection from "./views/Home/sections/BlogSection/index.jsx";
-import Faq from "./views/Home/sections/Faq/index.jsx";
-import FinalCta from "./views/Home/sections/FinalCta/index.jsx";
+import Hero from "./pages/Home/sections/Hero/index.jsx";
+import PromoBenefits from "./pages/Home/sections/PromoBenefits/index.jsx";
+import About from "./pages/Home/sections/About/index.jsx";
+import StatsTicker from "./pages/Home/sections/StatsTicker/index.jsx";
+import Courses from "./pages/Home/sections/Courses/index.jsx";
+import CourseCta from "./pages/Home/sections/CourseCta/index.jsx";
+import Faq from "./pages/Home/sections/Faq/index.jsx";
+import Comments from "./pages/Home/sections/Comments/index.jsx";
+import Blogs from "./pages/Home/sections/Blogs/index.jsx";
 import Footer from "./Components/Footer/index.jsx";
 
 export default function App() {
@@ -17,15 +16,14 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <PromoCards />
-        <PathSection />
-        <NumbersSection />
+        <PromoBenefits />
+        <StatsTicker />
+        <About />
         <Courses />
-        <LabSection />
-        <Testimonials />
-        <BlogSection />
+        <CourseCta />
         <Faq />
-        <FinalCta />
+        <Comments />
+        <Blogs />
       </main>
       <Footer />
     </>
