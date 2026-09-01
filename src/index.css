@@ -2478,6 +2478,60 @@ a:focus-visible, button:focus-visible {
 .v2-action .v2-btn:hover { background: var(--cat); color: var(--ink); transform: rotate(0) scale(1.05); }
 .v2-action .v2-btn svg { width: 14px; height: 14px; }
 
+/* ---- V3 Segmented filter (حضوری/آنلاین) ---- */
+.segbar { display: flex; justify-content: center; margin: 0 auto 2.4rem; }
+.segment {
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: .9rem;
+  corner-shape: squircle; -webkit-corner-shape: squircle;
+  padding: .35rem;
+  display: inline-flex;
+  box-shadow: 3px 3px 0 0 var(--ink);
+  gap: .15rem;
+  position: relative;
+}
+.seg-btn {
+  background: transparent; border: none; color: var(--ink);
+  font-family: inherit; font-weight: 800; font-size: 13.5px;
+  padding: .55rem 1.25rem;
+  border-radius: .6rem;
+  corner-shape: squircle; -webkit-corner-shape: squircle;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: .45rem;
+  transition: all .25s ease;
+  position: relative; z-index: 1;
+}
+.seg-btn .cnt { color: var(--ink-subtle); font-weight: 900; font-size: 11.5px; }
+.seg-btn.on { background: var(--ink); color: #fff; }
+.seg-btn.on .cnt { color: var(--college-normal); }
+.seg-btn .dot { width: 7px; height: 7px; border-radius: 50%; }
+.seg-btn[data-f="all"] .dot { background: var(--college-normal); }
+.seg-btn[data-f="onsite"] .dot { background: var(--navy-alt); }
+.seg-btn[data-f="online"] .dot { background: var(--ecosystem); }
+.seg-btn svg { width: 14px; height: 14px; }
+
+/* ---- Mode tokens (onsite/online) ---- */
+.mode-onsite { --mode: var(--navy-alt); --modeBg: #E9EAEF; --modeFg: #182044; --modeBorder: #BABDCC; }
+.mode-online { --mode: var(--ecosystem); --modeBg: #E6F5F3; --modeFg: #28544F; --modeBorder: #CCEAE6; }
+
+/* Inline mode badge inside meta row */
+.mode-inline {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-weight: 800; font-size: 12.5px;
+  color: var(--mode);
+}
+.mode-inline::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--mode);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--mode) 18%, transparent);
+}
+.mode-inline svg { width: 13px; height: 13px; }
+
+/* filter hide animation */
+.v2-list .v2-stack { transition: opacity .25s ease, transform .35s ease; }
+.v2-list .v2-stack.hide { display: none; }
+
 /* ---- CTA footer (shared) ---- */
 .cta-footer { margin-top: 3.5rem; text-align: center; }
 .cta-footer p { font-size: 15px; font-weight: 600; color: var(--ink-subtle); margin: 0 0 1rem; }
@@ -2488,10 +2542,11 @@ a:focus-visible, button:focus-visible {
   corner-shape: squircle; -webkit-corner-shape: squircle;
   font-weight: 900; font-size: 15.5px; text-decoration: none;
   border: 2px solid var(--ink);
+  transform: rotate(-1.5deg);
   box-shadow: 4px 4px 0 0 var(--college-normal);
   transition: all .25s ease;
 }
-.btn-all:hover { background: var(--college-normal); color: var(--ink); transform: scale(1.04); box-shadow: 5px 5px 0 0 var(--ink); }
+.btn-all:hover { background: var(--college-normal); color: var(--ink); transform: rotate(0deg) scale(1.04); box-shadow: 5px 5px 0 0 var(--ink); }
 .btn-all svg { width: 16px; height: 16px; }
 
 /* ---- Pagination buttons ---- */

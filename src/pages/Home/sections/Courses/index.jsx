@@ -1,7 +1,20 @@
-import { courses } from "@/data/content.js";
+import { useState } from "react";
+import { courses, courseCta } from "@/data/content.js";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
 import PatternLayer from "@/components/PatternLayer";
 import { ArrowIcon } from "@/common/Icons";
+
+// Course mode mapping (onsite = حضوری, online = آنلاین)
+const MODE_MAP = [
+  "onsite", "online", "online",
+  "onsite", "online", "onsite", "online",
+];
+
+const MODE_LABEL = { onsite: "دورهٔ حضوری", online: "دورهٔ آنلاین" };
+const MODE_ICON = {
+  onsite: <svg key="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+  online: <svg key="ol" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" width="13" height="13"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>,
+};
 
 var catColors = {
   "فناوری اطلاعات": { bg: "var(--college-light)", fg: "var(--college-darker)", border: "var(--college-light-active)", accent: "var(--college)" },
@@ -19,7 +32,7 @@ var courseIcons = [
 var durations = ["۱۲ هفته", "۱۶ هفته", "۸ هفته", "۱۰ هفته", "۱۲ هفته", "۴ ماه", "۶ ماه"];
 var courseFeatures = [
   ["پروژه‌محور", "مدرس معتبر"], ["React", "پرتفولیو"],
-  ["کی‌استاژ", "ابزارهای واقعی"],
+  ["کیس‌استادی", "ابزارهای واقعی"],
   ["Photoshop", "Illustrator"], ["Premiere", "After Effects"], ["IELTS", "MBA"], ["Canvas", "UI/UX"],
 ];
 var courseTags = [
@@ -28,7 +41,12 @@ var courseTags = [
   ["Premiere Pro", "After Effects", "DaVinci"], ["IELTS", "General English", "Business"],
   ["Canvas", "Figma", "Prototyping"],
 ];
-var toPersianNum = function(n) { return String(n).padStart(2, "0").replace(/\d/g, function(d) { return ["\u06f0","\u06f1","\u06f2","\u06f3","\u06f4","\u06f5","\u06f6","\u06f7","\u06f8","\u06f9"][d]; }); };
+
+var toPersianNum = function(n) {
+  return String(n).padStart(2, "0").replace(/\d/g, function(d) {
+    return ["\u06f0","\u06f1","\u06f2","\u06f3","\u06f4","\u06f5","\u06f6","\u06f7","\u06f8","\u06f9"][d];
+  });
+};
 
 var CourseCard = function(props) {
   var course = props.course;
@@ -39,9 +57,14 @@ var CourseCard = function(props) {
   var features = courseFeatures[index % courseFeatures.length];
   var tags = courseTags[index % courseTags.length];
   var num = toPersianNum(index + 1);
+  var mode = MODE_MAP[index];
 
   return (
-    <div className="v2-stack" style={{ "--cat": cat.accent, "--catBg": cat.bg, "--catFg": cat.fg, "--catBorder": cat.border }}>
+    <div
+      className={"v2-stack mode-" + mode}
+      data-mode={mode}
+      style={{ "--cat": cat.accent, "--catBg": cat.bg, "--catFg": cat.fg, "--catBorder": cat.border }}
+    >
       <article className="v2-item">
         <div className="v2-cover">
           <span className="v2-num">{num.slice(0, 1)}<span>{num.slice(1)}</span></span>
@@ -50,6 +73,11 @@ var CourseCard = function(props) {
         <div className="v2-body">
           <div className="v2-meta">
             <span className="v2-cat-pill">{course.category}</span>
+            <span>•</span>
+            <span className="mode-inline">
+              {MODE_ICON[mode]}
+              {MODE_LABEL[mode]}
+            </span>
             {features.map(function(f) { return <span key={f}>{"• " + f}</span>; })}
           </div>
           <h3 className="t-card">{course.title}</h3>
@@ -69,11 +97,27 @@ var CourseCard = function(props) {
 };
 
 export default function Courses() {
-  var displayCourses = courses.slice(0, 4);
+  var [filter, setFilter] = useState("all");
+  var displayCourses = courses.slice(0, 7);
+  var counts = { all: displayCourses.length };
+  displayCourses.forEach(function(_, i) {
+    var m = MODE_MAP[i];
+    if (!counts[m]) counts[m] = 0;
+    counts[m]++;
+  });
+
+  var filtered = displayCourses.filter(function(_, i) {
+    return filter === "all" || MODE_MAP[i] === filter;
+  });
+
+  var segs = [
+    { f: "all", label: "همه", count: counts.all },
+    { f: "onsite", label: "حضوری", count: counts.onsite },
+    { f: "online", label: "آنلاین", count: counts.online },
+  ];
 
   return (
     <section className="section v2-courses" id="courses" style={{ background: "var(--bg-college-tint)" }}>
-      {/* Background pattern (mask fade) */}
       <PatternLayer rotate={0} />
       <div className="container section-inner">
         <div className="head" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", maxWidth: 820, margin: "0 auto 2rem" }}>
@@ -82,10 +126,47 @@ export default function Courses() {
             {"لیست دوره‌های تخصصی"}
           </span>
           <RotatedHeading words={"از این دوره‌ها شغلت را بساز"} className="t-section" color="var(--navy)" />
-          <p style={{ fontSize: 16.5, lineHeight: 1.75, fontWeight: 600, color: "var(--ink-subtle)", maxWidth: 560, margin: "1rem auto 0" }}>{"لیست کامل دوره‌های کالج در یک نگه — با جزئیات سرفصل و شهریه."}</p>
+          <p style={{ fontSize: 16.5, lineHeight: 1.75, fontWeight: 600, color: "var(--ink-subtle)", maxWidth: 560, margin: "1rem auto 0" }}>
+            {"لیست کامل دوره‌های کالج با فیلتر نحوه برگزاری — حضوری یا آنلاین."}
+          </p>
         </div>
+
+        {/* Segmented filter control */}
+        <div className="segbar">
+          <div className="segment" role="tablist">
+            {segs.map(function(s) {
+              var isOn = filter === s.f;
+              return (
+                <button
+                  key={s.f}
+                  className={"seg-btn" + (isOn ? " on" : "")}
+                  data-f={s.f}
+                  onClick={function() { setFilter(s.f); }}
+                >
+                  <span className="dot" />
+                  {s.label}
+                  <span className="cnt">{s.count}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Course list */}
         <div className="v2-list">
-          {displayCourses.map(function(c, i) { return <CourseCard key={c.title} course={c} index={i} />; })}
+          {filtered.map(function(c, i) {
+            var realIndex = displayCourses.indexOf(c);
+            return <CourseCard key={c.title} course={c} index={realIndex} />;
+          })}
+        </div>
+
+        {/* CTA footer */}
+        <div className="cta-footer">
+          <p>{"هنوز مطمئن نیستی کدام دوره برای توست؟"}</p>
+          <a href="#consult" className="btn-all">
+            {"درخواست مشاوره رایگان"}
+            <ArrowIcon width={16} height={16} />
+          </a>
         </div>
       </div>
     </section>
