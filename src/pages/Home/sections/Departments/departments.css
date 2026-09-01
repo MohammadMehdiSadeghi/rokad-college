@@ -210,7 +210,7 @@
   transform: rotate(-2deg);
   transition: transform .2s ease;
 }
-.dept5-stack.mba .dept5-cta { color: var(--ink); }
+.dept5-stack.business .dept5-cta { color: var(--ink); }
 .dept5-cta:hover { transform: rotate(0) scale(1.05); }
 .dept5-cta svg { width: 13px; height: 13px; }
 

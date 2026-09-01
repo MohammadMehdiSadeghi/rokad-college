@@ -10,10 +10,10 @@ import PatternLayer from "@/components/PatternLayer";
 const departments = [
   {
     id: "it",
-    title: ["فناوری", "و طراحی"],
-    desc: "از طراحی سایت و برنامه‌نویسی تا گرافیک و برندسازی — همهٔ مهارت‌های دنیای دیجیتال در یک مسیر.",
-    chips: ["وردپرس", "فرانت‌اند", "سئو", "فتوشاپ", "طراحی برند"],
-    stat: "+۱۵۰۰",
+    title: ["فناوری", "اطلاعات"],
+    desc: "از طراحی وب و برنامه‌نویسی تا امنیت و شبکه — همهٔ مهارت‌های دنیای دیجیتال در یک مسیر.",
+    chips: ["طراحی سایت", "برنامه‌نویسی", "سئو", "امنیت", "شبکه"],
+    stat: "+۸۰۰",
     statLabel: "هنرجو",
     pattern: "/assets/StatCard/blue.png",
     dept: "var(--navy-alt)",
@@ -21,33 +21,33 @@ const departments = [
     deptDark: "var(--navy)",
   },
   {
-    id: "motion",
-    title: ["تدوین", "و موشن"],
-    desc: "حرکت، ریتم، داستان — یاد بگیر با تصویر متحرک احساس بسازی و پیام برسانی.",
-    chips: ["پریمیر", "افترافکت", "موشن‌گرافیک", "DaVinci"],
-    stat: "+۴۲۰",
-    statLabel: "هنرجو",
-    pattern: "/assets/StatCard/green.png",
-    dept: "var(--teal-alt)",
-    deptLight: "var(--teal-light)",
-    deptDark: "var(--teal-dark)",
-  },
-  {
-    id: "mba",
-    wide: true,
-    title: ["MBA", "و زبان"],
-    desc: "مهارت مدیریتی و تسلط زبان انگلیسی — دو ابزار حیاتی برای رشد شغلی و ورود به بازارهای بین‌المللی. از Business English و آمادگی IELTS تا مدیریت بازاریابی، مالی و رهبری تیم.",
-    chips: ["Business English", "IELTS", "مدیریت بازاریابی", "مدیریت مالی", "رهبری تیم", "مذاکره"],
-    stat: "+۲۸۰",
+    id: "business",
+    title: ["کسب", "و کار"],
+    desc: "مهارت‌های مدیریت، بازاریابی و کارآفرینی — برای شروع و رشد مسیر حرفه‌ات در بازار.",
+    chips: ["مدیریت", "بازاریابی", "کارآفرینی", "حسابداری", "رهبری"],
+    stat: "+۵۰۰",
     statLabel: "هنرجو",
     pattern: "/assets/StatCard/yellow.png",
     dept: "var(--college)",
     deptLight: "var(--college-light)",
     deptDark: "var(--college-darker)",
   },
+  {
+    id: "languages",
+    wide: true,
+    title: ["زبان‌های", "خارجی"],
+    desc: "انگلیسی، آیلتس و زبان‌های بین‌المللی — برای تحصیل، کار و ارتباطات جهانی. از مکالمه روزمره تا Business English و آمادگی آزمون‌های معتبر.",
+    chips: ["IELTS", "Business English", "مکالمه", "تافل", "زبان دوم", "ترجمه"],
+    stat: "+۶۰۰",
+    statLabel: "هنرجو",
+    pattern: "/assets/StatCard/green.png",
+    dept: "var(--teal-alt)",
+    deptLight: "var(--teal-light)",
+    deptDark: "var(--teal-dark)",
+  },
 ];
 
-/* ---- آیکونها (مطابق HTML V5) ---- */
+/* ---- آیکونها (متناسب با دپارتمان) ---- */
 const deptIcons = {
   it: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
@@ -56,16 +56,18 @@ const deptIcons = {
       <line x1="12" y1="17" x2="12" y2="21" />
     </svg>
   ),
-  motion: (
+  business: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="23 7 16 12 23 17 23 7" />
-      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+      <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+      <line x1="12" y1="12" x2="12" y2="12.01" />
     </svg>
   ),
-  mba: (
+  languages: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+      <circle cx="12" cy="12" r="10" />
+      <line x1="2" y1="12" x2="22" y2="12" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
     </svg>
   ),
 };
