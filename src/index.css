@@ -724,45 +724,113 @@ ul { list-style: none; }
   box-shadow: var(--shadow-college);
 }
 
-/* =============================================   Nav — matching rokad-web header structure
+/* =============================================   Nav — V1 Classic floating pill navbar (Rokad DS NavPill)
 ============================================= */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: transparent;
 }
-.nav {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: var(--space-4); padding-block: var(--space-3);
+/* V1 — floating pill wrapper */
+.v1-header {
+  padding: 20px 32px 0;
 }
-/* Desktop nav links */
+.v1-header .pill {
+  max-width: 1180px;
+  margin: 0 auto;
+  background: var(--white, #fff);
+  border-radius: 22px;
+  padding: 12px 18px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow:
+    0 0.0625rem 0.1875rem rgba(0,0,0,0.04),
+    0 0.5rem 1.25rem rgba(33,41,90,0.05),
+    0 1.25rem 2.5rem -0.25rem rgba(33,41,90,0.06);
+  border: 1px solid rgba(41,40,39,0.06);
+}
+/* Desktop nav links (V1: centered, gap 26) */
 .nav-links {
-  display: flex; align-items: center; gap: var(--space-6);
+  display: flex; align-items: center; gap: 26px;
+  flex: 1; justify-content: center;
   font-size: 14px; font-weight: 600; color: var(--navy);
 }
 .nav-links a {
   transition: color 0.2s ease;
-  padding: 4px 0;
+  padding: 6px 4px;
   position: relative;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink, var(--navy));
 }
 .nav-links a::after {
   content: "";
   position: absolute;
-  bottom: 0; right: 0;
-  width: 0; height: 2px;
+  bottom: -2px; right: 0;
+  width: 0; height: 2.5px;
   background: var(--college);
-  transition: width 0.2s ease;
-  border-radius: 1px;
+  transition: width 0.3s ease-out;
+  border-radius: 2px;
 }
+.nav-links a:hover::after,
+.nav-links a.active::after { width: 100%; }
+.nav-links a.active { color: var(--college-darker); font-weight: 900; }
 .nav-links a:hover { color: var(--college-dark); }
-.nav-links a:hover::after { width: 100%; }
 @media (max-width: 900px) { .nav-links { display: none; } }
+
+/* V1 actions row */
+.v1-header .actions {
+  display: flex; align-items: center; gap: 10px;
+}
+/* Icon-only button (search) */
+.ibtn {
+  width: 42px; height: 42px;
+  background: var(--white, #fff);
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink);
+  transition: transform 0.25s;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ibtn:hover { transform: translateY(-2px); }
+.ibtn svg { width: 18px; height: 18px; stroke-width: 2.4; }
+
+/* Login pill (secondary — teal outline style per DS) */
+.login-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--white, #fff); color: var(--sec);
+  padding: 9px 18px; border-radius: 12px;
+  font-weight: 800; font-size: 14px;
+  border: 1.5px solid var(--sec);
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.login-pill:hover { background: var(--sec); color: var(--white); }
+.login-pill svg { width: 14px; height: 14px; stroke-width: 2.5; }
 
 /* Desktop-only CTA button */
 .desktop-only { display: inline-flex; }
 @media (max-width: 900px) { .desktop-only { display: none; } }
+
+/* CTA pill (navy — DS spec, rotated -3deg) */
+.cta-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--sec);
+  color: var(--white, #fff);
+  padding: 11px 22px;
+  border-radius: 12px;
+  font-weight: 900; font-size: 14.5px;
+  transform: rotate(-3deg);
+  transition: transform 0.2s ease-out;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--college);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.cta-pill:hover { transform: rotate(0) scale(1.05); }
+.cta-pill svg { width: 14px; height: 14px; stroke-width: 2.5; }
 
 /* Mobile menu button — hamburger v1 */
 .mobile-menu-btn {
@@ -773,6 +841,9 @@ ul { list-style: none; }
   justify-content: center;
   border-radius: var(--r-sm);
   transition: background 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 .mobile-menu-btn:hover {
   background: rgba(0,0,0,0.05);

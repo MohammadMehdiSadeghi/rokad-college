@@ -6,51 +6,95 @@ const ROTS = [-1, 0.5, -0.5, 1, -1, 0.5];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [active, setActive] = useState(0);
 
   const links = [
-    { t: "چرا رکاد", href: "#promo" },
+    { t: "صفحهٔ اصلی", href: "#top" },
     { t: "ویژگی‌ها", href: "#features" },
     { t: "دوره‌ها", href: "#courses" },
-    { t: "سوالات", href: "#faq" },
-    { t: "نظرات", href: "#comments" },
-    { t: "وبلاگ", href: "#blog" },
+    { t: "اساتید", href: "#about" },
+    { t: "مجله", href: "#blog" },
+    { t: "تماس با ما", href: "#consult" },
   ];
 
   return (
     <>
       <header className="site-header" id="top">
-        <div className="container nav">
-          {/* Logo — right side (RTL) */}
-          <Logo />
+        <div className="v1-header">
+          <div className="pill">
+            {/* Logo — right side (RTL) */}
+            <Logo />
 
-          {/* Desktop nav — hidden on mobile */}
-          <nav className="nav-links">
-            <a href="#promo">چرا رکاد</a>
-            <a href="#features">ویژگی‌ها</a>
-            <a href="#courses">دوره‌ها</a>
-            <a href="#faq">سوالات</a>
-            <a href="#comments">نظرات</a>
-            <a href="#blog">وبلاگ</a>
-          </nav>
+            {/* Desktop nav — hidden on mobile */}
+            <nav className="nav-links">
+              {links.map((l, i) => (
+                <a
+                  key={i}
+                  href={l.href}
+                  className={"nav-link" + (active === i ? " active" : "")}
+                  onClick={() => setActive(i)}
+                >
+                  {l.t}
+                </a>
+              ))}
+            </nav>
 
-          {/* Desktop CTA — hidden on mobile */}
-          <a href="#consult" className="btn btn-sm btn-ghost desktop-only">
-            مشاوره رایگان
-          </a>
+            {/* Actions — search + login + CTA */}
+            <div className="actions">
+              <button className="ibtn" aria-label="جستجو">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.35-4.35" />
+                </svg>
+              </button>
+              <a href="#consult" className="login-pill desktop-only">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4" />
+                  <path d="M10 17l5-5-5-5" />
+                  <path d="M15 12H3" />
+                </svg>
+                ورود
+              </a>
+              <a href="#consult" className="cta-pill">
+                مشاورهٔ رایگان
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M15 6l-6 6 6 6" />
+                </svg>
+              </a>
 
-          {/* Mobile hamburger v1 — classic 3 lines → X */}
-          <button
-            className="mobile-menu-btn"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="منو"
-            aria-expanded={mobileOpen}
-          >
-            <span className={`hb1-bars ${mobileOpen ? "hb1-bars--open" : ""}`}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
-          </button>
+              {/* Mobile hamburger v1 — classic 3 lines → X */}
+              <button
+                className="mobile-menu-btn"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label="منو"
+                aria-expanded={mobileOpen}
+              >
+                <span className={`hb1-bars ${mobileOpen ? "hb1-bars--open" : ""}`}>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -72,7 +116,10 @@ export default function Header() {
             <li key={i}>
               <a
                 href={l.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={() => {
+                  setActive(i);
+                  setMobileOpen(false);
+                }}
                 style={{ transform: `rotate(${ROTS[i]}deg)` }}
               >
                 {l.t}
@@ -88,7 +135,7 @@ export default function Header() {
             className="hb1-cta"
             onClick={() => setMobileOpen(false)}
           >
-            مشاوره رایگان
+            مشاورهٔ رایگان
           </a>
         </div>
       </div>
