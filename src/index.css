@@ -758,6 +758,23 @@ ul { list-style: none; }
 }
 .nav-links a:hover { color: var(--college-dark); }
 .nav-links a:hover::after { width: 100%; }
+/* Active section indicator — orange underline */
+.nav-links .nav-link--active {
+  color: var(--college-dark);
+}
+.nav-links .nav-link--active::after {
+  width: 100%;
+  background: var(--college);
+  height: 2.5px;
+  border-radius: 2px;
+}
+/* Mobile active link */
+.mobile-dropdown-inner .mobile-link--active {
+  background: var(--college-light);
+  color: var(--college-dark);
+  border-left: 3px solid var(--college);
+  padding-right: 13px;
+}
 @media (max-width: 900px) { .nav-links { display: none; } }
 
 /* Desktop-only CTA button */

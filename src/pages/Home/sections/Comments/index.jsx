@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./comments.css";
 import PatternLayer from "@/components/PatternLayer";
+import use3DTilt from "@/lib/use3DTilt";
 
 /* ---------- Testimonials (from the V3 design HTML) ---------- */
 const testimonials = [
@@ -126,6 +127,48 @@ function Chevron({ right = false }) {
   );
 }
 
+/* ---------- Single testimonial card with 3D tilt ---------- */
+function TestimonialCard({ t }) {
+  const tilt = use3DTilt(8, 350);
+
+  return (
+    <article
+      ref={tilt.ref}
+      className="cmt3-card card-tilt"
+      onMouseMove={tilt.onMouseMove}
+      onMouseLeave={tilt.onMouseLeave}
+    >
+      <div className="shadow" />
+      <div className="body">
+        <div className="avatar-side">
+          <div className="avatar-big">{t.name.charAt(0)}</div>
+          <p className="name-white">{t.name}</p>
+          <p className="role-white">{t.role}</p>
+          <div className="cmt3-stars">
+            {Array.from({ length: 5 }, (_, s) => (
+              <StarIcon key={s} />
+            ))}
+          </div>
+        </div>
+        <div className="content-side">
+          <div className="head-row">
+            <span className="course-chip">{t.course}</span>
+            <span className="date">{t.date}</span>
+          </div>
+          <p className="quote-text">{t.quote}</p>
+          <div className="foot-row">
+            <span className="status">
+              <span className="pulse" />
+              {t.status}
+            </span>
+            <span>هنرجوی رکاد</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 /* ---------- Component ---------- */
 export default function Comments() {
   const [idx, setIdx] = useState(0);
@@ -208,36 +251,8 @@ export default function Comments() {
             className="cmt3-track"
             style={{ transform: `translateX(${shift}px)` }}
           >
-            {testimonials.map((t, i) => (
-              <article className="cmt3-card" key={t.name}>
-                <div className="shadow" />
-                <div className="body">
-                  <div className="avatar-side">
-                    <div className="avatar-big">{t.name.charAt(0)}</div>
-                    <p className="name-white">{t.name}</p>
-                    <p className="role-white">{t.role}</p>
-                    <div className="cmt3-stars">
-                      {Array.from({ length: 5 }, (_, s) => (
-                        <StarIcon key={s} />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="content-side">
-                    <div className="head-row">
-                      <span className="course-chip">{t.course}</span>
-                      <span className="date">{t.date}</span>
-                    </div>
-                    <p className="quote-text">{t.quote}</p>
-                    <div className="foot-row">
-                      <span className="status">
-                        <span className="pulse" />
-                        {t.status}
-                      </span>
-                      <span>هنرجوی رکاد</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
+            {testimonials.map((t) => (
+              <TestimonialCard key={t.name} t={t} />
             ))}
           </div>
         </div>
