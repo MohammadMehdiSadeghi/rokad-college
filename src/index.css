@@ -734,7 +734,6 @@ ul { list-style: none; }
 /* ── Desktop scrolled: floating compact pill ───────────────── */
 .site-header.scrolled {
   background: transparent;
-  box-shadow: 0 4px 24px rgba(33,41,90,0.08);
 }
 /* V1 — pill wrapper */
 .v1-header {
