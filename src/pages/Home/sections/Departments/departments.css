@@ -17,10 +17,10 @@
   z-index: 10;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 96px var(--space-6) 0;
+  padding: 80px var(--space-6);
 }
 @media (max-width: 768px) {
-  .dept5-inner { padding-top: 64px; }
+  .dept5-inner { padding: 48px var(--space-6); }
 }
 
 /* ---- Section heading ---- */
@@ -274,7 +274,6 @@
 
 /* ---- Responsive ---- */
 @media (max-width: 640px) {
-  .dept5-inner { padding-top: 56px; }
   .dept5-body h3 { font-size: 26px; }
   .dept5-header { min-height: 84px; padding: 1.25rem 1.25rem; }
   .dept5-icon-box { width: 52px; height: 52px; }

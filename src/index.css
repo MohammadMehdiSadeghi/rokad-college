@@ -503,9 +503,9 @@ ul { list-style: none; }
    LAYOUT
 ============================================= */
 .container { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: var(--space-6); }
-.section   { padding-block: var(--space-16); position: relative; }
-@media (max-width: 1024px) { .section { padding-block: var(--space-12); } }
-@media (max-width: 768px)  { .section { padding-block: var(--space-10); } }
+.section   { padding-block: 80px; position: relative; }
+@media (max-width: 1024px) { .section { padding-block: 48px; } }
+@media (max-width: 768px)  { .section { padding-block: 40px; } }
 
 /* Section background pattern (fade at edges) */
 .bg-pattern {
