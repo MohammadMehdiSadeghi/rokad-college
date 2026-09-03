@@ -3343,3 +3343,493 @@ a:focus-visible, button:focus-visible {
   margin-top: .25rem; transition: all .25s;
 }
 .hero-v5-all:hover { background: var(--college); color: var(--ink); }
+
+/* لینک تیتر کارت‌های مجله به تک‌مقاله */
+.mag-title-link { display: inline; color: inherit; transition: color .2s ease; }
+.mag-title-link:hover { color: var(--college-dark); }
+
+/* ============================================================
+   BLOG SINGLE — تک‌صفحهٔ بلاگ (دیزاین کالج)
+   ساختار برگرفته از تک‌صفحهٔ بلاگ رکاد وب — رنگ‌بندی کالج
+   ============================================================ */
+
+/* ---------- هیرو ---------- */
+.bs-hero { position: relative; overflow: hidden; background: var(--bg-college-tint); padding: 34px 0 66px; }
+.bs-hero-in { position: relative; z-index: 2; }
+.bs-back {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #fff; border: 2px solid var(--navy); color: var(--navy);
+  font-weight: 800; font-size: 13px;
+  padding: 8px 16px; border-radius: 10px; margin-bottom: 34px;
+  transition: all .2s ease;
+}
+.bs-back:hover { background: var(--navy); color: #fff; transform: translateY(-2px); }
+.bs-hero-grid { display: grid; grid-template-columns: 1.06fr .94fr; gap: 58px; align-items: center; }
+
+.bs-eyebrow {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: #fff; border: 2px solid var(--ink);
+  font-size: 12.5px; font-weight: 800; color: var(--ink);
+  padding: 7px 16px; border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--college);
+  transform: rotate(-1deg); margin-bottom: 22px;
+}
+.bs-eyebrow i { width: 8px; height: 8px; border-radius: 50%; display: block; animation: bsPulse 1.6s ease-in-out infinite; }
+@keyframes bsPulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+.bs-title {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px;
+  font-weight: 950; font-size: 46px; line-height: 1.3; color: var(--ink);
+  margin: 0 0 18px;
+}
+.bs-title .w { display: inline-block; }
+.bs-title .w.hl { color: var(--college-dark); }
+.bs-sub { color: #5a5654; font-size: 16px; font-weight: 600; line-height: 2; max-width: 620px; margin: 0 0 28px; }
+
+.bs-meta { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.bs-meta-item { display: inline-flex; align-items: center; gap: 9px; font-size: 13.5px; font-weight: 700; color: var(--ink-subtle); }
+.bs-meta-item strong { font-weight: 900; color: var(--ink); }
+.bs-meta-item .ic {
+  width: 34px; height: 34px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; border: 1.5px solid var(--ink); border-radius: 10px 0 10px 0;
+}
+
+/* کاور */
+.bs-cover { position: relative; }
+.bs-cover-sh {
+  position: absolute; top: 12px; left: 12px; width: 100%; height: 100%;
+  border-radius: 0 36px 0 36px; z-index: 0;
+}
+.bs-cover-card {
+  position: relative; z-index: 1;
+  aspect-ratio: 16 / 10; min-height: 240px;
+  border: 3px solid var(--ink); border-radius: 0 36px 0 36px;
+  overflow: hidden; color: #fff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.bs-cover-pattern { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .35; }
+.bs-cover-num { position: absolute; top: 16px; right: 20px; font-weight: 950; font-size: 22px; opacity: .8; }
+.bs-cover-glyph { position: relative; z-index: 1; font-size: 58px; font-weight: 950; line-height: 1; }
+.bs-cover-label { position: relative; z-index: 1; font-weight: 900; font-size: 17px; margin-top: 12px; }
+.bs-cover-cap { position: relative; z-index: 1; font-size: 12.5px; font-weight: 600; opacity: .85; margin-top: 4px; }
+.bs-sticker {
+  position: absolute; top: -16px; right: -10px; z-index: 3;
+  display: inline-flex; align-items: center; gap: 7px;
+  color: var(--ink); font-size: 12.5px; font-weight: 900; white-space: nowrap;
+  padding: 8px 15px; border: 2px solid var(--ink); border-radius: 12px;
+  box-shadow: 3px 3px 0 var(--ink); transform: rotate(2deg);
+}
+.bs-sticker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
+
+/* ---------- بدنه + سایدبار ---------- */
+.bs-body { background: #fff; }
+.bs-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 58px; align-items: start; padding-block: 34px 10px; }
+.bs-article { min-width: 0; max-width: 860px; }
+.bs-side { position: sticky; top: 108px; display: flex; flex-direction: column; gap: 22px; }
+
+/* بلاک‌های متن */
+.bs-lead { margin: 8px 0 32px; }
+.bs-lead > p { font-size: 18px; font-weight: 700; color: var(--ink); line-height: 2.05; }
+.bs-lead-stats { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; }
+.bs-lead-stat {
+  display: flex; flex-direction: column;
+  background: #fff; border: 2px solid var(--ink);
+  border-radius: 0 16px 0 16px; padding: 12px 18px 12px 20px;
+  box-shadow: 4px 4px 0 var(--college);
+}
+.bs-lead-stat .val { font-weight: 950; font-size: 21px; color: var(--college-dark); }
+.bs-lead-stat .lbl { font-size: 12.5px; font-weight: 700; color: var(--ink-subtle); line-height: 1.7; max-width: 190px; }
+
+.bs-h2 {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px;
+  font-weight: 950; font-size: 31px; line-height: 1.45; color: var(--ink);
+  margin: 46px 0 18px; scroll-margin-top: 112px;
+}
+.bs-h2 .w { display: inline-block; }
+.bs-h2 .w.hl { color: var(--college-dark); }
+
+.bs-h3 { display: flex; align-items: center; gap: 12px; font-size: 21px; font-weight: 900; color: var(--navy); margin: 34px 0 14px; }
+.bs-h3 .bar { width: 8px; height: 26px; flex-shrink: 0; display: block; border-radius: 4px; background: var(--college); }
+
+.bs-p { font-size: 16px; color: rgba(41, 40, 39, .86); line-height: 2.15; margin: 0 0 18px; }
+.bs-strong { color: var(--ink); font-weight: 900; border-bottom: 2px solid var(--college); }
+.bs-em { color: var(--college-dark); font-weight: 800; }
+
+/* نقل‌قول */
+.bs-quote {
+  position: relative; margin: 36px 0;
+  padding: 30px 32px 24px; border: 2px solid;
+  border-radius: 0 26px 0 26px;
+}
+.bs-quote .mark { position: absolute; top: 4px; right: 22px; font-size: 66px; line-height: 1; font-weight: 950; }
+.bs-quote blockquote { font-size: 17px; font-weight: 800; color: var(--ink); line-height: 2.05; margin: 0; }
+.bs-quote figcaption { margin-top: 14px; font-size: 13px; font-weight: 900; }
+
+/* جعبهٔ اطلاعات */
+.bs-info { position: relative; overflow: hidden; margin: 32px 0; background: #fff; border: 2px solid var(--ink); border-radius: 0 22px 0 22px; }
+.bs-info-tint { position: absolute; inset: 0; opacity: .08; pointer-events: none; }
+.bs-info-in { position: relative; padding: 24px 26px; }
+.bs-info-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #fff; font-size: 13px; font-weight: 900;
+  padding: 7px 15px; border-radius: 999px; margin-bottom: 18px;
+}
+.bs-info-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 26px; }
+.bs-info-list li { display: flex; align-items: baseline; gap: 9px; font-size: 14.5px; color: var(--ink); line-height: 1.95; }
+.bs-info-list .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; align-self: center; }
+.bs-info-list strong { font-weight: 900; }
+
+/* درس‌ها */
+.bs-lesson {
+  position: relative; margin: 16px 0; background: #fff;
+  border: 2px solid rgba(41, 40, 39, .14); border-radius: 0 18px 0 18px;
+  padding: 22px 82px 22px 26px;
+}
+.bs-lesson .num {
+  position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+  width: 46px; height: 46px; display: grid; place-items: center;
+  background: var(--college); border: 2px solid var(--ink); color: var(--ink);
+  font-weight: 950; font-size: 18px; border-radius: 0 12px 0 12px;
+}
+.bs-lesson h4 { font-size: 16.5px; font-weight: 900; color: var(--navy); margin: 0 0 6px; }
+.bs-lesson p { font-size: 14.5px; color: rgba(41, 40, 39, .8); line-height: 2; margin: 0; }
+
+/* نفرات */
+.bs-people { margin: 26px 0; }
+.bs-people-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.bs-people-grid.accent { margin-top: 12px; grid-template-columns: repeat(3, 1fr); }
+.bs-person {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  background: #fff; border: 2px solid var(--ink);
+  border-radius: 0 16px 0 16px; padding: 18px 10px 14px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.bs-person .avatar {
+  width: 46px; height: 46px; border-radius: 50%; color: #fff;
+  font-weight: 950; font-size: 15px; display: grid; place-items: center;
+  margin-bottom: 10px;
+}
+.bs-person .name { font-size: 13px; font-weight: 900; color: var(--ink); line-height: 1.5; }
+.bs-person .role { font-size: 11px; font-weight: 700; color: var(--ink-subtle); margin-top: 2px; }
+.bs-person .badge { font-size: 10px; font-weight: 900; color: #fff; border-radius: 6px; padding: 3px 9px; margin-top: 8px; }
+
+/* گالری */
+.bs-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 32px 0; }
+.bs-tile { position: relative; }
+.bs-tile-sh {
+  position: absolute; top: 5px; left: 5px; width: 100%; height: 100%;
+  background: var(--ink); border-radius: 0 16px 0 16px;
+}
+.bs-tile-card {
+  position: relative; aspect-ratio: 4 / 3;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 2.5px solid var(--ink); border-radius: 0 16px 0 16px;
+  overflow: hidden; color: #fff;
+}
+.bs-tile-pattern { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .25; }
+.bs-tile .num {
+  position: absolute; top: 8px; right: 10px; z-index: 1;
+  font-size: 10.5px; font-weight: 950; color: #fff;
+  background: rgba(41, 40, 39, .82); border-radius: 6px; padding: 2px 8px;
+}
+.bs-tile-icon { position: relative; z-index: 1; width: 30px; height: 30px; }
+.bs-tile .lbl { position: relative; z-index: 1; font-size: 12px; font-weight: 800; margin-top: 7px; }
+
+/* سکو */
+.bs-podium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 34px 0; align-items: stretch; }
+.bs-podium-col { position: relative; }
+.bs-podium-col.winner .bs-podium-card { transform: scale(1.045); z-index: 2; }
+.bs-podium-sh {
+  position: absolute; top: 6px; left: 6px; width: 100%; height: 100%;
+  background: var(--ink); border-radius: 0 20px 0 20px;
+}
+.bs-podium-card {
+  position: relative; height: 100%; background: #fff;
+  border: 2.5px solid var(--ink); border-radius: 0 20px 0 20px;
+  padding: 22px 16px; text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+.bs-podium .medal { font-size: 36px; line-height: 1; margin-bottom: 10px; }
+.bs-podium .rank { font-size: 11px; font-weight: 950; color: #fff; border-radius: 999px; padding: 5px 13px; margin-bottom: 10px; }
+.bs-podium .team { font-size: 15.5px; font-weight: 950; color: var(--ink); margin-bottom: 5px; }
+.bs-podium .proj { font-size: 12.5px; font-weight: 600; color: rgba(41, 40, 39, .6); line-height: 1.85; margin-bottom: 10px; }
+.bs-podium .members { font-size: 11.5px; font-weight: 900; color: var(--teal-dark); margin-top: auto; }
+
+/* خط زمانی */
+.bs-tl { position: relative; margin: 34px 0 30px; padding-right: 32px; }
+.bs-tl::before {
+  content: ""; position: absolute; right: 9px; top: 8px; bottom: 8px; width: 3px;
+  border-radius: 999px;
+  background: repeating-linear-gradient(to bottom, var(--college) 0 9px, transparent 9px 15px);
+}
+.bs-tl-item { position: relative; margin-bottom: 16px; }
+.bs-tl-item .node {
+  position: absolute; right: -31px; top: 22px; width: 19px; height: 19px;
+  background: var(--college); border: 2.5px solid var(--ink); border-radius: 50%; z-index: 1;
+}
+.bs-tl-card {
+  background: var(--college-light); border: 2px solid rgba(248, 164, 29, .4);
+  border-radius: 0 16px 0 16px; padding: 15px 19px;
+}
+.bs-tl-card .date { display: block; font-size: 11.5px; font-weight: 950; color: var(--college-dark); margin-bottom: 4px; }
+.bs-tl-card strong { display: block; font-size: 15px; font-weight: 900; color: var(--navy); margin-bottom: 4px; }
+.bs-tl-card p { font-size: 13.5px; font-weight: 500; color: rgba(41, 40, 39, .75); line-height: 1.95; margin: 0; }
+
+/* تگ‌ها */
+.bs-tags {
+  display: flex; flex-wrap: wrap; gap: 9px;
+  margin: 38px 0 26px; padding-top: 28px;
+  border-top: 1.5px solid rgba(41, 40, 39, .12);
+}
+.bs-tag { font-size: 12.5px; font-weight: 800; padding: 7px 15px; border-radius: 999px; border: 2px solid; transition: transform .2s ease; }
+.bs-tag:hover { transform: translateY(-2px); }
+
+/* اشتراک */
+.bs-share { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 34px; }
+.bs-share > span { font-size: 13px; font-weight: 900; color: rgba(41, 40, 39, .72); }
+.bs-share .btns { display: flex; gap: 8px; }
+.bs-share .btns button {
+  width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;
+  color: #fff; border: 2px solid var(--ink); border-radius: 9px; cursor: pointer;
+  transition: transform .2s ease;
+}
+.bs-share .btns button:hover { transform: translateY(-2px) rotate(-3deg); }
+.bs-share .tg { background: #0a78b5; }
+.bs-share .x { background: var(--ink); }
+.bs-share .in { background: #0a66c2; }
+.bs-share .cp { background: var(--teal); }
+
+/* نویسنده */
+.bs-author { position: relative; margin: 8px 0 20px; }
+.bs-author-sh {
+  position: absolute; top: 6px; left: 6px; width: 100%; height: 100%;
+  background: var(--college); border-radius: 0 22px 0 22px;
+}
+.bs-author-card {
+  position: relative; display: flex; align-items: center; gap: 18px;
+  background: #fff; border: 2.5px solid var(--ink);
+  border-radius: 0 22px 0 22px; padding: 22px 26px;
+}
+.bs-author .avatar {
+  width: 58px; height: 58px; flex-shrink: 0; border-radius: 50%;
+  background: var(--navy); color: #fff; font-weight: 950; font-size: 22px;
+  display: grid; place-items: center;
+}
+.bs-author .bio { display: flex; flex-direction: column; min-width: 0; }
+.bs-author .lbl { font-size: 11px; font-weight: 900; color: var(--college-dark); margin-bottom: 2px; }
+.bs-author strong { font-size: 17px; font-weight: 950; color: var(--navy); margin-bottom: 6px; }
+.bs-author p { font-size: 13px; font-weight: 500; color: rgba(41, 40, 39, .68); line-height: 1.9; margin: 0; }
+
+/* سایدبار */
+.bs-card-stack { position: relative; }
+.bs-card-stack::before {
+  content: ""; position: absolute; top: 6px; left: 6px; width: 100%; height: 100%;
+  border-radius: 0 20px 0 20px;
+}
+.bs-card-stack.sh-amber::before { background: var(--college); }
+.bs-card-stack.sh-ink::before { background: var(--ink); }
+.bs-card-stack.sh-navy::before { background: var(--navy-alt); }
+.bs-card-stack .bs-card {
+  position: relative; z-index: 1; background: #fff;
+  border: 2.5px solid var(--ink); border-radius: 0 20px 0 20px; padding: 20px;
+}
+.bs-card-head { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 950; color: var(--navy); margin-bottom: 12px; }
+.bs-toc { list-style: none; margin: 0; padding: 0; }
+.bs-toc a {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 7px 2px; font-size: 13px; font-weight: 800;
+  color: rgba(41, 40, 39, .72); line-height: 1.8;
+  border-bottom: 1px dashed rgba(41, 40, 39, .12); transition: color .2s ease;
+}
+.bs-toc li:last-child a { border-bottom: 0; }
+.bs-toc a:hover { color: var(--college-dark); }
+.bs-toc .num { min-width: 22px; font-size: 11px; font-weight: 950; color: var(--college-dark); margin-top: 2px; }
+
+.bs-mini-cta { background: var(--college) !important; }
+.bs-mini-cta .title { font-size: 18px; font-weight: 950; color: var(--ink); margin-bottom: 8px; }
+.bs-mini-cta p { font-size: 12.5px; font-weight: 600; color: rgba(41, 40, 39, .78); line-height: 1.9; margin: 0 0 16px; }
+.bs-mini-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #fff; color: var(--navy); border: 2px solid var(--ink);
+  font-size: 12.5px; font-weight: 900; padding: 9px 16px; border-radius: 8px;
+  transform: rotate(-1deg); box-shadow: 3px 3px 0 var(--ink);
+  transition: all .2s ease;
+}
+.bs-mini-btn:hover { transform: rotate(0) translateY(-2px); }
+.bs-rel { list-style: none; margin: 0; padding: 0; }
+.bs-rel li + li { border-top: 1px solid rgba(41, 40, 39, .08); }
+.bs-rel a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 2px; font-size: 13px; font-weight: 800;
+  color: rgba(41, 40, 39, .78); line-height: 1.75; transition: color .2s ease;
+}
+.bs-rel a:hover { color: var(--college-dark); }
+.bs-rel .glyph {
+  width: 32px; height: 32px; flex-shrink: 0; display: grid; place-items: center;
+  background: var(--college-light); border: 1.5px solid var(--college);
+  color: var(--college-dark); font-weight: 950; font-size: 14px; border-radius: 8px;
+}
+
+/* ---------- نظرات مقاله ---------- */
+.bs-comments { position: relative; overflow: hidden; background: var(--bg-college-tint); padding: 78px 0; }
+.bs-comments-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 30px; }
+.bs-comments-head h2 { display: flex; gap: 4px; font-size: 33px; font-weight: 950; color: var(--ink); margin: 0; }
+.bs-comments-head h2 .w { display: inline-block; }
+.bs-comments-head h2 .w.hl { color: var(--accent); }
+.bs-comments-head .count { font-size: 12.5px; font-weight: 900; color: var(--ink-subtle); }
+.bs-cform {
+  background: #fff; border: 2.5px solid var(--ink);
+  border-radius: 0 24px 0 24px; padding: 26px; margin-bottom: 28px;
+  box-shadow: 6px 6px 0 var(--college);
+}
+.bs-cform .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.bs-cform input, .bs-cform textarea {
+  width: 100%; border: 2px solid rgba(41, 40, 39, .15); background: var(--bg-college-tint);
+  border-radius: 12px; padding: 12px 16px; font-family: inherit; font-size: 13.5px;
+  font-weight: 600; color: var(--ink); outline: none; transition: border-color .2s ease; resize: none;
+}
+.bs-cform input::placeholder, .bs-cform textarea::placeholder { color: var(--ink-subtle); }
+.bs-cform input:focus, .bs-cform textarea:focus { border-color: var(--college); }
+.bs-cform textarea { margin-bottom: 16px; }
+.bs-send {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--navy); color: #fff; border: 2px solid var(--ink);
+  font-weight: 900; font-size: 14px; padding: 11px 22px; border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--college); transition: all .2s ease;
+}
+.bs-send:hover { background: var(--college); color: var(--ink); transform: translateY(-2px); }
+.bs-clist { display: flex; flex-direction: column; gap: 14px; }
+.bs-citem {
+  display: flex; gap: 15px; background: #fff;
+  border: 2px solid rgba(41, 40, 39, .1); border-radius: 0 16px 0 16px; padding: 17px 19px;
+}
+.bs-citem .avatar {
+  width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%;
+  color: #fff; font-weight: 950; font-size: 14px; display: grid; place-items: center;
+}
+.bs-citem .avatar.av0 { background: var(--teal); }
+.bs-citem .avatar.av1 { background: var(--accent); }
+.bs-citem .avatar.av2 { background: var(--navy-alt); }
+.bs-citem .avatar.av3 { background: var(--college); color: var(--ink); }
+.bs-citem .head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.bs-citem .head strong { font-size: 14.5px; font-weight: 950; color: var(--navy); }
+.bs-citem .head span { font-size: 11.5px; font-weight: 700; color: rgba(41, 40, 39, .45); }
+.bs-citem p { font-size: 13.5px; font-weight: 500; color: rgba(41, 40, 39, .8); line-height: 1.95; margin: 0; }
+
+/* ---------- مقالات مرتبط ---------- */
+.bs-related { position: relative; background: #fff; padding: 80px 0; }
+.bs-rel-title {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px;
+  font-size: 33px; font-weight: 950; color: var(--ink); margin: 0 0 44px;
+}
+.bs-rel-title .w { display: inline-block; }
+.bs-rel-title .w.hl { color: var(--college-dark); }
+.bs-rp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.bs-rp { position: relative; display: block; }
+.bs-rp-sh {
+  position: absolute; top: 7px; left: 7px; width: 100%; height: 100%;
+  background: var(--ink); border-radius: 0 22px 0 22px;
+  transition: top .3s ease, left .3s ease;
+}
+.bs-rp:hover .bs-rp-sh { top: 11px; left: 11px; }
+.bs-rp-card {
+  position: relative; background: #fff; border: 2.5px solid var(--ink);
+  border-radius: 0 22px 0 22px; overflow: hidden;
+  transition: transform .3s ease;
+}
+.bs-rp:hover .bs-rp-card { transform: translateY(-3px); }
+.bs-rp .cover {
+  position: relative; height: 150px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; border-bottom: 2.5px solid var(--ink);
+}
+.bs-rp .cover .pat { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .3; }
+.bs-rp .cover .glyph { position: relative; z-index: 1; font-size: 40px; font-weight: 950; }
+.bs-rp .cover .num {
+  position: absolute; top: 10px; right: 12px; z-index: 1;
+  font-size: 12px; font-weight: 950; background: rgba(41, 40, 39, .82);
+  border-radius: 6px; padding: 2px 9px;
+}
+.bs-rp .cover .cat {
+  position: absolute; bottom: 10px; left: 12px; z-index: 1;
+  background: #fff; color: var(--ink); font-size: 10.5px; font-weight: 900;
+  padding: 4px 11px; border-radius: 999px; border: 1.5px solid var(--ink);
+}
+.bs-rp .body { padding: 17px 19px 14px; }
+.bs-rp .body h3 { font-size: 15px; font-weight: 950; color: var(--navy); line-height: 1.65; margin: 0 0 8px; }
+.bs-rp .body p {
+  font-size: 12px; font-weight: 500; color: rgba(41, 40, 39, .62); line-height: 1.95; margin: 0 0 12px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.bs-rp .foot {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px dashed rgba(41, 40, 39, .15); padding-top: 10px;
+}
+.bs-rp .foot .date { font-size: 11px; font-weight: 800; color: rgba(41, 40, 39, .5); }
+.bs-rp .foot .go {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12.5px; font-weight: 950; color: var(--college-dark);
+}
+
+/* ---------- CTA پایانی ---------- */
+.bs-final { position: relative; background: var(--bg-college-tint); padding: 78px 0; }
+.bs-cta {
+  position: relative; background: #fff; border: 3px solid var(--ink);
+  border-radius: 26px; box-shadow: 10px 10px 0 var(--college);
+  padding: 50px 40px; text-align: center; max-width: 920px; margin: 0 auto;
+}
+.bs-cta-title {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0 12px;
+  font-size: 35px; font-weight: 950; line-height: 1.4; color: var(--ink); margin: 0 0 14px;
+}
+.bs-cta-title .w { display: inline-block; }
+.bs-cta-title .w.hl { color: var(--college-dark); }
+.bs-cta-desc {
+  font-size: 15px; font-weight: 600; color: rgba(41, 40, 39, .7); line-height: 2;
+  max-width: 660px; margin: 0 auto 28px;
+}
+.bs-cta-actions { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+.bs-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 950; font-size: 14.5px; padding: 13px 27px; border-radius: 12px;
+  border: 2.5px solid var(--ink); transition: all .25s ease;
+}
+.bs-btn-solid { background: var(--navy); color: #fff; box-shadow: 4px 4px 0 var(--college); }
+.bs-btn-solid:hover { background: var(--college); color: var(--ink); transform: translateY(-3px); box-shadow: 6px 6px 0 var(--college-dark); }
+.bs-btn-ghost { background: #fff; color: var(--navy); }
+.bs-btn-ghost:hover { background: var(--college-light); transform: translateY(-3px) rotate(-1deg); }
+
+/* ---------- ریسپانسیو ---------- */
+@media (max-width: 1024px) {
+  .bs-hero { padding: 26px 0 50px; }
+  .bs-hero-grid { grid-template-columns: 1fr; gap: 46px; }
+  .bs-cover { max-width: 560px; }
+  .bs-layout { grid-template-columns: 1fr; }
+  .bs-side { position: static; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .bs-people-grid { grid-template-columns: repeat(3, 1fr); }
+  .bs-gallery { grid-template-columns: repeat(3, 1fr); }
+  .bs-rp-grid { grid-template-columns: repeat(2, 1fr); }
+  .bs-podium { grid-template-columns: 1fr; max-width: 430px; margin-inline: auto; }
+  .bs-podium-col.winner .bs-podium-card { transform: none; }
+}
+@media (max-width: 768px) {
+  .bs-title { font-size: 33px; }
+  .bs-h2 { font-size: 25px; }
+  .bs-cform .row { grid-template-columns: 1fr; }
+  .bs-gallery { grid-template-columns: repeat(2, 1fr); }
+  .bs-rp-grid { grid-template-columns: 1fr; }
+  .bs-info-list { grid-template-columns: 1fr; }
+  .bs-cta { padding: 36px 22px; box-shadow: 7px 7px 0 var(--college); }
+  .bs-cta-title { font-size: 27px; }
+  .bs-sticker { right: -4px; }
+  .bs-cover-sh { top: 8px; left: 8px; }
+}
+@media (max-width: 560px) {
+  .bs-people-grid, .bs-people-grid.accent { grid-template-columns: repeat(2, 1fr); }
+  .bs-title { font-size: 27px; }
+  .bs-quote blockquote { font-size: 15px; }
+  .bs-lesson { display: flex; flex-direction: column; padding: 20px 20px 20px 18px; }
+  .bs-lesson .num { position: static; transform: none; width: 40px; height: 40px; margin-bottom: 12px; }
+  .bs-author-card { flex-direction: column; align-items: flex-start; }
+}

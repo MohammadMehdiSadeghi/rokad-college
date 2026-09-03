@@ -1,52 +1,6 @@
 /* V3 — Editorial Magazine */
 import PatternLayer from "@/components/PatternLayer";
-
-const articles = [
-  {
-    num: "۰۱",
-    glyph: "✦",
-    cat: "مسیر شغلی",
-    readTime: "۸ دقیقه مطالعه",
-    title: "از یک هنرجوی صفر تا اولین قرارداد فریلنسری",
-    excerpt:
-      "روایت‌های واقعی از هنرجویانی که در کمتر از یک سال، درآمد ماهانه‌شان را از صفر به میلیون‌ها تومان رساندند.",
-    author: "کیارش رضایی",
-    initial: "ک",
-  },
-  {
-    num: "۰۲",
-    glyph: "</>",
-    cat: "فرانت‌اند",
-    readTime: "۱۲ دقیقه مطالعه",
-    title: "چرا JavaScript هنوز اولویت اول تازه‌واردهاست؟",
-    excerpt:
-      "مقایسهٔ بازار کار و طول یادگیری بین جاوااسکریپت، پایتون و PHP در ایران — به‌همراه دادهٔ واقعی از آگهی‌های استخدام.",
-    author: "مریم صالحی",
-    initial: "م",
-  },
-  {
-    num: "۰۳",
-    glyph: "✎",
-    cat: "گرافیک",
-    readTime: "۶ دقیقه مطالعه",
-    title: "هفت اشتباه رایج در طراحی لوگو که برند شما را می‌کشد",
-    excerpt:
-      "راهنمایی برای طراحان تازه‌کار و صاحبان کسب‌وکار: چه وقت لوگو کار نمی‌کند و چطور آن را تشخیص دهیم.",
-    author: "ایمان کریمی",
-    initial: "ا",
-  },
-  {
-    num: "۰۴",
-    glyph: "◐",
-    cat: "MBA و زبان",
-    readTime: "۱۰ دقیقه مطالعه",
-    title: "آیا MBA برای نسل جوان ایران ارزش سرمایه‌گذاری دارد؟",
-    excerpt:
-      "یک نگاه صادقانه به بازگشت سرمایهٔ MBA در بازار کار امروز ایران، بر اساس گفتگو با ۲۰ فارغ‌التحصیل رکاد.",
-    author: "نگار موسوی",
-    initial: "ن",
-  },
-];
+import { articles } from "@/data/blogArticles";
 
 export default function Blogs() {
   return (
@@ -71,19 +25,19 @@ export default function Blogs() {
           </div>
           <div className="right">
             <a href="#consult" className="mag-btn">
-                          <svg
-                            className="arrow"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                          >
-                            <path d="M12 5v14M5 12h14" />
-                          </svg>
-                          دنبال‌کردن مجله
+              <svg
+                className="arrow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              دنبال‌کردن مجله
             </a>
           </div>
         </div>
@@ -91,7 +45,7 @@ export default function Blogs() {
         {/* Cards grid */}
         <div className="mag-grid">
           {articles.map((a) => (
-            <article className="mag-card" key={a.num}>
+            <article className="mag-card" key={a.slug}>
               <div className="shadow" />
               <div className="body">
                 <div className="cover">
@@ -103,14 +57,18 @@ export default function Blogs() {
                     <span className="cat">{a.cat}</span>
                     <span className="read-time">{a.readTime}</span>
                   </div>
-                  <h3>{a.title}</h3>
+                  <h3>
+                    <a href={`#article/${a.slug}`} className="mag-title-link">
+                      {a.title}
+                    </a>
+                  </h3>
                   <p>{a.excerpt}</p>
                   <div className="foot">
                     <div className="author-mini">
                       <span className="dot">{a.initial}</span>
                       <span>{a.author}</span>
                     </div>
-                    <a href="#blog" className="go">
+                    <a href={`#article/${a.slug}`} className="go">
                       مطالعه
                       <svg
                         viewBox="0 0 24 24"
