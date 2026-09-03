@@ -24,7 +24,7 @@ export default function Blogs() {
             </p>
           </div>
           <div className="right">
-            <a href="#consult" className="mag-btn">
+            <a href="#blog-index" className="mag-btn">
               <svg
                 className="arrow"
                 viewBox="0 0 24 24"
@@ -105,7 +105,7 @@ export default function Blogs() {
             </div>
           </div>
           <a
-            href="#blog"
+            href="#blog-index"
             className="mag-btn"
             style={{ background: "var(--college)", color: "var(--ink)" }}
           >

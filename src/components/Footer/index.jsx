@@ -2,16 +2,16 @@ import { useState } from "react";
 
 /* ---------- Data (from the V5 design) ---------- */
 const departments = [
-  { label: "فناوری اطلاعات", href: "#courses" },
-  { label: "گرافیک", href: "#courses" },
-  { label: "زبان و MBA", href: "#courses" },
-  { label: "دیجیتال مارکتینگ", href: "#courses" },
+  { label: "فناوری اطلاعات", href: "#courses-index" },
+  { label: "گرافیک", href: "#courses-index" },
+  { label: "زبان و MBA", href: "#courses-index" },
+  { label: "دیجیتال مارکتینگ", href: "#courses-index" },
 ];
 
 const quickLinks = [
   { label: "دربارهٔ ما", href: "#about" },
   { label: "اساتید", href: "#features" },
-  { label: "وبلاگ", href: "#blog" },
+  { label: "وبلاگ", href: "#blog-index" },
   { label: "پرسش‌های متداول", href: "#faq" },
 ];
 
@@ -106,7 +106,7 @@ export default function Footer() {
           />
           <button type="submit">درخواست مشاوره رایگان</button>
         </form>
-        <a href="#courses" className="f5-all-btn">
+        <a href="#courses-index" className="f5-all-btn">
           مشاهده همه دوره‌ها
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width={15} height={15} aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
         </a>

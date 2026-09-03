@@ -41,9 +41,9 @@ export default function Header() {
   const links = [
     { t: "صفحهٔ اصلی", href: "#top" },
     { t: "ویژگی‌ها", href: "#features" },
-    { t: "دوره‌ها", href: "#courses" },
+    { t: "دوره‌ها", href: "#courses-index" },
     { t: "اساتید", href: "#about" },
-    { t: "مجله", href: "#blog" },
+    { t: "مجله", href: "#blog-index" },
     { t: "تماس با ما", href: "#consult" },
   ];
 

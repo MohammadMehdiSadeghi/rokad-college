@@ -12,6 +12,8 @@ import Comments from "./pages/Home/sections/Comments/index.jsx";
 import Blogs from "./pages/Home/sections/Blogs/index.jsx";
 import Footer from "./Components/Footer/index.jsx";
 import BlogArticle from "./pages/BlogArticle/index.jsx";
+import BlogIndex from "./pages/BlogIndex/index.jsx";
+import CoursesPage from "./pages/CoursesPage/index.jsx";
 
 export default function App() {
   /* روت‌گذاری ساده با هش:
@@ -27,12 +29,15 @@ export default function App() {
 
   const m = hash.match(/^#article\/(.+)$/);
   const articleSlug = m ? decodeURIComponent(m[1]) : null;
-  const anchor = !articleSlug && hash.startsWith("#") ? decodeURIComponent(hash.slice(1)) : null;
+  const blogIndex = !articleSlug && hash === "#blog-index";
+  const coursesPage = !articleSlug && !blogIndex && hash === "#courses-index";
+  const anchor = !articleSlug && !blogIndex && !coursesPage && hash.startsWith("#") ? decodeURIComponent(hash.slice(1)) : null;
 
-  /* ورود به مقاله → شروع از بالا */
+  /* ورود به مقاله / صفحهٔ بلاگ / صفحهٔ دوره‌ها → شروع از بالا */
+  const pageMode = blogIndex || coursesPage || !!articleSlug;
   useEffect(() => {
-    if (articleSlug) window.scrollTo({ top: 0, behavior: "auto" });
-  }, [articleSlug]);
+    if (pageMode) window.scrollTo({ top: 0, behavior: "auto" });
+  }, [pageMode, articleSlug]);
 
   /* بازگشت به صفحهٔ اصلی با anchor → بعد از mount شدن سکشن‌ها اسکرول کن */
   useEffect(() => {
@@ -48,7 +53,11 @@ export default function App() {
     <>
       <Header />
       <main>
-        {articleSlug ? (
+        {coursesPage ? (
+          <CoursesPage />
+        ) : blogIndex ? (
+          <BlogIndex />
+        ) : articleSlug ? (
           <BlogArticle key={articleSlug} slug={articleSlug} />
         ) : (
           <>
