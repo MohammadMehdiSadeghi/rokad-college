@@ -125,10 +125,12 @@ export default function Header() {
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onClick);
+    document.body.style.overflow = "hidden";
     if (searchInputRef.current) searchInputRef.current.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onClick);
+      document.body.style.overflow = "";
     };
   }, [searchOpen]);
 
@@ -230,6 +232,9 @@ export default function Header() {
           </div>
         </div>
       </header>
+
+      {/* Backdrop */}
+      <div className={`search-backdrop${searchOpen ? " search-backdrop--open" : ""}`} onClick={() => { setSearchOpen(false); setQuery(""); }} />
 
       {/* Search panel overlay */}
       <div className={`search-panel${searchOpen ? " search-panel--open" : ""}`} ref={searchRef}>
