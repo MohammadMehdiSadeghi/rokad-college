@@ -73,7 +73,7 @@ const faqChat = [
         می‌ده.
         <div className="faq5-suggestions">
           <a className="faq5-chip" href="#consult">درخواست مشاوره</a>
-          <a className="faq5-chip" href="#courses">دیدن دپارتمان‌ها</a>
+          <a className="faq5-chip" href="#courses-index">دیدن دپارتمان‌ها</a>
           <a className="faq5-chip" href="#consult">تماس با تیم</a>
         </div>
       </>

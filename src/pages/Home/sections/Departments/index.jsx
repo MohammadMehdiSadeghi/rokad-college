@@ -98,7 +98,7 @@ export default function Departments({ layout = "stack" }) {
             هر کارت یک دنیای کامل است — رنگ، دوره‌ها، و شخصیت مستقل خودش.
             کدام‌یک آیندهٔ توست؟
           </p>
-          <a href="#courses" className="dept5-cta-top">
+          <a href="#courses-index" className="dept5-cta-top">
             مشاهدهٔ همهٔ دوره‌ها
             <ArrowIcon />
           </a>
@@ -145,7 +145,7 @@ export default function Departments({ layout = "stack" }) {
                       <strong>{d.stat}</strong>
                       <span>{d.statLabel}</span>
                     </div>
-                    <a href="#courses" className="dept5-cta">
+                    <a href="#courses-index" className="dept5-cta">
                       ورود به دپارتمان
                       <ArrowIcon />
                     </a>

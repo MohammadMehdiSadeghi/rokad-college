@@ -9,9 +9,11 @@ const departments = [
 ];
 
 const quickLinks = [
+  { label: "همهٔ دوره‌ها", href: "#courses-index" },
+  { label: "مجلهٔ رکاد", href: "#blog-index" },
+  { label: "پنل هنرجو", href: "#panel" },
+  { label: "ورود / ثبت‌نام", href: "#auth" },
   { label: "دربارهٔ ما", href: "#about" },
-  { label: "اساتید", href: "#features" },
-  { label: "وبلاگ", href: "#blog-index" },
   { label: "پرسش‌های متداول", href: "#faq" },
 ];
 

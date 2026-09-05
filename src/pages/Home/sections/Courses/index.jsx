@@ -89,7 +89,7 @@ var CourseCard = function(props) {
             <div className="v2-price-lbl">{"مدت دوره"}</div>
             <div className="v2-price-val">{dur.split(" ")[0]}<small>{dur.split(" ")[1]}</small></div>
           </div>
-          <a href="#courses" className="v2-btn">{"مشاهده "} <ArrowIcon width={14} height={14} /></a>
+          <a href="#course/ui-ux" className="v2-btn">{"مشاهده "} <ArrowIcon width={14} height={14} /></a>
         </div>
       </article>
     </div>

@@ -15,6 +15,7 @@ import BlogArticle from "./pages/BlogArticle/index.jsx";
 import BlogIndex from "./pages/BlogIndex/index.jsx";
 import CoursesPage from "./pages/CoursesPage/index.jsx";
 import CourseSingle from "./pages/CourseSingle/index.jsx";
+import Auth from "./pages/Auth/index.jsx";
 import Dashboard from "./pages/Panel/Dashboard.jsx";
 import Profile from "./pages/Panel/Profile.jsx";
 import Assignments from "./pages/Panel/Assignments.jsx";
@@ -65,12 +66,13 @@ export default function App() {
   const articleSlug = m ? decodeURIComponent(m[1]) : null;
   const mc = panelPage ? null : hash.match(/^#course\/(.+)$/);
   const courseSlug = mc ? decodeURIComponent(mc[1]) : null;
-  const blogIndex = !panelPage && !articleSlug && !courseSlug && hash === "#blog-index";
-  const coursesPage = !panelPage && !articleSlug && !courseSlug && !blogIndex && hash === "#courses-index";
-  const anchor = !panelPage && !articleSlug && !courseSlug && !blogIndex && !coursesPage && hash.startsWith("#") ? decodeURIComponent(hash.slice(1)) : null;
+  const authPage = !panelPage && !articleSlug && !courseSlug && (hash === "#auth" || hash === "#auth/register");
+  const blogIndex = !panelPage && !articleSlug && !courseSlug && !authPage && hash === "#blog-index";
+  const coursesPage = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex && hash === "#courses-index";
+  const anchor = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex && !coursesPage && hash.startsWith("#") ? decodeURIComponent(hash.slice(1)) : null;
 
-  /* ورود به مقاله / تک‌دوره / صفحهٔ بلاگ / دوره‌ها / پنل → شروع از بالا */
-  const pageMode = blogIndex || coursesPage || !!articleSlug || !!courseSlug || !!panelPage;
+  /* ورود به مقاله / تک‌دوره / auth / صفحهٔ بلاگ / دوره‌ها / پنل → شروع از بالا */
+  const pageMode = blogIndex || coursesPage || !!articleSlug || !!courseSlug || !!panelPage || authPage;
   useEffect(() => {
     if (pageMode) window.scrollTo({ top: 0, behavior: "auto" });
   }, [pageMode, articleSlug, courseSlug, panelPage]);
@@ -94,6 +96,8 @@ export default function App() {
     <>
       {panelPage ? (
         <PanelComp key={panelPage} onNavigate={goPanel} />
+      ) : authPage ? (
+        <Auth />
       ) : (
         <>
           <Header />

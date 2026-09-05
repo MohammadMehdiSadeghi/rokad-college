@@ -140,7 +140,7 @@ export default function Header() {
     { t: "دوره‌ها", href: "#courses-index" },
     { t: "اساتید", href: "#about" },
     { t: "مجله", href: "#blog-index" },
-    { t: "تماس با ما", href: "#consult" },
+    { t: "پنل من", href: "#panel" },
   ];
 
   return (
@@ -188,7 +188,7 @@ export default function Header() {
               </button>
 
               {/* Desktop-only: login + CTA */}
-              <a href="#consult" className="login-pill desktop-only">
+              <a href="#auth" className="login-pill desktop-only">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"

@@ -55,7 +55,7 @@ export default function Hero() {
           </p>
 
           <div className="hero-v5-actions">
-            <a href="#courses" className="hero-v5-btn-primary">
+            <a href="#courses-index" className="hero-v5-btn-primary">
               مشاهده دوره‌ها
               <ArrowIcon width={16} height={16} />
             </a>
@@ -95,7 +95,7 @@ export default function Hero() {
             </div>
 
             {courses.map((c, i) => (
-              <a key={c.title} href="#courses" className={`hero-v5-course ${c.cls}`}>
+              <a key={c.title} href="#course/ui-ux" className={`hero-v5-course ${c.cls}`}>
                 <div className="hero-v5-course-ic" style={iconColors[i] ? { background: iconColors[i] } : {}}>
                   {courseIcons[i]}
                 </div>
@@ -109,7 +109,7 @@ export default function Hero() {
               </a>
             ))}
 
-            <a href="#courses" className="hero-v5-all">
+            <a href="#courses-index" className="hero-v5-all">
               مشاهدهٔ همه دوره‌ها
               <ArrowIcon width={14} height={14} />
             </a>
