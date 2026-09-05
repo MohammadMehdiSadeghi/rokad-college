@@ -49,11 +49,7 @@ export default function StatsTicker() {
         </div>
 
         {/* Ticker */}
-        <div className="p5-ticker">
-          <span className="p5-tag">
-            <span className="p5-tag-dot" />
-            LIVE · زنده
-          </span>
+        <div className="p5-ticker"> 
           <div className="p5-track">
             {/* 4 identical copies — guaranteed to fill the box at every instant */}
             {[0, 1, 2, 3].map((copy) => (
