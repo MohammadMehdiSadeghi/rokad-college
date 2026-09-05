@@ -44,7 +44,14 @@ export default function CourseSingle() {
           <nav className="cs-crumbs">
             دوره‌ها › طراحی › <b>{course.title}</b>
           </nav>
-          <span className="cs-students">{course.students} دانشجو</span>
+          <span className="cs-students">
+            {course.students} دانشجو
+            <span className="avs" aria-hidden="true">
+              <span className="av" />
+              <span className="av" />
+              <span className="av" />
+            </span>
+          </span>
         </div>
 
         <div className="cs-grid container">
@@ -136,9 +143,10 @@ export default function CourseSingle() {
           <aside className="cs-side">
             <div className="cs-card">
               <div className="cs-thumb">
-                <img src={course.pattern} alt="" aria-hidden="true" />
                 <span className="play">
-                  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: 26, height: 26 }}><path d="M8 5v14l11-7z" /></svg>
+                  <span>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                  </span>
                 </span>
               </div>
 
