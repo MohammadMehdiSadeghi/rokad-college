@@ -81,8 +81,8 @@ const I = {
 const NAV = [
   { sec: "اصلی", items: [
     { key: "dashboard", label: "داشبورد", icon: I.dash },
-    { key: "courses", label: "دوره‌های من", icon: I.courses },
-    { key: "homework", label: "تکالیف", icon: I.homework, soon: true },
+    { key: "courses", label: "دوره‌های من", icon: I.courses, soon: true },
+    { key: "assignments", label: "تکالیف", icon: I.homework },
     { key: "certs", label: "گواهی‌ها", icon: I.certs, soon: true },
   ]},
   { sec: "اجتماع", items: [
@@ -95,6 +95,9 @@ const NAV = [
     { key: "support", label: "پشتیبانی", icon: I.support, soon: true },
   ]},
 ];
+
+/* عنوان صفحهٔ فعلی — برای h1 داینامیک */
+export const PAGE_TITLES = { dashboard: "داشبورد", profile: "پروفایل", assignments: "تکالیف" };
 
 export default function PanelLayout({ page, onNavigate, children }) {
   const [query, setQuery] = useState("");

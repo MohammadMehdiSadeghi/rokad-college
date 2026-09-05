@@ -100,3 +100,41 @@ export const badges = [
   { em: "🔒", label: "?", cls: "locked" },
   { em: "🔒", label: "?", cls: "locked" },
 ];
+
+/* ---------- تکالیف (صفحهٔ تکالیف) ----------
+   status: open | late | done | graded */
+export const assignments = [
+  {
+    id: 1,
+    title: "پیاده‌سازی گراف وزن‌دار و Dijkstra",
+    course: "ساختمان داده و الگوریتم",
+    due: "مهلت: امروز ۲۳:۵۹",
+    no: 4,
+    status: "late",
+  },
+  {
+    id: 2,
+    title: "آموزش مدل طبقه‌بندی روی دیتاست MNIST",
+    course: "مبانی هوش مصنوعی",
+    due: "مهلت: ۱۸ شهریور",
+    no: 2,
+    status: "open",
+  },
+  {
+    id: 3,
+    title: "تحلیل حافظه و بهینه‌سازی کش",
+    course: "معماری کامپیوتر",
+    due: "تحویل ۱۶ شهریور",
+    no: 5,
+    status: "done",
+  },
+  {
+    id: 4,
+    title: "مدل‌سازی توزیع نرمال با پایتون",
+    course: "آمار و احتمال کاربردی",
+    due: "تحویل ۱۲ شهریور",
+    no: 1,
+    status: "graded",
+    grade: "۱۹",
+  },
+];
