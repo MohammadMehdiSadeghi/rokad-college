@@ -81,23 +81,23 @@ const I = {
 const NAV = [
   { sec: "اصلی", items: [
     { key: "dashboard", label: "داشبورد", icon: I.dash },
-    { key: "courses", label: "دوره‌های من", icon: I.courses, soon: true },
+    { key: "courses", label: "دوره‌های من", icon: I.courses },
     { key: "assignments", label: "تکالیف", icon: I.homework },
-    { key: "certs", label: "گواهی‌ها", icon: I.certs, soon: true },
+    { key: "certs", label: "گواهی‌ها", icon: I.certs },
   ]},
   { sec: "اجتماع", items: [
-    { key: "mentor", label: "گفتگو با منتور", icon: I.mentor, soon: true },
-    { key: "group", label: "گروه مطالعه", icon: I.group, soon: true },
-    { key: "events", label: "رویدادها", icon: I.events, soon: true },
+    { key: "mentor", label: "گفتگو با منتور", icon: I.mentor },
+    { key: "group", label: "گروه مطالعه", icon: I.group },
+    { key: "events", label: "رویدادها", icon: I.events },
   ]},
   { sec: "حساب", items: [
     { key: "profile", label: "پروفایل", icon: I.settings },
-    { key: "support", label: "پشتیبانی", icon: I.support, soon: true },
+    { key: "support", label: "پشتیبانی", icon: I.support },
   ]},
 ];
 
 /* عنوان صفحهٔ فعلی — برای h1 داینامیک */
-export const PAGE_TITLES = { dashboard: "داشبورد", profile: "پروفایل", assignments: "تکالیف" };
+export const PAGE_TITLES = { dashboard: "داشبورد", profile: "پروفایل", assignments: "تکالیف", courses: "دوره‌های من", certs: "گواهی‌ها", mentor: "گفتگو با منتور", group: "گروه مطالعه", events: "رویدادها", support: "پشتیبانی" };
 
 export default function PanelLayout({ page, onNavigate, children }) {
   const [query, setQuery] = useState("");

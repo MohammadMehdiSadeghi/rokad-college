@@ -17,10 +17,30 @@ import CoursesPage from "./pages/CoursesPage/index.jsx";
 import Dashboard from "./pages/Panel/Dashboard.jsx";
 import Profile from "./pages/Panel/Profile.jsx";
 import Assignments from "./pages/Panel/Assignments.jsx";
+import PanelCourses from "./pages/Panel/Courses.jsx";
+import Certificates from "./pages/Panel/Certificates.jsx";
+import Mentor from "./pages/Panel/Mentor.jsx";
+import StudyGroup from "./pages/Panel/StudyGroup.jsx";
+import Events from "./pages/Panel/Events.jsx";
+import Support from "./pages/Panel/Support.jsx";
+
+/* صفحات پنل — key: صفحه، value: کامپوننت */
+const PANEL_PAGES = {
+  dashboard: Dashboard,
+  profile: Profile,
+  assignments: Assignments,
+  courses: PanelCourses,
+  certs: Certificates,
+  mentor: Mentor,
+  group: StudyGroup,
+  events: Events,
+  support: Support,
+};
+const PANEL_HASH = { dashboard: "panel", profile: "panel/profile", assignments: "panel/assignments", courses: "panel/courses", certs: "panel/certs", mentor: "panel/mentor", group: "panel/group", events: "panel/events", support: "panel/support" };
 
 export default function App() {
   /* روت‌گذاری ساده با هش:
-     #panel | #panel/profile | #panel/assignments → پنل هنرجو
+     #panel/<page> → پنل هنرجو
      #article/<slug> → تک‌صفحهٔ بلاگ
      #blog-index / #courses-index → صفحات مستقل
      بقیهٔ هش‌ها (مثل #courses / #blog) → صفحهٔ اصلی + اسکرول به سکشن */
@@ -32,14 +52,13 @@ export default function App() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
-  /* پنل هنرجو */
-  const panelPage = hash.startsWith("#panel")
-    ? hash.startsWith("#panel/profile")
-      ? "profile"
-      : hash.startsWith("#panel/assignments")
-        ? "assignments"
-        : "dashboard"
-    : null;
+  /* پنل هنرجو: #panel → dashboard، #panel/<page> → صفحهٔ مربوطه */
+  let panelPage = null;
+  if (hash === "#panel" || hash.startsWith("#panel/")) {
+    const sub = hash.replace(/^#panel\/?/, "");
+    panelPage = PANEL_PAGES[sub] ? sub : "dashboard";
+  }
+  const PanelComp = panelPage ? PANEL_PAGES[panelPage] : null;
 
   const m = panelPage ? null : hash.match(/^#article\/(.+)$/);
   const articleSlug = m ? decodeURIComponent(m[1]) : null;
@@ -65,17 +84,13 @@ export default function App() {
 
   /* ناوبری داخل پنل */
   const goPanel = (p) => {
-    window.location.hash = { profile: "panel/profile", assignments: "panel/assignments", dashboard: "panel" }[p] || "panel";
+    window.location.hash = PANEL_HASH[p] || "panel";
   };
 
   return (
     <>
-      {panelPage === "profile" ? (
-        <Profile onNavigate={goPanel} />
-      ) : panelPage === "assignments" ? (
-        <Assignments onNavigate={goPanel} />
-      ) : panelPage === "dashboard" ? (
-        <Dashboard onNavigate={goPanel} />
+      {panelPage ? (
+        <PanelComp key={panelPage} onNavigate={goPanel} />
       ) : (
         <>
           <Header />

@@ -138,3 +138,250 @@ export const assignments = [
     grade: "۱۹",
   },
 ];
+
+/* ---------- دوره‌های من (صفحهٔ دوره‌ها) ----------
+   status: active | done | locked-ish (تازه) */
+export const myCourses = [
+  {
+    id: 1,
+    title: "ساختمان داده و الگوریتم",
+    teacher: "دکتر رستمی",
+    sessions: "۱۲ جلسه · ۲۴ ساعت",
+    progress: 62,
+    chapter: "فصل ۴ از ۷",
+    next: "جلسهٔ بعد: الگوریتم‌های گراف — پنج‌شنبه ۱۰:۳۰",
+    status: "active",
+    pattern: "/assets/StatCard/blue.png",
+  },
+  {
+    id: 2,
+    title: "مبانی هوش مصنوعی",
+    teacher: "دکتر عزیزی",
+    sessions: "۱۶ جلسه · ۳۲ ساعت",
+    progress: 28,
+    chapter: "فصل ۲ از ۸",
+    next: "تکلیف باز: تمرین ۲ — مهلت ۱۸ شهریور",
+    status: "active",
+    pattern: "/assets/StatCard/green.png",
+  },
+  {
+    id: 3,
+    title: "معماری کامپیوتر",
+    teacher: "استاد احمدی",
+    sessions: "۱۲ جلسه · ۲۰ ساعت",
+    progress: 100,
+    chapter: "فصل ۶ از ۶",
+    next: "همهٔ درس‌ها کامل شد — آمادهٔ امتحان نهایی",
+    status: "done",
+    pattern: "/assets/StatCard/pink.png",
+  },
+  {
+    id: 4,
+    title: "آمار و احتمال کاربردی",
+    teacher: "دکتر رضایی",
+    sessions: "۱۰ جلسه · ۱۸ ساعت",
+    progress: 12,
+    chapter: "فصل ۱ از ۵",
+    next: "جلسهٔ بعد: توزیع‌های گسسته — شنبه ۱۴:۰۰",
+    status: "new",
+    pattern: "/assets/StatCard/yellow.png",
+  },
+];
+
+/* ---------- درس‌های دورهٔ فعال (بازشو) ---------- */
+export const courseLessons = [
+  { n: 1, title: "مقدمه‌ای بر ساختمان داده", time: "۲۴ دقیقه", done: true },
+  { n: 2, title: "آرایه و لیست پیوندی", time: "۳۱ دقیقه", done: true },
+  { n: 3, title: "پشته و صف", time: "۲۸ دقیقه", done: true },
+  { n: 4, title: "درخت و پیمایش", time: "۴۲ دقیقه", now: true },
+  { n: 5, title: "گراف وزن‌دار و Dijkstra", time: "۳۸ دقیقه", locked: true },
+  { n: 6, title: "جدول درهم‌سازی", time: "۳۵ دقیقه", locked: true },
+];
+
+/* ---------- گواهی‌ها ---------- */
+export const certificates = [
+  {
+    id: 1,
+    title: "مبانی برنامه‌نویسی پایتون",
+    date: "اردیبهشت ۱۴۰۴",
+    hours: "۴۰ ساعت",
+    grade: "۱۹.۵",
+    serial: "RK-PY-1404-0812",
+  },
+  {
+    id: 2,
+    title: "طراحی وب واکنش‌گرا",
+    date: "تیر ۱۴۰۴",
+    hours: "۳۵ ساعت",
+    grade: "۱۹",
+    serial: "RK-WD-1404-1447",
+  },
+  {
+    id: 3,
+    title: " ورود به دنیای داده",
+    date: "شهریور ۱۴۰۴",
+    hours: "۳۰ ساعت",
+    grade: "۱۸.۷۵",
+    serial: "RK-DS-1404-2133",
+  },
+];
+
+/* ---------- گفتگو با منتور ---------- */
+export const mentorChats = [
+  {
+    id: 1,
+    name: "دکتر رستمی",
+    role: "منتور تخصصی · الگوریتم",
+    initial: "ر",
+    last: "تمرین گراف رو دیدم، ایده‌ت درسته. فقط پیچیدگی زمانی رو بهینه کن.",
+    time: "۱۰ دقیقه پیش",
+    unread: 2,
+    online: true,
+  },
+  {
+    id: 2,
+    name: "مهندس کریمی",
+    role: "منتور مسیر شغلی",
+    initial: "ک",
+    last: "رزومه‌ات رو بردم شرکت همکار نشون بدم 👌",
+    time: "دیروز",
+    unread: 0,
+    online: true,
+  },
+  {
+    id: 3,
+    name: "دکتر عزیزی",
+    role: "منتور · هوش مصنوعی",
+    initial: "ع",
+    last: "منابع فصل ۲ رو برات فرستادم.",
+    time: "۳ روز پیش",
+    unread: 0,
+    online: false,
+  },
+];
+
+export const mentorMessages = [
+  { from: "me", text: "سلام استاد، تمرین ۴ رو شروع کردم ولی تو بخش Dijkstra گیر کردم." },
+  { from: "mentor", text: "سلام پارسا 👋 اول صف اولویت رو پیاده کن، بعد الگوریتم راحت می‌شه." },
+  { from: "me", text: "الان امتحانش می‌کنم، ممنون 🙏" },
+  { from: "mentor", text: "تمرین گراف رو دیدم، ایده‌ت درسته. فقط پیچیدگی زمانی رو بهینه کن." },
+];
+
+/* ---------- گروه مطالعه ---------- */
+export const studyGroups = [
+  {
+    id: 1,
+    name: "گروه الگوریتم و مسابقه",
+    course: "ساختمان داده و الگوریتم",
+    members: 6,
+    max: 8,
+    next: "جلسهٔ بعد: پنج‌شنبه ۱۹:۰۰ · Google Meet",
+    joined: true,
+    color: "var(--navy)",
+  },
+  {
+    id: 2,
+    name: "یادگیری ماشین از صفر",
+    course: "مبانی هوش مصنوعی",
+    members: 5,
+    max: 8,
+    next: "جلسهٔ بعد: جمعه ۱۷:۰۰ · کلاس آنلاین",
+    joined: true,
+    color: "var(--teal-alt)",
+  },
+  {
+    id: 3,
+    name: "پروژه‌محور: معماری کامپیوتر",
+    course: "معماری کامپیوتر",
+    members: 8,
+    max: 8,
+    next: "ظرفیت تکمیل — لیست انتظار",
+    joined: false,
+    color: "var(--accent)",
+  },
+];
+
+/* ---------- رویدادها ---------- */
+export const events = [
+  {
+    id: 1,
+    day: "۱۴",
+    month: "شهریور",
+    title: "کلاس زنده: الگوریتم‌های گراف",
+    time: "۱۰:۳۰",
+    host: "دکتر رستمی",
+    kind: "کلاس زنده",
+    place: "کلاس آنلاین · لینک در پروفایل کلاس",
+    registered: true,
+    featured: true,
+  },
+  {
+    id: 2,
+    day: "۱۶",
+    month: "شهریور",
+    title: "وبینار: مصاحبه شغلی تکنیکال",
+    time: "۲۰:۰۰",
+    host: "مهندس کریمی",
+    kind: "وبینار",
+    place: "آنلاین · رایگان",
+    registered: true,
+  },
+  {
+    id: 3,
+    day: "۲۴",
+    month: "شهریور",
+    title: "شب استارتاپ دانشجو",
+    time: "۱۸:۰۰",
+    host: "میهمانان ویژه",
+    kind: "رویداد حضوری",
+    place: "پردیس مرکزی · سالن همایش",
+    registered: false,
+    seats: "۲۰۰ ظرفیت",
+    featured: true,
+  },
+  {
+    id: 4,
+    day: "۰۵",
+    month: "مهر",
+    title: "کارگاه عملی: رزومه و لینکدین",
+    time: "۱۷:۰۰",
+    host: "تیم بازار کار رکاد",
+    kind: "کارگاه",
+    place: "آنلاین · ویژهٔ هنرجویان",
+    registered: false,
+  },
+];
+
+/* ---------- پشتیبانی ---------- */
+export const supportTickets = [
+  {
+    id: 1,
+    subject: "خطا در پخش ویدیوی جلسهٔ ۴",
+    dept: "پشتیبانی فنی",
+    status: "answering",
+    updated: "۲۰ دقیقه پیش",
+    messages: 3,
+  },
+  {
+    id: 2,
+    subject: "درخواست تمدید دسترسی دوره",
+    dept: "امور هنرجویان",
+    status: "open",
+    updated: "۱ روز پیش",
+    messages: 1,
+  },
+  {
+    id: 3,
+    subject: "صدور گواهی طراحی وب",
+    dept: "امور هنرجویان",
+    status: "closed",
+    updated: "۱ هفته پیش",
+    messages: 5,
+  },
+];
+
+export const supportFaqs = [
+  { q: "چطور ویدیوی دوره رو دانلود کنم؟", a: "ویدیوهای جلسات از پنل کلاس، بخش «منابع» قابل دانلودن." },
+  { q: "گواهی کی صادر می‌شه؟", a: "بعد از تکمیل همهٔ فصل‌ها و قبولی در امتحان نهایی، حداکثر ۷۲ ساعت کاری." },
+  { q: "می‌تونم منتورم رو عوض کنم؟", a: "بله، از همین صفحه دکمهٔ «تغییر منتور» رو بزن." },
+];
