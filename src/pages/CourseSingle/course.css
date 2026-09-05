@@ -1,0 +1,442 @@
+/* ============================================================
+   تک‌صفحهٔ دوره — Course Single styles
+   DS رکاد: بوردر 2px ink، شدو آفست 2.75–4px، رادیوس 12/17/24/34،
+   کات‌کورنر متناوب، کهربایی = تاکید، متن = ink/navy.
+   ============================================================ */
+.cs-page {
+  position: relative;
+  padding: 24px 0 80px;
+  min-height: 100vh;
+}
+
+/* ---------- Topbar ---------- */
+.cs-topbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-lg);
+  padding: 12px 20px;
+  box-shadow: 2.75px 2.75px 0 var(--college);
+  margin: 12px auto 26px;
+  flex-wrap: wrap;
+}
+.cs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--navy);
+  padding: 6px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 10px 0 10px 0;
+  background: var(--college-light);
+  transition: background 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+.cs-back:hover { background: var(--college); color: var(--college-darker); }
+.cs-crumbs { color: var(--ink-subtle); font-size: 13px; font-weight: 600; }
+.cs-crumbs b { color: var(--navy); font-weight: 800; }
+.cs-students {
+  margin-inline-start: auto;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--navy);
+  background: var(--bg-lavender);
+  border: 1.5px solid var(--navy);
+  border-radius: var(--r-pill);
+  padding: 5px 14px;
+}
+
+/* ---------- Grid ---------- */
+.cs-grid {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 26px;
+  align-items: start;
+}
+.cs-main {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: 4px 4px 0 var(--ink-light);
+}
+
+/* ---------- Hero ---------- */
+.cs-hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--college-light) 0%, var(--college-light-active) 100%);
+  border-bottom: 2px solid var(--ink);
+  padding: 30px 34px;
+  overflow: hidden;
+}
+.cs-hero::after {
+  content: "";
+  position: absolute;
+  left: -40px;
+  top: -40px;
+  width: 190px;
+  height: 190px;
+  background: radial-gradient(circle, var(--college) 0%, transparent 70%);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.cs-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--navy);
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 5px 14px;
+  transform: rotate(-1.5deg);
+  box-shadow: 2.5px 2.5px 0 var(--college);
+  position: relative;
+  z-index: 1;
+}
+.cs-eyebrow .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--college);
+  border-radius: 50%;
+}
+.cs-hero h1 {
+  margin: 16px 0 0;
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--navy);
+  letter-spacing: -0.5px;
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+.cs-lede {
+  margin: 14px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.85;
+  color: var(--ink-faq);
+  max-width: 660px;
+  position: relative;
+  z-index: 1;
+}
+.cs-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  position: relative;
+  z-index: 1;
+}
+.cs-meta .m {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-faq);
+  background: #fff;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r-pill);
+  padding: 6px 14px;
+}
+
+/* ---------- Tabs ---------- */
+.cs-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 24px;
+  border-bottom: 1.5px solid var(--ink-light);
+  overflow-x: auto;
+}
+.cs-tabs button {
+  padding: 15px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--ink-subtle);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+.cs-tabs button:hover { color: var(--ink); }
+.cs-tabs button.on {
+  color: var(--ink);
+  border-bottom-color: var(--college);
+  font-weight: 900;
+}
+
+/* ---------- Curriculum ---------- */
+.cs-curriculum { padding: 22px 28px 26px; }
+.cs-progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.cs-progress b { color: var(--navy); font-weight: 800; white-space: nowrap; }
+.cs-progress .bar {
+  flex: 1;
+  height: 9px;
+  background: var(--college-light);
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.cs-progress .bar span {
+  display: block;
+  height: 100%;
+  width: 35%;
+  background: var(--college);
+  border-left: 1.5px solid var(--ink);
+}
+
+.cs-chapters { display: flex; flex-direction: column; gap: 10px; }
+.cs-ch {
+  border: 1.5px solid var(--ink-light);
+  border-radius: 12px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.cs-ch.open {
+  border-color: var(--college);
+  background: var(--college-light);
+  box-shadow: 2.75px 2.75px 0 var(--college);
+}
+.cs-ch-head {
+  display: grid;
+  grid-template-columns: 40px 1fr auto auto;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  padding: 13px 15px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: right;
+}
+.cs-ch .num {
+  width: 36px;
+  height: 36px;
+  background: var(--college-light);
+  border: 1.5px solid var(--ink);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--navy);
+}
+.cs-ch.open .num {
+  background: var(--college);
+  color: var(--college-darker);
+}
+.cs-ch .info b { display: block; font-size: 14.5px; font-weight: 900; color: var(--navy); }
+.cs-ch .info small { font-size: 12px; font-weight: 600; color: var(--ink-subtle); margin-top: 2px; }
+.cs-ch .dur {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--ink-subtle);
+  font-variant-numeric: tabular-nums;
+}
+.cs-ch .chev { color: var(--ink-subtle); display: grid; place-items: center; }
+
+.cs-lessons {
+  display: none;
+  grid-column: 2 / -1;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 15px 14px;
+  padding-top: 10px;
+  border-top: 1.5px dashed var(--college);
+}
+.cs-lessons.open { display: flex; }
+.cs-lesson {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 4px;
+  font-size: 13px;
+}
+.cs-lesson .ic { display: grid; place-items: center; color: var(--ink-subtle); width: 16px; }
+.cs-lesson .t { flex: 1; font-weight: 600; color: var(--ink-faq); }
+.cs-lesson .tag { font-size: 11.5px; font-weight: 800; color: var(--ink-subtle); }
+.cs-lesson.free .tag {
+  color: var(--teal-dark);
+  background: var(--teal-light);
+  border: 1.5px solid var(--teal);
+  border-radius: var(--r-pill);
+  padding: 1px 9px;
+}
+.cs-lesson.free .t { font-weight: 800; color: var(--navy); }
+.cs-lesson.locked { opacity: 0.62; }
+
+/* ---------- Sidebar ---------- */
+.cs-side { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 90px; }
+.cs-card {
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-xl) 0 var(--r-xl) 0;
+  padding: 20px;
+  box-shadow: 4px 4px 0 var(--college);
+}
+.cs-thumb {
+  position: relative;
+  width: 100%;
+  height: 170px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 2.5px 2.5px 0 var(--college-light-active);
+}
+.cs-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.cs-thumb .play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(33, 41, 90, 0.3);
+  color: #fff;
+}
+.cs-thumb .play span {
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--navy);
+  box-shadow: 2.5px 2.5px 0 var(--ink);
+}
+.cs-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.cs-price .old {
+  font-size: 15px;
+  color: var(--ink-subtle);
+  text-decoration: line-through;
+}
+.cs-price b {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--navy);
+  letter-spacing: -0.5px;
+}
+.cs-price .cur { font-size: 14px; font-weight: 700; color: var(--ink-subtle); }
+.cs-discount {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--accent);
+  color: #fff;
+  border: 1.5px solid var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 11px;
+  border-radius: var(--r-xs);
+  transform: rotate(-1.5deg);
+}
+.cs-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  background: var(--college);
+  color: #fff;
+  padding: 15px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 900;
+  border: 2px solid var(--ink);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  box-shadow: 2.75px 2.75px 0 var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+}
+.cs-btn:hover {
+  background: var(--college-dark);
+  transform: translate(-1px, -1px);
+  box-shadow: 3.75px 3.75px 0 var(--ink);
+}
+.cs-sub-btn {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-faq);
+  cursor: pointer;
+}
+.cs-sub-btn:hover { color: var(--college-dark); }
+.cs-divider { height: 1.5px; background: var(--ink-light); margin: 18px 0; }
+.cs-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.cs-facts .k { font-size: 12px; color: var(--ink-subtle); font-weight: 600; }
+.cs-facts .v { font-size: 14.5px; font-weight: 800; color: var(--navy); margin-top: 2px; }
+
+.cs-instr {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--college-light);
+  border: 2px solid var(--ink);
+  border-radius: var(--r-lg) 0 var(--r-lg) 0;
+  padding: 14px 16px;
+  box-shadow: 2.75px 2.75px 0 var(--college-light-active);
+}
+.cs-instr .av {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--college);
+  border: 2px solid var(--ink);
+  display: grid;
+  place-items: center;
+  color: var(--college-darker);
+  font-weight: 900;
+  font-size: 15px;
+}
+.cs-instr .who b { display: block; font-size: 14px; font-weight: 900; color: var(--navy); }
+.cs-instr .who small { font-size: 12px; font-weight: 600; color: var(--ink-subtle); margin-top: 3px; display: block; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .cs-grid { grid-template-columns: 1fr; }
+  .cs-side { position: static; }
+  .cs-hero h1 { font-size: 30px; }
+}
+@media (max-width: 600px) {
+  .cs-hero { padding: 22px 20px; }
+  .cs-curriculum { padding: 18px 16px 20px; }
+  .cs-ch-head { grid-template-columns: 36px 1fr auto; }
+  .cs-ch .dur { display: none; }
+}

@@ -14,6 +14,7 @@ import Footer from "./Components/Footer/index.jsx";
 import BlogArticle from "./pages/BlogArticle/index.jsx";
 import BlogIndex from "./pages/BlogIndex/index.jsx";
 import CoursesPage from "./pages/CoursesPage/index.jsx";
+import CourseSingle from "./pages/CourseSingle/index.jsx";
 import Dashboard from "./pages/Panel/Dashboard.jsx";
 import Profile from "./pages/Panel/Profile.jsx";
 import Assignments from "./pages/Panel/Assignments.jsx";
@@ -62,15 +63,17 @@ export default function App() {
 
   const m = panelPage ? null : hash.match(/^#article\/(.+)$/);
   const articleSlug = m ? decodeURIComponent(m[1]) : null;
-  const blogIndex = !panelPage && !articleSlug && hash === "#blog-index";
-  const coursesPage = !panelPage && !articleSlug && !blogIndex && hash === "#courses-index";
-  const anchor = !panelPage && !articleSlug && !blogIndex && !coursesPage && hash.startsWith("#") ? decodeURIComponent(hash.slice(1)) : null;
+  const mc = panelPage ? null : hash.match(/^#course\/(.+)$/);
+  const courseSlug = mc ? decodeURIComponent(mc[1]) : null;
+  const blogIndex = !panelPage && !articleSlug && !courseSlug && hash === "#blog-index";
+  const coursesPage = !panelPage && !articleSlug && !courseSlug && !blogIndex && hash === "#courses-index";
+  const anchor = !panelPage && !articleSlug && !courseSlug && !blogIndex && !coursesPage && hash.startsWith("#") ? decodeURIComponent(hash.slice(1)) : null;
 
-  /* ورود به مقاله / صفحهٔ بلاگ / دوره‌ها / پنل → شروع از بالا */
-  const pageMode = blogIndex || coursesPage || !!articleSlug || !!panelPage;
+  /* ورود به مقاله / تک‌دوره / صفحهٔ بلاگ / دوره‌ها / پنل → شروع از بالا */
+  const pageMode = blogIndex || coursesPage || !!articleSlug || !!courseSlug || !!panelPage;
   useEffect(() => {
     if (pageMode) window.scrollTo({ top: 0, behavior: "auto" });
-  }, [pageMode, articleSlug, panelPage]);
+  }, [pageMode, articleSlug, courseSlug, panelPage]);
 
   /* بازگشت به صفحهٔ اصلی با anchor → بعد از mount شدن سکشن‌ها اسکرول کن */
   useEffect(() => {
@@ -101,6 +104,8 @@ export default function App() {
               <BlogIndex />
             ) : articleSlug ? (
               <BlogArticle key={articleSlug} slug={articleSlug} />
+            ) : courseSlug ? (
+              <CourseSingle key={courseSlug} slug={courseSlug} />
             ) : (
               <>
                 <Hero />

@@ -243,7 +243,7 @@ export default function CoursesPage() {
                           <span className="final">{toFa(c.price.toLocaleString("en-US"))} ت</span>
                         )}
                       </div>
-                      <a className="cp-cta" href="#consult">مشاهده</a>
+                      <a className="cp-cta" href="#course/ui-ux">مشاهده</a>
                     </div>
                   </div>
                 </div>
