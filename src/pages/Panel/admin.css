@@ -737,7 +737,7 @@
   overflow: hidden;
 }
 .pnl-skill .track i { display: block; height: 100%; background: var(--college); }
-.pnl-skill .pct { font-weight: 900; color: var(--college-darker); font-size: 13px; text-align: left; }
+.pnl-skill .pct { font-weight: 900; color: var(--navy); font-size: 13px; text-align: left; }
 
 /* badges */
 .pnl-badges {
@@ -949,7 +949,7 @@
 .pnl-mc-state.new { background: var(--club-light); color: var(--club-dark); border-color: var(--club-normal); }
 
 .pnl-mc-side { display: flex; align-items: center; gap: 12px; }
-.pnl-mc-side .pct { font-size: 15px; font-weight: 900; color: var(--college-dark); }
+.pnl-mc-side .pct { font-size: 15px; font-weight: 900; color: var(--navy); }
 .pnl-mc-chev {
   width: 30px; height: 30px;
   border: 2px solid var(--ink);
@@ -1007,7 +1007,7 @@
   border: 1.5px solid var(--ink);
   display: grid; place-items: center;
   font-weight: 900; font-size: 12.5px;
-  color: var(--college-darker);
+  color: var(--navy);
 }
 .pnl-les.done .n { background: var(--teal); border-color: var(--teal-dark); color: #fff; }
 .pnl-les .t b { display: block; font-size: 13px; font-weight: 800; color: var(--navy); }
@@ -1082,7 +1082,7 @@
   padding: 4px 12px;
   font-size: 11px;
   font-weight: 900;
-  color: var(--college-darker);
+  color: var(--navy);
   transform: rotate(-1.5deg);
   margin-bottom: 10px;
 }
@@ -1094,7 +1094,7 @@
   padding-top: 14px;
   border-top: 1.5px dashed rgba(87, 57, 10, 0.35);
 }
-.pnl-cert-meta b { display: block; font-size: 16px; font-weight: 900; color: var(--college-darker); }
+.pnl-cert-meta b { display: block; font-size: 16px; font-weight: 900; color: var(--navy); }
 .pnl-cert-meta small { font-size: 11px; font-weight: 700; color: var(--ink-subtle); }
 
 /* پرفوراژ وسط کارت */
@@ -1129,7 +1129,7 @@
   box-shadow: 2.5px 2.5px 0 var(--ink);
   transform: rotate(1.5deg);
 }
-.pnl-cert-stub .serial { font-size: 10.5px; font-weight: 800; letter-spacing: 1px; color: var(--college-darker); }
+.pnl-cert-stub .serial { font-size: 10.5px; font-weight: 800; letter-spacing: 1px; color: var(--ink-subtle); }
 
 .pnl-cert-note {
   display: flex;
@@ -1335,7 +1335,7 @@
   box-shadow: 2.5px 2.5px 0 var(--college-light-active);
 }
 .pnl-group .body h3 { margin: 0 0 2px; font-size: 16px; font-weight: 900; color: var(--navy); }
-.pnl-group .body .course { font-size: 12px; font-weight: 700; color: var(--college-dark); }
+.pnl-group .body .course { font-size: 12px; font-weight: 700; color: var(--ink-subtle); }
 .pnl-group-meta { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
 .pnl-group-meta > span { font-size: 11.5px; font-weight: 700; color: var(--ink-subtle); display: flex; align-items: center; gap: 8px; }
 .pnl-group-meta .bar {
@@ -1439,7 +1439,7 @@
   flex-direction: column;
   gap: 10px;
 }
-.pnl-new-ticket b { font-size: 14px; font-weight: 900; color: var(--college-darker); }
+.pnl-new-ticket b { font-size: 14px; font-weight: 900; color: var(--navy); }
 .pnl-new-ticket input,
 .pnl-new-ticket textarea {
   border: 1.5px solid var(--ink);

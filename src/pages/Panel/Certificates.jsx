@@ -24,8 +24,8 @@ export default function Certificates({ onNavigate }) {
     <section id="panel">
       <PanelLayout page="certs" onNavigate={onNavigate}>
         <h1 className="pnl-h1">
-          <span className="w" style={{ transform: "rotate(-1.5deg)", display: "inline-block" }}>گواهی</span>{" "}
-          <span className="w accent" style={{ transform: "rotate(1.5deg)", display: "inline-block" }}>های من</span>
+          <span className="w" style={{ transform: "rotate(-1.5deg)", display: "inline-block" }}>گواهی‌های</span>{" "}
+          <span className="w accent" style={{ transform: "rotate(1.5deg)", display: "inline-block" }}>من</span>
         </h1>
         <p className="pnl-sub">
           {certificates.length} گواهی معتبر داری — هر گواهی کد QR تأیید داره.

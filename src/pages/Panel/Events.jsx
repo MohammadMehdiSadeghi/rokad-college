@@ -30,8 +30,7 @@ export default function Events({ onNavigate }) {
     <section id="panel">
       <PanelLayout page="events" onNavigate={onNavigate}>
         <h1 className="pnl-h1">
-          <span className="w" style={{ transform: "rotate(-1.5deg)", display: "inline-block" }}>رویداد</span>{" "}
-          <span className="w accent" style={{ transform: "rotate(1.5deg)", display: "inline-block" }}>ها</span>
+          <span className="w accent" style={{ transform: "rotate(-1.5deg)", display: "inline-block" }}>رویدادها</span>
         </h1>
         <p className="pnl-sub">کلاس‌های زنده، وبینارها و رویدادهای حضوری رکاد.</p>
 

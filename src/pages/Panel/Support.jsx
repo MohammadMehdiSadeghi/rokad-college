@@ -27,8 +27,7 @@ export default function Support({ onNavigate }) {
     <section id="panel">
       <PanelLayout page="support" onNavigate={onNavigate}>
         <h1 className="pnl-h1">
-          <span className="w" style={{ transform: "rotate(-1.5deg)", display: "inline-block" }}>پشتی</span>{" "}
-          <span className="w accent" style={{ transform: "rotate(1.5deg)", display: "inline-block" }}>بانی</span>
+          <span className="w accent" style={{ transform: "rotate(-1.5deg)", display: "inline-block" }}>پشتیبانی</span>
         </h1>
         <p className="pnl-sub">تیم پشتیبانی رکاد همه‌روزه پاسخ‌گوی توئه.</p>
 

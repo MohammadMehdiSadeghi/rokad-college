@@ -218,7 +218,7 @@ export const certificates = [
   },
   {
     id: 3,
-    title: " ورود به دنیای داده",
+    title: "ورود به دنیای داده",
     date: "شهریور ۱۴۰۴",
     hours: "۳۰ ساعت",
     grade: "۱۸.۷۵",
