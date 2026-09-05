@@ -778,6 +778,95 @@
 .pnl-badge.b3 { background: var(--navy); }
 .pnl-badge.b3 b { color: var(--college); }
 
+/* ---------- Mobile bar + burger + fullscreen panel (≤900px) ---------- */
+.pnl-mobilebar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--navy);
+  padding: 10px 16px;
+  border-bottom: 2px solid var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.pnl-burger {
+  width: 42px;
+  height: 42px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease;
+}
+.pnl-burger:active { background: rgba(255, 255, 255, 0.14); }
+.pnl-burger-bars {
+  position: relative;
+  width: 22px;
+  height: 16px;
+  display: block;
+}
+.pnl-burger-bars span {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--college);
+  transition: transform 0.3s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.2s ease;
+}
+.pnl-burger-bars span:nth-child(1) { top: 0; }
+.pnl-burger-bars span:nth-child(2) { top: 7px; }
+.pnl-burger-bars span:nth-child(3) { top: 14px; }
+.pnl-burger-bars.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.pnl-burger-bars.open span:nth-child(2) { opacity: 0; }
+.pnl-burger-bars.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* پنل تمام‌صفحهٔ سرمه‌ای */
+.pnl-mobile-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--navy);
+  padding: 18px 20px 26px;
+  overflow-y: auto;
+  transform: translateY(-100%);
+  transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+.pnl-mobile-panel.open { transform: translateY(0); }
+.pnl-mobile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.pnl-mobile-title {
+  color: var(--college);
+  font-weight: 900;
+  font-size: 18px;
+}
+.pnl-mobile-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--college);
+  color: var(--navy);
+  border: 2px solid var(--ink);
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 2.5px 2.5px 0 rgba(0, 0, 0, 0.4);
+}
+.pnl-mobile-panel .pnl-sec { color: rgba(255, 255, 255, 0.5); }
+.pnl-mobile-panel .pnl-nav { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.pnl-mobile-panel .pnl-nav a { padding: 12px 12px; font-size: 15px; }
+.pnl-mobile-foot { margin-top: auto; padding-top: 20px; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1180px) {
   .pnl-kpis { grid-template-columns: repeat(2, 1fr); }
@@ -785,20 +874,9 @@
 }
 @media (max-width: 900px) {
   .pnl-root { grid-template-columns: 1fr; }
-  .pnl-side {
-    position: static;
-    height: auto;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 14px 16px;
-    border-left: none;
-    border-bottom: 2px solid var(--ink);
-  }
-  .pnl-brand { margin-bottom: 0; }
-  .pnl-sec, .pnl-side-foot { display: none; }
-  .pnl-nav { flex-direction: row; flex-wrap: wrap; gap: 6px; }
-  .pnl-nav a { padding: 7px 10px; font-size: 13px; }
+  /* سایدبار دسکتاپ مخفی — جاش mobilebar + پنل همبرگری */
+  .pnl-side { display: none; }
+  .pnl-mobilebar { display: flex; }
   .pnl-main { padding: 20px 16px 44px; }
   .pnl-streak { grid-template-columns: 1fr; }
   .pnl-flames { flex-wrap: wrap; }

@@ -101,10 +101,83 @@ export const PAGE_TITLES = { dashboard: "داشبورد", profile: "پروفای
 
 export default function PanelLayout({ page, onNavigate, children }) {
   const [query, setQuery] = useState("");
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  /* بستن منوی موبایل بعد از هر ناوبری */
+  const go = (key) => {
+    setMobileOpen(false);
+    onNavigate(key);
+  };
+
+  /* محتوای ناوبری — بین سایدبار دسکتاپ و پنل موبایل مشترک */
+  const navContent = (onItemClick) =>
+    NAV.map((group) => (
+      <div key={group.sec}>
+        <div className="pnl-sec">{group.sec}</div>
+        <nav className="pnl-nav">
+          {group.items.map((item) => (
+            <a
+              key={item.key}
+              href="#panel"
+              className={page === item.key ? "on" : ""}
+              onClick={(e) => {
+                e.preventDefault();
+                onItemClick(item);
+              }}
+            >
+              <span className="ic">{item.icon}</span>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    ));
 
   return (
     <div className="pnl-root">
-      {/* ---------- Sidebar ---------- */}
+      {/* ---------- نوار موبایل (فقط ≤900px) ---------- */}
+      <div className="pnl-mobilebar">
+        <a href="#top" className="pnl-brand" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0 }); }}>
+          <span className="mark">
+            <img src="/assets/Shared/Logos/logo-white-512.png" alt="" aria-hidden="true" />
+          </span>
+          <span>
+            <strong>رکاد</strong>
+            <small>ROKAD COLLEGE</small>
+          </span>
+        </a>
+        <button
+          className="pnl-burger"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="منو"
+          aria-expanded={mobileOpen}
+        >
+          <span className={`pnl-burger-bars${mobileOpen ? " open" : ""}`}>
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+      </div>
+
+      {/* ---------- پنل تمام‌صفحهٔ موبایل ---------- */}
+      <div className={`pnl-mobile-panel${mobileOpen ? " open" : ""}`}>
+        <div className="pnl-mobile-head">
+          <span className="pnl-mobile-title">{PAGE_TITLES[page] || "پنل"}</span>
+          <button className="pnl-mobile-close" onClick={() => setMobileOpen(false)} aria-label="بستن">
+            ×
+          </button>
+        </div>
+        {navContent((item) => go(item.key))}
+        <div className="pnl-mobile-foot">
+          <a href="/#top" className="pnl-back">
+            {I.home}
+            بازگشت به سایت
+          </a>
+        </div>
+      </div>
+
+      {/* ---------- Sidebar (دسکتاپ) ---------- */}
       <aside className="pnl-side">
         <a href="#top" className="pnl-brand" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0 }); }}>
           <span className="mark">
@@ -117,35 +190,7 @@ export default function PanelLayout({ page, onNavigate, children }) {
         </a>
 
         <nav className="pnl-nav-wrap">
-          {NAV.map((group) => (
-            <div key={group.sec}>
-              <div className="pnl-sec">{group.sec}</div>
-              <nav className="pnl-nav">
-                {group.items.map((item) => (
-                  <a
-                    key={item.key}
-                    href="#panel"
-                    className={page === item.key ? "on" : ""}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (item.soon) return; // به‌زودی — بدون ناوبری
-                      onNavigate(item.key);
-                    }}
-                    title={item.soon ? "به‌زودی" : undefined}
-                    style={item.soon ? { opacity: 0.55, cursor: "default" } : undefined}
-                  >
-                    <span className="ic">{item.icon}</span>
-                    {item.label}
-                    {item.soon && (
-                      <span style={{ marginInlineStart: "auto", fontSize: 9.5, fontWeight: 800, opacity: 0.6, letterSpacing: 0.5 }}>
-                        به‌زودی
-                      </span>
-                    )}
-                  </a>
-                ))}
-              </nav>
-            </div>
-          ))}
+          {navContent((item) => onNavigate(item.key))}
         </nav>
 
         <div className="pnl-side-foot">
