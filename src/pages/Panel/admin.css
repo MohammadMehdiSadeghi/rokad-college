@@ -234,9 +234,9 @@
   margin-bottom: 26px;
 }
 
-/* ---------- Streak banner ---------- */
+/* ---------- Streak banner (teal — رنگ اکوسیستم DS) ---------- */
 .pnl-streak {
-  background: var(--college);
+  background: var(--teal);
   border: 2px solid var(--ink);
   border-radius: var(--r-xl);
   padding: 22px 26px;
@@ -244,7 +244,7 @@
   grid-template-columns: 1fr auto;
   gap: 16px;
   align-items: center;
-  box-shadow: 4px 4px 0 var(--college-darker);
+  box-shadow: 4px 4px 0 var(--teal-dark);
   margin-bottom: 28px;
   position: relative;
   overflow: hidden;
@@ -258,16 +258,7 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.16);
-  pointer-events: none;
-}
-.pnl-streak::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("/assets/StatCard/yellow.png") center/cover;
-  opacity: 0.28;
-  mix-blend-mode: multiply;
+  background: rgba(255, 255, 255, 0.2);
   pointer-events: none;
 }
 .pnl-streak > * { position: relative; z-index: 1; }
@@ -275,11 +266,11 @@
   margin: 0;
   font-size: 21px;
   font-weight: 900;
-  color: var(--college-darker);
+  color: var(--teal-darker, #1f413d);
 }
 .pnl-streak p {
   margin: 6px 0 0;
-  color: var(--college-darker);
+  color: var(--teal-darker, #1f413d);
   opacity: 0.85;
   font-size: 14px;
   font-weight: 600;
@@ -288,12 +279,12 @@
 .pnl-flame {
   width: 42px;
   height: 54px;
-  background: var(--college-darker);
+  background: var(--teal-darker, #1f413d);
   border: 2px solid var(--ink);
   border-radius: 12px 12px 18px 18px;
   display: grid;
   place-items: center;
-  color: var(--college);
+  color: var(--teal);
   font-weight: 900;
   font-size: 15px;
   box-shadow: 2px 2px 0 rgba(41, 40, 39, 0.35);
@@ -301,8 +292,8 @@
 .pnl-flame:nth-child(odd) { transform: rotate(-2deg); }
 .pnl-flame:nth-child(even) { transform: rotate(2deg); }
 .pnl-flame.off {
-  background: rgba(87, 57, 10, 0.14);
-  color: rgba(87, 57, 10, 0.5);
+  background: rgba(31, 65, 61, 0.16);
+  color: rgba(31, 65, 61, 0.5);
   border-color: rgba(41, 40, 39, 0.35);
   box-shadow: none;
 }
