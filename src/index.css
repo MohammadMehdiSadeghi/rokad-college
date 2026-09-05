@@ -848,7 +848,7 @@ ul { list-style: none; }
 .desktop-only { display: inline-flex; }
 @media (max-width: 900px) { .desktop-only { display: none; } }
 
-/* CTA pill (navy — DS spec, rotated -3deg) */
+/* CTA pill (navy — DS spec, rotated 1deg) */
 .cta-pill {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--navy);
@@ -856,7 +856,7 @@ ul { list-style: none; }
   padding: 11px 22px;
   border-radius: 12px;
   font-weight: 900; font-size: 14.5px;
-  transform: rotate(-3deg);
+  transform: rotate(1deg);
   transition: transform 0.2s ease-out, background 0.2s ease, color 0.2s ease;
   border: 2px solid var(--ink);
   box-shadow: 3px 3px 0 var(--college);

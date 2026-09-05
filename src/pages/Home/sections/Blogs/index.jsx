@@ -131,41 +131,6 @@ export default function Blogs() {
           ))}
         </div>
 
-        {/* Archive strip */}
-        <div className="mag-archive">
-          <div className="info">
-            <h4>۱۲۴ مقالهٔ منتشرشده تا امروز</h4>
-            <p>
-              پیشرفت مسیر انتشار محتوای سالانهٔ ما — هدف ۲۰۰ مقاله تا پایان
-              ۱۴۰۴.
-            </p>
-            <div className="progress">
-              <div className="track">
-                <div className="fill" />
-              </div>
-              <div className="pct">۶۲٪ کامل شد</div>
-            </div>
-          </div>
-          <a
-            href="#blog"
-            className="mag-btn"
-            style={{ background: "var(--college)", color: "var(--ink)" }}
-          >
-            مرور آرشیو
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              style={{ width: 16, height: 16 }}
-            >
-              <path d="M15 6l-6 6 6 6" />
-            </svg>
-          </a>
-        </div>
       </div>
     </section>
   );

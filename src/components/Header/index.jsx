@@ -35,7 +35,7 @@ function matchItem(item, query) {
   const hay = (item.title + " " + item.text + " " + item.tags + " " + item.section).toLowerCase();
   return q.split(/\s+/).every((w) => hay.includes(w));
 }
-
+  
 const sectionBadge = {
   "دوره‌ها": { bg: "var(--college-light)", fg: "var(--college-darker)" },
   "وبلاگ": { bg: "var(--bg-lavender)", fg: "var(--navy)" },
