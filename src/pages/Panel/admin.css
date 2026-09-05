@@ -133,6 +133,10 @@
 .pnl-main { padding: 26px 34px 56px; min-width: 0; }
 /* ورود به پنل با anchor هش — همیشه از بالا */
 #panel { scroll-margin-top: 0; }
+/* ضدسرریز: گریدهای تو در تو نباید از محتوای nowrap منبسط شن */
+.pnl-main .pnl-panel { min-width: 0; max-width: 100%; }
+.pnl-main h4 { min-width: 0; }
+.pnl-main .pnl-pill { white-space: normal; text-align: center; }
 
 .pnl-top {
   display: flex;
@@ -1162,10 +1166,11 @@
   gap: 22px;
   align-items: start;
 }
+.pnl-mentor-grid > .pnl-panel { min-width: 0; }
 .pnl-mentor-list { display: flex; flex-direction: column; gap: 10px; }
 .pnl-mentor {
   display: grid;
-  grid-template-columns: 44px 1fr auto;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
   gap: 12px;
   align-items: center;
   width: 100%;
@@ -1238,8 +1243,9 @@
   max-height: 440px;
   overflow-y: auto;
   padding: 6px 2px;
+  min-width: 0;
 }
-.pnl-msg { display: flex; align-items: flex-end; gap: 10px; }
+.pnl-msg { display: flex; align-items: flex-end; gap: 10px; min-width: 0; }
 .pnl-msg.me { flex-direction: row-reverse; }
 .pnl-msg .ava {
   width: 34px; height: 34px;
@@ -1307,6 +1313,63 @@
 @media (max-width: 1100px) {
   .pnl-mentor-grid { grid-template-columns: 1fr; }
   .pnl-mentor .info .last { max-width: 100%; }
+}
+
+/* موبایل پنل — همهٔ صفحات */
+@media (max-width: 600px) {
+  /* تیتر h1 و زیرنویس */
+  .pnl-h1 { font-size: 25px; }
+  .pnl-sub { font-size: 13px; }
+
+  /* KPIها تک‌ستونه فشرده */
+  .pnl-kpi { padding: 14px; }
+  .pnl-kpi .v { font-size: 26px; }
+
+  /* کارت‌های تیکت‌مانند: پرفوراژ و گپ عمودی حذف */
+  .pnl-cert { padding: 20px 18px; }
+  .pnl-cert-main h3 { font-size: 19px; }
+  .pnl-cert-stub .qr { width: 72px; height: 72px; }
+
+  /* سطرها: ستون سوم زیر محتوا */
+  .pnl-asn { grid-template-columns: 44px minmax(0, 1fr); }
+  .pnl-asn .side { grid-column: 1 / -1; justify-content: flex-start; }
+  .pnl-asn.urgent { margin: 0 -8px; padding-inline: 8px; }
+
+  /* لیست منتور: پیام آخر با ارتفاع ثابت دوخطی */
+  .pnl-mentor .info .last { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* چت: حباب‌ها عریض‌تر، آواتار کوچک‌تر */
+  .pnl-msg .bubble { max-width: 85%; }
+  .pnl-chat-input .send { padding: 10px 14px; font-size: 12px; }
+
+  /* گروه و رویداد: اکشن‌ها زیر محتوا */
+  .pnl-group { padding: 14px 16px; }
+  .pnl-group .side { align-items: flex-start; }
+  .pnl-event { padding: 14px 16px; }
+  .pnl-event .meta { gap: 10px; }
+
+  /* فصل‌ها و درس‌ها */
+  .pnl-mc-head { grid-template-columns: 56px minmax(0, 1fr) auto; padding: 12px; }
+  .pnl-mc-thumb { width: 56px; height: 44px; }
+  .pnl-mc-info b { font-size: 13.5px; }
+  .pnl-les { grid-template-columns: 30px minmax(0, 1fr) auto; padding: 9px 10px; }
+  .pnl-les .n { width: 26px; height: 26px; font-size: 11px; }
+
+  /* پروفایل */
+  .pnl-prof-stats b { font-size: 17px; }
+  .pnl-avatar-lg { width: 96px; height: 96px; font-size: 38px; margin-top: -48px; }
+  .pnl-cover { height: 120px; }
+  .pnl-prof-body { padding: 10px 14px 20px; }
+  .pnl-tag { font-size: 11px; padding: 4px 10px; }
+
+  /* نمودار هفتگی: برچسب‌ها کوچک‌تر */
+  .pnl-bar span { font-size: 9.5px; }
+  .pnl-skill { grid-template-columns: 96px minmax(0, 1fr) 38px; }
+
+  /* فرم تیکت و فیلدها */
+  .pnl-new-ticket input,
+  .pnl-new-ticket textarea { font-size: 15px; } /* جلوگیری از زوم iOS (<16px) */
+  .pnl-chat-input input { font-size: 16px; }
 }
 
 /* ============================================================
