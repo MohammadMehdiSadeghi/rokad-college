@@ -43,7 +43,7 @@ export default function Hero() {
             <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>آینده</span>{" "}
             <span style={{ display: "inline-block", position: "relative" }}>
               شغلی
-              <span style={{ position: "absolute", left: 0, right: 0, bottom: "15%", height: "35%", background: "linear-gradient(180deg, transparent 65%, var(--college) 65%)", pointerEvents: "none" }} />
+              <span style={{ position: "absolute", left: 0, right: 0, bottom: "15%", height: "35%", background: "linear-gradient(180deg, transparent 65%, var(--college) 65%)", pointerEvents: "none", zIndex: -1 }} />
             </span>{" "}
             <span style={{ display: "inline-block", transform: "rotate(2deg)" }}>فردات</span>
             <br />
