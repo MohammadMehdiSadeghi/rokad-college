@@ -2987,8 +2987,9 @@ a:focus-visible, button:focus-visible {
   overflow: hidden;
 }
 @media (max-width: 1024px) { .p5-section { padding-left: 36px; padding-right: 36px; } }
+@media (max-width: 600px) { .p5-section { padding-left: 20px; padding-right: 20px; } }
 
-.p5-inner { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
+.p5-inner { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; min-width: 0; }
 
 /* ---- Head ---- */
 .p5-head { text-align: center; margin-bottom: 44px; }
@@ -3037,6 +3038,17 @@ a:focus-visible, button:focus-visible {
   position: relative;
   transform: rotate(-.6deg);
   margin-bottom: 40px;
+}
+/* موبایل: تگ LIVE بالای تیکر، تیکر تمام‌عرض */
+@media (max-width: 600px) {
+  .p5-ticker {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 18px 16px;
+  }
+  .p5-tag { align-self: flex-start; }
+  .p5-track { position: relative; }
 }
 /* Fade edges */
 .p5-ticker::before {
@@ -4421,4 +4433,65 @@ a:focus-visible, button:focus-visible {
   .cp-grid { grid-template-columns: 1fr; }
   .cp-header { padding: 30px 0 38px; }
   .cp-title-wrap { gap: 16px; }
+}
+
+/* ============================================================
+   GLOBAL RESPONSIVE POLISH — کل سایت در عرض‌های باریک
+   ============================================================ */
+
+/* کانتینر: پدینگ کمتر در موبایل */
+@media (max-width: 600px) {
+  .container { padding-inline: 16px; }
+}
+
+/* --- صفحهٔ اصلی --- */
+@media (max-width: 600px) {
+  /* فیلتر سگمنتی سکشن دوره‌ها: داخل خودش اسکرول افقی بگیرد */
+  .segbar { justify-content: flex-start; overflow-x: auto; padding-bottom: 6px; }
+  /* کارت‌های لیستی دوره: کاور در موبایل کوتاه‌تر */
+  .v2-cover { min-height: 150px; }
+  /* تیکر آمار: اعداد و فونت فشرده‌تر */
+  .p5-k { font-size: 14px; gap: 10px; }
+  .p5-n { font-size: 26px; }
+  .p5-sep { margin-inline: 20px; }
+  /* تختهٔ آمار */
+  .p5-tile { padding: 16px 14px; }
+  .p5-tile-num { font-size: 36px; }
+
+  /* هیرو: تیتر و دکمه‌ها */
+  .hero-v5-actions .hero-v5-btn-primary,
+  .hero-v5-actions .hero-v5-btn-ghost { padding: .85rem 1.3rem; font-size: .95rem; }
+  .hero-v5-trust { flex-wrap: wrap; }
+}
+
+/* --- تک‌صفحهٔ دوره --- */
+@media (max-width: 480px) {
+  .cs-topbar { gap: 10px; padding: 12px 14px; }
+  .cs-crumbs { display: none; } /* بردکرامب در موبایل خیلی باریک */
+  .cs-hero { padding: 22px 18px; }
+  .cs-hero h1 { font-size: 24px; }
+  .cs-lede { font-size: 13.5px; }
+  .cs-meta .m { font-size: 11.5px; padding: 5px 11px; }
+  .cs-tabs { padding: 0 14px; }
+  .cs-curriculum { padding: 16px 14px 20px; }
+  .cs-progress { font-size: 11.5px; gap: 8px; flex-wrap: wrap; }
+  .cs-ch-head { gap: 10px; padding: 11px 12px; }
+  .cs-ch .num { width: 30px; height: 30px; font-size: 12.5px; }
+  .cs-ch .info b { font-size: 13px; }
+  .cs-ch .info small { font-size: 11px; }
+  .cs-lessons { margin: 0 12px 12px; }
+  .cs-card { padding: 18px 16px; }
+  .cs-price b { font-size: 26px; }
+  .cs-thumb { height: 150px; }
+  .cs-instr { padding: 12px 14px; }
+}
+
+/* --- ورود / ثبت‌نام --- */
+@media (max-width: 480px) {
+  .auth-page { padding: 32px 14px; }
+}
+
+/* --- بلاگ ایندکس و تک‌بلاگ --- */
+@media (max-width: 600px) {
+  .rbs-cover-card { height: 220px; }
 }

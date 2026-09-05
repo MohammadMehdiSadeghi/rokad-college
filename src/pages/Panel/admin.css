@@ -363,7 +363,7 @@
 /* ---------- Content grid + panels ---------- */
 .pnl-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: 22px;
   align-items: start;
 }
@@ -520,7 +520,7 @@
    ============================================================ */
 .pnl-prof-wrap {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
   gap: 24px;
   align-items: start;
 }
@@ -870,7 +870,7 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 1180px) {
   .pnl-kpis { grid-template-columns: repeat(2, 1fr); }
-  .pnl-grid, .pnl-prof-wrap { grid-template-columns: 1fr; }
+  .pnl-grid, .pnl-prof-wrap { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 900px) {
   .pnl-root { grid-template-columns: 1fr; }
@@ -1443,6 +1443,9 @@
   /* نمودار هفتگی: برچسب‌ها کوچک‌تر */
   .pnl-bar span { font-size: 9.5px; }
   .pnl-skill { grid-template-columns: 96px minmax(0, 1fr) 38px; }
+  /* نمودار در موبایل: گپ کمتر تا ۷ ستون جا شود */
+  .pnl-chart { gap: 5px; padding: 0 2px 26px; }
+  .pnl-bar span { white-space: normal; line-height: 1.1; }
 
   /* فرم تیکت و فیلدها */
   .pnl-new-ticket input,
