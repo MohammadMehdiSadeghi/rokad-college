@@ -37,7 +37,6 @@ export default function About() {
       <div className="abt-inner">
         {/* Left side — text (right column in RTL) */}
         <div className="abt-side">
-          <span className="abt-eyebrow">مسیر رکاد‌کالج</span>
           <h2 className="abt-title">
             از <span className="hl">صفر</span> تا
             <br />

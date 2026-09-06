@@ -102,7 +102,6 @@ export default function Faq() {
       <div className="container section-inner">
         {/* Section heading */}
         <div className="faq5-head">
-          <span className="faq5-eyebrow">پرسش‌های متداول</span>
           <h2 className="faq5-title">
             یه گفت‌وگوی <span className="hl">کوتاه</span> با ما.
           </h2>

@@ -1156,18 +1156,6 @@
 }
 .pnl-cert-stamp svg { width: 13px; height: 13px; }
 
-.pnl-cert-eyebrow {
-  display: inline-block;
-  background: #fff;
-  border: 2px solid var(--ink);
-  border-radius: 10px;
-  padding: 4px 12px;
-  font-size: 11px;
-  font-weight: 900;
-  color: var(--navy);
-  transform: rotate(-1.5deg);
-  margin-bottom: 10px;
-}
 .pnl-cert-main h3 { margin: 0 0 14px; font-size: 24px; font-weight: 900; color: var(--navy); }
 .pnl-cert-meta {
   display: flex;

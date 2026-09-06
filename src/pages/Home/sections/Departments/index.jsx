@@ -88,7 +88,6 @@ export default function Departments({ layout = "stack" }) {
       <div className="dept5-inner">
         {/* Head */}
         <div className="dept5-head">
-          <span className="dept5-eyebrow">دپارتمان‌های تخصصی</span>
           <h2>
             <span className="w w1">سه</span>
             <span className="w w2">دپارتمان،</span>

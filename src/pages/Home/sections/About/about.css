@@ -28,22 +28,6 @@
 /* ---- Left side (text) — in RTL this is the right column ---- */
 .abt-side {}
 
-/* Eyebrow tag */
-.abt-eyebrow {
-  @apply inline-flex items-center gap-2;
-  background: var(--college-light);
-  border: 2px dashed var(--college);
-  color: var(--college-dark);
-  padding: 6px 14px;
-  border-radius: 10px;
-  font-weight: 900;
-  font-size: 12px;
-  margin-bottom: 18px;
-}
-.abt-eyebrow::before {
-  content: "\2726"; /* ✦ */
-}
-
 /* Title */
 .abt-title {
   @apply font-black;
@@ -54,11 +38,23 @@
 }
 .abt-title .hl {
   @apply inline-block;
-  background: var(--college);
-  padding: 2px 14px;
-  border-radius: 12px;
-  border: 2.5px solid var(--ink);
-  transform: rotate(-1.5deg);
+  position: relative;
+  z-index: 0;
+}
+.abt-title .hl::after {
+  content: "";
+  position: absolute;
+  right: -0.12em;
+  left: -0.12em;
+  bottom: 0.06em;
+  height: 0.42em;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(100deg,
+    rgba(255, 238, 102, 0.5) 0%, #ffee66 6%, #ffe94d 50%, #ffee66 94%,
+    rgba(255, 238, 102, 0.5) 100%);
+  border-radius: 3px 8px 4px 9px;
+  transform: rotate(-1.4deg);
 }
 
 /* Body text */

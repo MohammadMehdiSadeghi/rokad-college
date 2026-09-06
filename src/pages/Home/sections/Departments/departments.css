@@ -29,20 +29,6 @@
   max-width: 820px;
   margin: 0 auto 3.5rem;
 }
-.dept5-eyebrow {
-  display: inline-flex; align-items: center; gap: .55rem;
-  background: var(--white); border: 2px solid var(--ink);
-  color: var(--college-darker); font-weight: 800; font-size: 14px;
-  padding: .55rem 1.1rem;
-  border-radius: 0 .95rem 0 .95rem;
-  corner-shape: squircle; -webkit-corner-shape: squircle;
-  transform: rotate(-2deg);
-  box-shadow: 3px 3px 0 0 var(--college-normal);
-  margin-bottom: 1.5rem;
-}
-.dept5-eyebrow::before {
-  content: "✦"; color: var(--college); font-size: 15px;
-}
 .dept5-head h2 {
   font-size: clamp(28px, 4.4vw, 52px); line-height: 1.2;
   font-weight: 900; color: var(--ink); margin: 0 0 1rem; letter-spacing: -.01em;

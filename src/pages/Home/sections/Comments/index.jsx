@@ -181,10 +181,6 @@ export default function Comments() {
         {/* Section heading */}
         <div className="sec-head" style={{ marginBottom: 44, display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
           <div style={{ maxWidth: 760 }}>
-            <span className="cmt3-eyebrow" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "var(--white)", border: "2px solid var(--ink)", padding: "5px 14px", borderRadius: 10, fontWeight: 900, fontSize: 12, color: "var(--college-darker)", boxShadow: "3px 3px 0 var(--college)", transform: "rotate(-2deg)", marginBottom: 16 }}>
-              <span style={{ color: "var(--college)", fontSize: 14, marginLeft: 8 }}>✦</span>
-              قصهٔ هنرجوها
-            </span>
             <h2 style={{ margin: "0 0 10px", fontSize: 44, fontWeight: 900, lineHeight: 1.2, color: "var(--ink)", letterSpacing: "-.5px" }}>
               <span style={{ display: "inline-block", marginLeft: 6, transform: "rotate(-1.5deg)" }}>از صفر</span>
               <span style={{ display: "inline-block", marginLeft: 6, transform: "rotate(1.5deg)", color: "var(--college)" }}>تا</span>

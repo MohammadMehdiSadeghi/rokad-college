@@ -29,10 +29,6 @@ export default function StatsTicker() {
       <div className="container p5-inner">
         {/* Head */}
         <div className="p5-head">
-          <span className="p5-eyebrow">
-            <span className="p5-eyebrow-dot" />
-            در همین لحظه در رکاد
-          </span>
           <h2 className="t-section">
             <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>اینجا</span>{" "}
             <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--college)" }}>فقط</span>{" "}
@@ -40,7 +36,7 @@ export default function StatsTicker() {
             <span style={{ display: "inline-block", transform: "rotate(2deg)", color: "var(--navy)" }}>نمی‌بینی</span>
             <br />
             <span>برای </span>
-            <span className="hl" style={{ display: "inline-block", background: "var(--college)", padding: "2px 14px", borderRadius: 12, border: "2.5px solid var(--ink)", transform: "rotate(-1.5deg)", color: "var(--ink)", fontWeight: 900 }}>آینده</span>
+            <span className="mk">آینده</span>
             <span> آماده می‌شوی.</span>
           </h2>
           <p style={{ margin: "0 auto", color: "#a8abb5", fontSize: 16, lineHeight: 1.85, fontWeight: 600, maxWidth: 560 }}>

@@ -31,20 +31,12 @@ export default function Hero() {
       <div className="container hero-v5-grid">
         {/* Left — Content */}
         <div className="hero-v5-content">
-          <span className="eyebrow-pill">
-            <span className="dot" />
-            اولین هنرستان استارتاپی ایران
-          </span>
-
           <h1>
             <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>مهارت</span>{" "}
             <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--college)" }}>امروزت،</span>
             <br />
             <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>آینده</span>{" "}
-            <span style={{ display: "inline-block", position: "relative" }}>
-              شغلی
-              <span style={{ position: "absolute", left: 0, right: 0, bottom: "15%", height: "35%", background: "linear-gradient(180deg, transparent 65%, var(--college) 65%)", pointerEvents: "none", zIndex: -1 }} />
-            </span>{" "}
+            <span className="mk">شغلی</span>{" "}
             <span style={{ display: "inline-block", transform: "rotate(2deg)" }}>فردات</span>
             <br />
             <span style={{ display: "inline-block", transform: "rotate(-2deg)" }}>را می‌سازد.</span>

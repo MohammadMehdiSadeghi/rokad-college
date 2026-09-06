@@ -87,7 +87,6 @@ export default function Footer() {
     <footer className="footer-v5" id="consult">
       {/* ---------- CTA ---------- */}
       <div className="f5-newsletter">
-        <div className="f5-eyebrow">قدم اول برای آینده شغلیت</div>
         <h3>
           <span className="word">آینده</span>
           <span className="word hi">از اینجا</span>

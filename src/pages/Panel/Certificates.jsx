@@ -40,7 +40,6 @@ export default function Certificates({ onNavigate }) {
               </span>
 
               <div className="pnl-cert-main">
-                <span className="pnl-cert-eyebrow">گواهی اتمام دوره</span>
                 <h3>{c.title}</h3>
                 <div className="pnl-cert-meta">
                   <span>

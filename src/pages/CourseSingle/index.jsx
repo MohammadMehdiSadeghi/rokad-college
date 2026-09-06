@@ -59,10 +59,6 @@ export default function CourseSingle() {
           <div className="cs-main">
             {/* Hero */}
             <div className="cs-hero">
-              <span className="cs-eyebrow">
-                <span className="dot" />
-                {course.eyebrow}
-              </span>
               <h1>
                 <span style={{ display: "inline-block", transform: "rotate(-0.5deg)" }}>{course.title}</span>
               </h1>

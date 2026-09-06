@@ -96,20 +96,6 @@
   opacity: 0.3;
   pointer-events: none;
 }
-.cs-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--college-darker);
-}
-.cs-eyebrow .dot {
-  width: 8px;
-  height: 8px;
-  background: var(--college);
-  border-radius: 50%;
-}
 .cs-hero h1 {
   margin: 12px 0 0;
   font-size: 42px;

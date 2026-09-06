@@ -11,7 +11,6 @@ export default function Blogs() {
         {/* Section heading */}
         <div className="mag-head">
           <div className="left">
-            <span className="mag-eyebrow">شمارهٔ ۱۲ · مرداد ۱۴۰۴</span>
             <h2 className="mag-title">
               <span className="w w1">تیتر</span>
               <span className="w w2">اول</span>

@@ -121,10 +121,6 @@ export default function Courses() {
       <PatternLayer rotate={180} />
       <div className="container section-inner">
         <div className="head" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", maxWidth: 820, margin: "0 auto 2rem" }}>
-          <span className="eyebrow">
-            <span className="dot" />
-            {"لیست دوره‌های تخصصی"}
-          </span>
           <RotatedHeading words={"از این دوره‌ها شغلت را بساز"} className="t-section" color="var(--navy)" />
           <p style={{ fontSize: 16.5, lineHeight: 1.75, fontWeight: 600, color: "var(--ink-subtle)", maxWidth: 560, margin: "1rem auto 0" }}>
             {"لیست کامل دوره‌های کالج با فیلتر نحوه برگزاری — حضوری یا آنلاین."}

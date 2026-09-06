@@ -132,10 +132,6 @@ export default function PromoBenefits() {
       <div className="container section-inner">
         {/* Head */}
         <div className="promo-head">
-          <span className="promo-eyebrow">
-            <span className="dot" />
-            وعده‌های کالج رکاد
-          </span>
           <h2 className="t-section">
             <span
               style={{ display: "inline-block", transform: "rotate(-1.5deg)", color: "var(--college)" }}
