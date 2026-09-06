@@ -105,7 +105,6 @@ export default function Profile({ onNavigate }) {
               <div className="pnl-badges">
                 {badges.map((b, i) => (
                   <div key={i} className={`pnl-badge ${b.cls}`}>
-                    <span className="em">{b.em}</span>
                     <b>{b.label}</b>
                   </div>
                 ))}

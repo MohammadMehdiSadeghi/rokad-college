@@ -93,10 +93,6 @@ export default function Departments({ layout = "stack" }) {
             <span className="w w2">دپارتمان،</span>
             <span className="w w3">سه جهان</span>
           </h2>
-          <p>
-            هر کارت یک دنیای کامل است — رنگ، دوره‌ها، و شخصیت مستقل خودش.
-            کدام‌یک آیندهٔ توست؟
-          </p>
           <a href="#courses-index" className="dept5-cta-top">
             مشاهدهٔ همهٔ دوره‌ها
             <ArrowIcon />

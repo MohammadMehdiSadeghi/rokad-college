@@ -148,18 +148,6 @@ export default function PromoBenefits() {
               رو بساز
             </span>
           </h2>
-          <p
-            style={{
-              fontSize: 17,
-              lineHeight: 1.75,
-              fontWeight: 600,
-              color: "var(--ink-subtle)",
-              maxWidth: 580,
-              margin: "0 auto",
-            }}
-          >
-            یاد بگیر، تجربه کن، مهارت بساز و آینده‌ات را از همین امروز شروع کن.
-          </p>
         </div>
 
         {/* Grid */}

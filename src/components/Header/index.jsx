@@ -6,27 +6,27 @@ const ROTS = [-1, 0.5, -0.5, 1, -1, 0.5];
 
 /* ─── Searchable site content ─── */
 const searchableData = [
-  { section: "دوره‌ها", icon: "🎓", title: "طراحی سایت با وردپرس", text: "از آشنایی با وردپرس تا طراحی سایت حرفه‌ای", link: "#courses", tags: "وردپرس wordpress وب طراحی سایت" },
-  { section: "دوره‌ها", icon: "💻", title: "برنامه‌نویسی فرانت‌اند", text: "با HTML، CSS و JavaScript وارد دنیای توسعه وب شو", link: "#courses", tags: "javascript react فرانت‌اند frontend html css" },
-  { section: "دوره‌ها", icon: "📈", title: "سئو و بهینه‌سازی سایت", text: "بهینه‌سازی سایت برای موتورهای جست‌وجو", link: "#courses", tags: "seo سئو بهینه‌سازی google analytics" },
-  { section: "دوره‌ها", icon: "🎨", title: "فتوشاپ و طراحی گرافیک", text: "اصول طراحی و Photoshop", link: "#courses", tags: "فتوشاپ photoshop گرافیک طراحی illustrator" },
-  { section: "دوره‌ها", icon: "🎬", title: "تدوین و موشن گرافیک", text: "Premiere و After Effects", link: "#courses", tags: "موشن تدوین premiere after effects ویدیو" },
-  { section: "دوره‌ها", icon: "🌐", title: "زبان انگلیسی (IELTS)", text: "از پایه تا آمادگی آیلتس", link: "#courses", tags: "زبان انگلیسی ielts آیلتس english" },
-  { section: "دوره‌ها", icon: "📊", title: "MBA و مهارت‌های مدیریتی", text: "مدیریت و کسب‌وکار", link: "#courses", tags: "mba مدیریت کسب‌وکار بازار کار" },
-  { section: "وبلاگ", icon: "📝", title: "از کجا یادگیری یک مهارت را شروع کنیم؟", text: "مسیر یادگیری مهارت تخصصی", link: "#blog", tags: "یادگیری مهارت شروع مسیر شغلی" },
-  { section: "وبلاگ", icon: "📝", title: "۴ دپارتمان کالج رکاد", text: "فناوری اطلاعات، گرافیک، زبان یا MBA؟", link: "#blog", tags: "دپارتمان مسیر رشته" },
-  { section: "وبلاگ", icon: "📝", title: "یادگیری پروژه‌محور", text: "پروژه‌های واقعی سرعت یادگیری را بالا می‌برد", link: "#blog", tags: "پروژه‌محور پروژه تمرین عملی" },
-  { section: "سوالات", icon: "❓", title: "آیا پیش‌نیاز لازم دارم؟", text: "خیر. از سطح مقدماتی شروع می‌شود", link: "#faq", tags: "پیش‌نیاز مبتدی شروع" },
-  { section: "سوالات", icon: "❓", title: "مدرک دریافت می‌کنم؟", text: "گواهینامه داخلی با کد QR", link: "#faq", tags: "مدرک گواهینامه certificate" },
-  { section: "سوالات", icon: "❓", title: "پشتیبانی آموزشی دارم؟", text: "منتور اختصاصی و پاسخ‌گویی زیر ۲۴ ساعت", link: "#faq", tags: "پشتیبانی منتور استاد" },
-  { section: "نظرات", icon: "💬", title: "سارا — وردپرس", text: "از پایه شروع کردم، الان فریلنسرم", link: "#comments", tags: "تجربه نظر هنرجو وردپرس فریلنسر" },
-  { section: "نظرات", icon: "💬", title: "امیر — فرانت‌اند", text: "بازار کار لازم داشتم، الان در اسنپ", link: "#comments", tags: "تجربه نظر هنرجو فرانت‌اند استخدام" },
-  { section: "نظرات", icon: "💬", title: "نگار — گرافیک", text: "از صفر تا حرفه‌ای عالی بود", link: "#comments", tags: "تجربه نظر هنرجو گرافیک فریلنسر" },
-  { section: "نظرات", icon: "💬", title: "مریم — زبان", text: "آیلسم رو ۶.۵ گرفتم", link: "#comments", tags: "تجربه نظر هنرجو زبان ielts" },
-  { section: "ویژگی‌ها", icon: "🎓", title: "اساتید متخصص شاغل در بازار", text: "تجربه سال‌ها کار واقعی", link: "#promo", tags: "اساتید تجربه بازار کار" },
-  { section: "ویژگی‌ها", icon: "🚀", title: "ورود به بازار کار", text: "معرفی به شرکت‌های همکار", link: "#promo", tags: "شغل استخدام بازار کار" },
-  { section: "آمار", icon: "📊", title: "+۲.۵k هنرجوی فعال", text: "بیش از دو هزار هنرجو", link: "#features", tags: "آمار هنرجو تعداد" },
-  { section: "آمار", icon: "⭐", title: "۹۸٪ رضایت", text: "رضایت بالای هنرجوها", link: "#features", tags: "آمار رضایت" },
+  { section: "دوره‌ها", title: "طراحی سایت با وردپرس", text: "از آشنایی با وردپرس تا طراحی سایت حرفه‌ای", link: "#courses", tags: "وردپرس wordpress وب طراحی سایت" },
+  { section: "دوره‌ها", title: "برنامه‌نویسی فرانت‌اند", text: "با HTML، CSS و JavaScript وارد دنیای توسعه وب شو", link: "#courses", tags: "javascript react فرانت‌اند frontend html css" },
+  { section: "دوره‌ها", title: "سئو و بهینه‌سازی سایت", text: "بهینه‌سازی سایت برای موتورهای جست‌وجو", link: "#courses", tags: "seo سئو بهینه‌سازی google analytics" },
+  { section: "دوره‌ها", title: "فتوشاپ و طراحی گرافیک", text: "اصول طراحی و Photoshop", link: "#courses", tags: "فتوشاپ photoshop گرافیک طراحی illustrator" },
+  { section: "دوره‌ها", title: "تدوین و موشن گرافیک", text: "Premiere و After Effects", link: "#courses", tags: "موشن تدوین premiere after effects ویدیو" },
+  { section: "دوره‌ها", title: "زبان انگلیسی (IELTS)", text: "از پایه تا آمادگی آیلتس", link: "#courses", tags: "زبان انگلیسی ielts آیلتس english" },
+  { section: "دوره‌ها", title: "MBA و مهارت‌های مدیریتی", text: "مدیریت و کسب‌وکار", link: "#courses", tags: "mba مدیریت کسب‌وکار بازار کار" },
+  { section: "وبلاگ", title: "از کجا یادگیری یک مهارت را شروع کنیم؟", text: "مسیر یادگیری مهارت تخصصی", link: "#blog", tags: "یادگیری مهارت شروع مسیر شغلی" },
+  { section: "وبلاگ", title: "۴ دپارتمان کالج رکاد", text: "فناوری اطلاعات، گرافیک، زبان یا MBA؟", link: "#blog", tags: "دپارتمان مسیر رشته" },
+  { section: "وبلاگ", title: "یادگیری پروژه‌محور", text: "پروژه‌های واقعی سرعت یادگیری را بالا می‌برد", link: "#blog", tags: "پروژه‌محور پروژه تمرین عملی" },
+  { section: "سوالات", title: "آیا پیش‌نیاز لازم دارم؟", text: "خیر. از سطح مقدماتی شروع می‌شود", link: "#faq", tags: "پیش‌نیاز مبتدی شروع" },
+  { section: "سوالات", title: "مدرک دریافت می‌کنم؟", text: "گواهینامه داخلی با کد QR", link: "#faq", tags: "مدرک گواهینامه certificate" },
+  { section: "سوالات", title: "پشتیبانی آموزشی دارم؟", text: "منتور اختصاصی و پاسخ‌گویی زیر ۲۴ ساعت", link: "#faq", tags: "پشتیبانی منتور استاد" },
+  { section: "نظرات", title: "سارا — وردپرس", text: "از پایه شروع کردم، الان فریلنسرم", link: "#comments", tags: "تجربه نظر هنرجو وردپرس فریلنسر" },
+  { section: "نظرات", title: "امیر — فرانت‌اند", text: "بازار کار لازم داشتم، الان در اسنپ", link: "#comments", tags: "تجربه نظر هنرجو فرانت‌اند استخدام" },
+  { section: "نظرات", title: "نگار — گرافیک", text: "از صفر تا حرفه‌ای عالی بود", link: "#comments", tags: "تجربه نظر هنرجو گرافیک فریلنسر" },
+  { section: "نظرات", title: "مریم — زبان", text: "آیلسم رو ۶.۵ گرفتم", link: "#comments", tags: "تجربه نظر هنرجو زبان ielts" },
+  { section: "ویژگی‌ها", title: "اساتید متخصص شاغل در بازار", text: "تجربه سال‌ها کار واقعی", link: "#promo", tags: "اساتید تجربه بازار کار" },
+  { section: "ویژگی‌ها", title: "ورود به بازار کار", text: "معرفی به شرکت‌های همکار", link: "#promo", tags: "شغل استخدام بازار کار" },
+  { section: "آمار", title: "+۲.۵k هنرجوی فعال", text: "بیش از دو هزار هنرجو", link: "#features", tags: "آمار هنرجو تعداد" },
+  { section: "آمار", title: "۹۸٪ رضایت", text: "رضایت بالای هنرجوها", link: "#features", tags: "آمار رضایت" },
 ];
 
 function matchItem(item, query) {
@@ -305,7 +305,6 @@ export default function Header() {
                   </div>
                   {items.map((item) => (
                     <button key={item.title} className="search-hit" onClick={() => handleResultClick(item.link)}>
-                      <span className="search-hit-ic">{item.icon}</span>
                       <div className="search-hit-body">
                         <div className="search-hit-title">{item.title}</div>
                         <div className="search-hit-text">{item.text}</div>

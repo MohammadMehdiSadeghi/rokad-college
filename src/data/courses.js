@@ -209,11 +209,11 @@ export const courses = [
 ];
 
 export const departments = [
-  { id: "design", name: "طراحی و UX", icon: "🎨" },
-  { id: "coding", name: "برنامه‌نویسی", icon: "💻" },
-  { id: "marketing", name: "دیجیتال مارکتینگ", icon: "📱" },
-  { id: "business", name: "کسب‌وکار", icon: "💼" },
-  { id: "photography", name: "عکاسی", icon: "📸" },
+  { id: "design", name: "طراحی و UX" },
+  { id: "coding", name: "برنامه‌نویسی" },
+  { id: "marketing", name: "دیجیتال مارکتینگ" },
+  { id: "business", name: "کسب‌وکار" },
+  { id: "photography", name: "عکاسی" },
 ];
 
 export const LEVELS = [

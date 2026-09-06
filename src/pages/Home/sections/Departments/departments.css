@@ -37,10 +37,6 @@
 .dept5-head h2 .w1 { transform: rotate(-1.5deg); margin-left: .35rem; }
 .dept5-head h2 .w2 { transform: rotate(1.5deg); color: var(--college); margin-left: .35rem; }
 .dept5-head h2 .w3 { transform: rotate(-1deg); }
-.dept5-head p {
-  margin: 0 auto; max-width: 640px;
-  font-size: 16px; line-height: 1.85; font-weight: 600; color: var(--ink-subtle);
-}
 .dept5-cta-top {
   display: inline-flex; align-items: center; gap: .5rem;
   margin-top: 1.75rem;
@@ -106,7 +102,7 @@
   background: var(--dept, var(--ink));
   border-bottom: 2.5px solid var(--ink);
   padding: 1.1rem 1.25rem;
-  display: flex; align-items: center;
+  display: flex; align-items: center; justify-content: flex-end;
   position: relative; overflow: hidden;
   min-height: 68px;
 }

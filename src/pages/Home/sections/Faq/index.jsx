@@ -105,10 +105,6 @@ export default function Faq() {
           <h2 className="faq5-title">
             یه گفت‌وگوی <span className="hl">کوتاه</span> با ما.
           </h2>
-          <p className="faq5-sub">
-            روی هر سؤال کلیک کن تا پاسخ کارشناس رکاد رو ببینی. اگر سؤالت
-            اینجا نبود، همون پایین بپرس.
-          </p>
         </div>
 
         {/* Chat thread */}
@@ -155,7 +151,7 @@ export default function Faq() {
 
             {/* Ask box */}
             <div className="faq5-input">
-              <div className="field">سؤال دیگه‌ای داری؟ همین‌جا بپرس...</div>
+              <div className="field">سؤالت اینجا نبود؟ کارشناسان رکاد جواب می‌دن ↓</div>
               <a href="#consult" className="btn">درخواست مشاوره</a>
             </div>
           </div>

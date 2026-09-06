@@ -92,7 +92,6 @@ export default function Support({ onNavigate }) {
               ))}
             </div>
             <div className="pnl-cert-note" style={{ marginTop: 16 }}>
-              <span className="em">💬</span>
               سوال درسی داری؟ مستقیم از منتورت بپرس.
               <button className="pnl-cbtn ghost" onClick={() => onNavigate("mentor")}>گفتگو با منتور</button>
             </div>

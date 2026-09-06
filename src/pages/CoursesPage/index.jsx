@@ -85,7 +85,7 @@ export default function CoursesPage() {
               <p className="cp-lead">۱۸ دوره از دپارتمان‌های مختلف — از طراحی تا کسب‌وکار.</p>
             </div>
             <div className="cp-count-badge">
-              🎓 <span>{toFa(filtered.length)}</span> دوره فعال
+              <span>{toFa(filtered.length)}</span> دوره فعال
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function CoursesPage() {
                     onChange={() => toggleSet(depts, setDepts, d.id)}
                   />
                   <span className="cp-check-box" />
-                  <span className="cp-check-label">{d.icon} {d.name}</span>
+                  <span className="cp-check-label">{d.name}</span>
                   <span className="cp-check-count">{toFa(deptCount(d.id))}</span>
                 </label>
               ))}
@@ -207,7 +207,7 @@ export default function CoursesPage() {
           </div>
 
           {filtered.length === 0 ? (
-            <div className="cp-empty">😕 هیچ دوره‌ای با این فیلترها پیدا نشد. فیلترها را تغییر دهید.</div>
+            <div className="cp-empty">هیچ دوره‌ای با این فیلترها پیدا نشد. فیلترها را تغییر دهید.</div>
           ) : (
             <div className="cp-grid">
               {filtered.map((c, i) => (
@@ -228,9 +228,9 @@ export default function CoursesPage() {
                       <span>{c.instructor}</span>
                     </div>
                     <div className="cp-meta">
-                      <div><span className="icon">⏱</span> {c.duration}</div>
-                      <div><span className="icon">👥</span> {toFa(c.students)}</div>
-                      <div><span className="icon">⭐</span> {toFa(c.rating)}</div>
+                      <div>{c.duration}</div>
+                      <div>{toFa(c.students)}</div>
+                      <div>{toFa(c.rating)}</div>
                     </div>
                     <div className="cp-footer">
                       <div className="cp-price">

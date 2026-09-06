@@ -72,7 +72,6 @@ export default function Certificates({ onNavigate }) {
         </div>
 
         <div className="pnl-cert-note">
-          <span className="em">💡</span>
           گواهی‌های جدید بعد از قبولی در امتحان نهایی هر دوره، خودکار همین‌جا اضافه می‌شن.
           <button className="pnl-cbtn ghost" onClick={() => onNavigate("courses")}>دوره‌های من</button>
         </div>

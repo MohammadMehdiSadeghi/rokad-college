@@ -67,7 +67,6 @@ export default function StudyGroup({ onNavigate }) {
         </div>
 
         <div className="pnl-cert-note">
-          <span className="em">🤝</span>
           گروه‌های جدید هر ترم توسط منتورها چیده می‌شن — از رویدادها هم می‌تونی هم‌گروهی پیدا کنی.
           <button className="pnl-cbtn ghost" onClick={() => onNavigate("events")}>رویدادها</button>
         </div>

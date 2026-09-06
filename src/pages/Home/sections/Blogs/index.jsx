@@ -16,11 +16,6 @@ export default function Blogs() {
               <span className="w w2">اول</span>
               <span className="w w3">این ماه</span>
             </h2>
-            <p className="mag-desc">
-              یک ماهنامهٔ فشرده از بهترین مقاله‌ها، مصاحبه‌ها و تحلیل‌های آموزشی
-              رکاد. مطالعه‌ای که در پنج دقیقه شروع می‌شود و در بازار کار
-              به‌کار می‌آید.
-            </p>
           </div>
           <div className="right">
             <a href="#blog-index" className="mag-btn">

@@ -49,20 +49,6 @@ export default function About() {
           </p>
           <div className="abt-foot">
             <button className="abt-btn">درباره‌ی رکاد بیشتر بدون ←</button>
-            <div className="abt-signature">
-              <svg
-                viewBox="0 0 120 40"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M8 24 Q 14 8, 22 18 T 36 24 Q 42 12, 52 22 Q 60 30, 68 18 T 84 26 Q 92 16, 104 22 L 112 20" />
-                <path d="M18 30 L 24 32" opacity=".7" />
-              </svg>
-              <span className="who">— آرون، بنیان‌گذار</span>
-            </div>
           </div>
         </div>
 

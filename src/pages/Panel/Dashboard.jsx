@@ -22,15 +22,14 @@ export default function Dashboard({ onNavigate }) {
         {/* ---------- Greeting ---------- */}
         <h1 className="pnl-h1">
           <span className="w" style={{ transform: "rotate(-1.5deg)", display: "inline-block" }}>سلام</span>{" "}
-          <span className="w accent" style={{ transform: "rotate(1.5deg)", display: "inline-block" }}>{panelUser.firstName}</span>{" "}
-          <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>👋</span>
+          <span className="w accent" style={{ transform: "rotate(1.5deg)", display: "inline-block" }}>{panelUser.firstName}</span>
         </h1>
         <p className="pnl-sub">{panelUser.greeting}</p>
 
         {/* ---------- Streak banner ---------- */}
         <div className="pnl-streak">
           <div>
-            <h3>🔥 {streak.days} روز پیاپی یادگیری</h3>
+            <h3>{streak.days} روز پیاپی یادگیری</h3>
             <p>{streak.hint}</p>
           </div>
           <div className="pnl-flames" aria-hidden="true">

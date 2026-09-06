@@ -97,7 +97,6 @@ export default function Courses({ onNavigate }) {
 
           {c.status === "done" && (
             <div className="pnl-mc-done-note">
-              <span className="em">🎓</span>
               در این دوره قبول شدی — گواهی‌ات در صفحهٔ گواهی‌ها آماده‌ست.
               <button className="pnl-cbtn" onClick={() => onNavigate("certs")}>مشاهدهٔ گواهی</button>
             </div>

@@ -10,7 +10,7 @@ const departments = [
 
 const quickLinks = [
   { label: "همهٔ دوره‌ها", href: "#courses-index" },
-  { label: "مجلهٔ رکاد", href: "#blog-index" },
+  { label: "مجلهٔ رکاد کالج", href: "#blog-index" },
   { label: "پنل هنرجو", href: "#panel" },
   { label: "ورود / ثبت‌نام", href: "#auth" },
   { label: "دربارهٔ ما", href: "#about" },
@@ -93,7 +93,7 @@ export default function Footer() {
           <span className="word">شروع می‌شه.</span>
         </h3>
         <p className="f5-desc">
-          شماره‌ات رو بذار تا کارشناسان رکاد رایگان باهات تماس بگیرن و بهترین
+            شماره‌ات رو بذار تا کارشناسان رکاد کالج رایگان باهات تماس بگیرن و بهترین
           مسیر یادگیری رو با توجه به هدف شغلیت معرفی کنن.
         </p>
         <form className="f5-form" onSubmit={handleSubmit}>
@@ -112,7 +112,7 @@ export default function Footer() {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width={15} height={15} aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
         </a>
         {submitted ? (
-          <div className="f5-foot-note success">درخواستت ثبت شد! به‌زودی باهات تماس می‌گیریم. 🎉</div>
+          <div className="f5-foot-note success">درخواستت ثبت شد! به‌زودی باهات تماس می‌گیریم.</div>
         ) : (
           <div className="f5-foot-note">مشاوره کاملاً رایگانه — هیچ هزینه‌ای پرداخت نمی‌کنی.</div>
         )}
@@ -130,7 +130,7 @@ export default function Footer() {
                 aria-hidden="true"
               />
             </span>
-            رکاد <span className="f5-badge">کالج</span>
+            رکاد کالج
           </div>
           <p>اولین هنرستان استارتاپی ایران. یاد بگیر، تجربه کن، مهارت بساز.</p>
         </div>

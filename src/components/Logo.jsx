@@ -4,7 +4,7 @@ export default function Logo({ withWord = true, size = 40, compact = false }) {
     <a
       href="#top"
       className="logo"
-      aria-label="رکاد — کالج"
+      aria-label="رکاد کالج"
       style={{ display: "inline-flex", alignItems: "center", gap: 10 }}
     >
       <span
@@ -48,7 +48,7 @@ export default function Logo({ withWord = true, size = 40, compact = false }) {
               fontWeight: 950,
             }}
           >
-            رکاد
+            رکاد کالج
           </strong>
           <span
             style={{

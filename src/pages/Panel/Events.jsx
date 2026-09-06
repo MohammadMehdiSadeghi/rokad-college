@@ -48,8 +48,8 @@ export default function Events({ onNavigate }) {
                 </div>
                 <div className="meta">
                   <span><CalIcon /> {e.time}</span>
-                  <span>👤 {e.host}</span>
-                  <span>📍 {e.place}</span>
+                  <span>{e.host}</span>
+                  <span>{e.place}</span>
                   {e.seats && <span className="seats">{e.seats}</span>}
                 </div>
               </div>

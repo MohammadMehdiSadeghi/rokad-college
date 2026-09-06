@@ -57,13 +57,13 @@ export default function CourseCta() {
             {/* Main part */}
             <div className="cta5-main">
               <h3 className="cta5-title">
-                مسیر یادگیری <span className="hl">خودت</span>
+                نمی‌دونی از کجا
                 <br />
-                را پیدا کن.
+                <span className="hl">شروع</span> کنی؟
               </h3>
               <p className="cta5-desc">
-                یاد بگیر، تجربه کن، مهارت بساز و آینده‌ات را از همین امروز
-                شروع کن. مهارت امروزت، آینده شغلی فردات را می‌سازد.
+                یک گفت‌وگوی ۱۵ دقیقه‌ای و رایگان با کارشناس رکاد کافی است؛
+                هدفت را می‌سنجیم و مناسب‌ترین دوره را به تو پیشنهاد می‌دهیم.
               </p>
               <div className="cta5-meta">
                 {ctaMeta.map((m, i) => (
@@ -73,11 +73,6 @@ export default function CourseCta() {
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Perforated divider */}
-            <div className="cta5-perf">
-              <span className="line" />
             </div>
 
             {/* Stub */}

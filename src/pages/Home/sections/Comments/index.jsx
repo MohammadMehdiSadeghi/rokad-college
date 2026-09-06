@@ -186,10 +186,6 @@ export default function Comments() {
               <span style={{ display: "inline-block", marginLeft: 6, transform: "rotate(1.5deg)", color: "var(--college)" }}>تا</span>
               <span style={{ display: "inline-block", marginLeft: 6, transform: "rotate(-1deg)" }}>اولین قرارداد</span>
             </h2>
-            <p style={{ margin: 0, color: "var(--ink-subtle)", fontWeight: 600, lineHeight: 1.9, fontSize: 16 }}>
-              هر کارت یک روایت واقعی است — از هنرجویی که سه سال پیش هیچ
-              پیش‌زمینه‌ای نداشت تا هنرجویی که امروز مدرس شده.
-            </p>
           </div>
           <div className="cmt3-counter">
             <span className="cur">{pad2Fa(idx + 1)}</span>

@@ -39,9 +39,6 @@ export default function StatsTicker() {
             <span className="mk">آینده</span>
             <span> آماده می‌شوی.</span>
           </h2>
-          <p style={{ margin: "0 auto", color: "#a8abb5", fontSize: 16, lineHeight: 1.85, fontWeight: 600, maxWidth: 560 }}>
-            یاد بگیر، تجربه کن، مهارت بساز و آینده‌ات را از همین امروز شروع کن.
-          </p>
         </div>
 
         {/* Ticker */}

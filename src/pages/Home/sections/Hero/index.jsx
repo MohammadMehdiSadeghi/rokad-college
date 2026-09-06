@@ -32,14 +32,14 @@ export default function Hero() {
         {/* Left — Content */}
         <div className="hero-v5-content">
           <h1>
-            <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>مهارت</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--college)" }}>امروزت،</span>
+            <span>مهارت</span>{" "}
+            <span style={{ color: "var(--college)" }}>امروزت،</span>
             <br />
-            <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>آینده</span>{" "}
+            <span>آینده</span>{" "}
             <span className="mk">شغلی</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(2deg)" }}>فردات</span>
+            <span>فردات</span>
             <br />
-            <span style={{ display: "inline-block", transform: "rotate(-2deg)" }}>را می‌سازد.</span>
+            <span>را می‌سازد.</span>
           </h1>
 
           <p className="hero-v5-lead">
@@ -61,21 +61,6 @@ export default function Hero() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" width={16} height={16}><polyline points="20 6 9 17 4 12"/></svg>
             از یادگیری شروع کن، برای آینده آماده شو.
           </span>
-
-          {/* Trust avatars */}
-          <div className="hero-v5-trust">
-            <div className="hero-v5-avatars">
-              <div className="hero-v5-av" style={{ background: "var(--college)" }}>ن.م</div>
-              <div className="hero-v5-av" style={{ background: "var(--ecosystem)" }}>ا.ص</div>
-              <div className="hero-v5-av" style={{ background: "var(--female)", color: "#fff" }}>س.ر</div>
-              <div className="hero-v5-av" style={{ background: "var(--navy)", color: "#fff" }}>ر.ح</div>
-              <div className="hero-v5-av hero-v5-av-plus">+۱۸۰</div>
-            </div>
-            <div className="hero-v5-trust-txt">
-              +۱۸۰ هنرجو در حال یادگیری
-              <small>پیوستن به جدیدترین ورودی‌های کالج</small>
-            </div>
-          </div>
         </div>
 
         {/* Right — Course catalog panel */}

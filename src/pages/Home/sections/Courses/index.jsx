@@ -7,7 +7,7 @@ import { ArrowIcon } from "@/common/Icons";
 // Course mode mapping (onsite = حضوری, online = آنلاین)
 const MODE_MAP = [
   "onsite", "online", "online",
-  "onsite", "online", "onsite", "online",
+  "onsite", "online", "onsite", "online", "online",
 ];
 
 const MODE_LABEL = { onsite: "دورهٔ حضوری", online: "دورهٔ آنلاین" };
@@ -29,17 +29,18 @@ var courseIcons = [
   <svg key="gph" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a10 10 0 1 1 10-10c0 2-1.5 3-3 3h-3a3 3 0 0 0-3 3c0 1.5 1 2 1 3a2 2 0 0 1-2 1z"/></svg>,
 ];
 
-var durations = ["۱۲ هفته", "۱۶ هفته", "۸ هفته", "۱۰ هفته", "۱۲ هفته", "۴ ماه", "۶ ماه"];
+var durations = ["۱۲ هفته", "۱۶ هفته", "۸ هفته", "۱۰ هفته", "۱۲ هفته", "۴ ماه", "۶ ماه", "۱۴ هفته"];
 var courseFeatures = [
   ["پروژه‌محور", "مدرس معتبر"], ["React", "پرتفولیو"],
   ["کیس‌استادی", "ابزارهای واقعی"],
   ["Photoshop", "Illustrator"], ["Premiere", "After Effects"], ["IELTS", "MBA"], ["Canvas", "UI/UX"],
+  ["Figma", "پروتوتایپ"],
 ];
 var courseTags = [
   ["WordPress", "WooCommerce", "Elementor"], ["JavaScript", "React", "Tailwind"],
   ["Google Analytics", "Ahrefs", "Search Console"], ["Photoshop", "Illustrator", "Figma"],
   ["Premiere Pro", "After Effects", "DaVinci"], ["IELTS", "General English", "Business"],
-  ["Canvas", "Figma", "Prototyping"],
+  ["Canvas", "Figma", "Prototyping"], ["User Research", "Wireframe", "Design System"],
 ];
 
 var toPersianNum = function(n) {
@@ -98,7 +99,7 @@ var CourseCard = function(props) {
 
 export default function Courses() {
   var [filter, setFilter] = useState("all");
-  var displayCourses = courses.slice(0, 7);
+  var displayCourses = courses.slice(0, 8);
   var counts = { all: displayCourses.length };
   displayCourses.forEach(function(_, i) {
     var m = MODE_MAP[i];
@@ -122,9 +123,6 @@ export default function Courses() {
       <div className="container section-inner">
         <div className="head" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", maxWidth: 820, margin: "0 auto 2rem" }}>
           <RotatedHeading words={"از این دوره‌ها شغلت را بساز"} className="t-section" color="var(--navy)" />
-          <p style={{ fontSize: 16.5, lineHeight: 1.75, fontWeight: 600, color: "var(--ink-subtle)", maxWidth: 560, margin: "1rem auto 0" }}>
-            {"لیست کامل دوره‌های کالج با فیلتر نحوه برگزاری — حضوری یا آنلاین."}
-          </p>
         </div>
 
         {/* Segmented filter control */}

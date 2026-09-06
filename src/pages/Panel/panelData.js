@@ -91,14 +91,14 @@ export const skills = [
 ];
 
 export const badges = [
-  { em: "🎯", label: "اولین ۱۰۰٪", cls: "b1" },
-  { em: "🔥", label: "۳۰ روز پیاپی", cls: "b2" },
-  { em: "⚡", label: "سرعتی", cls: "b3" },
-  { em: "🏆", label: "قهرمان ماه", cls: "b1" },
-  { em: "📚", label: "کتاب‌خوان", cls: "b2" },
-  { em: "🔒", label: "?", cls: "locked" },
-  { em: "🔒", label: "?", cls: "locked" },
-  { em: "🔒", label: "?", cls: "locked" },
+  { label: "اولین ۱۰۰٪", cls: "b1" },
+  { label: "۳۰ روز پیاپی", cls: "b2" },
+  { label: "سرعتی", cls: "b3" },
+  { label: "قهرمان ماه", cls: "b1" },
+  { label: "کتاب‌خوان", cls: "b2" },
+  { label: "?", cls: "locked" },
+  { label: "?", cls: "locked" },
+  { label: "?", cls: "locked" },
 ];
 
 /* ---------- تکالیف (صفحهٔ تکالیف) ----------
@@ -243,7 +243,7 @@ export const mentorChats = [
     name: "مهندس کریمی",
     role: "منتور مسیر شغلی",
     initial: "ک",
-    last: "رزومه‌ات رو بردم شرکت همکار نشون بدم 👌",
+    last: "رزومه‌ات رو بردم شرکت همکار نشون بدم",
     time: "دیروز",
     unread: 0,
     online: true,
@@ -262,8 +262,8 @@ export const mentorChats = [
 
 export const mentorMessages = [
   { from: "me", text: "سلام استاد، تمرین ۴ رو شروع کردم ولی تو بخش Dijkstra گیر کردم." },
-  { from: "mentor", text: "سلام پارسا 👋 اول صف اولویت رو پیاده کن، بعد الگوریتم راحت می‌شه." },
-  { from: "me", text: "الان امتحانش می‌کنم، ممنون 🙏" },
+  { from: "mentor", text: "سلام پارسا اول صف اولویت رو پیاده کن، بعد الگوریتم راحت می‌شه." },
+  { from: "me", text: "الان امتحانش می‌کنم، ممنون" },
   { from: "mentor", text: "تمرین گراف رو دیدم، ایده‌ت درسته. فقط پیچیدگی زمانی رو بهینه کن." },
 ];
 
