@@ -9,6 +9,7 @@ import CourseCta from "./pages/Home/sections/CourseCta/index.jsx";
 import Faq from "./pages/Home/sections/Faq/index.jsx";
 import Comments from "./pages/Home/sections/Comments/index.jsx";
 import Blogs from "./pages/Home/sections/Blogs/index.jsx";
+import RokadHierarchy from "./pages/Home/sections/RokadHierarchy/index.jsx";
 import Footer from "./Components/Footer/index.jsx";
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
         <div className="reveal"><PromoBenefits /></div>
         <div className="reveal"><StatsTicker /></div>
         <div className="reveal"><About /></div>
+        <div className="reveal"><RokadHierarchy /></div>
         <div className="reveal"><Courses /></div>
         <div className="reveal"><CourseCta /></div>
         <div className="reveal"><Faq /></div>
