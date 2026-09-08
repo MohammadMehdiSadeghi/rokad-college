@@ -241,7 +241,6 @@ export default function Courses() {
                     var realIndex = displayCourses.indexOf(c);
                     return <CourseCard key={c.title} course={c} index={realIndex} />;
                   })}
-                  {!isMobile && p === pageCount - 1 && <CtaRow />}
                 </div>
               );
             })}
@@ -252,6 +251,9 @@ export default function Courses() {
             )}
           </div>
         </div>
+
+        {/* ردیف CTA دسکتاپ — زیر کاروسل، full width، خارج از اسلایدها */}
+        {!isMobile && <CtaRow />}
       </div>
     </section>
   );
