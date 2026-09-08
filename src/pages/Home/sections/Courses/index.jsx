@@ -221,16 +221,9 @@ export default function Courses() {
                 <Chevron right />
               </button>
             )}
-            {!isMobile && safePage === pageCount - 1 ? (
-              <a href="#courses-index" className="v2-cta-pill">
-                {"مشاهده همه دوره‌ها"}
-                <ArrowIcon width={14} height={14} />
-              </a>
-            ) : (
-              <button className="v2-icon-btn" onClick={function() { setPage((safePage + 1) % pageCount); }} aria-label="بعدی">
-                <Chevron />
-              </button>
-            )}
+            <button className="v2-icon-btn" onClick={function() { setPage((safePage + 1) % pageCount); }} aria-label="بعدی">
+              <Chevron />
+            </button>
           </div>
         </div>
 
