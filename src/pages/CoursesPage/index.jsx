@@ -14,7 +14,7 @@ import {
   formatPrice,
 } from "@/data/courses.js";
 
-const ROTATION = ["rotate(-1deg)", "rotate(1deg)", "rotate(-0.5deg)", "rotate(0.5deg)"];
+const ROTATION = ["rotate(-0.5deg)", "rotate(0.5deg)", "rotate(-0.25deg)", "rotate(0.25deg)"];
 const TAG_CLASS = { college: "college", sec: "sec", girl: "girl" };
 
 export default function CoursesPage({ initialDept }) {
