@@ -575,11 +575,12 @@
   .cs-crumbs { display: none; }
   .cs-back { font-size: 13px; }
 
-  /* Grid موبایل: تک‌ستونه */
+  /* Grid موبایل: تک‌ستونه، همه بچه‌ها عرض کامل */
   .cs-grid {
     display: flex;
     flex-direction: column;
     gap: 0;
+    align-items: stretch;
   }
 
   /* ---------- ستون پلر: اول صفحه، هم‌تراز بقیه بخش‌ها ---------- */
@@ -657,11 +658,14 @@
   .cs-ch .dur { display: none; }
   .cs-ch .num { width: 30px; height: 30px; font-size: 12px; }
 
-  /* سایدبار موبایل: زیر محتوا — هم‌اندازهٔ بقیهٔ بخش‌ها، بدون تامبنیل تکراری */
-  .cs-side { display: flex; padding: 16px; }
+  /* سایدبار موبایل: زیر محتوا — هم‌عرض با بقیه، بدون تامبنیل تکراری */
+  .cs-side {
+    display: flex;
+    padding: 16px 0 8px;
+  }
   .cs-side .cs-thumb-side { display: none; }
-  .cs-card { padding: 20px; }
-  .cs-side .cs-instr { border-radius: var(--r-lg); }
+  .cs-card { padding: 20px 16px; }
+  .cs-side .cs-instr { border-radius: var(--r-lg); margin: 0; }
 
   /* ---------- نوار مینی چسبان زیر هدر سایت ----------
      ظاهرشدن با .on — fixed زیر sticky header سایت، تمام‌عرض، باریک */

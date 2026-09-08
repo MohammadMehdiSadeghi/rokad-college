@@ -356,10 +356,9 @@ export default function CourseSingle() {
 
             {/* Panels */}
             {tab === 0 && <CurriculumPanel course={course} openChapter={openChapter} setOpenChapter={setOpenChapter} />}
-            {tab === 1 && <DescriptionPanel course={course} />}
-            {tab === 2 && <ReviewsPanel course={course} />}
-            {tab === 3 && <QaPanel course={course} />}
-            {tab === 4 && <ResourcesPanel course={course} />}
+            {tab === 1 && <ReviewsPanel course={course} />}
+            {tab === 2 && <QaPanel course={course} />}
+            {tab === 3 && <ResourcesPanel course={course} />}
           </div>
 
           {/* ================= سایدبار ================= */}
