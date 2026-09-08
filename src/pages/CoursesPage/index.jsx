@@ -219,6 +219,9 @@ export default function CoursesPage() {
                   {c.tag && (
                     <span className={`cp-tag ${TAG_CLASS[c.tagColor] || ""}`}>{c.tag}</span>
                   )}
+                  <div className="cp-card-cover">
+                    <img src={c.image} alt="" aria-hidden="true" loading="lazy" />
+                  </div>
                   <div className="cp-card-body">
                     <span className={`cp-mode ${c.mode}`}>{c.modeFa}</span>
                     <div className="cp-dept">{c.departmentFa}</div>

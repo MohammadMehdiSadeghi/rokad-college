@@ -208,6 +208,14 @@ export const courses = [
   },
 ];
 
+/* کاور کارت دوره — همرنگ پالت کارت */
+export const COURSE_COVERS = {
+  college: "/assets/StatCard/yellow.png",
+  sec: "/assets/StatCard/blue.png",
+  girl: "/assets/StatCard/pink.png",
+};
+courses.forEach((c) => { c.image = COURSE_COVERS[c.color] || COURSE_COVERS.college; });
+
 export const departments = [
   { id: "design", name: "طراحی و UX" },
   { id: "coding", name: "برنامه‌نویسی" },
