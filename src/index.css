@@ -2513,11 +2513,21 @@ a:focus-visible, button:focus-visible {
    V2 COURSES — HORIZONTAL LIST (wide cards)
    ============================================================ */
 .v2-courses { background: var(--bg-college-tint); }
-.v2-courses .head { text-align: center; max-width: 820px; margin: 0 auto 3.5rem; }
-.v2-courses .head h2 { font-size: clamp(28px, 4.2vw, 50px); line-height: 1.2; font-weight: 900; color: var(--ink); margin: 0 0 1rem; letter-spacing: -.01em; }
+/* Fit 2x2 course grid within ~100vh on laptop heights */
+@media (min-width: 901px) and (max-height: 900px) {
+  .v2-courses.section { padding-block: 2.2rem; }
+  .v2-courses .head { margin-bottom: 1.1rem; }
+  .v2-cover { aspect-ratio: 16 / 4; }
+  .v2-body { padding: .8rem 1.3rem; gap: .35rem; }
+  .v2-body p { -webkit-line-clamp: 1; }
+  .v2-action { padding: .65rem 1.3rem; }
+  .v2-list { gap: 1rem; }
+}
+.v2-courses .head { text-align: center; max-width: 820px; margin: 0 auto 1.6rem; }
+.v2-courses .head h2 { font-size: clamp(24px, 3.4vw, 40px); line-height: 1.2; font-weight: 900; color: var(--ink); margin: 0 0 .75rem; letter-spacing: -.01em; }
 
 /* ---- List (دو ستونه) ---- */
-.v2-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.v2-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
 @media (max-width: 900px) {
   .v2-list { grid-template-columns: 1fr; }
 }
@@ -2552,25 +2562,25 @@ a:focus-visible, button:focus-visible {
   border-bottom: 2px solid var(--ink);
   position: relative;
   display: grid; place-items: center;
-  aspect-ratio: 16 / 7;
+  aspect-ratio: 16 / 4.6;
 }
 .v2-cover .v2-icon {
-  width: 90px; height: 90px;
+  width: 64px; height: 64px;
   border: 2.5px solid var(--ink);
   background: #fff;
   border-radius: 0 1.1rem 0 1.1rem;
   corner-shape: squircle; -webkit-corner-shape: squircle;
-  box-shadow: 5px 5px 0 0 var(--ink);
+  box-shadow: 4px 4px 0 0 var(--ink);
   display: grid; place-items: center;
   transform: rotate(-3deg);
   color: var(--cat);
 }
-.v2-cover .v2-icon svg { width: 44px; height: 44px; }
+.v2-cover .v2-icon svg { width: 32px; height: 32px; }
 .v2-cover .v2-num {
-  position: absolute; top: 14px; left: 14px;
+  position: absolute; top: 10px; left: 10px;
   background: var(--ink); color: #fff;
-  font-weight: 900; font-size: 14px;
-  padding: .35rem .6rem;
+  font-weight: 900; font-size: 13px;
+  padding: .3rem .55rem;
   border-radius: .5rem;
   corner-shape: squircle; -webkit-corner-shape: squircle;
   font-family: var(--font);
@@ -2579,48 +2589,51 @@ a:focus-visible, button:focus-visible {
 
 /* ---- Body ---- */
 .v2-body {
-  padding: 1.4rem 1.6rem;
-  display: flex; flex-direction: column; gap: .65rem;
+  padding: 1rem 1.4rem;
+  display: flex; flex-direction: column; gap: .45rem;
   justify-content: center;
 }
 .v2-body .v2-meta {
-  display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
-  color: var(--ink-subtle); font-weight: 700; font-size: 12.5px;
+  display: flex; align-items: center; gap: .55rem; flex-wrap: wrap;
+  color: var(--ink-subtle); font-weight: 700; font-size: 12px;
 }
 .v2-body .v2-cat-pill {
   background: var(--catBg); color: var(--catFg);
   border: 1px solid var(--catBorder);
-  padding: .2rem .55rem; border-radius: 99px;
-  font-weight: 800; font-size: 11.5px;
+  padding: .15rem .5rem; border-radius: 99px;
+  font-weight: 800; font-size: 11px;
 }
-.v2-body h3 { margin: 0; font-size: 22px; line-height: 1.35; font-weight: 900; color: var(--ink); }
-.v2-body p { margin: 0; font-size: 14px; line-height: 1.7; font-weight: 500; color: var(--ink-subtle); max-width: 560px; }
-.v2-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .2rem; }
+.v2-body h3 { margin: 0; font-size: 19px; line-height: 1.3; font-weight: 900; color: var(--ink); }
+.v2-body p {
+  margin: 0; font-size: 13px; line-height: 1.6; font-weight: 500; color: var(--ink-subtle);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.v2-tags { display: flex; gap: .35rem; flex-wrap: wrap; margin-top: .1rem; }
 .v2-tags span {
   background: var(--ink-light); color: var(--ink);
-  padding: .25rem .55rem; border-radius: 99px;
-  font-size: 11px; font-weight: 700;
+  padding: .2rem .5rem; border-radius: 99px;
+  font-size: 10.5px; font-weight: 700;
 }
 
 /* ---- Action row (پایین کارت) ---- */
 .v2-action {
-  padding: 1.1rem 1.4rem;
+  padding: .8rem 1.4rem;
   border-top: 1.5px dashed var(--ink-light);
   display: flex; flex-direction: row;
   align-items: center; justify-content: space-between;
   gap: .85rem;
 }
 .v2-action .v2-price { text-align: right; }
-.v2-action .v2-price .v2-price-lbl { font-size: 11px; font-weight: 700; color: var(--ink-subtle); margin-bottom: .15rem; }
-.v2-action .v2-price .v2-price-val { font-size: 22px; font-weight: 900; color: var(--cat); line-height: 1; }
-.v2-action .v2-price .v2-price-val small { font-size: 11px; color: var(--ink-subtle); font-weight: 600; margin-right: .2rem; }
+.v2-action .v2-price .v2-price-lbl { font-size: 10.5px; font-weight: 700; color: var(--ink-subtle); margin-bottom: .1rem; }
+.v2-action .v2-price .v2-price-val { font-size: 19px; font-weight: 900; color: var(--cat); line-height: 1; }
+.v2-action .v2-price .v2-price-val small { font-size: 10.5px; color: var(--ink-subtle); font-weight: 600; margin-right: .2rem; }
 .v2-action .v2-btn {
   display: inline-flex; align-items: center; gap: .4rem;
   background: var(--ink); color: #fff;
-  padding: .75rem 1.25rem;
+  padding: .6rem 1.05rem;
   border-radius: .8rem;
   corner-shape: squircle; -webkit-corner-shape: squircle;
-  font-weight: 900; font-size: 14px; text-decoration: none;
+  font-weight: 900; font-size: 13px; text-decoration: none;
   border: 2px solid var(--ink);
   transform: rotate(-1.5deg);
   box-shadow: 3px 3px 0 0 var(--cat);
@@ -2630,13 +2643,13 @@ a:focus-visible, button:focus-visible {
 .v2-action .v2-btn svg { width: 14px; height: 14px; }
 
 /* ---- V3 Segmented filter (حضوری/آنلاین) ---- */
-.segbar { display: flex; justify-content: center; margin: 0 auto 2.4rem; }
+.segbar { display: flex; justify-content: center; margin: 0 auto 1.5rem; }
 .segment {
   background: var(--white);
   border: 2px solid var(--ink);
   border-radius: .9rem;
   corner-shape: squircle; -webkit-corner-shape: squircle;
-  padding: .35rem;
+  padding: .3rem;
   display: inline-flex;
   box-shadow: 3px 3px 0 0 var(--ink);
   gap: .15rem;
@@ -2644,8 +2657,8 @@ a:focus-visible, button:focus-visible {
 }
 .seg-btn {
   background: transparent; border: none; color: var(--ink);
-  font-family: inherit; font-weight: 800; font-size: 13.5px;
-  padding: .55rem 1.25rem;
+  font-family: inherit; font-weight: 800; font-size: 12.5px;
+  padding: .45rem 1.05rem;
   border-radius: .6rem;
   corner-shape: squircle; -webkit-corner-shape: squircle;
   cursor: pointer;
@@ -2684,8 +2697,8 @@ a:focus-visible, button:focus-visible {
 .v2-list .v2-stack.hide { display: none; }
 
 /* ---- CTA footer (shared) ---- */
-.cta-footer { margin-top: 3.5rem; text-align: center; }
-.cta-footer p { font-size: 15px; font-weight: 600; color: var(--ink-subtle); margin: 0 0 1rem; }
+.cta-footer { margin-top: 1.6rem; text-align: center; }
+.cta-footer p { font-size: 14px; font-weight: 600; color: var(--ink-subtle); margin: 0 0 .8rem; }
 .btn-all {
   display: inline-flex; align-items: center; gap: .5rem;
   background: var(--ink); color: #fff;
