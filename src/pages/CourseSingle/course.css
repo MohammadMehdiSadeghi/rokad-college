@@ -582,21 +582,22 @@
     gap: 0;
   }
 
-  /* ---------- ستون پلر: اول صفحه، توی flow عادی ---------- */
+  /* ---------- ستون پلر: اول صفحه، هم‌تراز بقیه بخش‌ها ---------- */
   .cs-player-col {
     display: flex;
     flex-direction: column;
     background: #fff;
+    padding: 12px 16px 0; /* فاصله از بالا + هم‌عرض با تب‌ها/فصل‌ها */
   }
 
-  /* ویدیو اصلی: 16:9 تمام‌عرض، چسبیده به لبه‌ها */
+  /* ویدیو اصلی: 16:9 با رادیوس و بوردر DS رکاد */
   .cs-player-col > .cs-video {
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    border-radius: 0;
-    border: none;
-    border-bottom: 1px solid var(--ink-light);
+    border-radius: var(--r-md);
+    border: 1.5px solid var(--ink);
+    box-shadow: 2.75px 2.75px 0 var(--college);
   }
   .cs-player-col > .cs-video .play {
     background: none;
@@ -610,9 +611,9 @@
   }
   .cs-player-col > .cs-video .play svg { width: 22px; height: 22px; }
 
-  /* عنوان + مدرس + توضیح (زیر پلر — مثل یوتیوب) */
+  /* عنوان + مدرس + توضیح (زیر پلر — مثل یوتیوب؛ افقی‌ها از والد میاد) */
   .cs-title-row {
-    padding: 12px 16px 10px;
+    padding: 10px 0 12px;
     border-bottom: 1px solid var(--ink-light);
   }
   .cs-title-row h1 {
@@ -656,10 +657,11 @@
   .cs-ch .dur { display: none; }
   .cs-ch .num { width: 30px; height: 30px; font-size: 12px; }
 
-  /* سایدبار موبایل: زیر محتوا، بدون تامبنیل تکراری ویدیو */
-  .cs-side { display: flex; padding: 0 16px 8px; }
+  /* سایدبار موبایل: زیر محتوا — هم‌اندازهٔ بقیهٔ بخش‌ها، بدون تامبنیل تکراری */
+  .cs-side { display: flex; padding: 16px; }
   .cs-side .cs-thumb-side { display: none; }
   .cs-card { padding: 20px; }
+  .cs-side .cs-instr { border-radius: var(--r-lg); }
 
   /* ---------- نوار مینی چسبان زیر هدر سایت ----------
      ظاهرشدن با .on — fixed زیر sticky header سایت، تمام‌عرض، باریک */
