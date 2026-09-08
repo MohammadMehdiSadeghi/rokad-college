@@ -68,14 +68,17 @@ export default function App() {
   const courseSlug = mc ? decodeURIComponent(mc[1]) : null;
   const authPage = !panelPage && !articleSlug && !courseSlug && (hash === "#auth" || hash === "#auth/register");
   const blogIndex = !panelPage && !articleSlug && !courseSlug && !authPage && hash === "#blog-index";
-  const coursesPage = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex && hash === "#courses-index";
+  /* #courses-index یا #courses-index/<dept> → صفحهٔ دوره‌ها (با فیلتر دپارتمان) */
+  const mcp = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex ? hash.match(/^#courses-index(?:\/(.+))?$/) : null;
+  const coursesDept = mcp && mcp[1] ? decodeURIComponent(mcp[1]) : null;
+  const coursesPage = !!mcp;
   const anchor = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex && !coursesPage && hash.startsWith("#") ? decodeURIComponent(hash.slice(1)) : null;
 
   /* ورود به مقاله / تک‌دوره / auth / صفحهٔ بلاگ / دوره‌ها / پنل → شروع از بالا */
   const pageMode = blogIndex || coursesPage || !!articleSlug || !!courseSlug || !!panelPage || authPage;
   useEffect(() => {
     if (pageMode) window.scrollTo({ top: 0, behavior: "auto" });
-  }, [pageMode, articleSlug, courseSlug, panelPage]);
+  }, [pageMode, articleSlug, courseSlug, panelPage, coursesDept]);
 
   /* بازگشت به صفحهٔ اصلی با anchor → بعد از mount شدن سکشن‌ها اسکرول کن */
   useEffect(() => {
@@ -103,7 +106,7 @@ export default function App() {
           <Header />
           <main>
             {coursesPage ? (
-              <CoursesPage />
+              <CoursesPage key={coursesDept || "all"} initialDept={coursesDept} />
             ) : blogIndex ? (
               <BlogIndex />
             ) : articleSlug ? (

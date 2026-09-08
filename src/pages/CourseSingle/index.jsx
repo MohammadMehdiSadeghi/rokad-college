@@ -208,7 +208,11 @@ export default function CourseSingle() {
             همهٔ دوره‌ها
           </a>
           <nav className="cs-crumbs">
-            دوره‌ها › طراحی › <b>{course.title}</b>
+            <a href="#courses-index">دوره‌ها</a>
+            <span className="sep">›</span>
+            <a href={`#courses-index/${course.department}`}>{course.departmentFa}</a>
+            <span className="sep">›</span>
+            <b>{course.title}</b>
           </nav>
           <span className="cs-students">
             {course.students} دانشجو

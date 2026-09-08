@@ -38,7 +38,10 @@
 }
 .cs-back:hover { color: var(--college-dark); }
 .cs-back svg { width: 14px; height: 14px; }
-.cs-crumbs { color: var(--ink-subtle); font-size: 13px; font-weight: 500; }
+.cs-crumbs { color: var(--ink-subtle); font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.cs-crumbs a { color: var(--ink-faq); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+.cs-crumbs a:hover { color: var(--college-dark); text-decoration: underline; }
+.cs-crumbs .sep { color: var(--ink-light); font-weight: 400; }
 .cs-crumbs b { color: var(--ink); font-weight: 700; }
 .cs-students {
   margin-inline-start: auto;

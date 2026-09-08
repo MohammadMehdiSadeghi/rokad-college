@@ -17,9 +17,9 @@ import {
 const ROTATION = ["rotate(-1deg)", "rotate(1deg)", "rotate(-0.5deg)", "rotate(0.5deg)"];
 const TAG_CLASS = { college: "college", sec: "sec", girl: "girl" };
 
-export default function CoursesPage() {
+export default function CoursesPage({ initialDept }) {
   const [mode, setMode] = useState("all");
-  const [depts, setDepts] = useState(() => new Set());
+  const [depts, setDepts] = useState(() => (initialDept && departments.some((d) => d.id === initialDept) ? new Set([initialDept]) : new Set()));
   const [levels, setLevels] = useState(() => new Set());
   const [price, setPrice] = useState(PRICE_MAX);
   const [cert, setCert] = useState(false);
