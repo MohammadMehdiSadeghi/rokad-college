@@ -71,25 +71,27 @@ var CourseCard = function(props) {
           <span className="v2-num">{num.slice(0, 1)}<span>{num.slice(1)}</span></span>
           <div className="v2-icon">{icon}</div>
         </div>
-        <div className="v2-body">
-          <div className="v2-meta">
-            <span className="v2-cat-pill">{course.category}</span>
-            <span>•</span>
-            <span className="mode-inline">
-              {MODE_ICON[mode]}
-              {MODE_LABEL[mode]}
-            </span>
-            {features.map(function(f) { return <span className="feat" key={f}>{"• " + f}</span>; })}
+        <div className="v2-content">
+          <div className="v2-body">
+            <div className="v2-meta">
+              <span className="v2-cat-pill">{course.category}</span>
+              <span>•</span>
+              <span className="mode-inline">
+                {MODE_ICON[mode]}
+                {MODE_LABEL[mode]}
+              </span>
+              {features.map(function(f) { return <span className="feat" key={f}>{"• " + f}</span>; })}
+            </div>
+            <h3 className="t-card">{course.title}</h3>
+            <div className="v2-tags">{tags.map(function(t) { return <span key={t}>{t}</span>; })}</div>
           </div>
-          <h3 className="t-card">{course.title}</h3>
-          <div className="v2-tags">{tags.map(function(t) { return <span key={t}>{t}</span>; })}</div>
-        </div>
-        <div className="v2-action">
-          <div className="v2-price">
-            <div className="v2-price-lbl">{"مدت دوره"}</div>
-            <div className="v2-price-val">{dur.split(" ")[0]}<small>{dur.split(" ")[1]}</small></div>
+          <div className="v2-action">
+            <div className="v2-price">
+              <div className="v2-price-lbl">{"مدت دوره"}</div>
+              <div className="v2-price-val">{dur.split(" ")[0]}<small>{dur.split(" ")[1]}</small></div>
+            </div>
+            <a href="#course/ui-ux" className="v2-btn">{"مشاهده "} <ArrowIcon width={14} height={14} /></a>
           </div>
-          <a href="#course/ui-ux" className="v2-btn">{"مشاهده "} <ArrowIcon width={14} height={14} /></a>
         </div>
       </article>
     </div>

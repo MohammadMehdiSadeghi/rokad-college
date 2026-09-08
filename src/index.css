@@ -4214,14 +4214,16 @@ a:focus-visible, button:focus-visible {
 
 /* ---------- کارت دوره ---------- */
 .cp-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px 24px;
 }
 /* چرخش و سایه روی سلول: کارت سفید/رنگی + سایهٔ جوهر که از زیر دیو به پایین می‌رود
    (الگوی استاندارد مجله: سایه زیر کارت می‌ماند و فقط کارت روی هاور بالا می‌آید) */
 .cp-card {
   position: relative;
   cursor: pointer;
+  display: grid; grid-template-columns: 140px minmax(0, 1fr);
+  align-items: stretch;
   transform: var(--rot, rotate(0deg));
   transition: transform .25s ease;
 }
@@ -4234,14 +4236,14 @@ a:focus-visible, button:focus-visible {
 }
 .cp-card:hover { transform: translate(3px, -3px); }
 .cp-card:hover::before { transform: translate(-3px, 3px); }
-/* ---------- کاور تصویری کارت دوره ---------- */
+/* ---------- کاور تصویری کارت دوره (ستون راست در RTL) ---------- */
 .cp-card-cover {
   position: relative; z-index: 1;
-  height: 140px; overflow: hidden;
+  overflow: hidden; min-height: 0;
   background: #fff;
   border: 2px solid var(--ink);
-  border-bottom: none;
-  border-radius: 20px 0 0 0;
+  border-left: none;
+  border-radius: 0 0 20px 0;
 }
 .cp-card-cover img {
   display: block; width: 100%; height: 100%;
@@ -4250,11 +4252,21 @@ a:focus-visible, button:focus-visible {
 .cp-card.college .cp-card-cover { background: var(--college-light); }
 .cp-card.sec .cp-card-cover { background: #e8ecf5; }
 .cp-card.girl .cp-card-cover { background: #fdeef5; }
+/* نشان تخفیف روی کاور */
+.cp-off {
+  position: absolute; bottom: 8px; right: 8px; z-index: 2;
+  background: var(--accent); color: #fff;
+  border: 1.5px solid var(--ink);
+  padding: 4px 9px; font-size: 11px; font-weight: 800;
+  border-radius: 7px; transform: rotate(2deg);
+}
 .cp-card-body {
   position: relative; z-index: 1;
+  display: flex; flex-direction: column;
   background: #fff; border: 2px solid var(--ink);
-  border-radius: 0 0 20px 0;
-  padding: 20px 20px 22px;
+  border-radius: 20px 0 0 0;
+  padding: 16px 16px 14px;
+  min-width: 0;
 }
 .cp-card.college .cp-card-body { background: var(--college-light); }
 .cp-tag {
@@ -4265,42 +4277,54 @@ a:focus-visible, button:focus-visible {
 }
 .cp-tag.girl { background: var(--accent); color: #fff; }
 .cp-tag.sec { background: var(--navy); color: #fff; }
+/* ردیف سربرگ کارت: دپارتمان/عنوان/مدرس + چیپ حالت */
+.cp-card-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 10px;
+}
+.cp-card-head > div { min-width: 0; flex: 1; }
 .cp-mode {
   display: inline-flex; align-items: center; gap: 5px;
   background: #fff; border: 1.5px solid var(--ink);
-  padding: 3px 10px; font-size: 12px; font-weight: 800;
-  border-radius: 6px; margin-bottom: 10px;
+  padding: 3px 9px; font-size: 11.5px; font-weight: 800;
+  border-radius: 6px; flex-shrink: 0; margin-top: 2px;
 }
 .cp-mode::before {
   content: ''; width: 6px; height: 6px; border-radius: 50%;
   background: var(--college); border: 1px solid var(--ink);
 }
 .cp-mode.online::before { background: var(--teal); }
-.cp-dept { font-size: 12px; font-weight: 700; color: var(--ink-subtle); margin-bottom: 6px; }
+.cp-dept { font-size: 11.5px; font-weight: 700; color: var(--ink-subtle); margin-bottom: 2px; }
 .cp-card .cp-title {
-  font-weight: 900; font-size: 18px; color: var(--ink);
-  line-height: 1.4; margin-bottom: 12px; min-height: 50px;
+  font-weight: 900; font-size: 15.5px; color: var(--ink);
+  line-height: 1.45; margin-bottom: 6px;
 }
 .cp-instructor {
   display: flex; align-items: center; gap: 8px;
-  font-size: 13px; font-weight: 600; color: var(--ink-subtle); margin-bottom: 14px;
+  font-size: 12.5px; font-weight: 600; color: var(--ink-subtle);
 }
 .cp-avatar {
-  width: 26px; height: 26px; background: var(--college);
+  width: 24px; height: 24px; background: var(--college);
   border: 1.5px solid var(--ink); border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-weight: 900; font-size: 11px; color: var(--ink);
+  flex-shrink: 0;
 }
+/* ردیف چیپ‌های اطلاعاتی */
 .cp-meta {
-  display: flex; gap: 12px;
-  padding: 10px 0;
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 5px 14px;
+  padding: 8px 0;
   border-top: 1.5px dashed var(--ink-light);
   border-bottom: 1.5px dashed var(--ink-light);
-  margin-bottom: 14px;
-  font-size: 13px; font-weight: 700;
+  margin-top: 10px; margin-bottom: 10px;
+  font-size: 11.5px; font-weight: 700; color: var(--ink-subtle);
 }
-.cp-meta > div { display: flex; align-items: center; gap: 4px; }
-.cp-footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.cp-meta > div { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.cp-meta-ico { font-size: 11px; line-height: 1; }
+.cp-rate { color: var(--ink); font-weight: 800; }
+.cp-rate .cp-meta-ico { color: #f5a623; }
+.cp-footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: auto; }
 .cp-price { display: flex; flex-direction: column; }
 .cp-price .original { text-decoration: line-through; color: var(--ink-subtle); font-size: 12px; font-weight: 600; }
 .cp-price .final { font-size: 16px; font-weight: 900; color: var(--ink); }
@@ -4323,8 +4347,11 @@ a:focus-visible, button:focus-visible {
   .cp-main { grid-template-columns: 1fr; }
   .cp-side { position: static; max-height: none; }
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .cp-grid { grid-template-columns: 1fr; }
+  .cp-card { grid-template-columns: 1fr; grid-template-rows: 126px auto; }
+  .cp-card-cover { border-left: 2px solid var(--ink); border-bottom: none; border-radius: 20px 0 0 0; }
+  .cp-card-body { border-radius: 0 0 20px 0; }
   .cp-header { padding: 30px 0 38px; }
   .cp-title-wrap { gap: 16px; }
 }

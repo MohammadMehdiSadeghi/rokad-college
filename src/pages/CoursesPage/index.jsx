@@ -221,19 +221,29 @@ export default function CoursesPage() {
                   )}
                   <div className="cp-card-cover">
                     <img src={c.image} alt="" aria-hidden="true" loading="lazy" />
+                    {c.discountPrice && c.discountPrice < c.price && (
+                      <span className="cp-off">
+                        {toFa(Math.round((1 - c.discountPrice / c.price) * 100))}٪ تخفیف
+                      </span>
+                    )}
                   </div>
                   <div className="cp-card-body">
-                    <span className={`cp-mode ${c.mode}`}>{c.modeFa}</span>
-                    <div className="cp-dept">{c.departmentFa}</div>
-                    <div className="cp-title">{c.title}</div>
-                    <div className="cp-instructor">
-                      <span className="cp-avatar">{c.instructor.charAt(0)}</span>
-                      <span>{c.instructor}</span>
+                    <div className="cp-card-head">
+                      <div>
+                        <div className="cp-dept">{c.departmentFa}</div>
+                        <div className="cp-title">{c.title}</div>
+                        <div className="cp-instructor">
+                          <span className="cp-avatar">{c.instructor.charAt(0)}</span>
+                          <span>{c.instructor}</span>
+                        </div>
+                      </div>
+                      <span className={`cp-mode ${c.mode}`}>{c.modeFa}</span>
                     </div>
                     <div className="cp-meta">
-                      <div>{c.duration}</div>
-                      <div>{toFa(c.students)}</div>
-                      <div>{toFa(c.rating)}</div>
+                      <div><span className="cp-meta-ico">▤</span>{toFa(c.sessions)} جلسه</div>
+                      <div><span className="cp-meta-ico">◔</span>{c.duration}</div>
+                      <div><span className="cp-meta-ico">👥</span>{toFa(c.students)}</div>
+                      <div className="cp-rate"><span className="cp-meta-ico">★</span>{toFa(c.rating)}</div>
                     </div>
                     <div className="cp-footer">
                       <div className="cp-price">
