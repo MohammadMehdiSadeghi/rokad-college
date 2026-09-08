@@ -14,6 +14,7 @@ import Footer from "./Components/Footer/index.jsx";
 import BlogArticle from "./pages/BlogArticle/index.jsx";
 import BlogIndex from "./pages/BlogIndex/index.jsx";
 import CoursesPage from "./pages/CoursesPage/index.jsx";
+import DepartmentPage from "./pages/DepartmentPage/index.jsx";
 import CourseSingle from "./pages/CourseSingle/index.jsx";
 import Auth from "./pages/Auth/index.jsx";
 import Dashboard from "./pages/Panel/Dashboard.jsx";
@@ -68,17 +69,20 @@ export default function App() {
   const courseSlug = mc ? decodeURIComponent(mc[1]) : null;
   const authPage = !panelPage && !articleSlug && !courseSlug && (hash === "#auth" || hash === "#auth/register");
   const blogIndex = !panelPage && !articleSlug && !courseSlug && !authPage && hash === "#blog-index";
+  /* #dept/<id> → صفحهٔ تک‌صفحه‌ای دپارتمان */
+  const mDept = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex ? hash.match(/^#dept\/([a-z-]+)$/) : null;
+  const deptPage = mDept ? mDept[1] : null;
   /* #courses-index یا #courses-index/<dept> → صفحهٔ دوره‌ها (با فیلتر دپارتمان) */
-  const mcp = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex ? hash.match(/^#courses-index(?:\/(.+))?$/) : null;
+  const mcp = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex && !deptPage ? hash.match(/^#courses-index(?:\/(.+))?$/) : null;
   const coursesDept = mcp && mcp[1] ? decodeURIComponent(mcp[1]) : null;
   const coursesPage = !!mcp;
   const anchor = !panelPage && !articleSlug && !courseSlug && !authPage && !blogIndex && !coursesPage && hash.startsWith("#") ? decodeURIComponent(hash.slice(1)) : null;
 
   /* ورود به مقاله / تک‌دوره / auth / صفحهٔ بلاگ / دوره‌ها / پنل → شروع از بالا */
-  const pageMode = blogIndex || coursesPage || !!articleSlug || !!courseSlug || !!panelPage || authPage;
+  const pageMode = blogIndex || coursesPage || !!articleSlug || !!courseSlug || !!panelPage || authPage || !!deptPage;
   useEffect(() => {
     if (pageMode) window.scrollTo({ top: 0, behavior: "auto" });
-  }, [pageMode, articleSlug, courseSlug, panelPage, coursesDept]);
+  }, [pageMode, articleSlug, courseSlug, panelPage, coursesDept, deptPage]);
 
   /* بازگشت به صفحهٔ اصلی با anchor → بعد از mount شدن سکشن‌ها اسکرول کن */
   useEffect(() => {
@@ -107,6 +111,8 @@ export default function App() {
           <main>
             {coursesPage ? (
               <CoursesPage key={coursesDept || "all"} initialDept={coursesDept} />
+            ) : deptPage ? (
+              <DepartmentPage key={deptPage} deptId={deptPage} />
             ) : blogIndex ? (
               <BlogIndex />
             ) : articleSlug ? (

@@ -105,10 +105,15 @@ export default function Departments({ layout = "stack" }) {
             <div
               key={d.id}
               className={`dept5-stack ${d.id}${d.wide && !row3 ? " wide" : ""}`}
+              role="link"
+              tabIndex={0}
+              onClick={() => { window.location.hash = `dept/${d.id}`; }}
+              onKeyDown={(e) => { if (e.key === "Enter") window.location.hash = `dept/${d.id}`; }}
               style={{
                 "--dept": d.dept,
                 "--dept-light": d.deptLight,
                 "--dept-dark": d.deptDark,
+                cursor: "pointer",
               }}
             >
               <article className="dept5-card">
@@ -140,7 +145,7 @@ export default function Departments({ layout = "stack" }) {
                       <strong>{d.stat}</strong>
                       <span>{d.statLabel}</span>
                     </div>
-                    <a href="#courses-index" className="dept5-cta">
+                    <a href={`#dept/${d.id}`} className="dept5-cta">
                       ورود به دپارتمان
                       <ArrowIcon />
                     </a>
