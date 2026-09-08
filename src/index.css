@@ -2567,26 +2567,6 @@ a:focus-visible, button:focus-visible {
   .v2-cover .v2-icon svg { width: 28px; height: 28px; }
 }
 
-/* دسکتاپ/لپ‌تاپ: چیدمان افقی — کاور راست، محتوا چپ */
-@media (min-width: 901px) {
-  .v2-item {
-    grid-template-columns: 42% 1fr;
-    grid-template-rows: 1fr auto;
-  }
-  .v2-cover {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    aspect-ratio: auto;
-    border-bottom: none;
-    border-left: 2px solid var(--ink);
-  }
-  .v2-cover .v2-icon { width: 68px; height: 68px; }
-  .v2-cover .v2-icon svg { width: 34px; height: 34px; }
-  .v2-cover .v2-num { left: auto; right: 10px; }
-  .v2-body { grid-column: 2; grid-row: 1; padding: 1.1rem 1.4rem; }
-  .v2-action { grid-column: 2; grid-row: 2; }
-}
-
 /* ---- Stack (shadow wrapper) ---- */
 .v2-stack { position: relative; height: 100%; }
 .v2-stack::before {
