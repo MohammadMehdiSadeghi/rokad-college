@@ -188,22 +188,6 @@ export default function Courses() {
           })}
         </div>
 
-        {/* Page dots */}
-        {pageCount > 1 && (
-          <div className="v2-dots">
-            {Array.from({ length: pageCount }, function(_, i) {
-              return (
-                <button
-                  key={i}
-                  className={"v2-dot" + (i === safePage ? " active" : "")}
-                  aria-label={"صفحه " + (i + 1)}
-                  onClick={function() { setPage(i); }}
-                />
-              );
-            })}
-          </div>
-        )}
-
         {/* CTA footer */}
         <div className="cta-footer">
           <p>{"ده‌ها دورهٔ تخصصی دیگر هم در رکاد منتظر توست"}</p>
