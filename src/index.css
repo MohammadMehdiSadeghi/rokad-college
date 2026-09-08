@@ -2518,7 +2518,40 @@ a:focus-visible, button:focus-visible {
 .v2-courses .head h2 { font-size: clamp(24px, 3.4vw, 40px); line-height: 1.2; font-weight: 900; color: var(--ink); margin: 0 0 .75rem; letter-spacing: -.01em; }
 
 /* ---- List (۲×۲ — چهار کارت در یک نما) ---- */
-.v2-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; }
+.v2-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; animation: v2-fade .45s ease; }
+@keyframes v2-fade {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ---- Controls row (فیلتر راست + فلش چپ) ---- */
+.v2-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+
+/* ---- Dots + arrows ---- */
+.v2-dots { display: flex; justify-content: center; gap: .4rem; margin-top: 1.2rem; }
+.v2-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ink-light); border: none; padding: 0; cursor: pointer;
+  transition: background .25s, transform .25s;
+}
+.v2-dot:hover { background: var(--ink-muted); transform: scale(1.15); }
+.v2-dot.active { background: var(--college); transform: scale(1.3); }
+.v2-nav-arrows { display: flex; gap: .55rem; }
+.v2-icon-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--white); color: var(--ink);
+  cursor: pointer;
+  transition: all .2s ease;
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+.v2-icon-btn:hover { background: var(--college); color: var(--white); transform: translate(-2px, -2px); box-shadow: 5px 5px 0 0 var(--ink); }
+.v2-icon-btn:active { transform: translate(0, 0); box-shadow: 1px 1px 0 0 var(--ink); }
 
 /* سکشن: پر کردن ارتفاع ویوپورت و وسط‌چین کردن محتوا */
 .v2-courses.section {
@@ -2528,7 +2561,7 @@ a:focus-visible, button:focus-visible {
 }
 .v2-courses .section-inner { width: 100%; }
 .v2-courses .head { margin-bottom: 1.2rem; }
-.v2-courses .segbar { margin-bottom: 1.2rem; }
+.v2-courses .v2-controls { margin-bottom: 1.2rem; }
 
 /* دسکتاپ/لپ‌تاپ: ۲×۲ کارت افقی کامل در یک نما (با احتساب هدر sticky) */
 @media (min-width: 901px) {
@@ -2538,7 +2571,7 @@ a:focus-visible, button:focus-visible {
   }
   .v2-courses .head { margin-bottom: 1.4rem; }
   .v2-courses .head h2 { font-size: clamp(26px, 3vw, 40px); }
-  .v2-courses .segbar { margin-bottom: 1.4rem; }
+  .v2-courses .v2-controls { margin-bottom: 1.4rem; }
   .segment { padding: .25rem; box-shadow: 2px 2px 0 0 var(--ink); }
   .seg-btn { padding: .4rem .9rem; font-size: 12.5px; }
   .v2-list { gap: 1.4rem; }

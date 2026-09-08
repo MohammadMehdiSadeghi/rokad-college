@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { courses, courseCta } from "@/data/content.js";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
 import PatternLayer from "@/components/PatternLayer";
@@ -98,9 +98,20 @@ var CourseCard = function(props) {
   );
 };
 
+/* Chevron SVG — RTL: prev = right-chevron, next = left-chevron */
+function Chevron({ right = false }) {
+  var d = right ? "M9 6l6 6-6 6" : "M15 6l-6 6 6 6";
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" width="20" height="20">
+      <path d={d} />
+    </svg>
+  );
+}
+
 export default function Courses() {
   var [filter, setFilter] = useState("all");
-  var displayCourses = courses.slice(0, 4);
+  var [page, setPage] = useState(0);
+  var displayCourses = courses.slice(0, 8);
   var counts = { all: displayCourses.length };
   displayCourses.forEach(function(_, i) {
     var m = MODE_MAP[i];
@@ -111,6 +122,20 @@ export default function Courses() {
   var filtered = displayCourses.filter(function(_, i) {
     return filter === "all" || MODE_MAP[i] === filter;
   });
+
+  /* صفحه‌بندی: هر صفحه ۴ کارت (۲×۲) */
+  var perPage = 4;
+  var pageCount = Math.max(1, Math.ceil(filtered.length / perPage));
+  var safePage = Math.min(page, pageCount - 1);
+  var visible = filtered.slice(safePage * perPage, safePage * perPage + perPage);
+
+  /* ریست صفحه هنگام تغییر فیلتر + چرخش خودکار */
+  useEffect(function() { setPage(0); }, [filter]);
+  useEffect(function() {
+    if (pageCount < 2) return;
+    var t = setInterval(function() { setPage(function(p) { return (p + 1) % pageCount; }); }, 6000);
+    return function() { clearInterval(t); };
+  }, [pageCount]);
 
   var segs = [
     { f: "all", label: "همه", count: counts.all },
@@ -126,8 +151,8 @@ export default function Courses() {
           <RotatedHeading words={"از این دوره‌ها شغلت را بساز"} className="t-section" color="var(--navy)" />
         </div>
 
-        {/* Segmented filter control */}
-        <div className="segbar">
+        {/* Controls row: filters (right) + arrows (left) */}
+        <div className="v2-controls">
           <div className="segment" role="tablist">
             {segs.map(function(s) {
               var isOn = filter === s.f;
@@ -145,15 +170,39 @@ export default function Courses() {
               );
             })}
           </div>
+          <div className="v2-nav-arrows">
+            <button className="v2-icon-btn" onClick={function() { setPage((safePage - 1 + pageCount) % pageCount); }} aria-label="قبلی">
+              <Chevron right />
+            </button>
+            <button className="v2-icon-btn" onClick={function() { setPage((safePage + 1) % pageCount); }} aria-label="بعدی">
+              <Chevron />
+            </button>
+          </div>
         </div>
 
-        {/* Course list */}
-        <div className="v2-list">
-          {filtered.map(function(c, i) {
+        {/* Course list — صفحه جاری (۴ کارت ۲×۲) */}
+        <div className="v2-list" key={filter + "-" + safePage}>
+          {visible.map(function(c) {
             var realIndex = displayCourses.indexOf(c);
             return <CourseCard key={c.title} course={c} index={realIndex} />;
           })}
         </div>
+
+        {/* Page dots */}
+        {pageCount > 1 && (
+          <div className="v2-dots">
+            {Array.from({ length: pageCount }, function(_, i) {
+              return (
+                <button
+                  key={i}
+                  className={"v2-dot" + (i === safePage ? " active" : "")}
+                  aria-label={"صفحه " + (i + 1)}
+                  onClick={function() { setPage(i); }}
+                />
+              );
+            })}
+          </div>
+        )}
 
         {/* CTA footer */}
         <div className="cta-footer">
