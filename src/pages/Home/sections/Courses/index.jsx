@@ -194,8 +194,8 @@ export default function Courses() {
           <RotatedHeading words={"از این دوره‌ها شغلت را بساز"} className="t-section" color="var(--navy)" />
         </div>
 
-        {/* Segmented filter control */}
-        <div className="segbar">
+        {/* Controls row: filters (right/start) + arrows (left/end) */}
+        <div className="v2-controls">
           <div className="segment" role="tablist">
             {segs.map(function(s) {
               var isOn = filter === s.f;
@@ -213,6 +213,14 @@ export default function Courses() {
               );
             })}
           </div>
+          <div className="v2-nav-arrows">
+            <button className="v2-icon-btn" onClick={prev} aria-label="قبلی">
+              <Chevron right />
+            </button>
+            <button className="v2-icon-btn" onClick={next} aria-label="بعدی">
+              <Chevron />
+            </button>
+          </div>
         </div>
 
         {/* Course carousel (۴ در دید اول) */}
@@ -229,28 +237,18 @@ export default function Courses() {
           </div>
         </div>
 
-        {/* Nav row */}
-        <div className="v2-nav">
-          <div className="v2-dots">
-            {Array.from({ length: dotCount }, function(_, i) {
-              return (
-                <button
-                  key={i}
-                  className={"v2-dot" + (i === idx ? " active" : "")}
-                  aria-label={"اسلاید " + (i + 1)}
-                  onClick={function() { goTo(i); }}
-                />
-              );
-            })}
-          </div>
-          <div className="v2-nav-arrows">
-            <button className="v2-icon-btn" onClick={prev} aria-label="قبلی">
-              <Chevron right />
-            </button>
-            <button className="v2-icon-btn" onClick={next} aria-label="بعدی">
-              <Chevron />
-            </button>
-          </div>
+        {/* Dots centered below carousel */}
+        <div className="v2-dots">
+          {Array.from({ length: dotCount }, function(_, i) {
+            return (
+              <button
+                key={i}
+                className={"v2-dot" + (i === idx ? " active" : "")}
+                aria-label={"اسلاید " + (i + 1)}
+                onClick={function() { goTo(i); }}
+              />
+            );
+          })}
         </div>
 
         {/* CTA footer */}
