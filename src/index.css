@@ -2534,9 +2534,12 @@ a:focus-visible, button:focus-visible {
 .v2-courses .head { margin-bottom: 1.2rem; }
 .v2-courses .segbar { margin-bottom: 1.2rem; }
 
-/* دسکتاپ/لپ‌تاپ (ارتفاع ≤ ۱۰۰۰px): ۲×۲ کامل در یک نما */
+/* دسکتاپ/لپ‌تاپ (ارتفاع ≤ ۱۰۰۰px): ۲×۲ کامل در یک نما (با احتساب هدر sticky) */
 @media (min-width: 901px) and (max-height: 1000px) {
-  .v2-courses.section { padding-block: 1.5rem; }
+  .v2-courses.section {
+    min-height: calc(100dvh - 72px);
+    padding-block: 1.5rem;
+  }
   .v2-courses .head { margin-bottom: .8rem; }
   .v2-courses .head h2 { font-size: clamp(24px, 3vw, 34px); }
   .v2-courses .segbar { margin-bottom: .8rem; }
@@ -4074,7 +4077,9 @@ a:focus-visible, button:focus-visible {
   border-radius: 20px 0 20px 0;
   padding: 24px 22px;
   max-height: calc(100vh - 110px); overflow-y: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
 }
+.cp-side::-webkit-scrollbar { display: none; }
 .cp-side-title {
   font-weight: 950; font-size: 20px; color: var(--ink);
   margin-bottom: 20px;
