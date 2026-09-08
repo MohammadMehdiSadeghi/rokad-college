@@ -5,8 +5,12 @@
    بوردر 2px ink، شدو آفست سخت 2.75px، رادیوس 12/17/24،
    کات‌کورنر متناوب، کهربایی فقط برای تاکید.
    باز شدن: #course/<slug>
+
+   موبایل (≤720px): پلر + عنوان + توضیح یوتیوبی اول صفحه؛
+   با اسکرول، همه‌شون می‌شن نوار افقی مینیِ چسبان زیر هدر
+   (ویدیوی کوچک راست + play/pause + عنوان) — ویوپورت نمی‌گیره.
    ============================================================ */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./course.css";
 import PatternLayer from "../../components/PatternLayer";
 import { courseSingle as course } from "./courseData.js";
@@ -30,6 +34,56 @@ const Star = ({ on }) => (
     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" />
   </svg>
 );
+
+const PlayGlyph = ({ size = 22 }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: size, height: size }}><path d="M8 5v14l11-7z" /></svg>
+);
+const PauseGlyph = ({ size = 22 }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: size, height: size }}><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
+);
+
+/* ---------- توضیح تاشو (مثل یوتیوب) — دکمه فقط وقتی متن کلمپ شده ---------- */
+function DescriptionCollapse({ paragraphs, className = "", clampLines = 2 }) {
+  const [more, setMore] = useState(false);
+  const [clippable, setClippable] = useState(false);
+  const bodyRef = useRef(null);
+
+  useEffect(() => {
+    const check = () => {
+      const el = bodyRef.current;
+      if (!el) return;
+      if (more) { setClippable(true); return; }
+      /* وقتی کلمپه: اگه ارتفاع واقعی > ارتفاع کلمپ‌شده یعنی متن بریده شده */
+      const clamped = el.scrollHeight > el.clientHeight + 2;
+      setClippable(clamped);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [more, paragraphs]);
+
+  return (
+    <div className={className}>
+      <div
+        ref={bodyRef}
+        className="cs-clamp-body"
+        style={more ? undefined : { display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: clampLines, overflow: "hidden" }}
+      >
+        {paragraphs.map((p, i) => (
+          <p key={i}>{p}</p>
+        ))}
+      </div>
+      {clippable && (
+        <button className="cs-desc-more" onClick={() => setMore((v) => !v)} aria-expanded={more}>
+          {more ? "کمتر" : "بیشتر"}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 11, height: 11, transform: more ? "rotate(180deg)" : "none", transition: "transform .25s ease" }}>
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
+}
 
 /* ---------- پنل: سرفصل‌ها ---------- */
 function CurriculumPanel({ course, openChapter, setOpenChapter }) {
@@ -87,10 +141,8 @@ function CurriculumPanel({ course, openChapter, setOpenChapter }) {
 /* ---------- پنل: توضیحات ---------- */
 function DescriptionPanel({ course }) {
   return (
-    <div className="cs-panel-body cs-desc">
-      {course.description.map((p, i) => (
-        <p key={i}>{p}</p>
-      ))}
+    <div className="cs-panel-body">
+      <DescriptionCollapse paragraphs={course.description} className="cs-desc" clampLines={4} />
     </div>
   );
 }
@@ -194,6 +246,37 @@ function ResourcesPanel({ course }) {
 export default function CourseSingle() {
   const [tab, setTab] = useState(0);
   const [openChapter, setOpenChapter] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [headGone, setHeadGone] = useState(false); /* بلاک بالا از دید خارج شد؟ */
+  const headRef = useRef(null);
+
+  /* نوار مینی موبایل: وقتی پلر + عنوان کاملاً از دید خارج شدن */
+  useEffect(() => {
+    const el = headRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) => setHeadGone(!entry.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  /* ارتفاع هدر چسبان سایت — نوار مینی دقیقاً زیرش می‌شینه */
+  useEffect(() => {
+    const hdr = document.querySelector(".site-header");
+    if (!hdr) return;
+    const set = () => document.documentElement.style.setProperty("--cs-hh", `${hdr.offsetHeight}px`);
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(hdr);
+    return () => ro.disconnect();
+  }, []);
+
+  const backToVideo = () => {
+    const el = headRef.current;
+    if (!el) return;
+    const hdrH = document.querySelector(".site-header")?.offsetHeight || 0;
+    const y = window.scrollY + el.getBoundingClientRect().top - hdrH - 8;
+    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+  };
 
   return (
     <main className="cs-page" id="course">
@@ -225,6 +308,22 @@ export default function CourseSingle() {
         </div>
 
         <div className="cs-grid container">
+          {/* ============ ستون پلر: موبایل = اول صفحه / دسکتاپ = مخفی ============ */}
+          <div className="cs-player-col" ref={headRef}>
+            <div className={`cs-thumb cs-video${playing ? " playing" : ""}`}>
+              <button className="play" onClick={() => setPlaying((v) => !v)} aria-label={playing ? "توقف" : "پخش"}>
+                <span>{playing ? <PauseGlyph /> : <PlayGlyph />}</span>
+              </button>
+            </div>
+
+            {/* عنوان + مدرس + توضیح یوتیوبی (فقط موبایل) */}
+            <div className="cs-title-row">
+              <h1>{course.title}</h1>
+              <small className="cs-title-sub">{course.teacher.name} · ★ ۴.۹ · {course.students} دانشجو</small>
+              <DescriptionCollapse paragraphs={[course.lede]} className="cs-lead-clamp" clampLines={2} />
+            </div>
+          </div>
+
           {/* ================= ستون اصلی ================= */}
           <div className="cs-main">
             {/* Hero */}
@@ -266,7 +365,7 @@ export default function CourseSingle() {
           {/* ================= سایدبار ================= */}
           <aside className="cs-side">
             <div className="cs-card">
-              <div className="cs-thumb">
+              <div className="cs-thumb cs-thumb-side">
                 <span className="play">
                   <span>
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
@@ -304,6 +403,24 @@ export default function CourseSingle() {
               </span>
             </div>
           </aside>
+        </div>
+
+        {/* ============ نوار مینی چسبان (فقط موبایل، بعد از اسکرول) ============
+            RTL: ویدیوی کوچک راست + play/pause + عنوان + بازگشت چپ */}
+        <div className={`cs-mini${headGone ? " on" : ""}`} aria-hidden={!headGone}>
+          <button className="cs-mini-thumb" onClick={backToVideo} aria-label="بازگشت به ویدیو">
+            {playing ? <PauseGlyph size={13} /> : <PlayGlyph size={13} />}
+          </button>
+          <button className="cs-mini-pp" onClick={() => setPlaying((v) => !v)} aria-label={playing ? "توقف" : "پخش"}>
+            {playing ? <PauseGlyph size={15} /> : <PlayGlyph size={15} />}
+          </button>
+          <div className="cs-mini-info">
+            <b>{course.title}</b>
+            <small>{course.teacher.name} · ★ ۴.۹</small>
+          </div>
+          <a href="#courses-index" className="cs-mini-back" aria-label="همهٔ دوره‌ها">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 5l-7 7 7 7" /></svg>
+          </a>
         </div>
       </main>
   );

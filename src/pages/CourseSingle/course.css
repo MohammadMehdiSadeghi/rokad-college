@@ -72,6 +72,9 @@
   align-items: start;
 }
 
+/* ---------- موبایل: ویدیو + عنوان بالا، بقیه پایین ---------- */
+.cs-player-col { display: none; } /* دسکتاپ: مخفی، ویدیو توی سایدباره */
+
 /* ---------- Main (طرح: s5-main — بدون شدو) ---------- */
 .cs-main {
   background: #fff;
@@ -425,7 +428,7 @@
 /* ---------- پنل‌های تب‌ها ---------- */
 .cs-panel-body { padding: 20px 32px 26px; }
 
-/* توضیحات */
+/* توضیحات + کلمپ یوتیوبی */
 .cs-desc p {
   font-size: 14.5px;
   font-weight: 500;
@@ -434,6 +437,20 @@
   margin: 0 0 14px;
 }
 .cs-desc p:last-child { margin-bottom: 0; }
+.cs-desc-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--college-dark);
+  cursor: pointer;
+  margin-top: 4px;
+}
 
 /* نظرات */
 .cs-reviews { display: flex; flex-direction: column; gap: 12px; }
@@ -526,15 +543,216 @@
   white-space: nowrap;
 }
 
-/* ---------- Responsive ---------- */
+/* ---------- Responsive — Desktop ≤ 1100px ---------- */
 @media (max-width: 1100px) {
   .cs-grid { grid-template-columns: 1fr; }
   .cs-side { position: static; }
   .cs-hero h1 { font-size: 30px; }
 }
-@media (max-width: 600px) {
-  .cs-hero { padding: 22px 20px; }
-  .cs-curriculum { padding: 18px 16px 20px; }
-  .cs-ch-head { grid-template-columns: auto 1fr auto; }
+
+/* ================================================================
+   موبایل — لایوت یوتیوبی (≤ 720px)
+   ترتیب طبیعی: [هدر سایت] [بازگشت] [پلر 16:9] [عنوان+مدرس+توضیح]
+                [تب‌ها] [محتوا]
+   بعد از اسکرول: نوار مینی fixed زیر هدر (ویدیو راست + pp + عنوان)
+   ================================================================ */
+@media (max-width: 720px) {
+  .cs-page { padding: 0 0 60px; background: #fff; }
+
+  /* topbar موبایل: فقط دکمهٔ بازگشت، باریک و بدون کارت */
+  .cs-topbar {
+    border-radius: 0;
+    border-inline: none;
+    border-top: none;
+    margin: 0;
+    padding: 10px 16px;
+    gap: 10px;
+    box-shadow: none;
+    border-bottom: 1px solid var(--ink-light);
+  }
+  .cs-students,
+  .cs-crumbs { display: none; }
+  .cs-back { font-size: 13px; }
+
+  /* Grid موبایل: تک‌ستونه */
+  .cs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* ---------- ستون پلر: اول صفحه، توی flow عادی ---------- */
+  .cs-player-col {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+
+  /* ویدیو اصلی: 16:9 تمام‌عرض، چسبیده به لبه‌ها */
+  .cs-player-col > .cs-video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--ink-light);
+  }
+  .cs-player-col > .cs-video .play {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .cs-player-col > .cs-video .play span {
+    width: 56px;
+    height: 56px;
+  }
+  .cs-player-col > .cs-video .play svg { width: 22px; height: 22px; }
+
+  /* عنوان + مدرس + توضیح (زیر پلر — مثل یوتیوب) */
+  .cs-title-row {
+    padding: 12px 16px 10px;
+    border-bottom: 1px solid var(--ink-light);
+  }
+  .cs-title-row h1 {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0 0 4px;
+    letter-spacing: 0;
+  }
+  .cs-title-sub {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-subtle);
+    margin-bottom: 6px;
+  }
+  .cs-lead-clamp { font-size: 13px; line-height: 1.9; color: var(--ink-faq); font-weight: 500; }
+  .cs-lead-clamp p { margin: 0; }
+  .cs-desc-more { font-size: 12px; margin-top: 2px; }
+
+  /* ---------- تب‌ها: در flow (مینی‌بار جاشو می‌گیره وقتی رد شد) ---------- */
+  .cs-tabs {
+    background: #fff;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--ink-light);
+  }
+  .cs-tabs button { padding: 13px 12px; font-size: 13px; }
+
+  /* ---------- محتوای اصلی: بدون کارت، flush ---------- */
+  .cs-main {
+    border-radius: 0;
+    border: none;
+    background: #fff;
+  }
+  .cs-hero { display: none; }
+
+  .cs-curriculum { padding: 16px 16px 22px; }
+  .cs-panel-body { padding: 16px; }
+  .cs-ch-head { grid-template-columns: auto 1fr auto; padding: 12px; gap: 12px; }
   .cs-ch .dur { display: none; }
+  .cs-ch .num { width: 30px; height: 30px; font-size: 12px; }
+
+  /* سایدبار موبایل: زیر محتوا، بدون تامبنیل تکراری ویدیو */
+  .cs-side { display: flex; padding: 0 16px 8px; }
+  .cs-side .cs-thumb-side { display: none; }
+  .cs-card { padding: 20px; }
+
+  /* ---------- نوار مینی چسبان زیر هدر سایت ----------
+     ظاهرشدن با .on — fixed زیر sticky header سایت، تمام‌عرض، باریک */
+  .cs-mini {
+    position: fixed;
+    top: var(--cs-hh, 64px);
+    right: 0;
+    left: 0;
+    z-index: 49; /* زیر هدر سایت (z:50) */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1.5px solid var(--ink);
+    box-shadow: 0 2.75px 0 var(--college);
+    opacity: 0;
+    transform: translateY(-110%);
+    transition: opacity .28s ease, transform .28s cubic-bezier(.4, 0, .2, 1);
+    pointer-events: none;
+  }
+  .cs-mini.on {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  /* ویدیوی مینیاتوری — سمت راست (RTL اولین آیتم) */
+  .cs-mini-thumb {
+    flex-shrink: 0;
+    width: 64px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px 0 8px 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+  }
+  /* دکمهٔ play/pause */
+  .cs-mini-pp {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--ink);
+    cursor: pointer;
+    padding: 0;
+    box-shadow: 1.5px 1.5px 0 var(--college);
+  }
+  .cs-mini-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .cs-mini-info b {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cs-mini-info small {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--ink-subtle);
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cs-mini-back {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    color: var(--ink);
+  }
+  .cs-mini-back svg { width: 17px; height: 17px; }
+}
+
+/* دسکتاپ: نوار مینی هیچ‌وقت */
+@media (min-width: 721px) {
+  .cs-mini { display: none; }
 }

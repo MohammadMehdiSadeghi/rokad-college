@@ -98,6 +98,22 @@ var CourseCard = function(props) {
   );
 };
 
+/* کاشی CTA — انتهای صفحه آخر گرید */
+var CtaTile = function() {
+  return (
+    <div className="v2-stack v2-cta-tile">
+      <a href="#courses-index" className="v2-tile-inner">
+        <div className="v2-tile-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+        </div>
+        <h3>ده‌ها دورهٔ تخصصی دیگر</h3>
+        <p>همه دوره‌های کالج رکاد را ببین و مسیرت را انتخاب کن.</p>
+        <span className="v2-tile-btn">مشاهده همه دوره‌ها <ArrowIcon width={14} height={14} /></span>
+      </a>
+    </div>
+  );
+};
+
 /* Chevron SVG — RTL: prev = right-chevron, next = left-chevron */
 function Chevron({ right = false }) {
   var d = right ? "M9 6l6 6-6 6" : "M15 6l-6 6 6 6";
@@ -190,12 +206,15 @@ export default function Courses() {
           >
             {Array.from({ length: pageCount }, function(_, p) {
               var pageCourses = filtered.slice(p * perPage, p * perPage + perPage);
+              var isLastPage = p === pageCount - 1;
+              var showCtaTile = isLastPage && pageCourses.length < perPage;
               return (
                 <div className="v2-page" key={filter + "-" + p} aria-hidden={p !== safePage}>
                   {pageCourses.map(function(c) {
                     var realIndex = displayCourses.indexOf(c);
                     return <CourseCard key={c.title} course={c} index={realIndex} />;
                   })}
+                  {showCtaTile && <CtaTile />}
                 </div>
               );
             })}
