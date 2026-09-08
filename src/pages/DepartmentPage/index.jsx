@@ -176,9 +176,23 @@ function CourseRow({ label, children }) {
   );
 }
 
+const DEPT_ICONS = {
+  languages: { hero: "globe", cta: "translate" },
+  business: { hero: "rocket", cta: "briefcase" },
+  it: { hero: "code", cta: "server" },
+};
+
+const ALL_DEPTS = [
+  { id: "it", name: "فناوری اطلاعات", color: "var(--navy-alt)" },
+  { id: "business", name: "کسب و کار", color: "var(--college)" },
+  { id: "languages", name: "زبان‌های خارجی", color: "var(--teal-alt)" },
+];
+
 export default function DepartmentPage({ deptId }) {
-  const persona = DEPT_PERSONA[deptId] || DEPT_PERSONA.languages;
-  const dept = departments[deptId] || departments.languages;
+  const currentId = departments[deptId] ? deptId : "languages";
+  const persona = DEPT_PERSONA[currentId] || DEPT_PERSONA.languages;
+  const dept = departments[currentId] || departments.languages;
+  const icons = DEPT_ICONS[currentId] || DEPT_ICONS.languages;
 
   /* لینک لنگری معمولی هش را عوض می‌کرد و روت #dept/<id> می‌شکست؛
      اینجا فقط اسکرول نرم می‌کنیم */
@@ -186,6 +200,7 @@ export default function DepartmentPage({ deptId }) {
     e.preventDefault();
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
   const styleVars = {
     "--dp": persona.colorVar,
     "--dp-light": persona.lightVar,
@@ -197,23 +212,42 @@ export default function DepartmentPage({ deptId }) {
   ));
 
   return (
-    <div className="dp-page" style={styleVars} data-dept={deptId} key={deptId}>
+    <div className="dp-page" style={styleVars} data-dept={currentId} key={currentId}>
       {/* ---------- HERO ---------- */}
       <header className="dp-hero">
         <PatternLayer rotate={0} />
         <div className="container dp-hero-inner">
           <div className="dp-hero-copy">
-            <nav className="dp-crumb" aria-label="مسیر">
-              <a href="#/">خانه</a>
-              <span className="sep">›</span>
-              <a href="#departments">دپارتمان‌ها</a>
-              <span className="sep">›</span>
-              <span className="cur">{dept.name}</span>
-            </nav>
+            {/* بریدکرامب + سوییچر دپارتمان‌ها */}
+            <div className="dp-top-row">
+              <nav className="dp-crumb" aria-label="مسیر">
+                <a href="#">خانه</a>
+                <span className="sep">›</span>
+                <a href="#departments">دپارتمان‌ها</a>
+                <span className="sep">›</span>
+                <span className="cur">{dept.name}</span>
+              </nav>
+
+              {/* سوییچر سریع بین دپارتمان‌ها */}
+              <div className="dp-switcher" role="tablist">
+                {ALL_DEPTS.map((d) => (
+                  <a
+                    key={d.id}
+                    href={`#dept/${d.id}`}
+                    className={`dp-switch-pill${d.id === currentId ? " active" : ""}`}
+                    style={d.id === currentId ? { background: d.color, color: d.id === "it" ? "#fff" : "var(--ink)", borderColor: "var(--ink)" } : {}}
+                  >
+                    {d.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             <div className="dp-badge">
               <span className="dot" />
               {dept.crumb}
             </div>
+
             <h1 className="dp-hero-title">
               {dept.headline[0]}{" "}
               <span className="dp-hero-accent">{dept.headline[1]}</span>
@@ -225,6 +259,10 @@ export default function DepartmentPage({ deptId }) {
                 <ArrowIcon />
               </a>
               <a className="dp-btn dp-btn-ghost" href="#dp-paths" onClick={(e) => scrollToSection(e, "dp-paths")}>مسیر یادگیری</a>
+              <a className="dp-btn dp-btn-consult" href="#consult">
+                مشاوره رایگان
+                <ArrowIcon />
+              </a>
             </div>
             <div className="dp-stats">
               {dept.stats.map((s) => (
@@ -239,8 +277,15 @@ export default function DepartmentPage({ deptId }) {
 
           <div className="dp-hero-visual">
             <div className="dp-hero-card">
+              {/* پترن پس‌زمینه بافت‌دار همرنگ دپارتمان */}
+              <img
+                src={persona.pattern}
+                alt=""
+                aria-hidden="true"
+                className="dp-hero-card-pattern"
+              />
               <div className="dp-hero-card-ic">
-                <CourseIcon id="globe" size={34} />
+                <CourseIcon id={icons.hero} size={34} />
               </div>
               <h3>{dept.heroCard.title}</h3>
               <p>{dept.heroCard.text}</p>
@@ -262,7 +307,7 @@ export default function DepartmentPage({ deptId }) {
           <SectionHead pre="پرطرفدارترین" accent="دوره‌ها" sub="دوره‌هایی که بیشترین هنرجو و بالاترین رضایت را دارند" />
           <CourseRow label={`پرطرفدارترین دوره‌های ${dept.name}`}>{popularCourses}</CourseRow>
           <div className="dp-more">
-            <a href="#courses-index" className="dp-btn dp-btn-ghost">
+            <a href={`#courses-index/${currentId}`} className="dp-btn dp-btn-ghost">
               همهٔ دوره‌های {dept.name}
               <ArrowIcon />
             </a>
@@ -292,7 +337,7 @@ export default function DepartmentPage({ deptId }) {
                 <span className="dp-path-num">{p.num}</span>
                 <h4>{p.title}</h4>
                 <p>{p.text}</p>
-                <a href="#courses-index" className="dp-path-link">
+                <a href={`#courses-index/${currentId}`} className="dp-path-link">
                   شروع مسیر
                   <ArrowIcon />
                 </a>
@@ -343,20 +388,31 @@ export default function DepartmentPage({ deptId }) {
         </div>
       </section>
 
-      {/* ---------- CTA ---------- */}
+      {/* ---------- CTA دپارتمان (طرح تیکت کالج) ---------- */}
       <section className="dp-block dp-cta-block">
         <div className="container">
           <div className="dp-cta">
+            <img
+              src={persona.pattern}
+              alt=""
+              aria-hidden="true"
+              className="dp-cta-pattern"
+            />
             <div className="dp-cta-copy">
               <h2>{dept.cta.title}</h2>
               <p>{dept.cta.text}</p>
-              <a href="#auth" className="dp-btn dp-btn-ink">
-                دریافت مشاورهٔ رایگان
-                <ArrowIcon />
-              </a>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}>
+                <a href="#consult" className="dp-btn dp-btn-ink">
+                  دریافت مشاورهٔ تخصصی {dept.name}
+                  <ArrowIcon />
+                </a>
+                <a href={`#courses-index/${currentId}`} className="dp-btn dp-btn-ghost">
+                  مشاهده تمام دوره‌های {dept.name}
+                </a>
+              </div>
             </div>
             <div className="dp-cta-visual">
-              <CourseIcon id="globe" size={110} />
+              <CourseIcon id={icons.cta} size={96} />
             </div>
           </div>
         </div>

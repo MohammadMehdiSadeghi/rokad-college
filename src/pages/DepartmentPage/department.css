@@ -37,16 +37,54 @@
   .dp-hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 40px 0 56px; }
 }
 
-/* مسیر (breadcrumb) */
+/* ردیف بالا: breadcrumb + سوییچر دپارتمان‌ها */
+.dp-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
 .dp-crumb {
   display: flex; gap: 8px; align-items: center;
   font-size: 14px; font-weight: 600; color: var(--ink-subtle);
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 .dp-crumb a { color: var(--ink-subtle); text-decoration: none; transition: color .2s; }
 .dp-crumb a:hover { color: var(--dp-dark); }
 .dp-crumb .sep { color: var(--dp); font-weight: 900; }
 .dp-crumb .cur { color: var(--ink); font-weight: 800; }
+
+/* سوییچر سریع دپارتمان‌ها */
+.dp-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: var(--r-pill);
+  padding: 4px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.dp-switch-pill {
+  padding: 5px 14px;
+  border-radius: var(--r-pill);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--ink-subtle);
+  border: 1.5px solid transparent;
+  transition: all 0.2s ease;
+}
+.dp-switch-pill:hover {
+  color: var(--ink);
+  background: var(--bg-neutral);
+}
+.dp-switch-pill.active {
+  box-shadow: 1.5px 1.5px 0 var(--ink);
+  font-weight: 900;
+}
 
 /* بج دپارتمان */
 .dp-badge {
@@ -86,7 +124,7 @@
   max-width: 560px;
   margin-bottom: 26px;
 }
-/* ردیف دکمه‌های هیرو — بدون این规则 دکمه‌ها به هم می‌چسبیدند */
+/* ردیف دکمه‌های هیرو */
 .dp-hero-actions {
   display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
 }
@@ -114,6 +152,12 @@
   box-shadow: 4px 4px 0 var(--dp);
 }
 .dp-btn-ghost:hover { box-shadow: 2px 2px 0 var(--dp); }
+.dp-btn-consult {
+  background: var(--college-light); color: var(--college-darker);
+  border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--college);
+}
+.dp-btn-consult:hover { box-shadow: 2px 2px 0 var(--college); }
 .dp-btn-ink {
   background: var(--ink); color: #fff;
   box-shadow: 4px 4px 0 var(--dp);
@@ -159,10 +203,20 @@
   box-shadow: 8px 8px 0 var(--dp);
   transform: rotate(1.25deg);
 }
+.dp-hero-card-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
 .dp-hero-card::before {
   content: ''; position: absolute; inset: 0;
   background: var(--dp);
-  opacity: .08;
+  opacity: .05;
   pointer-events: none;
 }
 .dp-hero-card-ic {
@@ -523,6 +577,16 @@
   gap: 32px; align-items: center;
   position: relative; overflow: hidden;
   box-shadow: 8px 8px 0 var(--ink);
+}
+.dp-cta-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 .dp-cta::before {
   content: ''; position: absolute; inset: 0;
