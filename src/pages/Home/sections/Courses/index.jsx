@@ -82,7 +82,6 @@ var CourseCard = function(props) {
             {features.map(function(f) { return <span className="feat" key={f}>{"• " + f}</span>; })}
           </div>
           <h3 className="t-card">{course.title}</h3>
-          <p className="t-sm">{course.text}</p>
           <div className="v2-tags">{tags.map(function(t) { return <span key={t}>{t}</span>; })}</div>
         </div>
         <div className="v2-action">
