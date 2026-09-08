@@ -315,16 +315,16 @@ export default function CoursesPage({ initialDept }) {
         >
           <div className="cp-drawer" onClick={(e) => e.stopPropagation()}>
             <div className="cp-drawer-head">
-              <span className="cp-drawer-title">فیلترها</span>
               <div className="cp-drawer-actions">
-                <button type="button" className="cp-reset" onClick={() => { reset(); setFilterOpen(false); }}>پاک کردن همه</button>
                 <button type="button" className="cp-drawer-close" onClick={() => setFilterOpen(false)} aria-label="بستن">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18" />
                     <line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
                 </button>
+                <button type="button" className="cp-reset" onClick={() => { reset(); setFilterOpen(false); }}>پاک کردن همه</button>
               </div>
+              <span className="cp-drawer-title">فیلترها</span>
             </div>
             <div className="cp-drawer-body">
               {filterGroups}
