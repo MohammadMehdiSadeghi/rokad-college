@@ -2571,27 +2571,6 @@ a:focus-visible, button:focus-visible {
   .cta-footer .btn-all { padding: .6rem 1.2rem; font-size: 13.5px; }
 }
 
-/* موبایل: کارت‌های عمودی + هر کارت یک اسلاید + پیش‌نمایش (peek) نسل بعد */
-@media (max-width: 700px) {
-  .v2-page {
-    flex: 0 0 78%;
-    display: block;
-  }
-  .v2-track { gap: 1.1rem; }
-  .v2-carousel { overflow-x: auto; overflow-y: visible; padding: 6px 6px 10px; margin: -6px -6px -10px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-  .v2-carousel::-webkit-scrollbar { display: none; }
-  .v2-page { scroll-snap-align: start; }
-  .v2-controls .v2-nav-arrows { display: none; }
-  .v2-item { grid-template-columns: 1fr; grid-template-rows: 140px auto; }
-  .v2-cover { border-left: none; border-bottom: 2px solid var(--ink); }
-  .v2-cover .v2-icon { width: 52px; height: 52px; }
-  .v2-cover .v2-icon svg { width: 26px; height: 26px; }
-  .v2-body { padding: 1rem 1.15rem .8rem; }
-  .v2-body h3 { font-size: 18px; }
-  .v2-body .feat { display: none; }
-  .v2-action .v2-btn { padding: .55rem .95rem; font-size: 12.5px; }
-}
-
 /* ---- Stack (shadow wrapper) ---- */
 .v2-stack { position: relative; height: 100%; }
 .v2-stack::before {
@@ -2704,6 +2683,27 @@ a:focus-visible, button:focus-visible {
 }
 .v2-action .v2-btn:hover { background: var(--cat); color: var(--ink); transform: rotate(0) scale(1.05); }
 .v2-action .v2-btn svg { width: 14px; height: 14px; }
+
+/* موبایل: کارت‌های عمودی + هر کارت یک اسلاید + پیش‌نمایش (peek) کارت بعدی */
+@media (max-width: 700px) {
+  .v2-page {
+    flex: 0 0 78%;
+    display: block;
+  }
+  .v2-track { gap: 1.1rem; }
+  .v2-carousel { overflow-x: auto; overflow-y: visible; padding: 6px 6px 10px; margin: -6px -6px -10px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .v2-carousel::-webkit-scrollbar { display: none; }
+  .v2-page { scroll-snap-align: start; }
+  .v2-controls .v2-nav-arrows { display: none; }
+  .v2-item { grid-template-columns: 1fr; grid-template-rows: 140px auto; }
+  .v2-cover { border-left: none; border-bottom: 2px solid var(--ink); }
+  .v2-cover .v2-icon { width: 52px; height: 52px; }
+  .v2-cover .v2-icon svg { width: 26px; height: 26px; }
+  .v2-body { padding: 1rem 1.15rem .8rem; }
+  .v2-body h3 { font-size: 18px; }
+  .v2-body .feat { display: none; }
+  .v2-action .v2-btn { padding: .55rem .95rem; font-size: 12.5px; }
+}
 
 /* ---- V3 Segmented filter (حضوری/آنلاین) ---- */
 .segbar { display: flex; justify-content: center; margin: 0 auto 1.5rem; }
@@ -4273,7 +4273,7 @@ a:focus-visible, button:focus-visible {
 
 /* ---------- کارت دوره ---------- */
 .cp-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  display: grid; grid-template-columns: 1fr;
   gap: 28px 24px;
 }
 /* چرخش و سایه روی سلول: کارت سفید/رنگی + سایهٔ جوهر که از زیر دیو به پایین می‌رود
@@ -4411,7 +4411,6 @@ a:focus-visible, button:focus-visible {
   .cp-controls { justify-content: flex-start; }
 }
 @media (max-width: 700px) {
-  .cp-grid { grid-template-columns: 1fr; }
   .cp-card { grid-template-columns: 1fr; grid-template-rows: 126px auto; }
   .cp-card-cover { border-left: 2px solid var(--ink); border-bottom: none; border-radius: 20px 0 0 0; }
   .cp-card-body { border-radius: 0 0 20px 0; }
