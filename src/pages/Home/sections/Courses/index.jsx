@@ -179,7 +179,7 @@ export default function Courses() {
         <div className="v2-carousel">
           <div
             className="v2-track"
-            style={{ transform: "translateX(" + (safePage * 100) + "%)" }}
+            style={{ transform: "translateX(calc(" + safePage + " * (100% + 2.5rem)))" }}
           >
             {Array.from({ length: pageCount }, function(_, p) {
               var pageCourses = filtered.slice(p * perPage, p * perPage + perPage);

@@ -2518,9 +2518,9 @@ a:focus-visible, button:focus-visible {
 .v2-courses .head h2 { font-size: clamp(24px, 3.4vw, 40px); line-height: 1.2; font-weight: 900; color: var(--ink); margin: 0 0 .75rem; letter-spacing: -.01em; }
 
 /* ---- Carousel (track-based — همه صفحات در یک ردیف) ---- */
-/* padding برای جای سایه (::before) تا هنگام هاور بریده نشود */
-.v2-carousel { overflow: hidden; padding: 6px 6px 8px; margin-block: -6px -8px; }
-.v2-track { display: flex; align-items: stretch; transition: transform .5s cubic-bezier(.4,0,.2,1); will-change: transform; }
+/* padding برای جای سایه (::before + هاور) تا هنگام هاور/transition بریده نشود */
+.v2-carousel { overflow: hidden; padding: 12px; margin: -12px; }
+.v2-track { display: flex; align-items: stretch; gap: 2.5rem; transition: transform .5s cubic-bezier(.4,0,.2,1); will-change: transform; }
 .v2-page { flex: 0 0 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 1.6rem; }
 
 /* ---- Controls row (فیلتر راست + فلش چپ) ---- */
