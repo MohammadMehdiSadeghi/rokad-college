@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import "./department.css";
 import PatternLayer from "@/Components/PatternLayer";
 import { DEPT_PERSONA, departments } from "@/data/departments.js";
@@ -50,6 +51,11 @@ const BookIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h11a3 3 0 0 1 3 3v14H7a3 3 0 0 1-3-3z"/><path d="M4 18a3 3 0 0 1 3-3h11"/></svg>
 );
 
+/* فلش دکمه‌های ناوبری ردیف دوره‌ها — با CSS-RTL خودش قرینه می‌شود */
+const ChevronIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+);
+
 /* بلوک سکشن با تیتر چرخیدهٔ نئوبروتالیست */
 const SectionHead = ({ pre, accent, sub }) => (
   <div className="dp-sec-head">
@@ -62,50 +68,133 @@ const SectionHead = ({ pre, accent, sub }) => (
   </div>
 );
 
+/* ---- کارت دوره (مشترک بین ردیف محبوب و جدیدترین) ---- */
+const CourseCard = ({ c, rot }) => (
+  <a className="dp-course" href="#courses-index" style={{ "--rot": `rotate(${rot}deg)` }}>
+    {c.tag && <span className="dp-course-tag">{c.tag}</span>}
+    <div className="dp-course-cover">
+      <CourseIcon id={c.ic} />
+    </div>
+    <div className="dp-course-body">
+      <div className="dp-course-cat">{c.cat}</div>
+      <div className="dp-course-title">{c.title}</div>
+      <div className="dp-course-inst">
+        <span className="dp-av">{c.inst.charAt(0)}</span>
+        <span>{c.inst}</span>
+      </div>
+      <div className="dp-course-meta">
+        <span className="dp-rate">★ {c.rating}</span>
+        <span><ClockIcon /> {c.hours}</span>
+        <span><UsersIcon /> {c.students}</span>
+      </div>
+      <div className="dp-course-price">
+        {c.free ? (
+          <span className="dp-free">رایگان</span>
+        ) : (
+          <>
+            <b>{c.price}</b>
+            {c.old && <s>{c.old}</s>}
+          </>
+        )}
+      </div>
+    </div>
+  </a>
+);
+
+/* ---- ردیف اسکرولی دوره‌ها + دکمه‌های قبلی/بعدی (الگوی مکتب‌خونه) ----
+   انیمیشن با rAF دستی است: این وب‌ویو behavior:"smooth" را اجرا نمی‌کند */
+function CourseRow({ label, children }) {
+  const rowRef = useRef(null);
+  const animRef = useRef(0);
+  const modelRef = useRef("flip"); // flip = کروم/فایرفاکس (RTL منفی)، legacy = سافاری
+  const [nav, setNav] = useState({ prev: false, next: true });
+
+  /* مدل scrollLeft در RTL بین مرورگرها فرق دارد؛ در mount تشخیص می‌دهیم */
+  const metrics = () => {
+    const el = rowRef.current;
+    const max = el.scrollWidth - el.clientWidth;
+    const rtl = getComputedStyle(el).direction === "rtl";
+    if (!rtl) return { max, pos: el.scrollLeft };
+    return { max, pos: modelRef.current === "legacy" ? max - el.scrollLeft : -el.scrollLeft };
+  };
+
+  const update = () => {
+    const el = rowRef.current;
+    if (!el) return;
+    const { max, pos } = metrics();
+    setNav({ prev: pos > 4, next: max > 0 && max - pos > 4 });
+  };
+
+  useEffect(() => {
+    const el = rowRef.current;
+    const max = el.scrollWidth - el.clientWidth;
+    if (getComputedStyle(el).direction === "rtl" && max > 0) {
+      modelRef.current = Math.abs(el.scrollLeft) < max / 2 ? "flip" : "legacy";
+    }
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  /* «بعدی» یعنی حرکت پنجرهٔ دید به سمت چپ؛ در RTL دلتای منفی
+     هم در مدل کروم (0 → منفی) و هم سافاری (max → 0) جلو می‌برد */
+  const scroll = (toNext) => {
+    const el = rowRef.current;
+    if (!el) return;
+    cancelAnimationFrame(animRef.current);
+    const rtl = getComputedStyle(el).direction === "rtl";
+    const dir = rtl ? (toNext ? -1 : 1) : (toNext ? 1 : -1);
+    const from = el.scrollLeft;
+    const to = from + dir * el.clientWidth * 0.85;
+    const t0 = performance.now();
+    const ease = (p) => 1 - Math.pow(1 - p, 3); // easeOutCubic
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / 450);
+      el.scrollLeft = from + (to - from) * ease(p);
+      if (p < 1) animRef.current = requestAnimationFrame(step);
+    };
+    animRef.current = requestAnimationFrame(step);
+  };
+
+  return (
+    <div className="dp-row-wrap">
+      <button type="button" className="dp-nav dp-nav-prev" onClick={() => scroll(false)} disabled={!nav.prev} aria-label="دوره‌های قبلی">
+        <ChevronIcon />
+      </button>
+      <div className="dp-row" ref={rowRef} aria-label={label}>
+        {children}
+      </div>
+      <button type="button" className="dp-nav dp-nav-next" onClick={() => scroll(true)} disabled={!nav.next} aria-label="دوره‌های بعدی">
+        <ChevronIcon />
+      </button>
+    </div>
+  );
+}
+
 export default function DepartmentPage({ deptId }) {
   const persona = DEPT_PERSONA[deptId] || DEPT_PERSONA.languages;
   const dept = departments[deptId] || departments.languages;
+
+  /* لینک لنگری معمولی هش را عوض می‌کرد و روت #dept/<id> می‌شکست؛
+     اینجا فقط اسکرول نرم می‌کنیم */
+  const scrollToSection = (e, id) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   const styleVars = {
     "--dp": persona.colorVar,
     "--dp-light": persona.lightVar,
     "--dp-dark": persona.darkVar,
   };
 
-  const popularCourses = (
-    <>
-      {dept.popular.map((c, i) => (
-        <a className="dp-course" href="#courses-index" key={i} style={{ "--rot": `rotate(${[-1, 1, -0.5, 0.5][i % 4]}deg)` }}>
-          {c.tag && <span className="dp-course-tag">{c.tag}</span>}
-          <div className="dp-course-cover">
-            <CourseIcon id={c.ic} />
-          </div>
-          <div className="dp-course-body">
-            <div className="dp-course-cat">{c.cat}</div>
-            <div className="dp-course-title">{c.title}</div>
-            <div className="dp-course-inst">
-              <span className="dp-av">{c.inst.charAt(0)}</span>
-              <span>{c.inst}</span>
-            </div>
-            <div className="dp-course-meta">
-              <span className="dp-rate">★ {c.rating}</span>
-              <span><ClockIcon /> {c.hours}</span>
-              <span><UsersIcon /> {c.students}</span>
-            </div>
-            <div className="dp-course-price">
-              {c.free ? (
-                <span className="dp-free">رایگان</span>
-              ) : (
-                <>
-                  <b>{c.price}</b>
-                  {c.old && <s>{c.old}</s>}
-                </>
-              )}
-            </div>
-          </div>
-        </a>
-      ))}
-    </>
-  );
+  const popularCourses = dept.popular.map((c, i) => (
+    <CourseCard c={c} rot={[-1, 1, -0.5, 0.5][i % 4]} key={i} />
+  ));
 
   return (
     <div className="dp-page" style={styleVars} data-dept={deptId} key={deptId}>
@@ -131,11 +220,11 @@ export default function DepartmentPage({ deptId }) {
             </h1>
             <p className="dp-hero-lead">{dept.lead}</p>
             <div className="dp-hero-actions">
-              <a className="dp-btn dp-btn-primary" href="#dp-popular">
+              <a className="dp-btn dp-btn-primary" href="#dp-popular" onClick={(e) => scrollToSection(e, "dp-popular")}>
                 مشاهدهٔ دوره‌ها
                 <ArrowIcon />
               </a>
-              <a className="dp-btn dp-btn-ghost" href="#dp-paths">مسیر یادگیری</a>
+              <a className="dp-btn dp-btn-ghost" href="#dp-paths" onClick={(e) => scrollToSection(e, "dp-paths")}>مسیر یادگیری</a>
             </div>
             <div className="dp-stats">
               {dept.stats.map((s) => (
@@ -171,7 +260,7 @@ export default function DepartmentPage({ deptId }) {
       <section className="dp-block" id="dp-popular">
         <div className="container">
           <SectionHead pre="پرطرفدارترین" accent="دوره‌ها" sub="دوره‌هایی که بیشترین هنرجو و بالاترین رضایت را دارند" />
-          <div className="dp-grid">{popularCourses}</div>
+          <CourseRow label={`پرطرفدارترین دوره‌های ${dept.name}`}>{popularCourses}</CourseRow>
           <div className="dp-more">
             <a href="#courses-index" className="dp-btn dp-btn-ghost">
               همهٔ دوره‌های {dept.name}
@@ -185,29 +274,11 @@ export default function DepartmentPage({ deptId }) {
       <section className="dp-block dp-tint">
         <div className="container">
           <SectionHead pre="جدیدترین" accent="دوره‌ها" sub="تازه‌ترین دوره‌هایی که به دپارتمان اضافه شده‌اند" />
-          <div className="dp-grid">
+          <CourseRow label={`جدیدترین دوره‌های ${dept.name}`}>
             {dept.newest.map((c, i) => (
-              <a className="dp-course" href="#courses-index" key={i} style={{ "--rot": `rotate(${[0.5, -0.5, 1, -1][i % 4]}deg)` }}>
-                <div className="dp-course-cover">
-                  <CourseIcon id={c.ic} />
-                </div>
-                <div className="dp-course-body">
-                  <div className="dp-course-cat">{c.cat}</div>
-                  <div className="dp-course-title">{c.title}</div>
-                  <div className="dp-course-inst">
-                    <span className="dp-av">{c.inst.charAt(0)}</span>
-                    <span>{c.inst}</span>
-                  </div>
-                  <div className="dp-course-meta">
-                    <span className="dp-rate">★ {c.rating}</span>
-                    <span><ClockIcon /> {c.hours}</span>
-                    <span><UsersIcon /> {c.students}</span>
-                  </div>
-                  <div className="dp-course-price"><b>{c.price}</b></div>
-                </div>
-              </a>
+              <CourseCard c={c} rot={[0.5, -0.5, 1, -1][i % 4]} key={i} />
             ))}
-          </div>
+          </CourseRow>
         </div>
       </section>
 
