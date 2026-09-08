@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { courses, courseCta } from "@/data/content.js";
 import RotatedHeading from "@/components/RotatedHeading.jsx";
 import PatternLayer from "@/components/PatternLayer";
@@ -49,16 +49,6 @@ var toPersianNum = function(n) {
   });
 };
 
-/* Chevron SVG — RTL: prev = right-chevron, next = left-chevron */
-function Chevron({ right = false }) {
-  var d = right ? "M9 6l6 6-6 6" : "M15 6l-6 6 6 6";
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" width="20" height="20">
-      <path d={d} />
-    </svg>
-  );
-}
-
 var CourseCard = function(props) {
   var course = props.course;
   var index = props.index;
@@ -107,13 +97,8 @@ var CourseCard = function(props) {
   );
 };
 
-/* ---------- Component ---------- */
 export default function Courses() {
   var [filter, setFilter] = useState("all");
-  var [idx, setIdx] = useState(0);
-  var [cardW, setCardW] = useState(0);
-  var carRef = useRef(null);
-  var timerRef = useRef(null);
   var displayCourses = courses.slice(0, 8);
   var counts = { all: displayCourses.length };
   displayCourses.forEach(function(_, i) {
@@ -131,60 +116,6 @@ export default function Courses() {
     { f: "onsite", label: "حضوری", count: counts.onsite },
     { f: "online", label: "آنلاین", count: counts.online },
   ];
-
-  /* ۴ کارت در دید اول (ریسپانسیو: ۲ و ۱) */
-  var [visible, setVisible] = useState(4);
-  var gap = 16;
-  var total = filtered.length;
-  var maxIndex = Math.max(0, total - visible);
-  var dotCount = maxIndex + 1;
-
-  /* Measure card width */
-  useEffect(function() {
-    var measure = function() {
-      var v = window.innerWidth <= 620 ? 1 : window.innerWidth <= 1100 ? 2 : 4;
-      setVisible(v);
-      if (carRef.current) {
-        var cs = window.getComputedStyle(carRef.current);
-        var padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
-        var avail = carRef.current.clientWidth - padX;
-        var w = (avail - (v - 1) * gap) / v;
-        setCardW(Math.max(w, 100));
-      }
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return function() { window.removeEventListener("resize", measure); };
-  }, []);
-
-  /* Reset index when filter changes */
-  useEffect(function() { setIdx(0); }, [filter]);
-
-  /* Autoplay 3500ms */
-  useEffect(function() {
-    var start = function() {
-      clearInterval(timerRef.current);
-      timerRef.current = setInterval(function() {
-        setIdx(function(i) { return i >= maxIndex ? 0 : i + 1; });
-      }, 3500);
-    };
-    start();
-    var el = carRef.current;
-    var stop = function() { clearInterval(timerRef.current); };
-    el?.addEventListener("mouseenter", stop);
-    el?.addEventListener("mouseleave", start);
-    return function() {
-      clearInterval(timerRef.current);
-      el?.removeEventListener("mouseenter", stop);
-      el?.removeEventListener("mouseleave", start);
-    };
-  }, [maxIndex]);
-
-  var shift = idx * (cardW + gap);
-
-  var goTo = function(i) { setIdx(Math.max(0, Math.min(i, maxIndex))); };
-  var prev = function() { goTo(idx - 1); };
-  var next = function() { goTo(idx + 1); };
 
   return (
     <section className="section v2-courses" id="courses" style={{ background: "var(--bg-college-tint)" }}>
@@ -215,42 +146,12 @@ export default function Courses() {
           </div>
         </div>
 
-        {/* Course carousel (۴ در دید اول) */}
-        <div className="v2-carousel" ref={carRef}>
-          <div className="v2-track" style={{ transform: "translateX(" + shift + "px)" }}>
-            {filtered.map(function(c, i) {
-              var realIndex = displayCourses.indexOf(c);
-              return (
-                <div className="v2-slide" key={c.title} style={{ width: cardW + "px" }}>
-                  <CourseCard course={c} index={realIndex} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Nav row */}
-        <div className="v2-nav">
-          <div className="v2-dots">
-            {Array.from({ length: dotCount }, function(_, i) {
-              return (
-                <button
-                  key={i}
-                  className={"v2-dot" + (i === idx ? " active" : "")}
-                  aria-label={"اسلاید " + (i + 1)}
-                  onClick={function() { goTo(i); }}
-                />
-              );
-            })}
-          </div>
-          <div className="v2-nav-arrows">
-            <button className="v2-icon-btn" onClick={prev} aria-label="قبلی">
-              <Chevron right />
-            </button>
-            <button className="v2-icon-btn" onClick={next} aria-label="بعدی">
-              <Chevron />
-            </button>
-          </div>
+        {/* Course list */}
+        <div className="v2-list">
+          {filtered.map(function(c, i) {
+            var realIndex = displayCourses.indexOf(c);
+            return <CourseCard key={c.title} course={c} index={realIndex} />;
+          })}
         </div>
 
         {/* CTA footer */}

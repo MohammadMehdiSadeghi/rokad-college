@@ -2516,37 +2516,14 @@ a:focus-visible, button:focus-visible {
 .v2-courses .head { text-align: center; max-width: 820px; margin: 0 auto 3.5rem; }
 .v2-courses .head h2 { font-size: clamp(28px, 4.2vw, 50px); line-height: 1.2; font-weight: 900; color: var(--ink); margin: 0 0 1rem; letter-spacing: -.01em; }
 
-/* ---- Carousel (۴ در دید اول) ---- */
-.v2-carousel { overflow-x: clip; padding: 10px 0 24px; }
-.v2-track { display: flex; gap: 16px; transition: transform .5s cubic-bezier(.4,0,.2,1); will-change: transform; }
-.v2-slide { flex: 0 0 auto; }
-
-/* ---- Nav row ---- */
-.v2-nav {
-  display: flex; align-items: center; justify-content: center; gap: 1rem;
-  margin-top: 1.6rem;
+/* ---- List (چهار ستونه) ---- */
+.v2-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; }
+@media (max-width: 1100px) {
+  .v2-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-.v2-dots { display: flex; gap: .45rem; }
-.v2-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--ink-light); border: none; padding: 0; cursor: pointer;
-  transition: background .25s, transform .25s;
+@media (max-width: 620px) {
+  .v2-list { grid-template-columns: 1fr; }
 }
-.v2-dot:hover { background: var(--ink-muted); transform: scale(1.15); }
-.v2-dot.active { background: var(--college); transform: scale(1.25); }
-.v2-nav-arrows { display: flex; gap: .55rem; }
-.v2-icon-btn {
-  display: flex; align-items: center; justify-content: center;
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: 2px solid var(--ink);
-  background: var(--white); color: var(--ink);
-  cursor: pointer;
-  transition: all .2s ease;
-  box-shadow: 3px 3px 0 0 var(--ink);
-}
-.v2-icon-btn:hover { background: var(--college); color: var(--white); transform: translate(-2px, -2px); box-shadow: 5px 5px 0 0 var(--ink); }
-.v2-icon-btn:active { transform: translate(0, 0); box-shadow: 1px 1px 0 0 var(--ink); }
 
 /* ---- Stack (shadow wrapper) ---- */
 .v2-stack { position: relative; height: 100%; }
@@ -2707,6 +2684,10 @@ a:focus-visible, button:focus-visible {
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--mode) 18%, transparent);
 }
 .mode-inline svg { width: 13px; height: 13px; }
+
+/* filter hide animation */
+.v2-list .v2-stack { transition: opacity .25s ease, transform .35s ease; }
+.v2-list .v2-stack.hide { display: none; }
 
 /* ---- CTA footer (shared) ---- */
 .cta-footer { margin-top: 3.5rem; text-align: center; }
@@ -4058,9 +4039,7 @@ a:focus-visible, button:focus-visible {
   border-radius: 20px 0 20px 0;
   padding: 24px 22px;
   max-height: calc(100vh - 110px); overflow-y: auto;
-  scrollbar-width: none; /* فایرفاکس */
 }
-.cp-side::-webkit-scrollbar { display: none; /* کروم و سافاری */ }
 .cp-side-title {
   font-weight: 950; font-size: 20px; color: var(--ink);
   margin-bottom: 20px;
