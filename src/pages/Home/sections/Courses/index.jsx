@@ -129,13 +129,8 @@ export default function Courses() {
   var safePage = Math.min(page, pageCount - 1);
   var visible = filtered.slice(safePage * perPage, safePage * perPage + perPage);
 
-  /* ریست صفحه هنگام تغییر فیلتر + چرخش خودکار */
+  /* ریست صفحه هنگام تغییر فیلتر */
   useEffect(function() { setPage(0); }, [filter]);
-  useEffect(function() {
-    if (pageCount < 2) return;
-    var t = setInterval(function() { setPage(function(p) { return (p + 1) % pageCount; }); }, 6000);
-    return function() { clearInterval(t); };
-  }, [pageCount]);
 
   var segs = [
     { f: "all", label: "همه", count: counts.all },
