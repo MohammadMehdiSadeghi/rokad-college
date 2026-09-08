@@ -98,6 +98,31 @@ var CourseCard = function(props) {
   );
 };
 
+/* کارت CTA — فقط موبایل: آخرین اسلایدِ قابل سواپ */
+var CtaCard = function() {
+  return (
+    <div className="v2-item v2-cta-item">
+      <a href="#courses-index" className="v2-cta-cover" aria-label="مشاهده همه دوره‌ها">
+        <div className="v2-icon v2-cta-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
+        </div>
+      </a>
+      <div className="v2-content">
+        <div className="v2-body">
+          <div className="v2-meta">
+            <span className="v2-cat-pill">مسیر بعدی تو</span>
+          </div>
+          <h3>ده‌ها دورهٔ تخصصی دیگر</h3>
+          <p>{"همه دوره‌های کالج رکاد را ببین و مسیرت را انتخاب کن."}</p>
+        </div>
+        <div className="v2-action">
+          <span className="v2-btn">{"مشاهده همه دوره‌ها "} <ArrowIcon width={14} height={14} /></span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* Chevron SVG — RTL: prev = right-chevron, next = left-chevron */
 function Chevron({ right = false }) {
   var d = right ? "M9 6l6 6-6 6" : "M15 6l-6 6 6 6";
@@ -208,6 +233,11 @@ export default function Courses() {
                 </div>
               );
             })}
+            {isMobile && (
+              <div className="v2-page">
+                <CtaCard />
+              </div>
+            )}
           </div>
         </div>
 
