@@ -2554,6 +2554,11 @@ a:focus-visible, button:focus-visible {
 .v2-courses .head { margin-bottom: 1.2rem; }
 .v2-courses .v2-controls { margin-bottom: 1.2rem; }
 
+/* فوتر CTA فقط موبایل — بالا‌تر از ۷۰۰px pill جایگزین می‌شود */
+@media (min-width: 701px) {
+  .v2-courses .v2-mobile-cta { display: none; }
+}
+
 /* دسکتاپ/لپ‌تاپ: ۲×۲ کارت افقی کامل در یک نما (با احتساب هدر sticky) */
 @media (min-width: 901px) {
   .v2-courses.section {
@@ -2566,9 +2571,7 @@ a:focus-visible, button:focus-visible {
   .segment { padding: .25rem; box-shadow: 2px 2px 0 0 var(--ink); }
   .seg-btn { padding: .4rem .9rem; font-size: 12.5px; }
   .v2-list { gap: 1.4rem; }
-  .cta-footer { margin-top: 1.5rem; }
-  .cta-footer p { display: none; }
-  .cta-footer .btn-all { padding: .6rem 1.2rem; font-size: 13.5px; }
+  .v2-courses .v2-mobile-cta { display: none; }
 }
 
 /* ---- Stack (shadow wrapper) ---- */
@@ -2684,51 +2687,24 @@ a:focus-visible, button:focus-visible {
 .v2-action .v2-btn:hover { background: var(--cat); color: var(--ink); transform: rotate(0) scale(1.05); }
 .v2-action .v2-btn svg { width: 14px; height: 14px; }
 
-/* ---- کاشی CTA (انتهای صفحه آخر — بنر تمام‌عرض) ---- */
-.v2-cta-tile { grid-column: 1 / -1; }
-.v2-tile-inner {
-  position: relative; z-index: 1;
-  display: flex; align-items: center; gap: 1.2rem;
-  background: var(--navy);
-  border: 2px solid var(--ink);
-  border-radius: 0 1.4rem 0 1.4rem;
-  corner-shape: squircle; -webkit-corner-shape: squircle;
-  overflow: hidden;
-  padding: 1.1rem 1.5rem;
-  text-decoration: none;
-}
-.v2-tile-icon {
-  flex: 0 0 auto;
-  width: 56px; height: 56px;
-  border: 2.5px solid #fff;
-  background: var(--college);
-  border-radius: 0 1rem 0 1rem;
-  corner-shape: squircle; -webkit-corner-shape: squircle;
-  box-shadow: 4px 4px 0 0 var(--ink);
-  display: grid; place-items: center;
-  transform: rotate(-3deg);
-  color: var(--ink);
-}
-.v2-tile-icon svg { width: 28px; height: 28px; }
-.v2-tile-inner h3 { margin: 0; font-size: 20px; font-weight: 900; color: #fff; line-height: 1.35; }
-.v2-tile-inner p { margin: .15rem 0 0; font-size: 13px; font-weight: 500; color: rgba(255,255,255,.75); line-height: 1.6; }
-.v2-tile-btn {
-  margin-inline-start: auto;
-  flex: 0 0 auto;
+/* ---- CTA pill — جای دکمه «بعدی» روی صفحه آخر ---- */
+.v2-cta-pill {
   display: inline-flex; align-items: center; gap: .4rem;
   background: var(--college); color: var(--ink);
-  padding: .65rem 1.15rem;
+  padding: .6rem 1.1rem;
   border-radius: .8rem;
   corner-shape: squircle; -webkit-corner-shape: squircle;
-  font-weight: 900; font-size: 13.5px;
+  font-weight: 900; font-size: 13px; text-decoration: none;
   border: 2px solid var(--ink);
-  transform: rotate(-1.5deg);
   box-shadow: 3px 3px 0 0 var(--ink);
+  transform: rotate(-1.5deg);
   transition: all .25s ease;
   white-space: nowrap;
+  animation: v2-pill-in .3s ease;
 }
-.v2-stack:hover .v2-tile-btn { transform: rotate(0) scale(1.04); background: #fff; }
-.v2-tile-btn svg { width: 14px; height: 14px; }
+.v2-cta-pill:hover { background: var(--ink); color: var(--white); transform: rotate(0) scale(1.04); }
+.v2-cta-pill svg { width: 14px; height: 14px; }
+@keyframes v2-pill-in { from { opacity: 0; } to { opacity: 1; } }
 
 /* موبایل: کارت‌های عمودی + هر کارت یک اسلاید + پیش‌نمایش (peek) کارت بعدی */
 @media (max-width: 700px) {
