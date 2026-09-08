@@ -97,10 +97,6 @@ const testimonials = [
 ];
 
 const total = testimonials.length;
-const visible = 2;
-const gap = 24;
-const maxIndex = Math.max(0, total - visible);
-const dotCount = total - visible + 1;
 
 /* Persian digits helper */
 const FA = "۰۱۲۳۴۵۶۷۸۹";
@@ -129,49 +125,101 @@ function Chevron({ right = false }) {
 /* ---------- Component ---------- */
 export default function Comments() {
   const [idx, setIdx] = useState(0);
-  const [cardW, setCardW] = useState(0);
+  const [perView, setPerView] = useState(2);
+  const [step, setStep] = useState(0);
+  /* drag state برای رندر (فالو زندهٔ انگشت)؛ dragRef همیشه sync برای منطق */
+  const [dragDx, setDragDx] = useState(null); // null = در حال درگ نیستیم
   const carRef = useRef(null);
+  const trackRef = useRef(null);
   const timerRef = useRef(null);
+  const dragRef = useRef(null); // { id, startX, dx } | null
 
-  /* Measure card width */
+  const maxIndex = Math.max(0, total - perView);
+  const dotCount = maxIndex + 1;
+  const dragging = dragDx !== null;
+
+  /* Desktop = 2 cards, mobile = 1 card */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 720px)");
+    const apply = () => setPerView(mq.matches ? 1 : 2);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  /* Keep idx valid when perView changes */
+  useEffect(() => {
+    setIdx((i) => Math.min(i, Math.max(0, total - perView)));
+  }, [perView]);
+
+  /* Measure one slide step (card width + track gap), in px */
   useEffect(() => {
     const measure = () => {
-      if (carRef.current) {
-        const cs = window.getComputedStyle(carRef.current);
-        const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
-        const avail = carRef.current.clientWidth - padX;
-        const w = (avail - (visible - 1) * gap) / visible;
-        setCardW(Math.max(w, 100));
-      }
+      const track = trackRef.current;
+      const card = track?.firstElementChild;
+      if (!track || !card) return;
+      const g = parseFloat(window.getComputedStyle(track).columnGap) || 0;
+      setStep(card.offsetWidth + g);
     };
     measure();
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
+    const t = setTimeout(measure, 300); /* بعد از لود فونت دوباره اندازه بگیر */
+    return () => {
+      window.removeEventListener("resize", measure);
+      clearTimeout(t);
+    };
+  }, [perView]);
 
-  /* Autoplay 3500ms */
+  /* Autoplay 3500ms — paused on hover and while dragging */
   useEffect(() => {
     const start = () => {
+      clearInterval(timerRef.current);
       timerRef.current = setInterval(() => {
-        setIdx((i) => (i >= maxIndex ? 0 : i + 1));
+        if (!dragRef.current) setIdx((i) => (i >= maxIndex ? 0 : i + 1));
       }, 3500);
     };
     start();
     const el = carRef.current;
-    el?.addEventListener("mouseenter", () => clearInterval(timerRef.current));
+    const enter = () => clearInterval(timerRef.current);
+    el?.addEventListener("mouseenter", enter);
     el?.addEventListener("mouseleave", start);
     return () => {
       clearInterval(timerRef.current);
-      el?.removeEventListener("mouseenter", () => clearInterval(timerRef.current));
+      el?.removeEventListener("mouseenter", enter);
       el?.removeEventListener("mouseleave", start);
     };
   }, [maxIndex]);
 
-  const shift = idx * (cardW + gap);
-
   const goTo = (i) => setIdx(Math.max(0, Math.min(i, maxIndex)));
-  const prev = () => goTo(idx - 1);
-  const next = () => goTo(idx + 1);
+
+  /* ----- سوایپ لمسی/ماوس — RTL: انگشت به راست = کارت بعدی (مثل اپ‌های فارسی) ----- */
+  const onPointerDown = (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    dragRef.current = { id: e.pointerId, startX: e.clientX, dx: 0 };
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* noop */ }
+    setDragDx(0);
+  };
+  const onPointerMove = (e) => {
+    const d = dragRef.current;
+    if (!d || e.pointerId !== d.id) return;
+    d.dx = e.clientX - d.startX;
+    setDragDx(d.dx); /* فالوی زندهٔ انگشت */
+  };
+  const endDrag = (e) => {
+    const d = dragRef.current;
+    if (!d) return;
+    dragRef.current = null;
+    try { e.currentTarget.releasePointerCapture?.(d.id); } catch { /* noop */ }
+    setDragDx(null); /* ترنزیشن برمی‌گرده و track به snap position انیمیت می‌شه */
+    if (Math.abs(d.dx) > 50) {
+      if (d.dx > 0) goTo(idx + 1);
+      else goTo(idx - 1);
+    }
+  };
+
+  /* Track position: snap position + drag offset (RTL: next = +X), clamped at edges */
+  const rawShift = idx * step + (dragging ? dragDx : 0);
+  const shift = Math.max(0, Math.min(rawShift, maxIndex * step));
 
   return (
     <section className="section cmt3-section" id="comments">
@@ -195,12 +243,20 @@ export default function Comments() {
         </div>
 
         {/* Carousel */}
-        <div className="cmt3-carousel" ref={carRef}>
+        <div
+          className={`cmt3-carousel${dragging ? " dragging" : ""}`}
+          ref={carRef}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+        >
           <div
             className="cmt3-track"
-            style={{ transform: `translateX(${shift}px)` }}
+            ref={trackRef}
+            style={{ transform: `translateX(${shift}px)`, transition: dragging ? "none" : undefined }}
           >
-            {testimonials.map((t, i) => (
+            {testimonials.map((t) => (
               <article className="cmt3-card" key={t.name}>
                 <div className="shadow" />
                 <div className="body">
@@ -234,7 +290,7 @@ export default function Comments() {
           </div>
         </div>
 
-        {/* Nav row */}
+        {/* Nav row — desktop only (mobile: swipe) */}
         <div className="cmt3-nav">
           <div className="cmt3-dots">
             {Array.from({ length: dotCount }, (_, i) => (
@@ -247,10 +303,10 @@ export default function Comments() {
             ))}
           </div>
           <div className="cmt3-nav-arrows">
-            <button className="cmt3-icon-btn" onClick={prev} aria-label="قبلی">
+            <button className="cmt3-icon-btn" onClick={() => goTo(idx - 1)} aria-label="قبلی">
               <Chevron right />
             </button>
-            <button className="cmt3-icon-btn" onClick={next} aria-label="بعدی">
+            <button className="cmt3-icon-btn" onClick={() => goTo(idx + 1)} aria-label="بعدی">
               <Chevron />
             </button>
           </div>

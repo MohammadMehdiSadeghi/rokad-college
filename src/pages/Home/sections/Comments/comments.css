@@ -183,10 +183,15 @@
 }
 .cmt3-icon-btn svg { width: 18px; height: 18px; }
 
-/* Responsive */
+/* Track: no transition while finger-dragging (class toggled in JS) */
+.cmt3-carousel.dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; }
+.cmt3-carousel.dragging .cmt3-track { transition: none; }
+
+/* Mobile: swipe only — hide dots + arrows */
 @media (max-width: 720px) {
   .cmt3-card { flex: 0 0 100%; }
   .cmt3-card .body { grid-template-columns: 1fr; }
   .cmt3-card .avatar-side { border-left: none; border-bottom: 2px solid var(--ink); padding: 22px 16px; }
-  .cmt3-nav { justify-content: center; }
+  .cmt3-nav { display: none; }
+  .cmt3-carousel { touch-action: pan-y; cursor: grab; }
 }

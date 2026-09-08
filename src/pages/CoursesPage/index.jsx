@@ -2,7 +2,7 @@
    رکاد کالج — صفحهٔ دوره‌ها
    دیزاین: طرح «۱ · فیلتر چسبان» از پک project (8) — با پالت کالج
    ============================================================ */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   courses,
   departments,
@@ -25,6 +25,7 @@ export default function CoursesPage({ initialDept }) {
   const [cert, setCert] = useState(false);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("popular");
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const toggleSet = (set, setter, value) => {
     const next = new Set(set);
@@ -65,6 +66,105 @@ export default function CoursesPage({ initialDept }) {
 
   const deptCount = (id) => courses.filter((c) => c.department === id).length;
 
+  // بستن درِاور فیلتر با Escape و قفل اسکرول بدنه هنگام باز بودن
+  useEffect(() => {
+    if (!filterOpen) return;
+    const onKey = (e) => { if (e.key === "Escape") setFilterOpen(false); };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [filterOpen]);
+
+  const filterGroups = (
+    <>
+      <div className="cp-fgroup">
+        <div className="cp-fgroup-title">نوع برگزاری</div>
+        <div className="cp-segment">
+          {MODES.map((m) => (
+            <button
+              key={m.id}
+              type="button"
+              className={mode === m.id ? "on" : ""}
+              onClick={() => setMode(m.id)}
+            >
+              {m.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="cp-fgroup">
+        <div className="cp-fgroup-title">دپارتمان‌ها</div>
+        <div className="cp-check-list">
+          {departments.map((d) => (
+            <label className="cp-check-item" key={d.id}>
+              <input
+                type="checkbox"
+                checked={depts.has(d.id)}
+                onChange={() => toggleSet(depts, setDepts, d.id)}
+              />
+              <span className="cp-check-box" />
+              <span className="cp-check-label">{d.name}</span>
+              <span className="cp-check-count">{toFa(deptCount(d.id))}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="cp-fgroup">
+        <div className="cp-fgroup-title">سطح</div>
+        <div className="cp-check-list">
+          {LEVELS.map((l) => (
+            <label className="cp-check-item" key={l.id}>
+              <input
+                type="checkbox"
+                checked={levels.has(l.id)}
+                onChange={() => toggleSet(levels, setLevels, l.id)}
+              />
+              <span className="cp-check-box" />
+              <span className="cp-check-label">{l.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="cp-fgroup">
+        <div className="cp-fgroup-title">حداکثر قیمت</div>
+        <div className="cp-range-wrap">
+          <input
+            type="range"
+            min={1000000}
+            max={PRICE_MAX}
+            step={500000}
+            value={price}
+            className="cp-range"
+            onChange={(e) => setPrice(parseInt(e.target.value, 10))}
+          />
+          <div className="cp-range-labels">
+            <span>۱ میلیون</span>
+            <span>۷ میلیون</span>
+          </div>
+          <div className="cp-range-value">تا {formatPrice(price)}</div>
+        </div>
+      </div>
+
+      <div className="cp-fgroup">
+        <div className="cp-fgroup-title">امکانات</div>
+        <div className="cp-check-list">
+          <label className="cp-check-item">
+            <input type="checkbox" checked={cert} onChange={(e) => setCert(e.target.checked)} />
+            <span className="cp-check-box" />
+            <span className="cp-check-label">فقط دارای مدرک</span>
+          </label>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <>
       {/* هدر صفحه */}
@@ -92,94 +192,13 @@ export default function CoursesPage({ initialDept }) {
       </header>
 
       <main className="cp-main">
-        {/* ---------- سایدبار فیلترها ---------- */}
+        {/* ---------- سایدبار فیلترها (دسکتاپ) ---------- */}
         <aside className="cp-side">
           <div className="cp-side-title">
             <span>فیلترها</span>
             <button type="button" className="cp-reset" onClick={reset}>پاک کردن همه</button>
           </div>
-
-          <div className="cp-fgroup">
-            <div className="cp-fgroup-title">نوع برگزاری</div>
-            <div className="cp-segment">
-              {MODES.map((m) => (
-                <button
-                  key={m.id}
-                  type="button"
-                  className={mode === m.id ? "on" : ""}
-                  onClick={() => setMode(m.id)}
-                >
-                  {m.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="cp-fgroup">
-            <div className="cp-fgroup-title">دپارتمان‌ها</div>
-            <div className="cp-check-list">
-              {departments.map((d) => (
-                <label className="cp-check-item" key={d.id}>
-                  <input
-                    type="checkbox"
-                    checked={depts.has(d.id)}
-                    onChange={() => toggleSet(depts, setDepts, d.id)}
-                  />
-                  <span className="cp-check-box" />
-                  <span className="cp-check-label">{d.name}</span>
-                  <span className="cp-check-count">{toFa(deptCount(d.id))}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="cp-fgroup">
-            <div className="cp-fgroup-title">سطح</div>
-            <div className="cp-check-list">
-              {LEVELS.map((l) => (
-                <label className="cp-check-item" key={l.id}>
-                  <input
-                    type="checkbox"
-                    checked={levels.has(l.id)}
-                    onChange={() => toggleSet(levels, setLevels, l.id)}
-                  />
-                  <span className="cp-check-box" />
-                  <span className="cp-check-label">{l.label}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="cp-fgroup">
-            <div className="cp-fgroup-title">حداکثر قیمت</div>
-            <div className="cp-range-wrap">
-              <input
-                type="range"
-                min={1000000}
-                max={PRICE_MAX}
-                step={500000}
-                value={price}
-                className="cp-range"
-                onChange={(e) => setPrice(parseInt(e.target.value, 10))}
-              />
-              <div className="cp-range-labels">
-                <span>۱ میلیون</span>
-                <span>۷ میلیون</span>
-              </div>
-              <div className="cp-range-value">تا {formatPrice(price)}</div>
-            </div>
-          </div>
-
-          <div className="cp-fgroup">
-            <div className="cp-fgroup-title">امکانات</div>
-            <div className="cp-check-list">
-              <label className="cp-check-item">
-                <input type="checkbox" checked={cert} onChange={(e) => setCert(e.target.checked)} />
-                <span className="cp-check-box" />
-                <span className="cp-check-label">فقط دارای مدرک</span>
-              </label>
-            </div>
-          </div>
+          {filterGroups}
         </aside>
 
         {/* ---------- نتایج ---------- */}
@@ -196,13 +215,32 @@ export default function CoursesPage({ initialDept }) {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <div className="cp-sort">
-              <span>مرتب‌سازی:</span>
-              <select value={sort} onChange={(e) => setSort(e.target.value)}>
-                {SORTS.map((s) => (
-                  <option value={s.id} key={s.id}>{s.label}</option>
-                ))}
-              </select>
+            <div className="cp-controls">
+              <button
+                type="button"
+                className="cp-filter-btn"
+                onClick={() => setFilterOpen(true)}
+                aria-haspopup="dialog"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="4" y1="7" x2="20" y2="7" />
+                  <line x1="7" y1="12" x2="17" y2="12" />
+                  <line x1="10" y1="17" x2="14" y2="17" />
+                </svg>
+                <span>فیلترها</span>
+                {(() => {
+                  const n = (mode !== "all" ? 1 : 0) + depts.size + levels.size + (cert ? 1 : 0) + (price < PRICE_MAX ? 1 : 0);
+                  return n > 0 ? <span className="cp-filter-count">{toFa(n)}</span> : null;
+                })()}
+              </button>
+              <div className="cp-sort">
+                <span>مرتب‌سازی:</span>
+                <select value={sort} onChange={(e) => setSort(e.target.value)}>
+                  {SORTS.map((s) => (
+                    <option value={s.id} key={s.id}>{s.label}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 
@@ -265,6 +303,35 @@ export default function CoursesPage({ initialDept }) {
           )}
         </section>
       </main>
+
+      {/* ---------- درِاور فیلتر (فقط موبایل) ---------- */}
+      {filterOpen && (
+        <div
+          className="cp-drawer-scrim"
+          onClick={() => setFilterOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="فیلترها"
+        >
+          <div className="cp-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="cp-drawer-head">
+              <span className="cp-drawer-title">فیلترها</span>
+              <div className="cp-drawer-actions">
+                <button type="button" className="cp-reset" onClick={() => { reset(); setFilterOpen(false); }}>پاک کردن همه</button>
+                <button type="button" className="cp-drawer-close" onClick={() => setFilterOpen(false)} aria-label="بستن">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div className="cp-drawer-body">
+              {filterGroups}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
