@@ -2521,7 +2521,7 @@ a:focus-visible, button:focus-visible {
 /* padding برای جای سایه (::before + هاور) تا هنگام هاور/transition بریده نشود */
 .v2-carousel { overflow: hidden; padding: 12px; margin: -12px; }
 .v2-track { display: flex; align-items: stretch; gap: 2.5rem; transition: transform .5s cubic-bezier(.4,0,.2,1); will-change: transform; }
-.v2-page { flex: 0 0 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 1.6rem; }
+.v2-page { flex: 0 0 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 1fr 1fr auto; gap: 1.6rem; }
 
 /* ---- Controls row (فیلتر راست + فلش چپ) ---- */
 .v2-controls {
