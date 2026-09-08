@@ -2706,6 +2706,31 @@ a:focus-visible, button:focus-visible {
 .v2-cta-pill svg { width: 14px; height: 14px; }
 @keyframes v2-pill-in { from { opacity: 0; } to { opacity: 1; } }
 
+/* ---- کارت CTA موبایل (آخرین اسلاید) ---- */
+.v2-cta-item { background: var(--navy); border-color: var(--ink); }
+.v2-cta-cover {
+  background: linear-gradient(135deg, var(--college), var(--college-dark));
+  display: grid; place-items: center;
+}
+.v2-cta-icon {
+  border-color: #fff;
+  background: var(--college);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.35);
+}
+.v2-cta-item .v2-meta .v2-cat-pill {
+  background: rgba(255,255,255,.12); color: #fff;
+  border-color: rgba(255,255,255,.3);
+}
+.v2-cta-item h3 { color: #fff; }
+.v2-cta-item p { color: rgba(255,255,255,.75); }
+.v2-cta-item .v2-action { border-top-color: rgba(255,255,255,.2); }
+.v2-cta-item .v2-btn {
+  background: var(--college); color: var(--ink);
+  margin-inline-start: auto;
+  box-shadow: 3px 3px 0 0 rgba(0,0,0,.35);
+}
+
 /* موبایل: کارت‌های عمودی + هر کارت یک اسلاید + پیش‌نمایش (peek) کارت بعدی */
 @media (max-width: 700px) {
   .v2-page {

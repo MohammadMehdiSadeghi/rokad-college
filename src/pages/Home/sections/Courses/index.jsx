@@ -102,7 +102,7 @@ var CourseCard = function(props) {
 var CtaCard = function() {
   return (
     <div className="v2-item v2-cta-item">
-      <a href="#courses-index" className="v2-cta-cover" aria-label="مشاهده همه دوره‌ها">
+      <a href="#courses-index" className="v2-cover v2-cta-cover" aria-label="مشاهده همه دوره‌ها">
         <div className="v2-icon v2-cta-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>
         </div>
@@ -239,15 +239,6 @@ export default function Courses() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* CTA فقط موبایل (فلش‌ها پنهان‌اند) */}
-        <div className="cta-footer v2-mobile-cta">
-          <p>{"ده‌ها دورهٔ تخصصی دیگر هم در رکاد منتظر توست"}</p>
-          <a href="#courses-index" className="btn-all">
-            {"مشاهده همه دوره‌ها"}
-            <ArrowIcon width={16} height={16} />
-          </a>
         </div>
       </div>
     </section>
