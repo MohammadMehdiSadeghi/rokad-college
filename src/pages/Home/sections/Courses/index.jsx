@@ -207,7 +207,7 @@ export default function Courses() {
             {Array.from({ length: pageCount }, function(_, p) {
               var pageCourses = filtered.slice(p * perPage, p * perPage + perPage);
               var isLastPage = p === pageCount - 1;
-              var showCtaTile = isLastPage && pageCourses.length < perPage;
+              var showCtaTile = isLastPage;
               return (
                 <div className="v2-page" key={filter + "-" + p} aria-hidden={p !== safePage}>
                   {pageCourses.map(function(c) {
@@ -219,15 +219,6 @@ export default function Courses() {
               );
             })}
           </div>
-        </div>
-
-        {/* CTA footer */}
-        <div className="cta-footer">
-          <p>{"ده‌ها دورهٔ تخصصی دیگر هم در رکاد منتظر توست"}</p>
-          <a href="#courses-index" className="btn-all">
-            {"مشاهده همه دوره‌ها"}
-            <ArrowIcon width={16} height={16} />
-          </a>
         </div>
       </div>
     </section>

@@ -2684,6 +2684,52 @@ a:focus-visible, button:focus-visible {
 .v2-action .v2-btn:hover { background: var(--cat); color: var(--ink); transform: rotate(0) scale(1.05); }
 .v2-action .v2-btn svg { width: 14px; height: 14px; }
 
+/* ---- کاشی CTA (انتهای صفحه آخر — بنر تمام‌عرض) ---- */
+.v2-cta-tile { grid-column: 1 / -1; }
+.v2-tile-inner {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 1.2rem;
+  background: var(--navy);
+  border: 2px solid var(--ink);
+  border-radius: 0 1.4rem 0 1.4rem;
+  corner-shape: squircle; -webkit-corner-shape: squircle;
+  overflow: hidden;
+  padding: 1.1rem 1.5rem;
+  text-decoration: none;
+}
+.v2-tile-icon {
+  flex: 0 0 auto;
+  width: 56px; height: 56px;
+  border: 2.5px solid #fff;
+  background: var(--college);
+  border-radius: 0 1rem 0 1rem;
+  corner-shape: squircle; -webkit-corner-shape: squircle;
+  box-shadow: 4px 4px 0 0 var(--ink);
+  display: grid; place-items: center;
+  transform: rotate(-3deg);
+  color: var(--ink);
+}
+.v2-tile-icon svg { width: 28px; height: 28px; }
+.v2-tile-inner h3 { margin: 0; font-size: 20px; font-weight: 900; color: #fff; line-height: 1.35; }
+.v2-tile-inner p { margin: .15rem 0 0; font-size: 13px; font-weight: 500; color: rgba(255,255,255,.75); line-height: 1.6; }
+.v2-tile-btn {
+  margin-inline-start: auto;
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--college); color: var(--ink);
+  padding: .65rem 1.15rem;
+  border-radius: .8rem;
+  corner-shape: squircle; -webkit-corner-shape: squircle;
+  font-weight: 900; font-size: 13.5px;
+  border: 2px solid var(--ink);
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  transition: all .25s ease;
+  white-space: nowrap;
+}
+.v2-stack:hover .v2-tile-btn { transform: rotate(0) scale(1.04); background: #fff; }
+.v2-tile-btn svg { width: 14px; height: 14px; }
+
 /* موبایل: کارت‌های عمودی + هر کارت یک اسلاید + پیش‌نمایش (peek) کارت بعدی */
 @media (max-width: 700px) {
   .v2-page {
@@ -2704,6 +2750,12 @@ a:focus-visible, button:focus-visible {
   .v2-body h3 { font-size: 18px; }
   .v2-body .feat { display: none; }
   .v2-action .v2-btn { padding: .55rem .95rem; font-size: 12.5px; }
+  .v2-tile-inner { padding: 1rem 1.2rem; gap: .9rem; flex-wrap: wrap; }
+  .v2-tile-inner h3 { font-size: 17px; }
+  .v2-tile-inner p { font-size: 12px; }
+  .v2-tile-icon { width: 46px; height: 46px; }
+  .v2-tile-icon svg { width: 22px; height: 22px; }
+  .v2-tile-btn { padding: .55rem .95rem; font-size: 12.5px; margin-inline-start: 0; }
 }
 
 /* ---- V3 Segmented filter (حضوری/آنلاین) ---- */
