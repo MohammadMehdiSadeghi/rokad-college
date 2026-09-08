@@ -2695,6 +2695,7 @@ a:focus-visible, button:focus-visible {
   .v2-carousel::-webkit-scrollbar { display: none; }
   .v2-page { scroll-snap-align: start; }
   .v2-controls .v2-nav-arrows { display: none; }
+  .v2-controls { justify-content: center; }
   .v2-item { grid-template-columns: 1fr; grid-template-rows: 140px auto; }
   .v2-cover { border-left: none; border-bottom: 2px solid var(--ink); }
   .v2-cover .v2-icon { width: 52px; height: 52px; }
