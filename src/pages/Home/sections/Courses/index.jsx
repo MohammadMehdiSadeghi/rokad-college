@@ -111,6 +111,7 @@ function Chevron({ right = false }) {
 export default function Courses() {
   var [filter, setFilter] = useState("all");
   var [page, setPage] = useState(0);
+  var [isMobile, setIsMobile] = useState(false);
   var displayCourses = courses.slice(0, 8);
   var counts = { all: displayCourses.length };
   displayCourses.forEach(function(_, i) {
@@ -123,11 +124,17 @@ export default function Courses() {
     return filter === "all" || MODE_MAP[i] === filter;
   });
 
-  /* صفحه‌بندی: هر صفحه ۴ کارت (۲×۲) */
-  var perPage = 4;
+  /* دسکتاپ: هر صفحه ۴ کارت (۲×۲) | موبایل: هر کارت یک اسلاید (۱ + peek) */
+  useEffect(function() {
+    var mq = window.matchMedia("(max-width: 700px)");
+    var onChange = function(e) { setIsMobile(e.matches); };
+    setIsMobile(mq.matches);
+    mq.addEventListener("change", onChange);
+    return function() { mq.removeEventListener("change", onChange); };
+  }, []);
+  var perPage = isMobile ? 1 : 4;
   var pageCount = Math.max(1, Math.ceil(filtered.length / perPage));
   var safePage = Math.min(page, pageCount - 1);
-  var visible = filtered.slice(safePage * perPage, safePage * perPage + perPage);
 
   /* ریست صفحه هنگام تغییر فیلتر */
   useEffect(function() { setPage(0); }, [filter]);
@@ -179,7 +186,7 @@ export default function Courses() {
         <div className="v2-carousel">
           <div
             className="v2-track"
-            style={{ transform: "translateX(calc(" + safePage + " * (100% + 2.5rem)))" }}
+            style={isMobile ? {} : { transform: "translateX(calc(" + safePage + " * (100% + 2.5rem)))" }}
           >
             {Array.from({ length: pageCount }, function(_, p) {
               var pageCourses = filtered.slice(p * perPage, p * perPage + perPage);
