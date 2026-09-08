@@ -665,6 +665,10 @@
   }
   .cs-side .cs-thumb-side { display: none; }
   .cs-card { padding: 20px 16px; }
+  /* قیمت و تخفیف موبایل: وسط‌چین */
+  .cs-card .cs-price { justify-content: center; text-align: center; }
+  .cs-card .cs-price .old { margin-inline-start: 0; }
+  .cs-card .cs-discount { display: block; width: fit-content; margin-inline: auto; }
   .cs-side .cs-instr { border-radius: var(--r-lg); margin: 0; }
 
   /* ---------- نوار مینی چسبان زیر هدر سایت ----------
