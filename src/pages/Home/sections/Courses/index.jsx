@@ -180,12 +180,24 @@ export default function Courses() {
           </div>
         </div>
 
-        {/* Course list — صفحه جاری (۴ کارت ۲×۲) */}
-        <div className="v2-list" key={filter + "-" + safePage}>
-          {visible.map(function(c) {
-            var realIndex = displayCourses.indexOf(c);
-            return <CourseCard key={c.title} course={c} index={realIndex} />;
-          })}
+        {/* Course carousel — صفحات ۲×۲ روی یک track (ارتفاع ثابت بین صفحات) */}
+        <div className="v2-carousel">
+          <div
+            className="v2-track"
+            style={{ transform: "translateX(" + (safePage * 100) + "%)" }}
+          >
+            {Array.from({ length: pageCount }, function(_, p) {
+              var pageCourses = filtered.slice(p * perPage, p * perPage + perPage);
+              return (
+                <div className="v2-page" key={filter + "-" + p} aria-hidden={p !== safePage}>
+                  {pageCourses.map(function(c) {
+                    var realIndex = displayCourses.indexOf(c);
+                    return <CourseCard key={c.title} course={c} index={realIndex} />;
+                  })}
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* CTA footer */}
