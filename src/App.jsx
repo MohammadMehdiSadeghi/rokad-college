@@ -122,7 +122,6 @@ export default function App() {
                 <Faq />
                 <Comments />
                 <Blogs />
-                <Blogs />
               </>
             )}
           </main>
