@@ -15,7 +15,41 @@ const SendIcon = () => (
 
 export default function Mentor({ onNavigate }) {
   const [activeId, setActiveId] = useState(mentorChats[0].id);
-  const active = mentorChats.find((m) => m.id === activeId);
+  const [inputVal, setInputVal] = useState("");
+  const [chatMessages, setChatMessages] = useState(() => ({
+    1: [...mentorMessages],
+    2: [
+      { from: "them", text: "سلام پارسا جان! سوالی در مورد جلسه طراحی فیگما داشتی؟" },
+    ],
+    3: [
+      { from: "them", text: "سلام! تمرین ریدینگ این هفته رو بررسی کردم، پیشرفتت عالی بوده." },
+    ],
+  }));
+
+  const active = mentorChats.find((m) => m.id === activeId) || mentorChats[0];
+  const currentMessages = chatMessages[activeId] || [];
+
+  const handleSend = (e) => {
+    e?.preventDefault();
+    if (!inputVal.trim()) return;
+    const text = inputVal.trim();
+    setInputVal("");
+    setChatMessages((prev) => ({
+      ...prev,
+      [activeId]: [...(prev[activeId] || []), { from: "me", text }],
+    }));
+
+    // Demo mentor auto response
+    setTimeout(() => {
+      setChatMessages((prev) => ({
+        ...prev,
+        [activeId]: [
+          ...(prev[activeId] || []),
+          { from: "them", text: "پیامت رو دیدم! بررسی می‌کنم و نکاتش رو بهت می‌گم." },
+        ],
+      }));
+    }, 1200);
+  };
 
   return (
     <section id="panel">
@@ -65,28 +99,27 @@ export default function Mentor({ onNavigate }) {
             </h4>
 
             <div className="pnl-chat">
-              {mentorMessages.map((msg, i) => (
+              {currentMessages.map((msg, i) => (
                 <div key={i} className={`pnl-msg ${msg.from}`}>
                   <span className="ava">{msg.from === "me" ? "پ" : active.initial}</span>
                   <span className="bubble">{msg.text}</span>
                 </div>
               ))}
-              <div className="pnl-msg typing">
-                <span className="ava">{active.initial}</span>
-                <span className="bubble">
-                  در حال نوشتن
-                  <span className="pnl-typing-dots" aria-hidden="true"><i /><i /><i /></span>
-                </span>
-              </div>
             </div>
 
-            <div className="pnl-chat-input">
-              <input type="text" placeholder="پیامت رو بنویس…" dir="rtl" />
-              <button className="pnl-cbtn send" aria-label="ارسال">
+            <form className="pnl-chat-input" onSubmit={handleSend}>
+              <input
+                type="text"
+                placeholder="پیامت رو بنویس…"
+                dir="rtl"
+                value={inputVal}
+                onChange={(e) => setInputVal(e.target.value)}
+              />
+              <button type="submit" className="pnl-cbtn send" aria-label="ارسال">
                 <SendIcon />
                 ارسال
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </PanelLayout>

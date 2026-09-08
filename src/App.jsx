@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Header from "./Components/Header/index.jsx";
+import Header from "./components/Header/index.jsx";
 import Hero from "./pages/Home/sections/Hero/index.jsx";
 import PromoBenefits from "./pages/Home/sections/PromoBenefits/index.jsx";
 import Departments from "./pages/Home/sections/Departments/index.jsx";
@@ -10,7 +10,7 @@ import CourseCta from "./pages/Home/sections/CourseCta/index.jsx";
 import Faq from "./pages/Home/sections/Faq/index.jsx";
 import Comments from "./pages/Home/sections/Comments/index.jsx";
 import Blogs from "./pages/Home/sections/Blogs/index.jsx";
-import Footer from "./Components/Footer/index.jsx";
+import Footer from "./components/Footer/index.jsx";
 import BlogArticle from "./pages/BlogArticle/index.jsx";
 import BlogIndex from "./pages/BlogIndex/index.jsx";
 import CoursesPage from "./pages/CoursesPage/index.jsx";

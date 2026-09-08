@@ -133,11 +133,16 @@ export default function PanelLayout({ page, onNavigate, children }) {
       </div>
     ));
 
+  const goHome = (e) => {
+    e.preventDefault();
+    window.location.hash = "";
+  };
+
   return (
     <div className="pnl-root">
       {/* ---------- نوار موبایل (فقط ≤900px) ---------- */}
       <div className="pnl-mobilebar">
-        <a href="#top" className="pnl-brand" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0 }); }}>
+        <a href="#" className="pnl-brand" onClick={goHome}>
           <span className="mark">
             <img src="/assets/Shared/Logos/logo-white-512.png" alt="" aria-hidden="true" />
           </span>
@@ -170,7 +175,7 @@ export default function PanelLayout({ page, onNavigate, children }) {
         </div>
         {navContent((item) => go(item.key))}
         <div className="pnl-mobile-foot">
-          <a href="/#top" className="pnl-back">
+          <a href="#" className="pnl-back" onClick={goHome}>
             {I.home}
             بازگشت به سایت
           </a>
@@ -179,7 +184,7 @@ export default function PanelLayout({ page, onNavigate, children }) {
 
       {/* ---------- Sidebar (دسکتاپ) ---------- */}
       <aside className="pnl-side">
-        <a href="#top" className="pnl-brand" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0 }); }}>
+        <a href="#" className="pnl-brand" onClick={goHome}>
           <span className="mark">
             <img src="/assets/Shared/Logos/logo-white-512.png" alt="" aria-hidden="true" />
           </span>
@@ -194,7 +199,7 @@ export default function PanelLayout({ page, onNavigate, children }) {
         </nav>
 
         <div className="pnl-side-foot">
-          <a href="/#top" className="pnl-back">
+          <a href="#" className="pnl-back" onClick={goHome}>
             {I.home}
             بازگشت به سایت
           </a>

@@ -22,7 +22,7 @@ const tiles = [
 
 export default function StatsTicker() {
   return (
-    <section className="section p5-section" id="about" style={{ background: "var(--white)" }}>
+    <section className="section p5-section" id="features" style={{ background: "var(--white)" }}>
       {/* Background pattern (mask fade) */}
       <PatternLayer rotate={180} />
 

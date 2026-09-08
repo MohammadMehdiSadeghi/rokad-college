@@ -22,6 +22,28 @@ const LifeIcon = () => (
 
 export default function Support({ onNavigate }) {
   const [openFaq, setOpenFaq] = useState(null);
+  const [tickets, setTickets] = useState(() => [...supportTickets]);
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [ticketSuccess, setTicketSuccess] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!subject.trim() || !message.trim()) return;
+    const newT = {
+      id: Date.now(),
+      subject: subject.trim(),
+      dept: "پشتیبانی عمومی",
+      messages: 1,
+      updated: "لحظاتی پیش",
+      status: "open",
+    };
+    setTickets((prev) => [newT, ...prev]);
+    setSubject("");
+    setMessage("");
+    setTicketSuccess(true);
+    setTimeout(() => setTicketSuccess(false), 3500);
+  };
 
   return (
     <section id="panel">
@@ -36,11 +58,11 @@ export default function Support({ onNavigate }) {
           <div className="pnl-panel">
             <h4>
               تیکت‌های من
-              <span className="pnl-pill">{supportTickets.length} تیکت</span>
+              <span className="pnl-pill">{tickets.length} تیکت</span>
             </h4>
             <div className="pnl-tickets">
-              {supportTickets.map((t) => {
-                const st = STATUS[t.status];
+              {tickets.map((t) => {
+                const st = STATUS[t.status] || STATUS.open;
                 return (
                   <div key={t.id} className="pnl-ticket">
                     <span className={`pnl-asn-ic ${st.cls}`} style={{ width: 40, height: 40 }}>
@@ -62,12 +84,31 @@ export default function Support({ onNavigate }) {
             </div>
 
             {/* تیکت جدید */}
-            <div className="pnl-new-ticket">
+            <form className="pnl-new-ticket" onSubmit={handleSubmit}>
               <b>تیکت جدید</b>
-              <input type="text" placeholder="موضوع تیکت…" dir="rtl" />
-              <textarea placeholder="توضیح مشکل یا سوالت…" dir="rtl" rows={3} />
-              <button className="pnl-cbtn">ارسال تیکت</button>
-            </div>
+              <input
+                type="text"
+                placeholder="موضوع تیکت…"
+                dir="rtl"
+                required
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
+              <textarea
+                placeholder="توضیح مشکل یا سوالت…"
+                dir="rtl"
+                rows={3}
+                required
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <button type="submit" className="pnl-cbtn">ارسال تیکت</button>
+              {ticketSuccess && (
+                <div style={{ color: "var(--teal-dark)", fontSize: "12.5px", fontWeight: 800 }}>
+                  تیکت شما با موفقیت ثبت شد ✓ کارشناسان به زودی پاسخ می‌دهند.
+                </div>
+              )}
+            </form>
           </div>
 
           {/* FAQ */}

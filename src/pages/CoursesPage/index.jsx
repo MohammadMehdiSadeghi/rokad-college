@@ -19,7 +19,13 @@ const TAG_CLASS = { college: "college", sec: "sec", girl: "girl" };
 
 export default function CoursesPage({ initialDept }) {
   const [mode, setMode] = useState("all");
-  const [depts, setDepts] = useState(() => (initialDept && departments.some((d) => d.id === initialDept) ? new Set([initialDept]) : new Set()));
+  const [depts, setDepts] = useState(() => {
+    if (!initialDept) return new Set();
+    if (initialDept === "it") return new Set(["coding", "design"]);
+    if (initialDept === "business") return new Set(["business", "marketing"]);
+    if (departments.some((d) => d.id === initialDept)) return new Set([initialDept]);
+    return new Set();
+  });
   const [levels, setLevels] = useState(() => new Set());
   const [price, setPrice] = useState(PRICE_MAX);
   const [cert, setCert] = useState(false);

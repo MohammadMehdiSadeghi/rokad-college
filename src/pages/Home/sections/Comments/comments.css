@@ -187,11 +187,14 @@
 .cmt3-carousel.dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; }
 .cmt3-carousel.dragging .cmt3-track { transition: none; }
 
-/* Mobile: swipe only — hide dots + arrows */
+/* Mobile: swipe + dots & compact controls */
 @media (max-width: 720px) {
   .cmt3-card { flex: 0 0 100%; }
-  .cmt3-card .body { grid-template-columns: 1fr; }
+  .cmt3-card .body { grid-template-columns: 1fr; min-height: auto; }
   .cmt3-card .avatar-side { border-left: none; border-bottom: 2px solid var(--ink); padding: 22px 16px; }
-  .cmt3-nav { display: none; }
-  .cmt3-carousel { touch-action: pan-y; cursor: grab; }
+  .cmt3-card .content-side { padding: 20px 18px; }
+  .cmt3-nav { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
+  .cmt3-nav-arrows { display: flex; }
+  .cmt3-icon-btn { width: 42px; height: 42px; }
+  .cmt3-carousel { touch-action: pan-y; cursor: grab; padding: 12px 4px 20px; }
 }

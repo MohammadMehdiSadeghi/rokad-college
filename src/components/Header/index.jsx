@@ -134,11 +134,24 @@ export default function Header() {
     };
   }, [searchOpen]);
 
+  /* Close mobile menu on Escape and prevent body scroll when open */
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e) => { if (e.key === "Escape") setMobileOpen(false); };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   const links = [
     { t: "صفحهٔ اصلی", href: "#top" },
     { t: "ویژگی‌ها", href: "#features" },
     { t: "دوره‌ها", href: "#courses-index" },
-    { t: "اساتید", href: "#about" },
+    { t: "مسیر و اساتید", href: "#about" },
     { t: "مجله", href: "#blog-index" },
     { t: "پنل من", href: "#panel" },
   ];
@@ -366,7 +379,15 @@ export default function Header() {
           ))}
         </ul>
 
-        <div className="hb1-actions">
+        <div className="hb1-actions" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <a
+            href="#auth"
+            className="hb1-cta"
+            style={{ background: "var(--white)", color: "var(--navy)", borderColor: "var(--navy)" }}
+            onClick={() => setMobileOpen(false)}
+          >
+            ورود / ثبت‌نام
+          </a>
           <a
             href="#consult"
             className="hb1-cta"

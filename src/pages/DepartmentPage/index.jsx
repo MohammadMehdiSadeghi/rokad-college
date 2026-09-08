@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./department.css";
-import PatternLayer from "@/Components/PatternLayer";
+import PatternLayer from "@/components/PatternLayer";
 import { DEPT_PERSONA, departments } from "@/data/departments.js";
 
 /* ---- آیکونهای دوره‌ها (کلید ic در دیتا) ---- */

@@ -48,7 +48,7 @@ export default function About() {
             آماده‌شدن برای اولین شغلت.
           </p>
           <div className="abt-foot">
-            <button className="abt-btn">درباره‌ی رکاد بیشتر بدون ←</button>
+            <a href="#courses-index" className="abt-btn">درباره‌ی مسیرهای رکاد بیشتر بدون ←</a>
           </div>
         </div>
 

@@ -48,7 +48,7 @@ const I = {
 /* ============================================================
    هیرو
    ============================================================ */
-function Hero() {
+function Hero({ searchQuery, setSearchQuery, setActiveCategory }) {
   /* همهٔ کلمات هیرو یک درجه‌چرخش یکسان (۲) با علامت‌های متناوب دارند */
   const line1 = [
     { text: "داستان‌ها،", rot: "-2deg" },
@@ -106,7 +106,12 @@ function Hero() {
         <form className="bi-search" onSubmit={(e) => e.preventDefault()}>
           <div className="bi-search-sh" />
           <div className="bi-search-box">
-            <input type="text" placeholder="دنبال چی می‌گردی؟ مثلاً «استارتاپ» یا «برنامه‌نویسی»" />
+            <input
+              type="text"
+              placeholder="دنبال چی می‌گردی؟ مثلاً «استارتاپ» یا «برنامه‌نویسی»"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <button type="submit">
               <I.Search style={{ width: 18, height: 18 }} />
               <span className="bi-hide-mobile">جست‌وجو</span>
@@ -117,8 +122,17 @@ function Hero() {
         {/* تگ‌های پرطرفدار */}
         <div className="bi-poptags">
           <span>جست‌وجوهای پرطرفدار:</span>
-          {["استارتاپ", "کارآفرینی نوجوان", "مسیر شغلی", "پیچ سرمایه‌گذار", "برنامه‌نویسی"].map((t, i) => (
-            <button key={i}>{t}</button>
+          {["استارتاپ", "کارآفرینی", "مسیر شغلی", "سرمایه‌گذار", "برنامه‌نویسی"].map((t, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => {
+                setSearchQuery(t);
+                setActiveCategory("all");
+              }}
+            >
+              {t}
+            </button>
           ))}
         </div>
       </div>
@@ -353,9 +367,18 @@ function BlogCard({ post, index }) {
   );
 }
 
-function BlogGrid({ activeCategory }) {
+function BlogGrid({ activeCategory, searchQuery }) {
   const tags = CAT_TAGS[activeCategory] || null;
-  const posts = tags ? POSTS.filter((p) => tags.some((t) => p.tag === t)) : POSTS;
+  const q = searchQuery.toLowerCase().trim();
+
+  const posts = POSTS.filter((p) => {
+    if (tags && !tags.some((t) => p.tag === t)) return false;
+    if (q) {
+      const match = (p.title + " " + p.excerpt + " " + p.tag + " " + p.author).toLowerCase();
+      if (!match.includes(q)) return false;
+    }
+    return true;
+  });
 
   return (
     <section className="bi-grid-sec">
@@ -376,20 +399,23 @@ function BlogGrid({ activeCategory }) {
         </div>
 
         {posts.length === 0 && (
-          <p style={{ textAlign: "center", color: "var(--ink-subtle)", fontWeight: 700, padding: "2rem 0" }}>
-            مقاله‌ای در این دسته پیدا نشد.
-          </p>
+          <div style={{ textAlign: "center", color: "var(--ink-subtle)", fontWeight: 700, padding: "3rem 1rem" }}>
+            <p style={{ fontSize: 16, margin: 0 }}>مقاله‌ای مطابق با جست‌وجوی شما پیدا نشد.</p>
+            <p style={{ fontSize: 13, opacity: 0.8, marginTop: 6 }}>می‌توانید کلمهٔ دیگری را جست‌وجو کنید یا دسته‌بندی را تغییر دهید.</p>
+          </div>
         )}
 
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "3.5rem" }}>
-          <div className="bi-loadmore">
-            <div className="bi-loadmore-sh" />
-            <button>
-              مقاله‌های بیشتر
-              <span className="bi-loadmore-num">۱۱۶</span>
-            </button>
+        {posts.length > 0 && (
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "3.5rem" }}>
+            <div className="bi-loadmore">
+              <div className="bi-loadmore-sh" />
+              <button>
+                مقاله‌های بیشتر
+                <span className="bi-loadmore-num">۱۱۶</span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
@@ -500,14 +526,19 @@ function Authors() {
    ============================================================ */
 export default function BlogIndex() {
   const [activeCategory, setActiveCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const featured = articles[0];
 
   return (
     <>
-      <Hero />
+      <Hero
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        setActiveCategory={setActiveCategory}
+      />
       <Featured featured={featured} />
       <Categories active={activeCategory} setActive={setActiveCategory} />
-      <BlogGrid activeCategory={activeCategory} />
+      <BlogGrid activeCategory={activeCategory} searchQuery={searchQuery} />
       <Trending />
       <Authors />
     </>

@@ -204,8 +204,7 @@
 /* ---- Responsive ---- */
 @media (max-width: 1024px) {
   .abt-section {
-    padding-left: 36px;
-    padding-right: 36px;
+    padding: 64px 24px;
   }
   .abt-inner {
     grid-template-columns: 1fr;
@@ -213,16 +212,25 @@
   }
 }
 @media (max-width: 600px) {
+  .abt-section {
+    padding: 48px 16px;
+  }
+  .abt-title {
+    font-size: 32px;
+  }
   .abt-timeline {
-    padding-right: 36px;
+    padding-right: 48px;
   }
   .abt-timeline::before {
-    right: -2px;
+    right: 16px;
   }
   .abt-step .node {
     width: 36px;
     height: 36px;
-    right: -56px;
+    right: -48px;
     font-size: 13px;
+  }
+  .abt-card {
+    padding: 14px 16px;
   }
 }

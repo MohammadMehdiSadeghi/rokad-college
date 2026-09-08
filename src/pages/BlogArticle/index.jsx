@@ -16,7 +16,11 @@ const toneGrad = (t) =>
 
 const H2_COLORS = ["var(--college)", "var(--navy)", "var(--accent)"];
 
+import { useState } from "react";
+
 export default function BlogArticle() {
+  const [copied, setCopied] = useState(false);
+
   const scrollTo = (id) => (e) => {
     e.preventDefault();
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -25,6 +29,8 @@ export default function BlogArticle() {
   const copyLink = () => {
     try {
       navigator.clipboard?.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
     } catch (e) {
       /* ignore */
     }
@@ -184,8 +190,14 @@ export default function BlogArticle() {
               <div className="head">این مطلب رو به اشتراک بذار!</div>
               <div className="rbs-share-btns">
                 {post.share.map((s, i) => (
-                  <button className="rbs-sbtn" type="button" key={i} onClick={s === "کپی لینک" ? copyLink : undefined}>
-                    {s}
+                  <button
+                    className={`rbs-sbtn${s === "کپی لینک" && copied ? " copied" : ""}`}
+                    type="button"
+                    key={i}
+                    onClick={s === "کپی لینک" ? copyLink : undefined}
+                    style={s === "کپی لینک" && copied ? { background: "var(--teal)", color: "#fff", borderColor: "var(--ink)" } : {}}
+                  >
+                    {s === "کپی لینک" && copied ? "کپی شد ✓" : s}
                   </button>
                 ))}
               </div>
