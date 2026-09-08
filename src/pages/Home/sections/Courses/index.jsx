@@ -79,7 +79,7 @@ var CourseCard = function(props) {
               {MODE_ICON[mode]}
               {MODE_LABEL[mode]}
             </span>
-            {features.map(function(f) { return <span key={f}>{"• " + f}</span>; })}
+            {features.map(function(f) { return <span className="feat" key={f}>{"• " + f}</span>; })}
           </div>
           <h3 className="t-card">{course.title}</h3>
           <p className="t-sm">{course.text}</p>
@@ -99,7 +99,7 @@ var CourseCard = function(props) {
 
 export default function Courses() {
   var [filter, setFilter] = useState("all");
-  var displayCourses = courses.slice(0, 8);
+  var displayCourses = courses.slice(0, 4);
   var counts = { all: displayCourses.length };
   displayCourses.forEach(function(_, i) {
     var m = MODE_MAP[i];
@@ -156,9 +156,9 @@ export default function Courses() {
 
         {/* CTA footer */}
         <div className="cta-footer">
-          <p>{"هنوز مطمئن نیستی کدام دوره برای توست؟"}</p>
-          <a href="#consult" className="btn-all">
-            {"درخواست مشاوره رایگان"}
+          <p>{"ده‌ها دورهٔ تخصصی دیگر هم در رکاد منتظر توست"}</p>
+          <a href="#courses-index" className="btn-all">
+            {"مشاهده همه دوره‌ها"}
             <ArrowIcon width={16} height={16} />
           </a>
         </div>
