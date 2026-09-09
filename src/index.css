@@ -3876,7 +3876,9 @@ a:focus-visible, button:focus-visible {
   padding: .65rem 1.1rem; border-radius: 999px;
   border: 2px solid; font-weight: 800; font-size: 14px;
   white-space: nowrap; cursor: pointer; transition: all .25s ease;
+  position: relative;
 }
+/* چیپ فعال (z-index از inline style) بالاتر از بقیه تا سایه‌اش چیپ کناری را نپوشاند */
 .bi-chip-count {
   font-size: 11px; font-weight: 900; padding: 1px 8px;
   border-radius: 999px; border: 1px solid rgba(0, 0, 0, .06);
@@ -3889,6 +3891,24 @@ a:focus-visible, button:focus-visible {
   padding: .45rem .9rem; border-radius: 999px;
   font-weight: 800; font-size: 13px; color: var(--ink);
   display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+}
+.bi-sort-wrap { position: relative; display: flex; align-items: center; gap: 8px; }
+.bi-sort-menu {
+  position: absolute; top: calc(100% + 8px); left: 0; z-index: 30;
+  min-width: 100%; list-style: none; margin: 0; padding: 6px;
+  background: #fff; border: 2px solid var(--ink); border-radius: 14px;
+  box-shadow: 4px 4px 0 rgba(41, 40, 39, .85);
+}
+.bi-sort-menu button {
+  display: block; width: 100%; text-align: right; white-space: nowrap;
+  background: transparent; border: none; border-radius: 9px;
+  padding: .5rem .8rem; font-weight: 800; font-size: 13px; color: var(--ink);
+  cursor: pointer; font-family: inherit;
+}
+.bi-sort-menu button:hover { background: var(--college-light); }
+.bi-sort-menu button.active { background: var(--ink); color: #fff; }
+.bi-loadmore-end {
+  margin: 0; font-size: 14px; font-weight: 800; color: var(--ink-subtle);
 }
 .bi-blog-grid {
   display: grid; grid-template-columns: repeat(1, 1fr); gap: 2rem;
@@ -3968,9 +3988,10 @@ a:focus-visible, button:focus-visible {
 .bi-card-arr {
   width: 34px; height: 34px; border: 1.5px solid var(--ink);
   border-radius: 0 10px 0 10px; display: grid; place-items: center;
-  color: #fff; transition: transform .2s ease;
+  color: #fff; transition: transform .25s ease;
 }
-.bi-card:hover .bi-card-arr { transform: rotate(-45deg); }
+/* هاور ملایم: حرکت افقی کوچک به سمت هدف، بدون چرخش */
+.bi-card:hover .bi-card-arr { transform: translateX(-4px); }
 
 /* دکمهٔ مقاله‌های بیشتر */
 .bi-loadmore {
@@ -3986,8 +4007,9 @@ a:focus-visible, button:focus-visible {
   position: relative; z-index: 1; display: flex; align-items: center; gap: 8px;
   background: #fff; color: var(--navy); border: 2px solid var(--navy);
   padding: .9rem 2rem; border-radius: 16px; font-weight: 900; font-size: 15px;
-  cursor: pointer;
+  cursor: pointer; font-family: inherit;
 }
+.bi-loadmore button:disabled { cursor: default; color: var(--ink-subtle); border-color: rgba(41, 40, 39, .25); }
 .bi-loadmore-num {
   background: var(--college); color: #fff; border-radius: 999px;
   padding: 1px 8px; font-size: 12px; font-weight: 900;
@@ -3996,7 +4018,7 @@ a:focus-visible, button:focus-visible {
 /* ---------- پرخواننده‌ترین‌ها ---------- */
 .bi-trending {
   position: relative; overflow: hidden;
-  background: var(--bg-neutral); padding: 4rem 0;
+  background: #fff; padding: 4rem 0;
 }
 .bi-trend-ic {
   width: 44px; height: 44px; display: grid; place-items: center;
@@ -4024,11 +4046,28 @@ a:focus-visible, button:focus-visible {
 .bi-trend-card {
   position: relative; z-index: 1; display: flex; flex-direction: column;
   background: #fff; border: 2px solid var(--ink); border-radius: 0 24px 0 24px;
-  padding: 1.75rem 1.5rem 1.5rem; min-height: 220px;
+  overflow: hidden;
+}
+/* تصویر هدر گرادیانی کارت پرخواننده */
+.bi-trend-media {
+  position: relative; height: 120px; flex-shrink: 0; overflow: hidden;
+  display: grid; place-items: center;
+}
+.bi-trend-media .bi-card-circle { z-index: 1; }
+.bi-trend-media .bi-card-square { z-index: 1; }
+.bi-trend-glyph {
+  position: relative; z-index: 2;
+  font-size: 44px; line-height: 1;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, .18);
+  transform: rotate(-5deg);
+}
+.bi-trend-body {
+  position: relative; padding: 1.25rem 1.5rem 1.5rem;
+  display: flex; flex-direction: column; flex: 1; min-height: 170px;
 }
 .bi-trend-rank {
-  position: absolute; top: -20px; left: 8px;
-  font-size: 130px; font-weight: 950; opacity: .14; line-height: 1;
+  position: absolute; top: -18px; left: 8px;
+  font-size: 110px; font-weight: 950; opacity: .14; line-height: 1;
   pointer-events: none;
 }
 .bi-trend-top {
@@ -4043,6 +4082,8 @@ a:focus-visible, button:focus-visible {
   font-weight: 900; font-size: 16.5px; line-height: 1.65; color: var(--ink);
   margin: 0 0 1rem; flex: 1; position: relative; z-index: 1;
 }
+.bi-trend-top { position: relative; z-index: 1; }
+.bi-trend-foot { position: relative; z-index: 1; }
 .bi-trend-foot {
   display: flex; align-items: center; justify-content: space-between;
   font-size: 12px; font-weight: 700; color: var(--ink-subtle);
@@ -4050,7 +4091,7 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ---------- نویسنده‌ها ---------- */
-.bi-authors { background: var(--bg-neutral); padding: 4.5rem 0 5rem; }
+.bi-authors { background: #fff; padding: 4.5rem 0 5rem; }
 .bi-author-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;
 }

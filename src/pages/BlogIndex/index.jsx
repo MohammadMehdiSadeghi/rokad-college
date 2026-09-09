@@ -4,7 +4,7 @@
    دیزاین: سیستم کالج (کهربایی اصلی + سرمه‌ای/مجنتا/تیل)
    باز شدن: هش #blog-index
    ============================================================ */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { articles } from "@/data/blogArticles";
 
 /* تبدیل اعداد لاتین به فارسی */
@@ -34,6 +34,7 @@ const I = {
   Search: (p) => <svg viewBox="0 0 24 24" {...S} {...p}><circle cx="11" cy="11" r="7" /><path d="m21 21-4.35-4.35" /></svg>,
   Arrow: (p) => <svg viewBox="0 0 24 24" {...S} {...p}><path d="M19 12H5M12 5l-7 7 7 7" /></svg>,
   ArrowLeft: (p) => <svg viewBox="0 0 24 24" {...S} {...p}><path d="M5 12h14M12 5l7 7-7 7" /></svg>,
+  ArrowRight: (p) => <svg viewBox="0 0 24 24" {...S} {...p}><path d="M19 12H5M12 5l7 7-7 7" /></svg>,
   Clock: (p) => <svg viewBox="0 0 24 24" {...S} {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>,
   Eye: (p) => <svg viewBox="0 0 24 24" {...S} {...p}><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg>,
   Bookmark: (p) => <svg viewBox="0 0 24 24" {...S} {...p}><path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16l7-4 7 4z" /></svg>,
@@ -48,7 +49,10 @@ const I = {
 /* ============================================================
    هیرو
    ============================================================ */
-function Hero({ searchQuery, setSearchQuery, setActiveCategory }) {
+/* تگ‌های جست‌وجوی پرطرفدار — حتماً حداقل در یک مقاله عنوان/تگ/نویسنده باشند */
+const POPULAR_TAGS = ["استارتاپ", "مصاحبه", "داستان", "راهنما", "ابزار"];
+
+function Hero({ searchQuery, setSearchQuery, setActiveCategory, onGoResults }) {
   /* همهٔ کلمات هیرو یک درجه‌چرخش یکسان (۱) با علامت‌های متناوب دارند */
   const line1 = [
     { text: "داستان‌ها،", rot: "-1deg" },
@@ -103,7 +107,13 @@ function Hero({ searchQuery, setSearchQuery, setActiveCategory }) {
         </p>
 
         {/* جست‌وجو */}
-        <form className="bi-search" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="bi-search"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onGoResults?.();
+          }}
+        >
           <div className="bi-search-sh" />
           <div className="bi-search-box">
             <input
@@ -122,13 +132,14 @@ function Hero({ searchQuery, setSearchQuery, setActiveCategory }) {
         {/* تگ‌های پرطرفدار */}
         <div className="bi-poptags">
           <span>جست‌وجوهای پرطرفدار:</span>
-          {["استارتاپ", "کارآفرینی", "مسیر شغلی", "سرمایه‌گذار", "برنامه‌نویسی"].map((t, i) => (
+          {POPULAR_TAGS.map((t, i) => (
             <button
               key={i}
               type="button"
               onClick={() => {
                 setSearchQuery(t);
                 setActiveCategory("all");
+                onGoResults?.();
               }}
             >
               {t}
@@ -216,7 +227,7 @@ function Featured({ featured }) {
                   </span>
                 </div>
                 <a href={`#article/${featured.slug}`} className="bi-read-btn">
-                  خواندن مقاله <I.ArrowLeft style={{ width: 16, height: 16 }} />
+                  خواندن مقاله <I.ArrowRight style={{ width: 16, height: 16 }} />
                 </a>
               </div>
             </div>
@@ -259,6 +270,7 @@ function Categories({ active, setActive }) {
                   borderColor: isActive ? "var(--ink)" : "rgba(41,40,39,.15)",
                   transform: isActive ? "rotate(0deg) scale(1.05)" : `rotate(${ROTS[i]})`,
                   boxShadow: isActive ? "3px 3px 0 var(--ink)" : "none",
+                  zIndex: isActive ? 2 : 1,
                 }}
               >
                 {c.label}
@@ -306,6 +318,8 @@ const TAG_TONE = {
 };
 /* چرخش یکدست: همهٔ کارت‌ها یک درجه‌چرخش (۱) با علامت متناوب */
 const CARD_ROTS = ["-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg"];
+/* تعداد کارت اولیه در هر صفحهٔ لود‌مور */
+const PAGE_SIZE = 9;
 const CAT_TAGS = {
   all: null,
   startup: ["استارتاپ", "ابزار"],
@@ -320,6 +334,7 @@ function BlogCard({ post, index }) {
   const c = TAG_COLORS[post.tagColor] || TAG_COLORS.primary;
   const rot = CARD_ROTS[index % CARD_ROTS.length];
   const slug = articles[(post.id - 1) % articles.length].slug;
+  const [saved, setSaved] = useState(false);
 
   return (
     <div className={`bi-card bi-card-${post.size}`} style={{ transform: `rotate(${rot})` }}>
@@ -332,11 +347,13 @@ function BlogCard({ post, index }) {
           <span className="bi-card-tag" style={{ color: c.dark }}>#{post.tag}</span>
 
           <button
-            className="bi-card-bookmark"
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); e.currentTarget.style.background = c.solid; }}
-            aria-label="ذخیره"
+            className={`bi-card-bookmark${saved ? " saved" : ""}`}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((v) => !v); }}
+            style={saved ? { background: c.solid, color: "#fff" } : undefined}
+            aria-label={saved ? "حذف از ذخیره‌شده‌ها" : "ذخیره"}
+            aria-pressed={saved}
           >
-            <I.Bookmark style={{ width: 15, height: 15 }} />
+            <I.Bookmark style={{ width: 15, height: 15, fill: saved ? "currentColor" : "none" }} />
           </button>
         </div>
 
@@ -358,7 +375,7 @@ function BlogCard({ post, index }) {
               {post.author}
             </span>
             <span className="bi-card-arr" style={{ background: c.solid }}>
-              <I.ArrowLeft style={{ width: 14, height: 14 }} />
+              <I.Arrow style={{ width: 14, height: 14 }} />
             </span>
           </div>
         </div>
@@ -371,7 +388,37 @@ function BlogGrid({ activeCategory, searchQuery }) {
   const tags = CAT_TAGS[activeCategory] || null;
   const q = searchQuery.toLowerCase().trim();
 
-  const posts = POSTS.filter((p) => {
+  const [sortBy, setSortBy] = useState("newest");
+  const [sortOpen, setSortOpen] = useState(false);
+  const [visible, setVisible] = useState(PAGE_SIZE);
+  const ref = useRef(null);
+
+  /* بستن منوی مرتب‌سازی با کلیک بیرون */
+  useEffect(() => {
+    if (!sortOpen) return;
+    const onDoc = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setSortOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [sortOpen]);
+
+  /* با هر تغییر فیلتر/سرچ، شمارندهٔ لود‌مور ریست شود */
+  useEffect(() => {
+    setVisible(PAGE_SIZE);
+  }, [activeCategory, searchQuery, sortBy]);
+
+  const SORTS = [
+    { id: "newest", label: "جدیدترین" },
+    { id: "oldest", label: "قدیمی‌ترین" },
+    { id: "popular", label: "پرخواننده‌ترین" },
+  ];
+  const sortLabel = SORTS.find((s) => s.id === sortBy)?.label;
+
+  /* خواندن عدد K از رشتهٔ فارسی («۴.۲K» → 4.2) */
+  const parseReads = (r) => parseFloat(String(r).replace(/[^\d.]/g, "")) || 0;
+
+  const filtered = POSTS.filter((p) => {
     if (tags && !tags.some((t) => p.tag === t)) return false;
     if (q) {
       const match = (p.title + " " + p.excerpt + " " + p.tag + " " + p.author).toLowerCase();
@@ -380,17 +427,46 @@ function BlogGrid({ activeCategory, searchQuery }) {
     return true;
   });
 
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === "popular") return parseReads(b.reads) - parseReads(a.reads);
+    /* newest: id بزرگ‌تر = جدیدتر */
+    if (sortBy === "oldest") return a.id - b.id;
+    return b.id - a.id;
+  });
+
+  const posts = sorted.slice(0, visible);
+  const hasMore = visible < sorted.length;
+
   return (
-    <section className="bi-grid-sec">
+    <section className="bi-grid-sec" id="bi-results">
       <div className="container">
         <div className="bi-sec-head">
           <h2 className="bi-h2">
             <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>همه‌ی</span>{" "}
             <span style={{ display: "inline-block", transform: "rotate(1deg)", color: "var(--college-dark)" }}>مقاله‌ها</span>
           </h2>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <div className="bi-sort-wrap" ref={ref}>
             <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-subtle)" }}>مرتب‌سازی:</span>
-            <button className="bi-sort">جدیدترین <span style={{ fontSize: 10 }}>▼</span></button>
+            <button className="bi-sort" onClick={() => setSortOpen((v) => !v)} aria-expanded={sortOpen}>
+              {sortLabel} <span style={{ fontSize: 10 }}>▼</span>
+            </button>
+            {sortOpen && (
+              <ul className="bi-sort-menu">
+                {SORTS.map((s) => (
+                  <li key={s.id}>
+                    <button
+                      className={sortBy === s.id ? "active" : ""}
+                      onClick={() => {
+                        setSortBy(s.id);
+                        setSortOpen(false);
+                      }}
+                    >
+                      {s.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 
@@ -398,22 +474,34 @@ function BlogGrid({ activeCategory, searchQuery }) {
           {posts.map((p, i) => <BlogCard key={p.id} post={p} index={i} />)}
         </div>
 
-        {posts.length === 0 && (
+        {sorted.length === 0 && (
           <div style={{ textAlign: "center", color: "var(--ink-subtle)", fontWeight: 700, padding: "3rem 1rem" }}>
             <p style={{ fontSize: 16, margin: 0 }}>مقاله‌ای مطابق با جست‌وجوی شما پیدا نشد.</p>
             <p style={{ fontSize: 13, opacity: 0.8, marginTop: 6 }}>می‌توانید کلمهٔ دیگری را جست‌وجو کنید یا دسته‌بندی را تغییر دهید.</p>
           </div>
         )}
 
-        {posts.length > 0 && (
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "3.5rem" }}>
+        {sorted.length > 0 && (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14, marginTop: "3.5rem" }}>
             <div className="bi-loadmore">
               <div className="bi-loadmore-sh" />
-              <button>
-                مقاله‌های بیشتر
-                <span className="bi-loadmore-num">۱۱۶</span>
+              <button
+                onClick={() => setVisible((v) => v + PAGE_SIZE)}
+                disabled={!hasMore}
+              >
+                {hasMore ? (
+                  <>
+                    مقاله‌های بیشتر
+                    <span className="bi-loadmore-num">{toFa(sorted.length - visible)}</span>
+                  </>
+                ) : (
+                  "همه مقاله‌ها نمایش داده شد"
+                )}
               </button>
             </div>
+            {!hasMore && (
+              <p className="bi-loadmore-end">🎉 به آخر لیست رسیدی! مقاله جدید به‌زودی اضافه می‌شه.</p>
+            )}
           </div>
         )}
       </div>
@@ -426,9 +514,9 @@ function BlogGrid({ activeCategory, searchQuery }) {
    ============================================================ */
 function Trending() {
   const items = [
-    { rank: 1, title: "راز موفقیت استارتاپ‌های نوجوان که هیچ‌کس بهت نمی‌گه", author: "علی رضایی", reads: "۱۸.۲K", tone: "magenta", rot: "-1deg" },
-    { rank: 2, title: "۷ اشتباه رایج در پیچ‌دک که حتی حرفه‌ای‌ها می‌کنند", author: "سارا محمدی", reads: "۱۴.۷K", tone: "teal", rot: "1deg" },
-    { rank: 3, title: "از صفر تا اپلیکیشن: مسیر یک دانش‌آموز رکادی", author: "محمد امینی", reads: "۱۱.۹K", tone: "amber", rot: "-1deg" },
+    { rank: 1, title: "راز موفقیت استارتاپ‌های نوجوان که هیچ‌کس بهت نمی‌گه", author: "علی رضایی", reads: "۱۸.۲K", tone: "magenta", rot: "-1deg", glyph: "🚀" },
+    { rank: 2, title: "۷ اشتباه رایج در پیچ‌دک که حتی حرفه‌ای‌ها می‌کنند", author: "سارا محمدی", reads: "۱۴.۷K", tone: "teal", rot: "1deg", glyph: "💡" },
+    { rank: 3, title: "از صفر تا اپلیکیشن: مسیر یک دانش‌آموز رکادی", author: "محمد امینی", reads: "۱۱.۹K", tone: "amber", rot: "-1deg", glyph: "📱" },
   ];
 
   return (
@@ -454,14 +542,22 @@ function Trending() {
               <div key={i} className="bi-trend-cell" style={{ transform: `rotate(${it.rot})` }}>
                 <div className="bi-trend-sh" />
                 <article className="bi-trend-card">
-                  <span className="bi-trend-rank" style={{ color: c.solid }}>#{toFa(it.rank)}</span>
-                  <div className="bi-trend-top">
-                    <span className="bi-trend-badge" style={{ background: c.solid }}>رتبه {toFa(it.rank)}</span>
+                  {/* تصویر (هدر گرادیانی) */}
+                  <div className="bi-trend-media" style={{ background: coverBg(it.tone) }}>
+                    <div className="bi-card-circle" style={{ background: "rgba(255,255,255,.25)" }} />
+                    <div className="bi-card-square" />
+                    <span className="bi-trend-glyph">{it.glyph}</span>
                   </div>
-                  <h3>{it.title}</h3>
-                  <div className="bi-trend-foot">
-                    <span>{it.author}</span>
-                    <span style={{ color: c.solid, fontWeight: 900 }}>{it.reads}</span>
+                  <div className="bi-trend-body">
+                    <span className="bi-trend-rank" style={{ color: c.solid }}>#{toFa(it.rank)}</span>
+                    <div className="bi-trend-top">
+                      <span className="bi-trend-badge" style={{ background: c.solid }}>رتبه {toFa(it.rank)}</span>
+                    </div>
+                    <h3>{it.title}</h3>
+                    <div className="bi-trend-foot">
+                      <span>{it.author}</span>
+                      <span style={{ color: c.solid, fontWeight: 900 }}>{it.reads}</span>
+                    </div>
                   </div>
                 </article>
               </div>
@@ -529,12 +625,18 @@ export default function BlogIndex() {
   const [searchQuery, setSearchQuery] = useState("");
   const featured = articles[0];
 
+  /* اسکرول به بخش نتایج گرید مقاله‌ها */
+  const goResults = () => {
+    document.getElementById("bi-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <>
       <Hero
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         setActiveCategory={setActiveCategory}
+        onGoResults={goResults}
       />
       <Featured featured={featured} />
       <Categories active={activeCategory} setActive={setActiveCategory} />
