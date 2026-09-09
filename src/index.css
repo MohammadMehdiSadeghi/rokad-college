@@ -3439,7 +3439,8 @@ a:focus-visible, button:focus-visible {
    ============================================================ */
 
 /* ---------- صفحه ---------- */
-.rbs-page { position: relative; background: var(--bg-college-tint); padding: 0 0 88px; overflow: hidden; }
+/* overflow: clip به‌جای hidden — hidden باعث می‌شد سایدبار sticky عمل نکند */
+.rbs-page { position: relative; background: var(--bg-college-tint); padding: 0 0 88px; overflow: clip; }
 
 /* بریدکرامب */
 .rbs-crumb {
