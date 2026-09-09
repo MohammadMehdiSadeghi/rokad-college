@@ -49,17 +49,17 @@ const I = {
    هیرو
    ============================================================ */
 function Hero({ searchQuery, setSearchQuery, setActiveCategory }) {
-  /* همهٔ کلمات هیرو یک درجه‌چرخش یکسان (۲) با علامت‌های متناوب دارند */
+  /* همهٔ کلمات هیرو یک درجه‌چرخش یکسان (۱) با علامت‌های متناوب دارند */
   const line1 = [
-    { text: "داستان‌ها،", rot: "-2deg" },
-    { text: "ایده‌ها", rot: "2deg" },
-    { text: "و", rot: "-2deg" },
-    { text: "تجربه‌های", rot: "2deg" },
+    { text: "داستان‌ها،", rot: "-1deg" },
+    { text: "ایده‌ها", rot: "1deg" },
+    { text: "و", rot: "-1deg" },
+    { text: "تجربه‌های", rot: "1deg" },
   ];
   const line2 = [
-    { text: "یک", rot: "-2deg" },
-    { text: "نسل", rot: "2deg", hl: true },
-    { text: "استارتاپی", rot: "-2deg", hl: true },
+    { text: "یک", rot: "-1deg" },
+    { text: "نسل", rot: "1deg", hl: true },
+    { text: "استارتاپی", rot: "-1deg", hl: true },
   ];
 
   return (
@@ -154,9 +154,9 @@ function Featured({ featured }) {
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <span className="bi-dot-ring" />
             <h2 className="bi-h2">
-              <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>مقاله</span>{" "}
-              <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--accent)" }}>ویژه</span>{" "}
-              <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>این هفته</span>
+              <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>مقاله</span>{" "}
+              <span style={{ display: "inline-block", transform: "rotate(1deg)", color: "var(--accent)" }}>ویژه</span>{" "}
+              <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>این هفته</span>
             </h2>
           </div>
           <a className="bi-more-link" href="#blog-index">همه مقالات ویژه <I.Arrow style={{ width: 16, height: 16 }} /></a>
@@ -239,8 +239,8 @@ const CATEGORIES = [
   { id: "interview", label: "مصاحبه",        color: "var(--navy)",     bg: "var(--bg-lavender)", count: 15 },
   { id: "tips",      label: "راهنما و ترفند", color: "var(--teal-dark)", bg: "var(--bg-mint)",    count: 22 },
 ];
-/* چرخش یکدست: همهٔ چیپ‌ها یک درجه‌چرخش (۱.۵) با علامت متناوب */
-const ROTS = ["-1.5deg", "1.5deg", "-1.5deg", "1.5deg", "-1.5deg", "1.5deg", "-1.5deg"];
+/* چرخش یکدست: همهٔ چیپ‌ها یک درجه‌چرخش (۱) با علامت متناوب */
+const ROTS = ["-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg", "-1deg"];
 
 function Categories({ active, setActive }) {
   return (
@@ -304,8 +304,8 @@ const TAG_TONE = {
   girl: "magenta",
   third: "amber",
 };
-/* چرخش یکدست: همهٔ کارت‌ها یک درجه‌چرخش (۱.۵) با علامت متناوب */
-const CARD_ROTS = ["-1.5deg", "1.5deg", "-1.5deg", "1.5deg", "-1.5deg", "1.5deg", "-1.5deg", "1.5deg", "-1.5deg", "1.5deg", "-1.5deg", "1.5deg"];
+/* چرخش یکدست: همهٔ کارت‌ها یک درجه‌چرخش (۱) با علامت متناوب */
+const CARD_ROTS = ["-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg", "-1deg", "1deg"];
 const CAT_TAGS = {
   all: null,
   startup: ["استارتاپ", "ابزار"],
@@ -385,8 +385,8 @@ function BlogGrid({ activeCategory, searchQuery }) {
       <div className="container">
         <div className="bi-sec-head">
           <h2 className="bi-h2">
-            <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>همه‌ی</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--college-dark)" }}>مقاله‌ها</span>
+            <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>همه‌ی</span>{" "}
+            <span style={{ display: "inline-block", transform: "rotate(1deg)", color: "var(--college-dark)" }}>مقاله‌ها</span>
           </h2>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-subtle)" }}>مرتب‌سازی:</span>
@@ -426,9 +426,9 @@ function BlogGrid({ activeCategory, searchQuery }) {
    ============================================================ */
 function Trending() {
   const items = [
-    { rank: 1, title: "راز موفقیت استارتاپ‌های نوجوان که هیچ‌کس بهت نمی‌گه", author: "علی رضایی", reads: "۱۸.۲K", tone: "magenta", rot: "-1.5deg" },
-    { rank: 2, title: "۷ اشتباه رایج در پیچ‌دک که حتی حرفه‌ای‌ها می‌کنند", author: "سارا محمدی", reads: "۱۴.۷K", tone: "teal", rot: "1.5deg" },
-    { rank: 3, title: "از صفر تا اپلیکیشن: مسیر یک دانش‌آموز رکادی", author: "محمد امینی", reads: "۱۱.۹K", tone: "amber", rot: "-1.5deg" },
+    { rank: 1, title: "راز موفقیت استارتاپ‌های نوجوان که هیچ‌کس بهت نمی‌گه", author: "علی رضایی", reads: "۱۸.۲K", tone: "magenta", rot: "-1deg" },
+    { rank: 2, title: "۷ اشتباه رایج در پیچ‌دک که حتی حرفه‌ای‌ها می‌کنند", author: "سارا محمدی", reads: "۱۴.۷K", tone: "teal", rot: "1deg" },
+    { rank: 3, title: "از صفر تا اپلیکیشن: مسیر یک دانش‌آموز رکادی", author: "محمد امینی", reads: "۱۱.۹K", tone: "amber", rot: "-1deg" },
   ];
 
   return (
@@ -440,8 +440,8 @@ function Trending() {
               <I.Flame style={{ color: "#fff", width: 22, height: 22, transform: "rotate(4deg)" }} />
             </span>
             <h2 className="bi-h2">
-              <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>پرخواننده‌ترین‌های</span>{" "}
-              <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--accent)" }}>ماه</span>
+              <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>پرخواننده‌ترین‌های</span>{" "}
+              <span style={{ display: "inline-block", transform: "rotate(1deg)", color: "var(--accent)" }}>ماه</span>
             </h2>
           </div>
           <span className="bi-update">به‌روزرسانی هر یکشنبه</span>
@@ -478,10 +478,10 @@ function Trending() {
    ============================================================ */
 function Authors() {
   const authors = [
-    { name: "نگین کریمی", role: "سردبیر مجله", posts: 32, tone: "magenta", initials: "ن.ک", rot: "-1.5deg" },
-    { name: "مهدی رضایی", role: "نویسنده استارتاپ", posts: 24, tone: "teal", initials: "م.ر", rot: "1.5deg" },
-    { name: "سارا اکبری", role: "مصاحبه‌گر", posts: 18, tone: "amber", initials: "س.ا", rot: "-1.5deg" },
-    { name: "علی محمدی", role: "مربی راهنما", posts: 15, tone: "navy", initials: "ع.م", rot: "1.5deg" },
+    { name: "نگین کریمی", role: "سردبیر مجله", posts: 32, tone: "magenta", initials: "ن.ک", rot: "-1deg" },
+    { name: "مهدی رضایی", role: "نویسنده استارتاپ", posts: 24, tone: "teal", initials: "م.ر", rot: "1deg" },
+    { name: "سارا اکبری", role: "مصاحبه‌گر", posts: 18, tone: "amber", initials: "س.ا", rot: "-1deg" },
+    { name: "علی محمدی", role: "مربی راهنما", posts: 15, tone: "navy", initials: "ع.م", rot: "1deg" },
   ];
 
   return (
@@ -489,9 +489,9 @@ function Authors() {
       <div className="container">
         <div className="bi-sec-head">
           <h2 className="bi-h2">
-            <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>قلم‌های</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(1.5deg)", color: "var(--college-dark)" }}>پشت</span>{" "}
-            <span style={{ display: "inline-block", transform: "rotate(-1.5deg)" }}>مقاله‌ها</span>
+            <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>قلم‌های</span>{" "}
+            <span style={{ display: "inline-block", transform: "rotate(1deg)", color: "var(--college-dark)" }}>پشت</span>{" "}
+            <span style={{ display: "inline-block", transform: "rotate(-1deg)" }}>مقاله‌ها</span>
           </h2>
           <a className="bi-more-link" href="#blog-index">همه نویسنده‌ها <I.Arrow style={{ width: 16, height: 16 }} /></a>
         </div>

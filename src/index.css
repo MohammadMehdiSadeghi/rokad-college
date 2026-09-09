@@ -2372,8 +2372,8 @@ a:focus-visible, button:focus-visible {
   line-height: 1.2; color: var(--ink); letter-spacing: -.5px;
 }
 .mag-title .w { display: inline-block; margin-left: 6px; }
-.mag-title .w1 { transform: rotate(-1.5deg); }
-.mag-title .w2 { transform: rotate(1.5deg); color: var(--college); }
+.mag-title .w1 { transform: rotate(-1deg); }
+.mag-title .w2 { transform: rotate(1deg); color: var(--college); }
 .mag-title .w3 { transform: rotate(-1deg); }
 
 /* Sticker button (دنبال‌کردن مجله / مرور آرشیو) */
@@ -2391,8 +2391,8 @@ a:focus-visible, button:focus-visible {
 .mag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 
 /* Magazine card */
-.mag-card { position: relative; transform: rotate(-.5deg); transition: transform .5s ease-out; }
-.mag-card:nth-child(even) { transform: rotate(.5deg); }
+.mag-card { position: relative; transform: rotate(-1deg); transition: transform .5s ease-out; }
+.mag-card:nth-child(even) { transform: rotate(1deg); }
 .mag-card:hover { transform: rotate(0) translateY(-3px); }
 .mag-card .shadow {
   position: absolute; top: 5px; left: 5px; right: -5px; bottom: -5px;
@@ -3700,7 +3700,7 @@ a:focus-visible, button:focus-visible {
   background: #fff; color: var(--navy);
   padding: .5rem 1.25rem; font-size: 14px; font-weight: 700;
   border-radius: 999px; border: 2px solid var(--ink);
-  transform: rotate(-1.5deg); box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(-1deg); box-shadow: 3px 3px 0 var(--ink);
 }
 .bi-title {
   text-align: center;
@@ -3804,7 +3804,7 @@ a:focus-visible, button:focus-visible {
   display: inline-flex; align-items: center; gap: 6px;
   background: var(--ink); color: #fff; padding: .4rem .9rem;
   border-radius: 999px; font-size: 12px; font-weight: 900;
-  transform: rotate(-1.5deg);
+  transform: rotate(-1deg);
 }
 .bi-feat-chips { position: relative; z-index: 2; display: flex; gap: 9px; flex-wrap: wrap; }
 .bi-feat-chips .chip {
@@ -3812,8 +3812,8 @@ a:focus-visible, button:focus-visible {
   border: 2px solid var(--ink); border-radius: 9px;
   box-shadow: 2px 2px 0 var(--ink);
 }
-.bi-feat-chips .chip.white { background: #fff; color: var(--college-darker); transform: rotate(1.5deg); }
-.bi-feat-chips .chip.amber { background: var(--navy); color: #fff; transform: rotate(-1.5deg); }
+.bi-feat-chips .chip.white { background: #fff; color: var(--college-darker); transform: rotate(1deg); }
+.bi-feat-chips .chip.amber { background: var(--navy); color: #fff; transform: rotate(-1deg); }
 .bi-featured-body {
   padding: 2rem 2rem 2.25rem;
   display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem;
@@ -3858,7 +3858,7 @@ a:focus-visible, button:focus-visible {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--navy); color: #fff; font-weight: 900; font-size: 14.5px;
   padding: .8rem 1.4rem; border-radius: 12px; border: 2px solid var(--ink);
-  transform: rotate(1.5deg); box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(1deg); box-shadow: 3px 3px 0 var(--ink);
   transition: transform .2s ease, background .2s ease;
 }
 .bi-read-btn:hover { transform: rotate(0deg) scale(1.04); background: var(--college); color: var(--ink); }
@@ -3927,7 +3927,7 @@ a:focus-visible, button:focus-visible {
   display: inline-block; background: #fff; padding: .35rem .85rem;
   font-size: 12px; font-weight: 900; border-radius: 999px;
   border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
-  transform: rotate(-1.5deg);
+  transform: rotate(-1deg);
 }
 .bi-card-bookmark {
   position: absolute; top: 14px; left: 14px; z-index: 2;
@@ -3975,7 +3975,7 @@ a:focus-visible, button:focus-visible {
 /* دکمهٔ مقاله‌های بیشتر */
 .bi-loadmore {
   position: relative; display: inline-block; transform-origin: center;
-  transform: rotate(-1.5deg); transition: transform .25s ease;
+  transform: rotate(-1deg); transition: transform .25s ease;
 }
 .bi-loadmore:hover { transform: rotate(0deg) scale(1.05); }
 .bi-loadmore-sh {
@@ -4001,7 +4001,7 @@ a:focus-visible, button:focus-visible {
 .bi-trend-ic {
   width: 44px; height: 44px; display: grid; place-items: center;
   background: var(--accent); border: 2px solid var(--ink);
-  border-radius: 0 12px 0 12px; transform: rotate(-1.5deg);
+  border-radius: 0 12px 0 12px; transform: rotate(-1deg);
   box-shadow: 3px 3px 0 var(--ink); flex-shrink: 0;
 }
 .bi-update {
