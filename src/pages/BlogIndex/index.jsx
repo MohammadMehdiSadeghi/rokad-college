@@ -51,8 +51,6 @@ const I = {
    ============================================================ */
 /* تگ‌های جست‌وجوی پرطرفدار — حتماً حداقل در یک مقاله عنوان/تگ/نویسنده باشند */
 const POPULAR_TAGS = ["استارتاپ", "مصاحبه", "داستان", "راهنما", "ابزار"];
-/* همهٔ تگ‌های موجود در مقاله‌ها — برای ساجستیشن سرچ */
-const TAG_SET = [...new Set(POSTS.map((p) => p.tag))];
 
 /* هایلایت بخش مطابق با عبارت جست‌وجو داخل ساجستیشن */
 function SuggestLabel({ text, q }) {
@@ -75,7 +73,7 @@ function Hero({ searchQuery, setSearchQuery, setActiveCategory, onGoResults }) {
   const suggestions = q
     ? [...new Set([
         ...POSTS.filter((p) => p.title.toLowerCase().includes(q)).map((p) => p.title),
-        ...TAG_SET.filter((t) => t.toLowerCase().includes(q)),
+        ...[...new Set(POSTS.map((p) => p.tag))].filter((t) => t.toLowerCase().includes(q)),
       ])].slice(0, 6)
     : [];
 
