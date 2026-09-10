@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./department.css";
-import PatternLayer from "@/components/PatternLayer";
 import { DEPT_PERSONA, departments } from "@/data/departments.js";
 
 /* ---- آیکونهای دوره‌ها (کلید ic در دیتا) ---- */
@@ -55,65 +54,73 @@ const StarIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
 );
 
-/* فلش دکمه‌های ناوبری ردیف دوره‌ها — با CSS-RTL خودش قرینه می‌شود */
-const ChevronIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+/* فلش‌های ناوبری ردیف دوره‌ها — راست = قبلی، چپ = بعدی (جهت RTL) */
+const ChevronIcon = ({ dir = "left" }) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {dir === "left" ? <path d="M15 6l-6 6 6 6" /> : <path d="M9 6l6 6-6 6" />}
+  </svg>
 );
 
-/* ---- تبدیل اعداد فارسی برای فیلتر/مرتب‌سازی ---- */
+/* ---- تبدیل اعداد فارسی برای فیلتر/مرتب‌سازی/نمایش ---- */
 const faToNum = (s) =>
   Number(
     String(s)
       .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
       .replace(/[^\d.]/g, "")
   ) || 0;
+const faNum = (n) => String(n).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
 
 /* بلوک سکشن با تیتر و کلمهٔ تاکیدی رنگ دپارتمان */
-const SectionHead = ({ pre, accent, sub }) => (
+const SectionHead = ({ pre, accent }) => (
   <div className="dp-sec-head">
     <h2 className="dp-sec-title">
       {pre} <span className="dp-sec-accent">{accent}</span>
     </h2>
-    {sub && <div className="dp-sec-sub">{sub}</div>}
   </div>
 );
 
-/* ---- کارت دوره (مشترک بین ردیف و گرید) ---- */
-const CourseCard = ({ c, rot }) => (
-  <a className="dp-course" href="#courses-index" style={{ "--rot": `rotate(${rot}deg)` }}>
-    {c.tag && <span className="dp-course-tag">{c.tag}</span>}
-    <div className="dp-course-cover">
-      <CourseIcon id={c.ic} />
+/* ---- کارت دوره — یکدست با کارت صفحهٔ دوره‌ها (الگوی cp-card) ---- */
+const CourseCard = ({ c, rot, pattern }) => (
+  <a className="dp-card" href="#courses-index" style={{ "--rot": `rotate(${rot}deg)` }}>
+    <div className="dp-card-cover">
+      <img className="dp-cover-pattern" src={pattern} alt="" aria-hidden="true" />
+      <CourseIcon id={c.ic} size={34} />
     </div>
-    <div className="dp-course-body">
-      <div className="dp-course-cat">{c.cat}</div>
-      <div className="dp-course-title">{c.title}</div>
-      <div className="dp-course-inst">
-        <span className="dp-av">{c.inst.charAt(0)}</span>
-        <span>{c.inst}</span>
+    <div className="dp-card-body">
+      {c.tag && <span className="dp-card-tag">{c.tag}</span>}
+      <div className="dp-card-head">
+        <div>
+          <div className="dp-card-title">{c.title}</div>
+          <div className="dp-card-inst">
+            <span className="dp-av">{c.inst.charAt(0)}</span>
+            <span>{c.inst}</span>
+          </div>
+        </div>
+        <span className="dp-card-mode">{c.cat}</span>
       </div>
-      <div className="dp-course-meta">
+      <div className="dp-card-meta">
         <span className="dp-rate"><StarIcon /> {c.rating}</span>
         <span><ClockIcon /> {c.hours}</span>
         <span><UsersIcon /> {c.students}</span>
       </div>
-      <div className="dp-course-price">
+      <div className="dp-card-foot">
         {c.free ? (
           <span className="dp-free">رایگان</span>
         ) : (
-          <>
-            <b>{c.price}</b>
+          <span className="dp-price">
             {c.old && <s>{c.old}</s>}
-          </>
+            <b>{c.price}</b>
+          </span>
         )}
+        <span className="dp-card-btn">مشاهده</span>
       </div>
     </div>
   </a>
 );
 
-/* ---- ردیف اسکرولی دوره‌ها + دکمه‌های قبلی/بعدی (الگوی مکتب‌خونه) ----
+/* ---- ناوبری ردیف اسکرولی دوره‌ها (فلش‌ها بالای ردیف، کنار تب‌ها) ----
    انیمیشن با rAF دستی است: این وب‌ویو behavior:"smooth" را اجرا نمی‌کند */
-function CourseRow({ label, children }) {
+function useRtlRowNav() {
   const rowRef = useRef(null);
   const animRef = useRef(0);
   const modelRef = useRef("flip"); // flip = کروم/فایرفاکس (RTL منفی)، legacy = سافاری
@@ -137,6 +144,7 @@ function CourseRow({ label, children }) {
 
   useEffect(() => {
     const el = rowRef.current;
+    if (!el) return;
     const max = el.scrollWidth - el.clientWidth;
     if (getComputedStyle(el).direction === "rtl" && max > 0) {
       modelRef.current = Math.abs(el.scrollLeft) < max / 2 ? "flip" : "legacy";
@@ -171,19 +179,7 @@ function CourseRow({ label, children }) {
     animRef.current = requestAnimationFrame(step);
   };
 
-  return (
-    <div className="dp-row-wrap">
-      <button type="button" className="dp-nav dp-nav-prev" onClick={() => scroll(false)} disabled={!nav.prev} aria-label="دوره‌های قبلی">
-        <ChevronIcon />
-      </button>
-      <div className="dp-row" ref={rowRef} aria-label={label}>
-        {children}
-      </div>
-      <button type="button" className="dp-nav dp-nav-next" onClick={() => scroll(true)} disabled={!nav.next} aria-label="دوره‌های بعدی">
-        <ChevronIcon />
-      </button>
-    </div>
-  );
+  return { rowRef, nav, update, scroll };
 }
 
 /* ---- آیتم آکاردئونی سوالات متداول ---- */
@@ -217,12 +213,12 @@ const ALL_DEPTS = [
 
 /* فیلترها و مرتب‌سازی بخش «همهٔ دوره‌ها» */
 const RATING_FILTERS = [
-  { id: 0, label: "همهٔ امتیازها" },
+  { id: 0, label: "همه" },
   { id: 4.8, label: "۴.۸ به بالا" },
   { id: 4.5, label: "۴.۵ به بالا" },
 ];
 const DUR_FILTERS = [
-  { id: "all", label: "هر طولی" },
+  { id: "all", label: "همه" },
   { id: "short", label: "زیر ۲۰ ساعت" },
   { id: "long", label: "۲۰ ساعت به بالا" },
 ];
@@ -256,6 +252,15 @@ export default function DepartmentPage({ deptId }) {
 
   /* آکاردئون سوالات متداول */
   const [openFaq, setOpenFaq] = useState(0);
+
+  /* ناوبری ردیف دوره‌های پیشنهادی */
+  const suggestNav = useRtlRowNav();
+
+  /* بعد از تعویض تب، وضعیت دکمه‌ها را به‌روز کن */
+  useEffect(() => {
+    suggestNav.update();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab]);
 
   /* بستن منوی مرتب‌سازی با کلیک بیرون */
   useEffect(() => {
@@ -304,15 +309,6 @@ export default function DepartmentPage({ deptId }) {
 
   const tabList = tab === "popular" ? dept.popular : dept.newest;
 
-  const quickLinks = [
-    { id: "dp-suggest", label: "دوره‌های پیشنهادی" },
-    { id: "dp-topics", label: "موضوعات پرطرفدار" },
-    { id: "dp-all", label: "همهٔ دوره‌ها" },
-    { id: "dp-paths", label: "مسیرهای یادگیری" },
-    { id: "dp-insts", label: "مدرسان برتر" },
-    { id: "dp-faq", label: "سوالات متداول" },
-  ];
-
   return (
     <div className="dp-page" style={styleVars} data-dept={currentId} key={currentId}>
       {/* ---------- سوییچر دپارتمان‌ها (فقط موبایل) ---------- */}
@@ -329,9 +325,9 @@ export default function DepartmentPage({ deptId }) {
         ))}
       </div>
 
-      {/* ---------- HERO (مثل مکتب‌خونه: تیتر + لید + نوار آمار) ---------- */}
+      {/* ---------- HERO (تیتر + لید + نوار آمار + پترن دپارتمان) ---------- */}
       <header className="dp-hero">
-        <PatternLayer rotate={0} />
+        <img src={persona.pattern} alt="" aria-hidden="true" className="dp-hero-pattern" />
         <div className="container dp-hero-inner">
           <nav className="dp-crumb" aria-label="مسیر">
             <a href="#">خانه</a>
@@ -360,10 +356,6 @@ export default function DepartmentPage({ deptId }) {
             <a className="dp-btn dp-btn-ghost" href="#dp-paths" onClick={(e) => scrollToSection(e, "dp-paths")}>
               مسیر یادگیری
             </a>
-            <a className="dp-btn dp-btn-consult" href="#consult">
-              مشاورهٔ رایگان
-              <ArrowIcon />
-            </a>
           </div>
 
           {/* نوار آمار — الگوی مکتب‌خونه */}
@@ -382,7 +374,7 @@ export default function DepartmentPage({ deptId }) {
       <div className="container dp-layout">
         {/* ----- سایدبار ----- */}
         <aside className="dp-side">
-          <div className="dp-side-card">
+          <div className="dp-side-card dp-side-depts-card">
             <div className="dp-side-title">دپارتمان‌ها</div>
             <div className="dp-side-depts">
               {ALL_DEPTS.map((d) => {
@@ -403,52 +395,94 @@ export default function DepartmentPage({ deptId }) {
             </div>
           </div>
 
-          <div className="dp-side-card">
-            <div className="dp-side-title">دسترسی سریع</div>
-            <nav className="dp-side-links">
-              {quickLinks.map((l) => (
-                <a key={l.id} href={`#${l.id}`} onClick={(e) => scrollToSection(e, l.id)}>
-                  {l.label}
-                  <ArrowIcon />
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          <div className="dp-side-card dp-side-cta">
-            <div className="dp-side-cta-t">هنوز مطمئن نیستی؟</div>
-            <p>یک مشاورهٔ رایگان بگیر و مسیرت را با کارشناسان دپارتمان بچین.</p>
-            <a href="#consult" className="dp-btn dp-btn-ink dp-btn-sm">
-              مشاورهٔ رایگان
-              <ArrowIcon />
-            </a>
+          {/* فیلترها — همان سیستم فیلتر بخش همهٔ دوره‌ها */}
+          <div className="dp-side-card dp-side-filters">
+            <div className="dp-side-title">
+              فیلترها
+              {activeFilterCount > 0 && (
+                <button type="button" className="dp-reset" onClick={resetFilters}>
+                  پاک کردن ×
+                </button>
+              )}
+            </div>
+            <div className="dp-fgroup">
+              <div className="dp-fgroup-t">امتیاز دوره</div>
+              <div className="dp-fchips">
+                {RATING_FILTERS.map((f) => (
+                  <button key={f.id} type="button" className={`dp-fchip${ratingF === f.id ? " on" : ""}`} onClick={() => setRatingF(f.id)}>
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="dp-fgroup">
+              <div className="dp-fgroup-t">طول دوره</div>
+              <div className="dp-fchips">
+                {DUR_FILTERS.map((f) => (
+                  <button key={f.id} type="button" className={`dp-fchip${durF === f.id ? " on" : ""}`} onClick={() => setDurF(f.id)}>
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="dp-fgroup">
+              <div className="dp-fgroup-t">نوع دوره</div>
+              <div className="dp-fchips">
+                {TYPE_FILTERS.map((f) => (
+                  <button key={f.id} type="button" className={`dp-fchip${typeF === f.id ? " on" : ""}`} onClick={() => setTypeF(f.id)}>
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </aside>
 
         {/* ----- محتوای اصلی ----- */}
         <main className="dp-main">
-          {/* دوره‌های پیشنهادی — با تب محبوب‌ترین/جدیدترین (الگوی مکتب‌خونه) */}
+          {/* دوره‌های پیشنهادی — تب محبوب‌ترین/جدیدترین + فلش‌ها کنار تب‌ها */}
           <section className="dp-block" id="dp-suggest">
             <div className="dp-suggest-head">
               <SectionHead
                 pre="دوره‌های پیشنهادی برای شروع"
                 accent={dept.name}
-                sub="انتخاب ما برای شروع مسیر شما در این دپارتمان"
               />
-              <div className="dp-tabs" role="tablist">
-                <button type="button" role="tab" aria-selected={tab === "popular"} className={`dp-tab${tab === "popular" ? " active" : ""}`} onClick={() => setTab("popular")}>
-                  محبوب‌ترین
-                </button>
-                <button type="button" role="tab" aria-selected={tab === "newest"} className={`dp-tab${tab === "newest" ? " active" : ""}`} onClick={() => setTab("newest")}>
-                  جدیدترین
-                </button>
+              <div className="dp-suggest-ctrl">
+                <div className="dp-tabs" role="tablist">
+                  <button type="button" role="tab" aria-selected={tab === "popular"} className={`dp-tab${tab === "popular" ? " active" : ""}`} onClick={() => setTab("popular")}>
+                    محبوب‌ترین
+                  </button>
+                  <button type="button" role="tab" aria-selected={tab === "newest"} className={`dp-tab${tab === "newest" ? " active" : ""}`} onClick={() => setTab("newest")}>
+                    جدیدترین
+                  </button>
+                </div>
+                <div className="dp-row-nav">
+                  <button
+                    type="button"
+                    className="dp-nav"
+                    onClick={() => suggestNav.scroll(false)}
+                    disabled={!suggestNav.nav.prev}
+                    aria-label="دوره‌های قبلی"
+                  >
+                    <ChevronIcon dir="right" />
+                  </button>
+                  <button
+                    type="button"
+                    className="dp-nav"
+                    onClick={() => suggestNav.scroll(true)}
+                    disabled={!suggestNav.nav.next}
+                    aria-label="دوره‌های بعدی"
+                  >
+                    <ChevronIcon dir="left" />
+                  </button>
+                </div>
               </div>
             </div>
-            <CourseRow key={tab} label={`دوره‌های پیشنهادی ${dept.name}`}>
+            <div className="dp-row" ref={suggestNav.rowRef} aria-label={`دوره‌های پیشنهادی ${dept.name}`}>
               {tabList.map((c, i) => (
-                <CourseCard c={c} rot={[-1, 1, -0.5, 0.5][i % 4]} key={i} />
+                <CourseCard c={c} rot={[-1, 1, -0.5, 0.5][i % 4]} pattern={persona.pattern} key={i} />
               ))}
-            </CourseRow>
+            </div>
             <div className="dp-more">
               <a href="#dp-all" onClick={(e) => scrollToSection(e, "dp-all")} className="dp-btn dp-btn-ghost">
                 همهٔ دوره‌های {dept.name}
@@ -459,7 +493,7 @@ export default function DepartmentPage({ deptId }) {
 
           {/* موضوعات پرطرفدار */}
           <section className="dp-block dp-card-block" id="dp-topics">
-            <SectionHead pre="موضوعات" accent="پرطرفدار" sub={`پرجستجوترین موضوعات دپارتمان ${dept.name}`} />
+            <SectionHead pre="موضوعات" accent="پرطرفدار" />
             <div className="dp-topics">
               {dept.topics.map((t, i) => (
                 <a key={t} href={`#courses-index/${currentId}`} className="dp-topic" style={{ "--rot": `rotate(${i % 2 ? 1 : -1}deg)` }}>
@@ -469,31 +503,14 @@ export default function DepartmentPage({ deptId }) {
             </div>
           </section>
 
-          {/* همهٔ دوره‌ها — فیلتر + مرتب‌سازی + گرید */}
+          {/* همهٔ دوره‌ها — گرید (فیلترها در سایدبار) */}
           <section className="dp-block" id="dp-all">
-            <SectionHead pre="همهٔ" accent="دوره‌ها" sub="بر اساس هدف و سطح خودتان فیلتر کنید" />
+            <SectionHead pre="همهٔ" accent="دوره‌ها" />
 
             <div className="dp-toolbar">
-              <div className="dp-fchips">
-                {RATING_FILTERS.map((f) => (
-                  <button key={f.id} type="button" className={`dp-fchip${ratingF === f.id ? " on" : ""}`} onClick={() => setRatingF(f.id)}>
-                    {f.label}
-                  </button>
-                ))}
-                <span className="dp-fsep" />
-                {DUR_FILTERS.map((f) => (
-                  <button key={f.id} type="button" className={`dp-fchip${durF === f.id ? " on" : ""}`} onClick={() => setDurF(f.id)}>
-                    {f.label}
-                  </button>
-                ))}
-                <span className="dp-fsep" />
-                {TYPE_FILTERS.map((f) => (
-                  <button key={f.id} type="button" className={`dp-fchip${typeF === f.id ? " on" : ""}`} onClick={() => setTypeF(f.id)}>
-                    {f.label}
-                  </button>
-                ))}
+              <div className="dp-count">
+                <b>{faNum(allCourses.length)}</b> دوره
               </div>
-
               <div className="dp-sort" ref={sortRef}>
                 <span className="dp-sort-lab">ترتیب:</span>
                 <button type="button" className="dp-sort-btn" onClick={() => setSortOpen((v) => !v)} aria-haspopup="listbox" aria-expanded={sortOpen}>
@@ -522,18 +539,12 @@ export default function DepartmentPage({ deptId }) {
               </div>
             </div>
 
-            {activeFilterCount > 0 && (
-              <button type="button" className="dp-reset" onClick={resetFilters}>
-                پاک کردن {activeFilterCount} فیلتر ×
-              </button>
-            )}
-
             {allCourses.length === 0 ? (
               <div className="dp-empty">دوره‌ای با این فیلترها پیدا نشد. فیلترها را تغییر دهید.</div>
             ) : (
               <div className="dp-grid">
                 {allCourses.map((c, i) => (
-                  <CourseCard c={c} rot={[-0.5, 0.5, -0.25, 0.25][i % 4]} key={i} />
+                  <CourseCard c={c} rot={[-0.5, 0.5, -0.25, 0.25][i % 4]} pattern={persona.pattern} key={i} />
                 ))}
               </div>
             )}
@@ -541,7 +552,7 @@ export default function DepartmentPage({ deptId }) {
 
           {/* مسیرهای یادگیری */}
           <section className="dp-block dp-card-block" id="dp-paths">
-            <SectionHead pre="مسیرهای" accent="یادگیری" sub="نقشهٔ راه ساختاریافته برای رسیدن به هدف حرفه‌ای" />
+            <SectionHead pre="مسیرهای" accent="یادگیری" />
             <div className="dp-paths">
               {dept.paths.map((p) => (
                 <article className="dp-path" key={p.num}>
@@ -559,7 +570,7 @@ export default function DepartmentPage({ deptId }) {
 
           {/* مدرسان برتر */}
           <section className="dp-block" id="dp-insts">
-            <SectionHead pre="مدرسان" accent="برتر" sub="از افراد باتجربه و شاغل در صنعت آموزش ببینید" />
+            <SectionHead pre="مدرسان" accent="برتر" />
             <div className="dp-insts">
               {dept.instructors.map((t) => (
                 <article className="dp-inst" key={t.name}>
@@ -577,7 +588,7 @@ export default function DepartmentPage({ deptId }) {
 
           {/* تجربهٔ هنرجویان */}
           <section className="dp-block dp-card-block">
-            <SectionHead pre="تجربهٔ" accent="هنرجویان" sub={`آنچه هنرجویان دپارتمان ${dept.name} گفته‌اند`} />
+            <SectionHead pre="تجربهٔ" accent="هنرجویان" />
             <div className="dp-tests">
               {dept.testimonials.map((t) => (
                 <article className="dp-test" key={t.name}>
@@ -605,7 +616,7 @@ export default function DepartmentPage({ deptId }) {
 
           {/* سوالات متداول — آکاردئون */}
           <section className="dp-block dp-card-block" id="dp-faq">
-            <SectionHead pre="سوالات متداول" accent={dept.name} sub="پاسخ پرتکرارترین سوالات هنرجویان این دپارتمان" />
+            <SectionHead pre="سوالات متداول" accent={dept.name} />
             <div className="dp-faq">
               {dept.faqs.map((f, i) => (
                 <FaqItem key={i} item={f} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? -1 : i)} />

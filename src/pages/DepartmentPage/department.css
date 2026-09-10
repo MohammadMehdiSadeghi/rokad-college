@@ -1,9 +1,10 @@
 /* ============================================================
    DEPARTMENT PAGE — صفحهٔ تک‌صفحه‌ای دپارتمان (الگوی مکتب‌خونه)
    دیزاین سیستم کالج رکاد: نئوبروتالیسم
-   ساختار: هیرو با نوار آمار → سایدبار چسبان دپارتمان‌ها +
-   ستون محتوا (تب پیشنهادی/جدیدترین، موضوعات، همهٔ دوره‌ها با
-   فیلتر و مرتب‌سازی، مسیرها، مدرسان، نظرات، درباره، FAQ، CTA)
+   ساختار: هیرو با پترن دپارتمان + نوار آمار → سایدبار چسبان
+   (دپارتمان‌ها + فیلترها) + ستون محتوا (تب پیشنهادی/جدیدترین با
+   فلش‌ها، موضوعات، همهٔ دوره‌ها، مسیرها، مدرسان، نظرات، درباره،
+   FAQ، CTA) — کارت دوره یکدست با کارت صفحهٔ دوره‌ها (الگوی cp-card)
    پرسونای رنگی هر دپارتمان با متغیرهای --dp / --dp-light / --dp-dark
    ============================================================ */
 
@@ -43,15 +44,25 @@
   font-weight: 900;
 }
 
-/* ============ HERO ============ */
+/* ============ HERO (بدون خط مشکی، با پترن دپارتمان) ============ */
 .dp-hero {
   position: relative;
   background:
     linear-gradient(to bottom, var(--dp-light), var(--white));
-  border-bottom: 2px solid var(--ink);
   overflow: hidden;
 }
-.dp-hero .pattern-layer { opacity: .5; }
+.dp-hero-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .28;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
 .dp-hero-inner {
   position: relative; z-index: 2;
   padding: 36px 0 44px;
@@ -132,18 +143,11 @@
   box-shadow: 4px 4px 0 var(--dp);
 }
 .dp-btn-ghost:hover { box-shadow: 2px 2px 0 var(--dp); }
-.dp-btn-consult {
-  background: var(--college-light); color: var(--college-darker);
-  border-color: var(--ink);
-  box-shadow: 4px 4px 0 var(--college);
-}
-.dp-btn-consult:hover { box-shadow: 2px 2px 0 var(--college); }
 .dp-btn-ink {
   background: var(--ink); color: #fff;
   box-shadow: 4px 4px 0 var(--dp);
 }
 .dp-btn-ink:hover { box-shadow: 2px 2px 0 var(--dp); }
-.dp-btn-sm { padding: 9px 16px; font-size: 13px; }
 
 /* نوار آمار — الگوی مکتب‌خونه (عدد درشت + برچسب، جداکنندهٔ خط‌چین) */
 .dp-hero-stats {
@@ -151,7 +155,7 @@
   margin-top: 30px;
   background: #fff;
   border: 2px solid var(--ink);
-  border-radius: 18px 0 18px 0;
+  border-radius: 20px 0 20px 0;
   corner-shape: squircle; -webkit-corner-shape: squircle;
   box-shadow: 5px 5px 0 var(--dp);
   width: fit-content;
@@ -179,7 +183,7 @@
   grid-template-columns: 252px minmax(0, 1fr);
   gap: 36px;
   align-items: start;
-  padding-block: 36px 72px;
+  padding-block: 40px 80px;
 }
 
 /* ---------- سایدبار چسبان ---------- */
@@ -191,15 +195,16 @@
 .dp-side-card {
   background: #fff;
   border: 2px solid var(--ink);
-  border-radius: 18px 0 18px 0;
+  border-radius: 20px 0 20px 0;
   corner-shape: squircle; -webkit-corner-shape: squircle;
   box-shadow: 4px 4px 0 var(--dp);
   padding: 18px;
 }
 .dp-side-title {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
   font-size: 12px; font-weight: 900; color: var(--ink-subtle);
   letter-spacing: .04em;
-  padding-bottom: 10px; margin-bottom: 10px;
+  padding-bottom: 10px; margin-bottom: 12px;
   border-bottom: 1.5px dashed var(--ink-light);
 }
 /* لیست دپارتمان‌ها */
@@ -236,56 +241,70 @@
   background: var(--dp); border: 1.5px solid var(--ink);
 }
 
-/* دسترسی سریع */
-.dp-side-links { display: flex; flex-direction: column; gap: 2px; }
-.dp-side-links a {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 8px;
-  padding: 8px 8px;
-  border-radius: 9px 0 9px 0;
-  font-size: 13px; font-weight: 700; color: var(--ink-faq);
-  text-decoration: none;
+/* فیلترها در سایدبار */
+.dp-fgroup { margin-bottom: 16px; }
+.dp-fgroup:last-of-type { margin-bottom: 0; }
+.dp-fgroup-t {
+  font-size: 12px; font-weight: 900; color: var(--ink);
+  margin-bottom: 8px;
+}
+.dp-fchips {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+.dp-fchip {
+  padding: 5px 12px;
+  border: 1.5px solid var(--ink-light);
+  border-radius: var(--r-pill);
+  font-family: inherit;
+  font-size: 12px; font-weight: 800;
+  color: var(--ink-subtle);
+  background: transparent;
+  cursor: pointer;
   transition: all .18s ease;
 }
-.dp-side-links a svg { width: 12px; height: 12px; opacity: 0; transform: translateX(4px); transition: all .18s ease; }
-.dp-side-links a:hover { background: var(--dp-light); color: var(--dp-dark); }
-.dp-side-links a:hover svg { opacity: 1; transform: translateX(0); }
-
-/* کارت CTA سایدبار */
-.dp-side-cta {
-  background: var(--dp-light);
+.dp-fchip:hover { border-color: var(--dp); color: var(--dp-dark); background: var(--dp-light); }
+.dp-fchip.on {
+  background: var(--dp); color: var(--dp-text);
+  border-color: var(--ink);
+  box-shadow: 1.5px 1.5px 0 var(--ink);
+  font-weight: 900;
 }
-.dp-side-cta-t {
-  font-size: 15px; font-weight: 900; color: var(--ink);
-  margin-bottom: 6px;
+/* ریست فیلترها */
+.dp-reset {
+  padding: 4px 12px;
+  border: 2px solid var(--female-dark);
+  border-radius: var(--r-pill);
+  background: var(--female-light);
+  color: var(--female-dark);
+  font-family: inherit;
+  font-size: 11.5px; font-weight: 900;
+  cursor: pointer;
+  transition: all .18s ease;
 }
-.dp-side-cta p {
-  font-size: 12.5px; line-height: 1.85; font-weight: 600;
-  color: var(--ink-subtle);
-  margin-bottom: 14px;
+.dp-reset:hover { background: var(--female); color: #fff; }
+
+/* ---------- ستون محتوا — فاصلهٔ استاندارد یکنواخت ---------- */
+.dp-main {
+  min-width: 0;
+  display: flex; flex-direction: column; gap: 48px;
 }
 
-/* ---------- ستون محتوا ---------- */
-.dp-main { min-width: 0; }
-
-.dp-block { padding: 28px 0; scroll-margin-top: 92px; }
-/* بلوک کارتی: زمینهٔ تینت + بوردر جوهر (جایگزین نوار تمام‌عرض قدیمی) */
+.dp-block { scroll-margin-top: 92px; }
+/* بلوک کارتی: زمینهٔ تینت + بوردر جوهر */
 .dp-card-block {
   background: var(--dp-light);
   border: 2px solid var(--ink);
   border-radius: 24px 0 24px 0;
   corner-shape: squircle; -webkit-corner-shape: squircle;
   box-shadow: 6px 6px 0 var(--dp);
-  padding: 32px 32px 36px;
-  margin-block: 16px;
+  padding: 30px;
 }
 @media (max-width: 700px) {
-  .dp-block { padding: 20px 0; }
-  .dp-card-block { padding: 24px 18px 26px; }
+  .dp-card-block { padding: 22px 18px; }
 }
 
 .dp-sec-head {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 .dp-sec-title {
   font-size: clamp(22px, 3vw, 32px);
@@ -302,18 +321,17 @@
   transform: rotate(-1.5deg);
   box-shadow: 3px 3px 0 var(--ink);
 }
-.dp-sec-sub {
-  margin-top: 10px;
-  font-size: 13.5px; font-weight: 600; color: var(--ink-subtle);
-}
 
-/* ============ هدِ بخش پیشنهادی: تیتر + تب‌ها ============ */
+/* ============ هدِ بخش پیشنهادی: تیتر + تب‌ها و فلش‌ها ============ */
 .dp-suggest-head {
-  display: flex; align-items: flex-end; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   gap: 18px; flex-wrap: wrap;
   margin-bottom: 24px;
 }
 .dp-suggest-head .dp-sec-head { margin-bottom: 0; }
+.dp-suggest-ctrl {
+  display: flex; align-items: center; gap: 12px;
+}
 .dp-tabs {
   display: inline-flex; gap: 4px;
   background: #fff;
@@ -340,146 +358,156 @@
   box-shadow: 1.5px 1.5px 0 var(--ink);
   font-weight: 900;
 }
+/* فلش‌های قبلی/بعدی — بالای ردیف، کنار تب‌ها */
+.dp-row-nav {
+  display: flex; gap: 8px;
+}
+.dp-nav {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  background: #fff; color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 10px 0 10px 0;
+  corner-shape: squircle; -webkit-corner-shape: squircle;
+  box-shadow: 2.5px 2.5px 0 var(--dp);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.dp-nav:hover:enabled { transform: translate(2px, -2px); box-shadow: 1px 1px 0 var(--dp); }
+.dp-nav:disabled { opacity: .35; box-shadow: none; cursor: default; }
 
 /* ============ ردیف اسکرولی دوره‌ها ============
-   کارت‌ها در یک ردیف با اسکرول افقی + دکمه‌های ناوبری شناور.
    padding/margin منفی = ترفند v2-carousel؛ وگرنه سایهٔ آفست
-   dp-course::before توسط overflow کات می‌شود */
+   dp-card::before توسط overflow کات می‌شود */
 .dp-row {
   display: flex; gap: 22px;
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 6px 6px 10px;
-  margin: -6px -6px -10px;
+  padding: 10px 6px 14px;
+  margin: -10px -6px -14px;
 }
 .dp-row::-webkit-scrollbar { display: none; }
-.dp-row > .dp-course { flex: 0 0 268px; }
-@media (max-width: 900px) { .dp-row { gap: 16px; } .dp-row > .dp-course { flex-basis: 236px; } }
-@media (max-width: 640px) { .dp-row > .dp-course { flex-basis: 76%; } }
+.dp-row > .dp-card { flex: 0 0 348px; }
+@media (max-width: 900px) { .dp-row { gap: 16px; } .dp-row > .dp-card { flex-basis: 320px; } }
+@media (max-width: 640px) { .dp-row > .dp-card { flex-basis: 88%; } }
 
-/* دکمه‌های قبلی/بعدی شناور روی لبه‌های ردیف (inset-inline = آگاه به RTL) */
-.dp-row-wrap { position: relative; }
-.dp-nav {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  z-index: 3;
-  width: 42px; height: 42px;
-  display: grid; place-items: center;
-  background: #fff; color: var(--ink);
-  border: 2px solid var(--ink);
-  border-radius: 12px 0 12px 0;
-  corner-shape: squircle; -webkit-corner-shape: squircle;
-  box-shadow: 3px 3px 0 var(--ink);
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
-}
-.dp-nav:hover:enabled { transform: translateY(-50%) translate(2px, -2px); box-shadow: 1px 1px 0 var(--ink); }
-.dp-nav:disabled { opacity: .35; box-shadow: none; cursor: default; }
-.dp-nav-prev { inset-inline-start: -14px; }
-.dp-nav-next { inset-inline-end: -14px; }
-@media (max-width: 640px) { .dp-nav { width: 38px; height: 38px; } }
+.dp-more { text-align: center; margin-top: 28px; }
 
-.dp-more { text-align: center; margin-top: 30px; }
-
-/* ---- کارت دوره (سایهٔ جوهر زیر کارت با ::before) ----
-   wrapper بدون overflow و cover/body با z-index 1 روی سایه */
-.dp-course {
+/* ============ کارت دوره — یکدست با صفحهٔ دوره‌ها (cp-card) ============
+   افقی: کاور رنگی (ستون راست در RTL) + بدنه؛ سایهٔ جوهر آفست با ::before */
+.dp-card {
   position: relative;
-  display: flex; flex-direction: column;
-  background: #fff;
-  border: 2px solid var(--ink);
-  border-radius: 20px 0 20px 0;
-  corner-shape: squircle; -webkit-corner-shape: squircle;
+  cursor: pointer;
+  display: grid; grid-template-columns: 128px minmax(0, 1fr);
+  align-items: stretch;
   text-decoration: none; color: var(--ink);
   transform: var(--rot, rotate(0deg));
   transition: transform .25s ease;
 }
-.dp-course::before {
+.dp-card::before {
   content: ''; position: absolute;
   top: 5px; left: 5px; right: -5px; bottom: -5px;
   background: var(--ink); z-index: 0;
   border-radius: 20px 0 20px 0;
   transition: transform .25s ease;
 }
-.dp-course:hover { transform: rotate(0deg) translate(3px, -3px); }
-.dp-course:hover::before { transform: translate(-3px, 3px); }
+.dp-card:hover { transform: rotate(0deg) translate(3px, -3px); }
+.dp-card:hover::before { transform: translate(-3px, 3px); }
 
-.dp-course-tag {
-  position: absolute; top: 12px; right: 12px; z-index: 2;
-  background: var(--dp); color: var(--dp-text);
-  border: 2px solid var(--ink);
-  font-size: 10.5px; font-weight: 900;
-  padding: 3px 10px;
-  border-radius: 8px 0 8px 0;
-  letter-spacing: .02em;
-}
-.dp-course-cover {
+/* کاور (ستون راست در RTL) — تینت + پترن دپارتمان + آیکون */
+.dp-card-cover {
   position: relative; z-index: 1;
-  height: 104px;
+  overflow: hidden; min-height: 0;
   background: var(--dp-light);
-  border-bottom: 2px solid var(--ink);
-  border-radius: 20px 0 0 0;
-  corner-shape: squircle; -webkit-corner-shape: squircle;
+  border: 2px solid var(--ink);
+  border-left: none;
+  border-radius: 0 0 20px 0;
   display: grid; place-items: center;
   color: var(--dp-dark);
 }
-/* پرشدگی نقطه‌ای کاور زیر آیکون */
-.dp-course-cover::after {
-  content: ''; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(41, 40, 39, .10) 1.2px, transparent 1.2px);
-  background-size: 18px 18px;
+.dp-cover-pattern {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: .35;
+  mix-blend-mode: multiply;
   pointer-events: none;
 }
-.dp-course-cover svg { position: relative; z-index: 1; }
+.dp-card-cover svg { position: relative; z-index: 1; }
 
-.dp-course-body {
+/* بدنه (ستون چپ در RTL) */
+.dp-card-body {
   position: relative; z-index: 1;
+  display: flex; flex-direction: column;
   background: #fff;
-  border-radius: 0 0 20px 0;
-  corner-shape: squircle; -webkit-corner-shape: squircle;
-  padding: 15px 17px 17px;
-  display: flex; flex-direction: column; gap: 8px; flex: 1;
+  border: 2px solid var(--ink);
+  border-radius: 20px 0 0 0;
+  padding: 15px 16px 13px;
+  min-width: 0;
 }
-.dp-course-cat {
-  font-size: 11px; font-weight: 900; color: var(--dp-dark);
-  background: var(--dp-light);
-  border: 1.5px solid var(--dp);
-  width: fit-content;
-  padding: 2px 10px;
-  border-radius: 0 .5rem 0 .5rem;
+/* تگ شناور بالای کارت — الگوی cp-tag */
+.dp-card-tag {
+  position: absolute; top: -12px; right: 16px; z-index: 2;
+  background: var(--dp); color: var(--dp-text);
+  border: 2px solid var(--ink);
+  padding: 4px 12px; font-size: 11.5px; font-weight: 900;
+  border-radius: 8px; transform: rotate(-3deg);
 }
-.dp-course-title {
-  font-size: 15px; font-weight: 800; line-height: 1.6; color: var(--ink);
+.dp-card-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 10px;
 }
-.dp-course-inst {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 12.5px; font-weight: 700; color: var(--ink-subtle);
+.dp-card-head > div { min-width: 0; flex: 1; }
+.dp-card-title {
+  font-weight: 900; font-size: 15px; color: var(--ink);
+  line-height: 1.5; margin-bottom: 6px;
+}
+.dp-card-inst {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 600; color: var(--ink-subtle);
 }
 .dp-av {
-  width: 26px; height: 26px; flex-shrink: 0;
+  width: 24px; height: 24px; flex-shrink: 0;
   background: var(--dp-light);
-  border: 1.5px solid var(--ink);
-  border-radius: 50%;
-  display: grid; place-items: center;
-  font-weight: 900; font-size: 12px; color: var(--dp-dark);
+  border: 1.5px solid var(--ink); border-radius: 50%;
+  display: inline-grid; place-items: center;
+  font-weight: 900; font-size: 11px; color: var(--dp-dark);
 }
-.dp-course-meta {
-  display: flex; align-items: center; flex-wrap: wrap;
-  gap: 5px 12px;
-  padding: 7px 0;
+/* چیپ دسته‌بندی — الگوی cp-mode */
+.dp-card-mode {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--dp-light); border: 1.5px solid var(--dp);
+  color: var(--dp-dark);
+  padding: 3px 9px; font-size: 11px; font-weight: 800;
+  border-radius: 6px; flex-shrink: 0; margin-top: 2px;
+  white-space: nowrap;
+}
+.dp-card-mode::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--dp); border: 1px solid var(--ink);
+}
+/* ردیف متا — الگوی cp-meta */
+.dp-card-meta {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 5px 13px;
+  padding: 8px 0;
   border-top: 1.5px dashed var(--ink-light);
   border-bottom: 1.5px dashed var(--ink-light);
+  margin-top: 10px; margin-bottom: 10px;
   font-size: 11.5px; font-weight: 700; color: var(--ink-subtle);
 }
-.dp-course-meta > span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.dp-card-meta > span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .dp-rate { color: var(--ink); font-weight: 800; }
-.dp-rate svg { color: var(--college); }
+.dp-rate svg { color: #f5a623; }
 
-.dp-course-price {
-  margin-top: auto;
-  display: flex; align-items: center; gap: 8px;
+/* فوتر کارت: قیمت + دکمه مشاهده */
+.dp-card-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; margin-top: auto;
 }
-.dp-course-price b { font-size: 14.5px; font-weight: 900; color: var(--ink); }
-.dp-course-price s { font-size: 12px; font-weight: 600; color: var(--ink-subtle); }
+.dp-price { display: flex; flex-direction: column; line-height: 1.3; }
+.dp-price s { text-decoration: line-through; color: var(--ink-subtle); font-size: 11.5px; font-weight: 600; }
+.dp-price b { font-size: 14.5px; font-weight: 900; color: var(--ink); }
 .dp-free {
   background: var(--teal-light);
   color: var(--teal-dark);
@@ -487,6 +515,27 @@
   font-size: 12px; font-weight: 900;
   padding: 3px 12px;
   border-radius: 0 .5rem 0 .5rem;
+}
+.dp-card-btn {
+  background: var(--navy); color: #fff;
+  border: 2px solid var(--ink); padding: 7px 15px;
+  font-weight: 800; font-size: 12.5px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: all .2s;
+  white-space: nowrap;
+}
+.dp-card:hover .dp-card-btn {
+  background: var(--dp); color: var(--dp-text);
+  transform: rotate(-2deg) scale(1.03);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* موبایل: کارت عمودی — الگوی cp-card */
+@media (max-width: 640px) {
+  .dp-card { grid-template-columns: 1fr; grid-template-rows: 118px auto; }
+  .dp-card-cover { border-left: 2px solid var(--ink); border-bottom: none; border-radius: 20px 0 0 0; }
+  .dp-card-body { border-radius: 0 0 20px 0; }
 }
 
 /* ============ موضوعات پرطرفدار ============ */
@@ -512,7 +561,7 @@
   box-shadow: 2px 2px 0 var(--ink);
 }
 
-/* ============ همهٔ دوره‌ها: تولبار فیلتر + مرتب‌سازی ============ */
+/* ============ همهٔ دوره‌ها: نوار تعداد + مرتب‌سازی ============ */
 .dp-toolbar {
   display: flex; align-items: center; justify-content: space-between;
   gap: 14px; flex-wrap: wrap;
@@ -521,36 +570,13 @@
   border-radius: 16px 0 16px 0;
   corner-shape: squircle; -webkit-corner-shape: squircle;
   box-shadow: 4px 4px 0 var(--dp);
-  padding: 12px 16px;
-  margin-bottom: 22px;
+  padding: 10px 16px;
+  margin-bottom: 26px;
 }
-.dp-fchips {
-  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+.dp-count {
+  font-size: 13px; font-weight: 700; color: var(--ink-subtle);
 }
-.dp-fsep {
-  width: 2px; height: 18px;
-  background: var(--ink-light);
-  margin-inline: 4px;
-  border-radius: 2px;
-}
-.dp-fchip {
-  padding: 6px 13px;
-  border: 1.5px solid var(--ink-light);
-  border-radius: var(--r-pill);
-  font-family: inherit;
-  font-size: 12px; font-weight: 800;
-  color: var(--ink-subtle);
-  background: transparent;
-  cursor: pointer;
-  transition: all .18s ease;
-}
-.dp-fchip:hover { border-color: var(--dp); color: var(--dp-dark); background: var(--dp-light); }
-.dp-fchip.on {
-  background: var(--dp); color: var(--dp-text);
-  border-color: var(--ink);
-  box-shadow: 1.5px 1.5px 0 var(--ink);
-  font-weight: 900;
-}
+.dp-count b { font-size: 15px; font-weight: 950; color: var(--dp-dark); margin-inline-end: 4px; }
 
 /* مرتب‌سازی — دراپ‌داون سفارشی */
 .dp-sort {
@@ -598,41 +624,25 @@
 .dp-sort-menu button:hover { background: var(--dp-light); color: var(--dp-dark); }
 .dp-sort-menu button.active { background: var(--dp); color: var(--dp-text); font-weight: 900; }
 
-/* ریست فیلترها */
-.dp-reset {
-  display: inline-flex; align-items: center; gap: 4px;
-  margin-bottom: 18px;
-  padding: 6px 14px;
-  border: 2px solid var(--female-dark);
-  border-radius: var(--r-pill);
-  background: var(--female-light);
-  color: var(--female-dark);
-  font-family: inherit;
-  font-size: 12px; font-weight: 900;
-  cursor: pointer;
-  transition: all .18s ease;
-}
-.dp-reset:hover { background: var(--female); color: #fff; }
-
 /* حالت خالی */
 .dp-empty {
   background: var(--bg-neutral);
   border: 2px dashed var(--ink-light);
-  border-radius: 18px 0 18px 0;
+  border-radius: 20px 0 20px 0;
   padding: 44px 24px;
   text-align: center;
   font-size: 14px; font-weight: 700; color: var(--ink-subtle);
 }
 
-/* گرید دوره‌ها */
+/* گرید دوره‌ها (کارت‌های افقی — عریضتر از کارت عمودی) */
 .dp-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
-  gap: 26px 22px;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 30px 22px;
   padding-top: 6px;
 }
 @media (max-width: 640px) {
-  .dp-grid { grid-template-columns: 1fr; gap: 24px; }
+  .dp-grid { grid-template-columns: 1fr; gap: 26px; }
 }
 
 /* ============ مسیرهای یادگیری ============ */
@@ -645,10 +655,10 @@
   position: relative;
   background: #fff;
   border: 2px solid var(--ink);
-  border-radius: 0 20px 0 20px;
+  border-radius: 20px 0 20px 0;
   corner-shape: squircle; -webkit-corner-shape: squircle;
   padding: 26px 22px 20px;
-  box-shadow: 5px 5px 0 var(--dp);
+  box-shadow: 4px 4px 0 var(--dp);
   transition: transform .25s ease;
 }
 .dp-path:hover { transform: translate(3px, -3px); }
@@ -733,10 +743,10 @@
 .dp-test {
   background: #fff;
   border: 2px solid var(--ink);
-  border-radius: 0 20px 0 20px;
+  border-radius: 20px 0 20px 0;
   corner-shape: squircle; -webkit-corner-shape: squircle;
   padding: 22px 22px 18px;
-  box-shadow: 5px 5px 0 var(--dp);
+  box-shadow: 4px 4px 0 var(--dp);
   display: flex; flex-direction: column; gap: 16px;
   transition: transform .25s ease;
 }
@@ -755,7 +765,7 @@
   border: 2px solid var(--ink);
   border-radius: 20px 0 20px 0;
   corner-shape: squircle; -webkit-corner-shape: squircle;
-  box-shadow: 5px 5px 0 var(--dp);
+  box-shadow: 4px 4px 0 var(--dp);
   padding: 28px 30px;
 }
 @media (min-width: 861px) {
@@ -822,7 +832,6 @@
 }
 
 /* ============ CTA ============ */
-.dp-cta-block { padding-bottom: 24px; }
 .dp-cta {
   background: var(--dp);
   border: 2.5px solid var(--ink);
@@ -887,10 +896,19 @@
   .dp-hstat b { font-size: 19px; }
 }
 @media (max-width: 980px) {
-  .dp-layout { grid-template-columns: 1fr; padding-top: 24px; }
-  .dp-side { display: none; }
+  .dp-layout {
+    display: flex; flex-direction: column; gap: 28px;
+    padding-top: 28px;
+  }
+  /* سایدبار: ایستا، کارت دپارتمان‌ها مخفی (جایگزین: پیل‌های بالای صفحه) */
+  .dp-side {
+    position: static;
+    flex-direction: column; gap: 14px;
+  }
+  .dp-side-depts-card { display: none; }
   .dp-mbar { display: flex; }
   .dp-hero-inner { padding-top: 28px; }
+  .dp-main { gap: 32px; }
 }
 
 /* ============ موبایل ============ */
@@ -902,7 +920,6 @@
   .dp-hstat { flex: 1; padding: 11px 12px; min-width: calc(50% - 0px); }
   .dp-hstat:nth-child(3) { border-inline-start: none; }
   .dp-hstat:nth-child(n+3) { border-top: 2px dashed var(--ink-light); }
-  .dp-suggest-head { align-items: stretch; flex-direction: column; }
-  .dp-tabs { align-self: flex-start; }
-  .dp-toolbar { padding: 12px; }
+  .dp-suggest-head { flex-direction: column; align-items: stretch; }
+  .dp-suggest-ctrl { justify-content: space-between; }
 }

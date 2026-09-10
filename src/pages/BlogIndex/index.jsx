@@ -456,6 +456,16 @@ function BlogGrid({ activeCategory, searchQuery }) {
   /* حالت انیمیشن: stagger برای کارت‌های تازه لودشده، خروج برای کارت‌های اضافه */
   const [animState, setAnimState] = useState({ phase: "idle", fromIndex: 0 });
   const ref = useRef(null);
+  /* ----- ثابت‌های انیمیشن لودمور ----- */
+  const ENTER_STAGGER = 60, ENTER_MS = 550, EXIT_STAGGER = 45, EXIT_MS = 420;
+  const animTimers = useRef([]);
+
+  const clearAnimTimers = () => {
+    animTimers.current.forEach(clearTimeout);
+    animTimers.current = [];
+  };
+  /* پاک‌سازی تایمرها هنگام آن‌مانت */
+  useEffect(() => clearAnimTimers, []);
 
   /* بستن منوی مرتب‌سازی با کلیک بیرون */
   useEffect(() => {
@@ -467,9 +477,11 @@ function BlogGrid({ activeCategory, searchQuery }) {
     return () => document.removeEventListener("mousedown", onDoc);
   }, [sortOpen]);
 
-  /* با هر تغییر فیلتر/سرچ، شمارندهٔ لود‌مور ریست شود */
+  /* با هر تغییر فیلتر/سرچ، شمارندهٔ لود‌مور و فاز انیمیشن ریست شود */
   useEffect(() => {
+    clearAnimTimers();
     setVisible(PAGE_SIZE);
+    setAnimState({ phase: "idle", fromIndex: 0 });
   }, [activeCategory, searchQuery, sortBy]);
 
   const SORTS = [
@@ -502,8 +514,6 @@ function BlogGrid({ activeCategory, searchQuery }) {
   const hasMore = visible < sorted.length;
 
   /* ----- لود‌مور: کارت‌های جدید با stagger وارد می‌شوند ----- */
-  const ENTER_STAGGER = 60, ENTER_MS = 550, EXIT_STAGGER = 45, EXIT_MS = 420;
-
   const loadMore = () => {
     if (animState.phase !== "idle" || !hasMore) return;
     const from = visible;
@@ -511,9 +521,9 @@ function BlogGrid({ activeCategory, searchQuery }) {
     setVisible((v) => v + PAGE_SIZE);
     setAnimState({ phase: "enter", fromIndex: from });
     /* بعد از پایان stagger، فاز به idle برمی‌گردد تا کلاس انیمیشن برداشته شود */
-    setTimeout(() => {
+    animTimers.current.push(setTimeout(() => {
       setAnimState((s) => (s.phase === "enter" ? { phase: "idle", fromIndex: 0 } : s));
-    }, (count - 1) * ENTER_STAGGER + ENTER_MS + 60);
+    }, (count - 1) * ENTER_STAGGER + ENTER_MS + 60));
   };
 
   /* ----- بستن: کارت‌های اضافه با stagger خارج می‌شوند، بعد شمارنده برمی‌گردد ----- */
@@ -521,10 +531,10 @@ function BlogGrid({ activeCategory, searchQuery }) {
     if (animState.phase !== "idle" || visible <= PAGE_SIZE) return;
     setAnimState({ phase: "exit", fromIndex: PAGE_SIZE });
     const EXIT_TOTAL = EXIT_MS + (visible - PAGE_SIZE - 1) * EXIT_STAGGER + 80;
-    setTimeout(() => {
+    animTimers.current.push(setTimeout(() => {
       setVisible(PAGE_SIZE);
       setAnimState({ phase: "idle", fromIndex: 0 });
-    }, EXIT_TOTAL);
+    }, EXIT_TOTAL));
   };
 
   return (
