@@ -439,10 +439,13 @@
   box-shadow: 4px 4px 0 var(--ink);
 }
 
-/* ============ موضوعات پرطرفدار ============ */
+/* ============ موضوعات پرطرفدار ============
+   دسکتاپ: wrap عادی — موبایل: دو ردیف اسکرول افقی */
 .dp-topics {
   display: flex; flex-wrap: wrap; gap: 12px;
 }
+/* دسکتاپ: ردیف‌ها در جریان فلکس والد حل می‌شوند */
+.dp-topic-row { display: contents; }
 .dp-topic {
   display: inline-block;
   background: #fff;
@@ -906,4 +909,18 @@
   .dp-hstat:nth-child(n+3) { border-top: 2px dashed var(--ink-light); }
   .dp-card-block { padding: 26px 18px; }
   .dp-suggest-ctrl { justify-content: space-between; }
+  /* موضوعات: دو ردیف اسکرول افقی با لبهٔ کامل */
+  .dp-topics { display: block; }
+  .dp-topic-row {
+    display: flex; gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-block: 4px 8px;
+    margin-inline: -18px;
+    padding-inline: 18px;
+  }
+  .dp-topic-row::-webkit-scrollbar { display: none; }
+  .dp-topic-row + .dp-topic-row { margin-top: 2px; }
+  .dp-topic { flex-shrink: 0; padding: 8px 16px; font-size: 12.5px; }
 }

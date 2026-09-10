@@ -454,15 +454,22 @@ export default function DepartmentPage({ deptId }) {
             </div>
           </section>
 
-          {/* موضوعات پرطرفدار */}
+          {/* موضوعات پرطرفدار — موبایل: دو ردیف اسکرولی */}
           <section className="dp-block dp-card-block" id="dp-topics">
             <SectionHead pre="موضوعات" accent="پرطرفدار" />
             <div className="dp-topics">
-              {dept.topics.map((t, i) => (
-                <a key={t} href={`#courses-index/${currentId}`} className="dp-topic" style={{ "--rot": `rotate(${i % 2 ? 1 : -1}deg)` }}>
-                  {t}
-                </a>
-              ))}
+              {(() => {
+                const half = Math.ceil(dept.topics.length / 2);
+                return [dept.topics.slice(0, half), dept.topics.slice(half)].map((row, r) => (
+                  <div className="dp-topic-row" key={r}>
+                    {row.map((t, i) => (
+                      <a key={t} href={`#courses-index/${currentId}`} className="dp-topic" style={{ "--rot": `rotate(${i % 2 ? 1 : -1}deg)` }}>
+                        {t}
+                      </a>
+                    ))}
+                  </div>
+                ));
+              })()}
             </div>
           </section>
 
