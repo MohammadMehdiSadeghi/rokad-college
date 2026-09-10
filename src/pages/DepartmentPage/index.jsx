@@ -53,6 +53,9 @@ const BookIcon = () => (
 const StarIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
 );
+const FilterIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="17" x2="14" y2="17"/></svg>
+);
 
 /* فلش‌های ناوبری ردیف دوره‌ها — راست = قبلی، چپ = بعدی (جهت RTL) */
 const ChevronIcon = ({ dir = "left" }) => (
@@ -79,24 +82,20 @@ const SectionHead = ({ pre, accent }) => (
   </div>
 );
 
-/* ---- کارت دوره — یکدست با کارت صفحهٔ دوره‌ها (الگوی cp-card) ---- */
+/* ---- کارت دوره — عمودی: کاور (پترن + آیکون) بالای کارت ---- */
 const CourseCard = ({ c, rot, pattern }) => (
   <a className="dp-card" href="#courses-index" style={{ "--rot": `rotate(${rot}deg)` }}>
     <div className="dp-card-cover">
       <img className="dp-cover-pattern" src={pattern} alt="" aria-hidden="true" />
+      {c.tag && <span className="dp-card-tag">{c.tag}</span>}
       <CourseIcon id={c.ic} size={34} />
     </div>
     <div className="dp-card-body">
-      {c.tag && <span className="dp-card-tag">{c.tag}</span>}
-      <div className="dp-card-head">
-        <div>
-          <div className="dp-card-title">{c.title}</div>
-          <div className="dp-card-inst">
-            <span className="dp-av">{c.inst.charAt(0)}</span>
-            <span>{c.inst}</span>
-          </div>
-        </div>
-        <span className="dp-card-mode">{c.cat}</span>
+      <div className="dp-card-cat">{c.cat}</div>
+      <div className="dp-card-title">{c.title}</div>
+      <div className="dp-card-inst">
+        <span className="dp-av">{c.inst.charAt(0)}</span>
+        <span>{c.inst}</span>
       </div>
       <div className="dp-card-meta">
         <span className="dp-rate"><StarIcon /> {c.rating}</span>
@@ -182,23 +181,6 @@ function useRtlRowNav() {
   return { rowRef, nav, update, scroll };
 }
 
-/* ---- آیتم آکاردئونی سوالات متداول ---- */
-function FaqItem({ item, open, onToggle }) {
-  return (
-    <div className={`dp-faq-item${open ? " open" : ""}`}>
-      <button type="button" className="dp-faq-q" onClick={onToggle} aria-expanded={open}>
-        <span>{item.q}</span>
-        <span className="dp-faq-ic"><CourseIcon id="plus" size={14} /></span>
-      </button>
-      <div className="dp-faq-a">
-        <div className="dp-faq-a-clip">
-          <p>{item.a}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 const DEPT_ICONS = {
   languages: { hero: "globe", cta: "translate" },
   business: { hero: "rocket", cta: "briefcase" },
@@ -250,8 +232,15 @@ export default function DepartmentPage({ deptId }) {
   const [sortOpen, setSortOpen] = useState(false);
   const sortRef = useRef(null);
 
-  /* آکاردئون سوالات متداول */
-  const [openFaq, setOpenFaq] = useState(0);
+  /* درِاور فیلتر (موبایل) */
+  const [filterOpen, setFilterOpen] = useState(false);
+
+  /* نمایش کارت فیلترها در سایدبار فقط وقتی سکشن دوره‌ها در دید است */
+  const allRef = useRef(null);
+  const [filtersVisible, setFiltersVisible] = useState(false);
+
+  /* دکمهٔ شناور انتخاب دپارتمان (موبایل) */
+  const [fabOpen, setFabOpen] = useState(false);
 
   /* ناوبری ردیف دوره‌های پیشنهادی */
   const suggestNav = useRtlRowNav();
@@ -271,6 +260,34 @@ export default function DepartmentPage({ deptId }) {
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [sortOpen]);
+
+  /* کارت فیلترها فقط هنگام دید بودن سکشن «همهٔ دوره‌ها» */
+  useEffect(() => {
+    const el = allRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setFiltersVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => setFiltersVisible(entry.isIntersecting),
+      { rootMargin: "0px 0px -10% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  /* درِاور فیلتر: قفل اسکرول بدنه + بستن با Escape */
+  useEffect(() => {
+    if (!filterOpen) return;
+    const onKey = (e) => { if (e.key === "Escape") setFilterOpen(false); };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [filterOpen]);
 
   /* لینک لنگری معمولی هش را عوض می‌کرد و روت #dept/<id> می‌شکست؛
      اینجا فقط اسکرول نرم می‌کنیم */
@@ -307,24 +324,54 @@ export default function DepartmentPage({ deptId }) {
     setSort("default");
   };
 
+  /* گروه‌های فیلتر — مشترک بین سایدبار و درِاور موبایل */
+  const filterGroups = (
+    <>
+      <div className="dp-fgroup">
+        <div className="dp-fgroup-t">امتیاز دوره</div>
+        <div className="dp-fchips">
+          {RATING_FILTERS.map((f) => (
+            <button key={f.id} type="button" className={`dp-fchip${ratingF === f.id ? " on" : ""}`} onClick={() => setRatingF(f.id)}>
+              {f.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="dp-fgroup">
+        <div className="dp-fgroup-t">طول دوره</div>
+        <div className="dp-fchips">
+          {DUR_FILTERS.map((f) => (
+            <button key={f.id} type="button" className={`dp-fchip${durF === f.id ? " on" : ""}`} onClick={() => setDurF(f.id)}>
+              {f.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="dp-fgroup">
+        <div className="dp-fgroup-t">نوع دوره</div>
+        <div className="dp-fchips">
+          {TYPE_FILTERS.map((f) => (
+            <button key={f.id} type="button" className={`dp-fchip${typeF === f.id ? " on" : ""}`} onClick={() => setTypeF(f.id)}>
+              {f.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+
   const tabList = tab === "popular" ? dept.popular : dept.newest;
+
+  const quickLinks = [
+    { id: "dp-suggest", label: "دوره‌های پیشنهادی" },
+    { id: "dp-topics", label: "موضوعات پرطرفدار" },
+    { id: "dp-all", label: "همهٔ دوره‌ها" },
+    { id: "dp-paths", label: "مسیرهای یادگیری" },
+    { id: "dp-insts", label: "مدرسان برتر" },
+  ];
 
   return (
     <div className="dp-page" style={styleVars} data-dept={currentId} key={currentId}>
-      {/* ---------- سوییچر دپارتمان‌ها (فقط موبایل) ---------- */}
-      <div className="dp-mbar container">
-        {ALL_DEPTS.map((d) => (
-          <a
-            key={d.id}
-            href={`#dept/${d.id}`}
-            className={`dp-mbar-pill${d.id === currentId ? " active" : ""}`}
-            style={d.id === currentId ? { background: d.color, color: d.id === "it" ? "#fff" : "var(--ink)", borderColor: "var(--ink)" } : {}}
-          >
-            {d.name}
-          </a>
-        ))}
-      </div>
-
       {/* ---------- HERO (تیتر + لید + نوار آمار + پترن دپارتمان) ---------- */}
       <header className="dp-hero">
         <img src={persona.pattern} alt="" aria-hidden="true" className="dp-hero-pattern" />
@@ -395,87 +442,67 @@ export default function DepartmentPage({ deptId }) {
             </div>
           </div>
 
-          {/* فیلترها — همان سیستم فیلتر بخش همهٔ دوره‌ها */}
-          <div className="dp-side-card dp-side-filters">
-            <div className="dp-side-title">
-              فیلترها
-              {activeFilterCount > 0 && (
-                <button type="button" className="dp-reset" onClick={resetFilters}>
-                  پاک کردن ×
-                </button>
-              )}
-            </div>
-            <div className="dp-fgroup">
-              <div className="dp-fgroup-t">امتیاز دوره</div>
-              <div className="dp-fchips">
-                {RATING_FILTERS.map((f) => (
-                  <button key={f.id} type="button" className={`dp-fchip${ratingF === f.id ? " on" : ""}`} onClick={() => setRatingF(f.id)}>
-                    {f.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="dp-fgroup">
-              <div className="dp-fgroup-t">طول دوره</div>
-              <div className="dp-fchips">
-                {DUR_FILTERS.map((f) => (
-                  <button key={f.id} type="button" className={`dp-fchip${durF === f.id ? " on" : ""}`} onClick={() => setDurF(f.id)}>
-                    {f.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="dp-fgroup">
-              <div className="dp-fgroup-t">نوع دوره</div>
-              <div className="dp-fchips">
-                {TYPE_FILTERS.map((f) => (
-                  <button key={f.id} type="button" className={`dp-fchip${typeF === f.id ? " on" : ""}`} onClick={() => setTypeF(f.id)}>
-                    {f.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="dp-side-card">
+            <div className="dp-side-title">دسترسی سریع</div>
+            <nav className="dp-side-links">
+              {quickLinks.map((l) => (
+                <a key={l.id} href={`#${l.id}`} onClick={(e) => scrollToSection(e, l.id)}>
+                  {l.label}
+                  <ArrowIcon />
+                </a>
+              ))}
+            </nav>
           </div>
+
+          {/* فیلترها — فقط وقتی سکشن «همهٔ دوره‌ها» در دید است */}
+          {filtersVisible && (
+            <div className="dp-side-card dp-side-filters">
+              <div className="dp-side-title">
+                فیلترها
+                {activeFilterCount > 0 && (
+                  <button type="button" className="dp-reset" onClick={resetFilters}>
+                    پاک کردن ×
+                  </button>
+                )}
+              </div>
+              {filterGroups}
+            </div>
+          )}
         </aside>
 
         {/* ----- محتوای اصلی ----- */}
         <main className="dp-main">
-          {/* دوره‌های پیشنهادی — تب محبوب‌ترین/جدیدترین + فلش‌ها کنار تب‌ها */}
+          {/* دوره‌های پیشنهادی — تب‌ها راست، فلش‌ها چپ */}
           <section className="dp-block" id="dp-suggest">
-            <div className="dp-suggest-head">
-              <SectionHead
-                pre="دوره‌های پیشنهادی برای شروع"
-                accent={dept.name}
-              />
-              <div className="dp-suggest-ctrl">
-                <div className="dp-tabs" role="tablist">
-                  <button type="button" role="tab" aria-selected={tab === "popular"} className={`dp-tab${tab === "popular" ? " active" : ""}`} onClick={() => setTab("popular")}>
-                    محبوب‌ترین
-                  </button>
-                  <button type="button" role="tab" aria-selected={tab === "newest"} className={`dp-tab${tab === "newest" ? " active" : ""}`} onClick={() => setTab("newest")}>
-                    جدیدترین
-                  </button>
-                </div>
-                <div className="dp-row-nav">
-                  <button
-                    type="button"
-                    className="dp-nav"
-                    onClick={() => suggestNav.scroll(false)}
-                    disabled={!suggestNav.nav.prev}
-                    aria-label="دوره‌های قبلی"
-                  >
-                    <ChevronIcon dir="right" />
-                  </button>
-                  <button
-                    type="button"
-                    className="dp-nav"
-                    onClick={() => suggestNav.scroll(true)}
-                    disabled={!suggestNav.nav.next}
-                    aria-label="دوره‌های بعدی"
-                  >
-                    <ChevronIcon dir="left" />
-                  </button>
-                </div>
+            <SectionHead pre="دوره‌های پیشنهادی برای شروع" accent={dept.name} />
+            <div className="dp-suggest-ctrl">
+              <div className="dp-tabs" role="tablist">
+                <button type="button" role="tab" aria-selected={tab === "popular"} className={`dp-tab${tab === "popular" ? " active" : ""}`} onClick={() => setTab("popular")}>
+                  محبوب‌ترین
+                </button>
+                <button type="button" role="tab" aria-selected={tab === "newest"} className={`dp-tab${tab === "newest" ? " active" : ""}`} onClick={() => setTab("newest")}>
+                  جدیدترین
+                </button>
+              </div>
+              <div className="dp-row-nav">
+                <button
+                  type="button"
+                  className="dp-nav"
+                  onClick={() => suggestNav.scroll(false)}
+                  disabled={!suggestNav.nav.prev}
+                  aria-label="دوره‌های قبلی"
+                >
+                  <ChevronIcon dir="right" />
+                </button>
+                <button
+                  type="button"
+                  className="dp-nav"
+                  onClick={() => suggestNav.scroll(true)}
+                  disabled={!suggestNav.nav.next}
+                  aria-label="دوره‌های بعدی"
+                >
+                  <ChevronIcon dir="left" />
+                </button>
               </div>
             </div>
             <div className="dp-row" ref={suggestNav.rowRef} aria-label={`دوره‌های پیشنهادی ${dept.name}`}>
@@ -503,39 +530,46 @@ export default function DepartmentPage({ deptId }) {
             </div>
           </section>
 
-          {/* همهٔ دوره‌ها — گرید (فیلترها در سایدبار) */}
-          <section className="dp-block" id="dp-all">
+          {/* همهٔ دوره‌ها — گرید (فیلترها در سایدبار / درِاور موبایل) */}
+          <section className="dp-block" id="dp-all" ref={allRef}>
             <SectionHead pre="همهٔ" accent="دوره‌ها" />
 
             <div className="dp-toolbar">
               <div className="dp-count">
                 <b>{faNum(allCourses.length)}</b> دوره
               </div>
-              <div className="dp-sort" ref={sortRef}>
-                <span className="dp-sort-lab">ترتیب:</span>
-                <button type="button" className="dp-sort-btn" onClick={() => setSortOpen((v) => !v)} aria-haspopup="listbox" aria-expanded={sortOpen}>
-                  {SORTS.find((s) => s.id === sort)?.label} <span className="caret">▼</span>
+              <div className="dp-tools">
+                <button type="button" className="dp-filter-btn" onClick={() => setFilterOpen(true)} aria-haspopup="dialog">
+                  <FilterIcon />
+                  <span>فیلترها</span>
+                  {activeFilterCount > 0 && <span className="dp-filter-count">{faNum(activeFilterCount)}</span>}
                 </button>
-                {sortOpen && (
-                  <ul className="dp-sort-menu" role="listbox">
-                    {SORTS.map((s) => (
-                      <li key={s.id}>
-                        <button
-                          type="button"
-                          role="option"
-                          aria-selected={sort === s.id}
-                          className={sort === s.id ? "active" : ""}
-                          onClick={() => {
-                            setSort(s.id);
-                            setSortOpen(false);
-                          }}
-                        >
-                          {s.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div className="dp-sort" ref={sortRef}>
+                  <span className="dp-sort-lab">ترتیب:</span>
+                  <button type="button" className="dp-sort-btn" onClick={() => setSortOpen((v) => !v)} aria-haspopup="listbox" aria-expanded={sortOpen}>
+                    {SORTS.find((s) => s.id === sort)?.label} <span className="caret">▼</span>
+                  </button>
+                  {sortOpen && (
+                    <ul className="dp-sort-menu" role="listbox">
+                      {SORTS.map((s) => (
+                        <li key={s.id}>
+                          <button
+                            type="button"
+                            role="option"
+                            aria-selected={sort === s.id}
+                            className={sort === s.id ? "active" : ""}
+                            onClick={() => {
+                              setSort(s.id);
+                              setSortOpen(false);
+                            }}
+                          >
+                            {s.label}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -605,25 +639,6 @@ export default function DepartmentPage({ deptId }) {
             </div>
           </section>
 
-          {/* دربارهٔ دپارتمان (متن معرفی) */}
-          <section className="dp-block" id="dp-about">
-            <SectionHead pre="دربارهٔ دپارتمان" accent={dept.name} />
-            <div className="dp-about">
-              <p>{dept.about.p1}</p>
-              <p>{dept.about.p2}</p>
-            </div>
-          </section>
-
-          {/* سوالات متداول — آکاردئون */}
-          <section className="dp-block dp-card-block" id="dp-faq">
-            <SectionHead pre="سوالات متداول" accent={dept.name} />
-            <div className="dp-faq">
-              {dept.faqs.map((f, i) => (
-                <FaqItem key={i} item={f} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? -1 : i)} />
-              ))}
-            </div>
-          </section>
-
           {/* CTA دپارتمان */}
           <section className="dp-block dp-cta-block">
             <div className="dp-cta">
@@ -647,6 +662,77 @@ export default function DepartmentPage({ deptId }) {
             </div>
           </section>
         </main>
+      </div>
+
+      {/* ---------- درِاور فیلتر (فقط موبایل) ---------- */}
+      {filterOpen && (
+        <div
+          className="dp-drawer-scrim"
+          onClick={() => setFilterOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="فیلترها"
+        >
+          <div className="dp-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="dp-drawer-head">
+              <span className="dp-drawer-title">فیلترها</span>
+              <div className="dp-drawer-actions">
+                {activeFilterCount > 0 && (
+                  <button type="button" className="dp-reset" onClick={resetFilters}>
+                    پاک کردن ×
+                  </button>
+                )}
+                <button type="button" className="dp-drawer-close" onClick={() => setFilterOpen(false)} aria-label="بستن">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div className="dp-drawer-body">
+              {filterGroups}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ---------- دکمهٔ شناور انتخاب دپارتمان (فقط موبایل — مثل چت‌بات) ---------- */}
+      <div className="dp-fab-wrap">
+        {fabOpen && (
+          <>
+            <div className="dp-fab-backdrop" onClick={() => setFabOpen(false)} />
+            <div className="dp-fab-menu" role="menu">
+              {ALL_DEPTS.map((d) => {
+                const active = d.id === currentId;
+                return (
+                  <a
+                    key={d.id}
+                    href={`#dept/${d.id}`}
+                    role="menuitem"
+                    className={`dp-fab-item${active ? " active" : ""}`}
+                    style={active ? { background: d.color, color: d.id === "it" ? "#fff" : "var(--ink)" } : {}}
+                    onClick={() => setFabOpen(false)}
+                  >
+                    <span className="dp-fab-ic">
+                      <CourseIcon id={DEPT_ICONS[d.id].hero} size={16} />
+                    </span>
+                    {d.name}
+                  </a>
+                );
+              })}
+            </div>
+          </>
+        )}
+        <button
+          type="button"
+          className={`dp-fab${fabOpen ? " open" : ""}`}
+          onClick={() => setFabOpen((v) => !v)}
+          aria-label="انتخاب دپارتمان"
+          aria-expanded={fabOpen}
+        >
+          <CourseIcon id="globe" size={24} />
+        </button>
       </div>
     </div>
   );
