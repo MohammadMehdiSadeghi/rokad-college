@@ -229,6 +229,13 @@ export default function DepartmentPage({ deptId }) {
   const [durF, setDurF] = useState("all");
   const [typeF, setTypeF] = useState("all");
   const [sort, setSort] = useState("default");
+
+  /* صفحه‌بندی گرید دوره‌ها (حداکثر ۹ دوره در هر صفحه — ۳×۳) */
+  const PAGE_SIZE = 9;
+  const [page, setPage] = useState(1);
+  useEffect(() => {
+    setPage(1);
+  }, [ratingF, durF, typeF, sort]);
   const [sortOpen, setSortOpen] = useState(false);
   const sortRef = useRef(null);
 
@@ -303,6 +310,15 @@ export default function DepartmentPage({ deptId }) {
     setDurF("all");
     setTypeF("all");
     setSort("default");
+  };
+
+  /* برش دوره‌های صفحهٔ جاری + رفتن به صفحه با اسکرول به سکشن */
+  const totalPages = Math.max(1, Math.ceil(allCourses.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const pagedCourses = allCourses.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+  const goPage = (n) => {
+    setPage(n);
+    document.getElementById("dp-all")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   /* گروه‌های فیلتر — مشترک بین سایدبار و درِاور موبایل */
@@ -496,11 +512,48 @@ export default function DepartmentPage({ deptId }) {
             {allCourses.length === 0 ? (
               <div className="dp-empty">دوره‌ای با این فیلترها پیدا نشد. فیلترها را تغییر دهید.</div>
             ) : (
-              <div className="dp-grid">
-                {allCourses.map((c, i) => (
-                  <CourseCard c={c} rot={[-0.5, 0.5, -0.25, 0.25][i % 4]} pattern={persona.pattern} key={i} />
-                ))}
-              </div>
+              <>
+                <div className="dp-grid">
+                  {pagedCourses.map((c, i) => (
+                    <CourseCard c={c} rot={[-0.5, 0.5, -0.25, 0.25][i % 4]} pattern={persona.pattern} key={i} />
+                  ))}
+                </div>
+
+                {/* صفحه‌بندی */}
+                {totalPages > 1 && (
+                  <nav className="dp-pagination" aria-label="صفحه‌بندی دوره‌ها">
+                    <button
+                      type="button"
+                      className="dp-page-btn"
+                      disabled={safePage === 1}
+                      onClick={() => goPage(safePage - 1)}
+                      aria-label="صفحهٔ قبل"
+                    >
+                      <ChevronIcon dir="right" />
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        className={`dp-page-btn${safePage === n ? " active" : ""}`}
+                        onClick={() => goPage(n)}
+                        aria-current={safePage === n ? "page" : undefined}
+                      >
+                        {faNum(n)}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      className="dp-page-btn"
+                      disabled={safePage === totalPages}
+                      onClick={() => goPage(safePage + 1)}
+                      aria-label="صفحهٔ بعد"
+                    >
+                      <ChevronIcon dir="left" />
+                    </button>
+                  </nav>
+                )}
+              </>
             )}
           </section>
 

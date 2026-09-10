@@ -561,16 +561,47 @@
   font-size: 14px; font-weight: 700; color: var(--ink-subtle);
 }
 
-/* گرید دوره‌ها */
+/* گرید دوره‌ها — حداکثر ۳ کارت در هر ردیف + صفحه‌بندی */
 .dp-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px 24px;
   padding-top: 6px;
+}
+@media (max-width: 980px) {
+  .dp-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
   .dp-grid { grid-template-columns: 1fr; gap: 28px; }
 }
+
+/* صفحه‌بندی */
+.dp-pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: 8px; flex-wrap: wrap;
+  margin-top: 42px;
+}
+.dp-page-btn {
+  min-width: 42px; height: 42px;
+  padding: 0 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 10px 0 10px 0;
+  corner-shape: squircle; -webkit-corner-shape: squircle;
+  box-shadow: 2.5px 2.5px 0 var(--dp);
+  font-family: inherit;
+  font-weight: 900; font-size: 14px;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.dp-page-btn svg { width: 16px; height: 16px; }
+.dp-page-btn:hover:enabled:not(.active) { transform: translate(2px, -2px); box-shadow: 1px 1px 0 var(--dp); }
+.dp-page-btn.active {
+  background: var(--dp); color: var(--dp-text);
+  cursor: default;
+}
+.dp-page-btn:disabled { opacity: .35; box-shadow: none; cursor: default; }
 
 /* ============ مسیرهای یادگیری ============ */
 .dp-paths {
