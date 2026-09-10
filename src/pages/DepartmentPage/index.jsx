@@ -232,14 +232,10 @@ export default function DepartmentPage({ deptId }) {
   const [sortOpen, setSortOpen] = useState(false);
   const sortRef = useRef(null);
 
-  /* درِاور فیلتر (موبایل) */
+  /* درِاور فیلتر (کنار دکمهٔ فیلترها در نوار ابزار) */
   const [filterOpen, setFilterOpen] = useState(false);
 
-  /* نمایش کارت فیلترها در سایدبار فقط وقتی سکشن دوره‌ها در دید است */
-  const allRef = useRef(null);
-  const [filtersVisible, setFiltersVisible] = useState(false);
-
-  /* دکمهٔ شناور انتخاب دپارتمان (موبایل) */
+  /* دکمهٔ شناور انتخاب دپارتمان (مثل چت‌بات) */
   const [fabOpen, setFabOpen] = useState(false);
 
   /* ناوبری ردیف دوره‌های پیشنهادی */
@@ -260,21 +256,6 @@ export default function DepartmentPage({ deptId }) {
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [sortOpen]);
-
-  /* کارت فیلترها فقط هنگام دید بودن سکشن «همهٔ دوره‌ها» */
-  useEffect(() => {
-    const el = allRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") {
-      setFiltersVisible(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([entry]) => setFiltersVisible(entry.isIntersecting),
-      { rootMargin: "0px 0px -10% 0px" }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
 
   /* درِاور فیلتر: قفل اسکرول بدنه + بستن با Escape */
   useEffect(() => {
@@ -362,14 +343,6 @@ export default function DepartmentPage({ deptId }) {
 
   const tabList = tab === "popular" ? dept.popular : dept.newest;
 
-  const quickLinks = [
-    { id: "dp-suggest", label: "دوره‌های پیشنهادی" },
-    { id: "dp-topics", label: "موضوعات پرطرفدار" },
-    { id: "dp-all", label: "همهٔ دوره‌ها" },
-    { id: "dp-paths", label: "مسیرهای یادگیری" },
-    { id: "dp-insts", label: "مدرسان برتر" },
-  ];
-
   return (
     <div className="dp-page" style={styleVars} data-dept={currentId} key={currentId}>
       {/* ---------- HERO (تیتر + لید + نوار آمار + پترن دپارتمان) ---------- */}
@@ -417,62 +390,9 @@ export default function DepartmentPage({ deptId }) {
         </div>
       </header>
 
-      {/* ---------- چیدمان دو ستونه: سایدبار چسبان + محتوا ---------- */}
-      <div className="container dp-layout">
-        {/* ----- سایدبار ----- */}
-        <aside className="dp-side">
-          <div className="dp-side-card dp-side-depts-card">
-            <div className="dp-side-title">دپارتمان‌ها</div>
-            <div className="dp-side-depts">
-              {ALL_DEPTS.map((d) => {
-                const active = d.id === currentId;
-                return (
-                  <a key={d.id} href={`#dept/${d.id}`} className={`dp-side-dept${active ? " active" : ""}`}>
-                    <span
-                      className="dp-side-ic"
-                      style={active ? { background: d.color, color: d.id === "it" ? "#fff" : "var(--ink)" } : {}}
-                    >
-                      <CourseIcon id={DEPT_ICONS[d.id].hero} size={17} />
-                    </span>
-                    <span className="dp-side-dept-name">{d.name}</span>
-                    {active && <span className="dp-side-dot" />}
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="dp-side-card">
-            <div className="dp-side-title">دسترسی سریع</div>
-            <nav className="dp-side-links">
-              {quickLinks.map((l) => (
-                <a key={l.id} href={`#${l.id}`} onClick={(e) => scrollToSection(e, l.id)}>
-                  {l.label}
-                  <ArrowIcon />
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          {/* فیلترها — فقط وقتی سکشن «همهٔ دوره‌ها» در دید است */}
-          {filtersVisible && (
-            <div className="dp-side-card dp-side-filters">
-              <div className="dp-side-title">
-                فیلترها
-                {activeFilterCount > 0 && (
-                  <button type="button" className="dp-reset" onClick={resetFilters}>
-                    پاک کردن ×
-                  </button>
-                )}
-              </div>
-              {filterGroups}
-            </div>
-          )}
-        </aside>
-
-        {/* ----- محتوای اصلی ----- */}
-        <main className="dp-main">
-          {/* دوره‌های پیشنهادی — تب‌ها راست، فلش‌ها چپ */}
+      {/* ---------- محتوا — تمام‌عرض ---------- */}
+      <main className="dp-main container">
+        {/* دوره‌های پیشنهادی — تب‌ها راست، فلش‌ها چپ */}
           <section className="dp-block" id="dp-suggest">
             <SectionHead pre="دوره‌های پیشنهادی برای شروع" accent={dept.name} />
             <div className="dp-suggest-ctrl">
@@ -531,7 +451,7 @@ export default function DepartmentPage({ deptId }) {
           </section>
 
           {/* همهٔ دوره‌ها — گرید (فیلترها در سایدبار / درِاور موبایل) */}
-          <section className="dp-block" id="dp-all" ref={allRef}>
+          <section className="dp-block" id="dp-all">
             <SectionHead pre="همهٔ" accent="دوره‌ها" />
 
             <div className="dp-toolbar">
@@ -661,10 +581,9 @@ export default function DepartmentPage({ deptId }) {
               </div>
             </div>
           </section>
-        </main>
-      </div>
+      </main>
 
-      {/* ---------- درِاور فیلتر (فقط موبایل) ---------- */}
+      {/* ---------- درِاور فیلتر (کنار دکمهٔ فیلترها — همهٔ سایزها) ---------- */}
       {filterOpen && (
         <div
           className="dp-drawer-scrim"
@@ -697,7 +616,7 @@ export default function DepartmentPage({ deptId }) {
         </div>
       )}
 
-      {/* ---------- دکمهٔ شناور انتخاب دپارتمان (فقط موبایل — مثل چت‌بات) ---------- */}
+      {/* ---------- دکمهٔ شناور انتخاب دپارتمان (مثل چت‌بات) ---------- */}
       <div className="dp-fab-wrap">
         {fabOpen && (
           <>
