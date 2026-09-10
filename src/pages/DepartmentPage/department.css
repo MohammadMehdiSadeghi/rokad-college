@@ -295,9 +295,10 @@
   margin: -6px -6px -12px;
 }
 .dp-row::-webkit-scrollbar { display: none; }
-.dp-row > .dp-card { flex: 0 0 276px; }
-@media (max-width: 900px) { .dp-row { gap: 16px; } .dp-row > .dp-card { flex-basis: 248px; } }
-@media (max-width: 640px) { .dp-row > .dp-card { flex-basis: 76%; } }
+/* دسکتاپ: دقیقاً ۳ کارت در نمای ردیف */
+.dp-row > .dp-card { flex: 0 0 calc((100% - 48px) / 3); }
+@media (max-width: 900px) { .dp-row { gap: 16px; } .dp-row > .dp-card { flex-basis: calc((100% - 16px) / 2); } }
+@media (max-width: 640px) { .dp-row > .dp-card { flex-basis: 86%; } }
 
 .dp-more { text-align: center; margin-top: 30px; }
 
