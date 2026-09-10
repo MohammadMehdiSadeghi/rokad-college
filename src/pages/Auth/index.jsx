@@ -41,7 +41,7 @@ export default function Auth() {
             <img src="/assets/Shared/Logos/logo-white-512.png" alt="" aria-hidden="true" />
           </span>
           <span className="txt">
-            <b>رکاد کالج</b>
+            <b>کالج رکاد</b>
             <small>ROKAD COLLEGE</small>
           </span>
         </div>
@@ -175,7 +175,7 @@ export default function Auth() {
         </div>
 
         <p className="auth-terms">
-          با ورود، <a href="#faq">قوانین و شرایط</a> رکاد کالج رو می‌پذیری.
+          با ورود، <a href="#faq">قوانین و شرایط</a> کالج رکاد رو می‌پذیری.
         </p>
       </div>
     </main>

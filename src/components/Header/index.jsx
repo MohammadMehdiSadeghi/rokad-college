@@ -54,27 +54,26 @@ export default function Header() {
   const searchRef = useRef(null);
   const searchInputRef = useRef(null);
 
-  /* Scroll spy: scrolled + active nav section */
+  /* Scroll spy: حالت چسبیدهٔ هدر + هایلایت لینک نوبار مطابق صفحهٔ فعلی (روت هش)
+     0 صفحهٔ اصلی | 1 دوره‌ها | 2 مجله | 3 پنل */
   useEffect(() => {
-    const sectionIds = ["promo", "features", "courses", "about", "blog", "comments"];
-
-    const onScroll = () => {
+    const apply = () => {
       setScrolled(window.scrollY > 80);
-      /* find which section is in view */
-      let current = 0;
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sectionIds[i]);
-        if (!el) continue;
-        if (el.getBoundingClientRect().top <= 90) {
-          current = i + 1;
-          break;
-        }
-      }
-      setActive(current);
+      const h = window.location.hash || "";
+      setActive(
+        h.startsWith("#courses-index") || h.startsWith("#dept/") || h.startsWith("#course/") ? 1
+          : h.startsWith("#blog-index") || h.startsWith("#article/") ? 2
+          : h.startsWith("#panel") ? 3
+          : 0
+      );
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", apply, { passive: true });
+    window.addEventListener("hashchange", apply);
+    apply();
+    return () => {
+      window.removeEventListener("scroll", apply);
+      window.removeEventListener("hashchange", apply);
+    };
   }, []);
 
   /* ─── Search logic: filter + group ─── */
@@ -147,11 +146,10 @@ export default function Header() {
     };
   }, [mobileOpen]);
 
+  /* لینک‌های نوبار — صفحه‌محور (نه سکشن‌محور) */
   const links = [
     { t: "صفحهٔ اصلی", href: "#top" },
-    { t: "ویژگی‌ها", href: "#features" },
     { t: "دوره‌ها", href: "#courses-index" },
-    { t: "مسیر و اساتید", href: "#about" },
     { t: "مجله", href: "#blog-index" },
     { t: "پنل من", href: "#panel" },
   ];

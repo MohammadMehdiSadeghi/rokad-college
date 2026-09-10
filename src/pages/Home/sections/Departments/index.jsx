@@ -93,10 +93,6 @@ export default function Departments({ layout = "stack" }) {
             <span className="w w2">دپارتمان،</span>
             <span className="w w3">سه جهان</span>
           </h2>
-          <a href="#courses-index" className="dept5-cta-top">
-            مشاهدهٔ همهٔ دوره‌ها
-            <ArrowIcon />
-          </a>
         </div>
 
         {/* Grid: پیش‌فرض ۲ بالا + ۱ عریض | layout="row3" → ۳ ستونه کنار هم */}

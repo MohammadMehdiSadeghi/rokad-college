@@ -10,7 +10,7 @@ const departments = [
 
 const quickLinks = [
   { label: "همهٔ دوره‌ها", href: "#courses-index" },
-  { label: "مجلهٔ رکاد کالج", href: "#blog-index" },
+  { label: "مجلهٔ کالج رکاد", href: "#blog-index" },
   { label: "پنل هنرجو", href: "#panel" },
   { label: "ورود / ثبت‌نام", href: "#auth" },
   { label: "دربارهٔ ما", href: "#about" },
@@ -93,7 +93,7 @@ export default function Footer() {
           <span className="word">شروع می‌شه.</span>
         </h3>
         <p className="f5-desc">
-            شماره‌ات رو بذار تا کارشناسان رکاد کالج رایگان باهات تماس بگیرن و بهترین
+            شماره‌ات رو بذار تا کارشناسان کالج رکاد رایگان باهات تماس بگیرن و بهترین
           مسیر یادگیری رو با توجه به هدف شغلیت معرفی کنن.
         </p>
         <form className="f5-form" onSubmit={handleSubmit}>
@@ -130,7 +130,7 @@ export default function Footer() {
                 aria-hidden="true"
               />
             </span>
-            رکاد کالج
+            کالج رکاد
           </div>
           <p>اولین هنرستان استارتاپی ایران. یاد بگیر، تجربه کن، مهارت بساز.</p>
         </div>
@@ -175,7 +175,7 @@ export default function Footer() {
       {/* ---------- Bottom bar ---------- */}
       <div className="f5-bottom">
         <div className="f5-copy">
-          © {toFa(year)} <strong>رکاد‌کالج</strong> — طراحی شده با عشق.
+          © {toFa(year)} <strong>کالج رکاد</strong> — طراحی شده با عشق.
         </div>
         <div className="f5-socs">
           {socials.map((s) => (

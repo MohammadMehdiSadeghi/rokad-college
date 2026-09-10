@@ -1,5 +1,5 @@
 /* ============================================================
-   رکاد کالج — صفحهٔ همهٔ بلاگ‌ها (Blog Index)
+   کالج رکاد — صفحهٔ همهٔ بلاگ‌ها (Blog Index)
    ساختار: برگرفته از «Blog Page.html» (مرجع)
    دیزاین: سیستم کالج (کهربایی اصلی + سرمه‌ای/مجنتا/تیل)
    باز شدن: هش #blog-index
@@ -44,6 +44,7 @@ const I = {
   Book: (p) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>,
   Sparkle: (p) => <svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M12 2l1.8 6.4L20 10l-6.2 1.6L12 18l-1.8-6.4L4 10l6.2-1.6L12 2z" /></svg>,
   Check: (p) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...p}><polyline points="20 6 9 17 4 12" /></svg>,
+  X: (p) => <svg viewBox="0 0 24 24" {...S} {...p}><path d="M18 6 6 18M6 6l12 12" /></svg>,
 };
 
 /* ============================================================
@@ -388,14 +389,17 @@ const CAT_TAGS = {
   tips: ["راهنما"],
 };
 
-function BlogCard({ post, index }) {
+function BlogCard({ post, index, entering, exiting, animDelay = 0 }) {
   const c = TAG_COLORS[post.tagColor] || TAG_COLORS.primary;
   const rot = CARD_ROTS[index % CARD_ROTS.length];
   const slug = articles[(post.id - 1) % articles.length].slug;
   const [saved, setSaved] = useState(false);
 
   return (
-    <div className={`bi-card bi-card-${post.size}`} style={{ transform: `rotate(${rot})` }}>
+    <div
+      className={`bi-card bi-card-${post.size}${entering ? " bi-enter" : ""}${exiting ? " bi-exit" : ""}`}
+      style={{ "--rot": rot, animationDelay: animDelay ? `${animDelay}ms` : undefined }}
+    >
       <div className="bi-card-sh" />
       <a href={`#article/${slug}`} className="bi-card-body">
         {/* هدر رنگی */}
@@ -449,6 +453,8 @@ function BlogGrid({ activeCategory, searchQuery }) {
   const [sortBy, setSortBy] = useState("newest");
   const [sortOpen, setSortOpen] = useState(false);
   const [visible, setVisible] = useState(PAGE_SIZE);
+  /* حالت انیمیشن: stagger برای کارت‌های تازه لودشده، خروج برای کارت‌های اضافه */
+  const [animState, setAnimState] = useState({ phase: "idle", fromIndex: 0 });
   const ref = useRef(null);
 
   /* بستن منوی مرتب‌سازی با کلیک بیرون */
@@ -495,6 +501,32 @@ function BlogGrid({ activeCategory, searchQuery }) {
   const posts = sorted.slice(0, visible);
   const hasMore = visible < sorted.length;
 
+  /* ----- لود‌مور: کارت‌های جدید با stagger وارد می‌شوند ----- */
+  const ENTER_STAGGER = 60, ENTER_MS = 550, EXIT_STAGGER = 45, EXIT_MS = 420;
+
+  const loadMore = () => {
+    if (animState.phase !== "idle" || !hasMore) return;
+    const from = visible;
+    const count = Math.min(PAGE_SIZE, sorted.length - from);
+    setVisible((v) => v + PAGE_SIZE);
+    setAnimState({ phase: "enter", fromIndex: from });
+    /* بعد از پایان stagger، فاز به idle برمی‌گردد تا کلاس انیمیشن برداشته شود */
+    setTimeout(() => {
+      setAnimState((s) => (s.phase === "enter" ? { phase: "idle", fromIndex: 0 } : s));
+    }, (count - 1) * ENTER_STAGGER + ENTER_MS + 60);
+  };
+
+  /* ----- بستن: کارت‌های اضافه با stagger خارج می‌شوند، بعد شمارنده برمی‌گردد ----- */
+  const collapseAll = () => {
+    if (animState.phase !== "idle" || visible <= PAGE_SIZE) return;
+    setAnimState({ phase: "exit", fromIndex: PAGE_SIZE });
+    const EXIT_TOTAL = EXIT_MS + (visible - PAGE_SIZE - 1) * EXIT_STAGGER + 80;
+    setTimeout(() => {
+      setVisible(PAGE_SIZE);
+      setAnimState({ phase: "idle", fromIndex: 0 });
+    }, EXIT_TOTAL);
+  };
+
   return (
     <section className="bi-grid-sec" id="bi-results">
       <div className="container">
@@ -529,7 +561,16 @@ function BlogGrid({ activeCategory, searchQuery }) {
         </div>
 
         <div className="bi-blog-grid">
-          {posts.map((p, i) => <BlogCard key={p.id} post={p} index={i} />)}
+          {posts.map((p, i) => (
+            <BlogCard
+              key={p.id}
+              post={p}
+              index={i}
+              entering={animState.phase === "enter" && i >= animState.fromIndex}
+              exiting={animState.phase === "exit" && i >= animState.fromIndex}
+              animDelay={(i - animState.fromIndex) * (animState.phase === "exit" ? EXIT_STAGGER : ENTER_STAGGER)}
+            />
+          ))}
         </div>
 
         {sorted.length === 0 && (
@@ -543,21 +584,33 @@ function BlogGrid({ activeCategory, searchQuery }) {
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14, marginTop: "3.5rem" }}>
             <div className="bi-loadmore">
               <div className="bi-loadmore-sh" />
-              <button
-                onClick={() => setVisible((v) => v + PAGE_SIZE)}
-                disabled={!hasMore}
-              >
-                {hasMore ? (
-                  <>
-                    مقاله‌های بیشتر
-                    <span className="bi-loadmore-num">{toFa(sorted.length - visible)}</span>
-                  </>
-                ) : (
-                  "همه مقاله‌ها نمایش داده شد"
-                )}
-              </button>
+              {hasMore ? (
+                <button onClick={loadMore} disabled={animState.phase !== "idle"}>
+                  {animState.phase === "enter" ? (
+                    <>
+                      در حال بارگذاری
+                      <span className="bi-loadmore-dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span>
+                    </>
+                  ) : (
+                    <>
+                      مقاله‌های بیشتر
+                      <span className="bi-loadmore-num">{toFa(sorted.length - visible)}</span>
+                    </>
+                  )}
+                </button>
+              ) : (
+                <button className="bi-loadmore-close" onClick={collapseAll} disabled={animState.phase !== "idle"}>
+                  {animState.phase === "exit" ? (
+                    "در حال بستن…"
+                  ) : (
+                    <>
+                      بستن مقاله‌ها <I.X style={{ width: 16, height: 16 }} />
+                    </>
+                  )}
+                </button>
+              )}
             </div>
-            {!hasMore && (
+            {!hasMore && animState.phase !== "exit" && (
               <p className="bi-loadmore-end">🎉 به آخر لیست رسیدی! مقاله جدید به‌زودی اضافه می‌شه.</p>
             )}
           </div>

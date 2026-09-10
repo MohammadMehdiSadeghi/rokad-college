@@ -1,5 +1,5 @@
 /* ============================================================
-   رکاد کالج — Rokad College visual system
+   کالج رکاد — Rokad College visual system
    Primary brand color: amber/college (#f8a41d)
    Self-hosted IRANSansX. No Google Fonts.
    ============================================================ */
@@ -1730,7 +1730,7 @@ ul { list-style: none; }
   position: relative;
 }
 .faq5-thread::before {
-  content: "● رکاد کالج آنلاین";
+  content: "● کالج رکاد آنلاین";
   position: absolute;
   top: -14px;
   right: 32px;
@@ -3955,11 +3955,32 @@ a:focus-visible, button:focus-visible {
   grid-auto-flow: dense; /* پرهیز از حفرهٔ خالی کنار کارت‌های پهن در ردیف‌های ۲ ستونه */
 }
 /* چرخش روی خودِ سلول است (نه بدنهٔ کارت) تا لایهٔ سایه و کارت مثل یک برچسب، هم‌چرخ بمانند */
+/* زاویهٔ چرخش هر کارت از متغیر --rot خوانده می‌شود تا با انیمیشن ورود/خروج جمع شود */
 .bi-card {
   position: relative; transform-origin: center;
+  transform: rotate(var(--rot, 0deg));
   transition: transform .4s ease-out;
 }
-.bi-card:hover { transform: rotate(0deg) translateY(-4px) !important; }
+.bi-card:hover { transform: rotate(0deg) translateY(-4px); }
+
+/* --- انیمیشن ورود کارت‌های لودمور (stagger از پایین) --- */
+@keyframes biCardEnter {
+  0%   { opacity: 0; transform: translateY(28px) scale(.94) rotate(var(--rot, 0deg)); }
+  60%  { opacity: 1; transform: translateY(-6px) scale(1.02) rotate(var(--rot, 0deg)); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(var(--rot, 0deg)); }
+}
+.bi-card.bi-enter {
+  animation: biCardEnter .55s cubic-bezier(.22, 1, .36, 1) both;
+}
+/* --- انیمیشن خروج کارت‌ها هنگام بستن (کوچک‌شدن و محو) --- */
+@keyframes biCardExit {
+  0%   { opacity: 1; transform: translateY(0) scale(1) rotate(var(--rot, 0deg)); }
+  100% { opacity: 0; transform: translateY(24px) scale(.9) rotate(var(--rot, 0deg)); }
+}
+.bi-card.bi-exit {
+  animation: biCardExit .42s cubic-bezier(.55, 0, .55, .2) both;
+  pointer-events: none;
+}
 .bi-card-sh {
   position: absolute; top: 5px; left: 5px; right: -5px; bottom: -5px;
   background: var(--ink); border-radius: 0 30px 0 30px; z-index: 0;
@@ -4054,6 +4075,24 @@ a:focus-visible, button:focus-visible {
   background: var(--college); color: #fff; border-radius: 999px;
   padding: 1px 8px; font-size: 12px; font-weight: 900;
 }
+/* حالت بارگذاری: نقطه‌چین پرشی */
+.bi-loadmore-dots { display: inline-flex; gap: 2px; }
+.bi-loadmore-dots span {
+  display: inline-block; font-size: 18px; line-height: 1; color: var(--navy);
+  animation: biDotBounce 1s ease-in-out infinite;
+}
+.bi-loadmore-dots span:nth-child(2) { animation-delay: .15s; }
+.bi-loadmore-dots span:nth-child(3) { animation-delay: .3s; }
+@keyframes biDotBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: .4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+/* دکمهٔ بستن (پس از نمایش همهٔ مقاله‌ها) — همان بدنه با پالت قرمز ملایم */
+.bi-loadmore button.bi-loadmore-close {
+  color: var(--female-dark); border-color: var(--female-dark);
+}
+.bi-loadmore button.bi-loadmore-close:hover { transform: rotate(0deg) scale(1.05); }
+.bi-loadmore:has(.bi-loadmore-close) .bi-loadmore-sh { background: var(--female-dark); }
 
 /* ---------- پرخواننده‌ترین‌ها ---------- */
 .bi-trending {
