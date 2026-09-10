@@ -2,7 +2,7 @@
    رکاد کالج — صفحهٔ دوره‌ها
    دیزاین: طرح «۱ · فیلتر چسبان» از پک project (8) — با پالت کالج
    ============================================================ */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   courses,
   departments,
@@ -32,6 +32,19 @@ export default function CoursesPage({ initialDept }) {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("popular");
   const [filterOpen, setFilterOpen] = useState(false);
+  /* دراپ‌داون سفارشی مرتب‌سازی */
+  const [sortOpen, setSortOpen] = useState(false);
+  const sortRef = useRef(null);
+
+  /* بستن منوی مرتب‌سازی با کلیک بیرون */
+  useEffect(() => {
+    if (!sortOpen) return;
+    const onDoc = (e) => {
+      if (sortRef.current && !sortRef.current.contains(e.target)) setSortOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [sortOpen]);
 
   const toggleSet = (set, setter, value) => {
     const next = new Set(set);
@@ -239,13 +252,38 @@ export default function CoursesPage({ initialDept }) {
                   return n > 0 ? <span className="cp-filter-count">{toFa(n)}</span> : null;
                 })()}
               </button>
-              <div className="cp-sort">
+              {/* مرتب‌سازی — دراپ‌داون سفارشی مثل مجله */}
+              <div className="cp-sort" ref={sortRef}>
                 <span>مرتب‌سازی:</span>
-                <select value={sort} onChange={(e) => setSort(e.target.value)}>
-                  {SORTS.map((s) => (
-                    <option value={s.id} key={s.id}>{s.label}</option>
-                  ))}
-                </select>
+                <button
+                  type="button"
+                  className="cp-sort-btn"
+                  onClick={() => setSortOpen((v) => !v)}
+                  aria-haspopup="listbox"
+                  aria-expanded={sortOpen}
+                >
+                  {SORTS.find((s) => s.id === sort)?.label} <span className="caret">▼</span>
+                </button>
+                {sortOpen && (
+                  <ul className="cp-sort-menu" role="listbox">
+                    {SORTS.map((s) => (
+                      <li key={s.id}>
+                        <button
+                          type="button"
+                          role="option"
+                          aria-selected={sort === s.id}
+                          className={sort === s.id ? "active" : ""}
+                          onClick={() => {
+                            setSort(s.id);
+                            setSortOpen(false);
+                          }}
+                        >
+                          {s.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           </div>

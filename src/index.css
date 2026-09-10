@@ -3676,7 +3676,9 @@ a:focus-visible, button:focus-visible {
   position: relative;
   background: var(--college);
   padding: 2.5rem 0 4.5rem;
-  overflow: hidden;
+  /* برش افقی پترن‌ها؛ عمودی باز تا دراپ‌داون ساجستشن از لبهٔ سکشن بیرون نزند */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 .bi-hero-deco {
   position: absolute;
@@ -4340,15 +4342,32 @@ a:focus-visible, button:focus-visible {
 }
 .cp-search svg { color: var(--ink-subtle); flex-shrink: 0; }
 .cp-sort {
+  position: relative;
   display: flex; align-items: center; gap: 8px;
   background: #fff; border: 2px solid var(--ink);
   padding: 10px 14px; border-radius: 12px;
   font-weight: 700; font-size: 14px;
 }
-.cp-sort select {
-  border: none; background: transparent; font-family: inherit;
-  font-weight: 700; font-size: 14px; outline: none; cursor: pointer; color: var(--ink);
+.cp-sort-btn {
+  background: transparent; border: none; cursor: pointer; font-family: inherit;
+  font-weight: 700; font-size: 14px; color: var(--ink);
+  display: inline-flex; align-items: center; gap: 6px;
 }
+.cp-sort .caret { font-size: 10px; }
+.cp-sort-menu {
+  position: absolute; top: calc(100% + 8px); left: 0; z-index: 30;
+  min-width: 100%; list-style: none; margin: 0; padding: 6px;
+  background: #fff; border: 2px solid var(--ink); border-radius: 14px;
+  box-shadow: 4px 4px 0 rgba(41, 40, 39, .85);
+}
+.cp-sort-menu button {
+  display: block; width: 100%; text-align: right; white-space: nowrap;
+  background: transparent; border: none; border-radius: 9px;
+  padding: .5rem .8rem; font-weight: 800; font-size: 13px; color: var(--ink);
+  cursor: pointer; font-family: inherit;
+}
+.cp-sort-menu button:hover { background: var(--college-light); }
+.cp-sort-menu button.active { background: var(--ink); color: #fff; }
 
 /* دکمهٔ فیلتر موبایل + ظرف کنترل‌ها (کنار مرتب‌سازی) */
 .cp-controls { display: flex; align-items: center; gap: 10px; }
