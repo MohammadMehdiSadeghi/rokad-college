@@ -51,8 +51,34 @@ const I = {
    ============================================================ */
 /* تگ‌های جست‌وجوی پرطرفدار — حتماً حداقل در یک مقاله عنوان/تگ/نویسنده باشند */
 const POPULAR_TAGS = ["استارتاپ", "مصاحبه", "داستان", "راهنما", "ابزار"];
+/* همهٔ تگ‌های موجود در مقاله‌ها — برای ساجستیشن سرچ */
+const TAG_SET = [...new Set(POSTS.map((p) => p.tag))];
+
+/* هایلایت بخش مطابق با عبارت جست‌وجو داخل ساجستیشن */
+function SuggestLabel({ text, q }) {
+  const idx = text.toLowerCase().indexOf(q.toLowerCase());
+  if (idx < 0) return <span>{text}</span>;
+  return (
+    <span>
+      {text.slice(0, idx)}
+      <mark>{text.slice(idx, idx + q.length)}</mark>
+      {text.slice(idx + q.length)}
+    </span>
+  );
+}
 
 function Hero({ searchQuery, setSearchQuery, setActiveCategory, onGoResults }) {
+  const [showSuggest, setShowSuggest] = useState(false);
+
+  /* ساجستیشن زنده: عنوان مقاله‌ها + تگ‌ها، حداکثر ۶ مورد */
+  const q = searchQuery.trim().toLowerCase();
+  const suggestions = q
+    ? [...new Set([
+        ...POSTS.filter((p) => p.title.toLowerCase().includes(q)).map((p) => p.title),
+        ...TAG_SET.filter((t) => t.toLowerCase().includes(q)),
+      ])].slice(0, 6)
+    : [];
+
   /* همهٔ کلمات هیرو یک درجه‌چرخش یکسان (۱) با علامت‌های متناوب دارند */
   const line1 = [
     { text: "داستان‌ها،", rot: "-1deg" },
@@ -111,6 +137,7 @@ function Hero({ searchQuery, setSearchQuery, setActiveCategory, onGoResults }) {
           className="bi-search"
           onSubmit={(e) => {
             e.preventDefault();
+            setShowSuggest(false);
             onGoResults?.();
           }}
         >
@@ -120,13 +147,46 @@ function Hero({ searchQuery, setSearchQuery, setActiveCategory, onGoResults }) {
               type="text"
               placeholder="دنبال چی می‌گردی؟ مثلاً «استارتاپ» یا «برنامه‌نویسی»"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowSuggest(true);
+              }}
+              onFocus={() => setShowSuggest(true)}
+              onBlur={() => setTimeout(() => setShowSuggest(false), 150)}
+              role="combobox"
+              aria-expanded={showSuggest && !!searchQuery.trim()}
+              autoComplete="off"
             />
             <button type="submit">
               <I.Search style={{ width: 18, height: 18 }} />
               <span className="bi-hide-mobile">جست‌وجو</span>
             </button>
           </div>
+          {/* ساجستیشن زنده */}
+          {showSuggest && searchQuery.trim() && (
+            <ul className="bi-suggest">
+              {suggestions.length === 0 && (
+                <li className="bi-suggest-empty">موردی پیدا نشد…</li>
+              )}
+              {suggestions.map((s, i) => (
+                <li key={i}>
+                  <button
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault() /* جلوگیری از blur زودتر از کلیک */}
+                    onClick={() => {
+                      setSearchQuery(s);
+                      setActiveCategory("all");
+                      setShowSuggest(false);
+                      onGoResults?.();
+                    }}
+                  >
+                    <I.Search style={{ width: 14, height: 14, flexShrink: 0, opacity: .5 }} />
+                    <SuggestLabel text={s} q={searchQuery.trim()} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </form>
 
         {/* تگ‌های پرطرفدار */}
@@ -227,7 +287,7 @@ function Featured({ featured }) {
                   </span>
                 </div>
                 <a href={`#article/${featured.slug}`} className="bi-read-btn">
-                  خواندن مقاله <I.ArrowRight style={{ width: 16, height: 16 }} />
+                  خواندن مقاله <I.Arrow style={{ width: 16, height: 16 }} />
                 </a>
               </div>
             </div>
@@ -504,6 +564,13 @@ function BlogGrid({ activeCategory, searchQuery }) {
             )}
           </div>
         )}
+
+        {/* دیوایدر پایان گرید */}
+        <div className="bi-divider" aria-hidden="true">
+          <span className="line" />
+          <span className="glyph">✦</span>
+          <span className="line" />
+        </div>
       </div>
     </section>
   );

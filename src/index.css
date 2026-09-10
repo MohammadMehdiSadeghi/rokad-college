@@ -3755,6 +3755,29 @@ a:focus-visible, button:focus-visible {
 }
 .bi-poptags button:hover { background: rgba(255, 255, 255, .34); }
 
+/* ساجستیشن زندهٔ سرچ */
+.bi-suggest {
+  position: absolute; top: calc(100% + 8px); right: 0; left: 0; z-index: 40;
+  list-style: none; margin: 0; padding: 6px;
+  background: #fff; border: 2px solid var(--ink); border-radius: 0 16px 0 16px;
+  box-shadow: 4px 4px 0 rgba(41, 40, 39, .85);
+  max-height: 320px; overflow-y: auto;
+}
+.bi-suggest button {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: right;
+  background: transparent; border: none; border-radius: 10px;
+  padding: .6rem .9rem; font-size: 13.5px; font-weight: 700; color: var(--ink);
+  cursor: pointer; font-family: inherit; transition: background .15s ease;
+}
+.bi-suggest button:hover { background: var(--college-light); }
+.bi-suggest mark {
+  background: rgba(248, 164, 29, .35); color: inherit; border-radius: 3px; padding: 0 1px;
+}
+.bi-suggest-empty {
+  padding: .8rem 1rem; font-size: 13px; font-weight: 700; color: var(--ink-subtle);
+  text-align: center;
+}
+
 /* ---------- مشترک هدر سکشن ---------- */
 .bi-sec-head {
   display: flex; align-items: baseline; justify-content: space-between;
@@ -3867,7 +3890,9 @@ a:focus-visible, button:focus-visible {
 .bi-cats { background: #fff; padding: 1.25rem 0 1rem; }
 .bi-chip-row {
   display: flex; gap: 10px; flex-wrap: nowrap;
-  overflow-x: auto; padding: .5rem 0;
+  overflow-x: auto; padding: .5rem 4px .5rem 0;
+  /* چیپ اول (همه) در RTL از لبهٔ راست کات نمی‌شود */
+  scroll-padding-inline: 4px;
   scrollbar-width: none;
 }
 .bi-chip-row::-webkit-scrollbar { display: none; }
@@ -3909,6 +3934,19 @@ a:focus-visible, button:focus-visible {
 .bi-sort-menu button.active { background: var(--ink); color: #fff; }
 .bi-loadmore-end {
   margin: 0; font-size: 14px; font-weight: 800; color: var(--ink-subtle);
+}
+/* دیوایدر پایان گرید مقاله‌ها */
+.bi-divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 4rem 0 0;
+}
+.bi-divider .line {
+  flex: 1; height: 3px; border-radius: 999px;
+  background: repeating-linear-gradient(90deg, rgba(41,40,39,.25) 0 14px, transparent 14px 24px);
+}
+.bi-divider .glyph {
+  font-size: 18px; color: var(--college);
+  transform: rotate(-8deg);
 }
 .bi-blog-grid {
   display: grid; grid-template-columns: repeat(1, 1fr); gap: 2rem;
@@ -4037,6 +4075,7 @@ a:focus-visible, button:focus-visible {
 .bi-trend-cell {
   position: relative; transform-origin: center;
   transition: transform .3s ease;
+  display: flex; /* سلول کش می‌آید تا کارت‌ها هم‌ارتفاع شوند و سایهٔ مشکی کوتاه نماند */
 }
 .bi-trend-cell:hover { transform: rotate(0deg) translateY(-4px) !important; }
 .bi-trend-sh {
@@ -4045,6 +4084,7 @@ a:focus-visible, button:focus-visible {
 }
 .bi-trend-card {
   position: relative; z-index: 1; display: flex; flex-direction: column;
+  width: 100%;
   background: #fff; border: 2px solid var(--ink); border-radius: 0 24px 0 24px;
   overflow: hidden;
 }
@@ -4131,6 +4171,8 @@ a:focus-visible, button:focus-visible {
 /* ---------- ریسپانسیو ---------- */
 @media (min-width: 768px) {
   .bi-hero-deco { display: block; }
+  /* در عرض بزرگ چیپ‌ها جا می‌شوند: بدون اسکرول، بدون کات لبهٔ راست */
+  .bi-chip-row { flex-wrap: wrap; overflow-x: visible; }
 }
 @media (min-width: 900px) {
   .bi-featured-grid { grid-template-columns: 1fr 1.15fr; }
