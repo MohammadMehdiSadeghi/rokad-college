@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./department.css";
 import PatternLayer from "@/components/PatternLayer";
 import { DEPT_PERSONA, departments } from "@/data/departments.js";
@@ -28,6 +28,7 @@ const IC = {
   shield: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></>,
   smartphone: <><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></>,
   search: <><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>,
+  plus: <><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>,
 };
 const CourseIcon = ({ id, size = 26 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -50,25 +51,34 @@ const UsersIcon = () => (
 const BookIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h11a3 3 0 0 1 3 3v14H7a3 3 0 0 1-3-3z"/><path d="M4 18a3 3 0 0 1 3-3h11"/></svg>
 );
+const StarIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+);
 
 /* فلش دکمه‌های ناوبری ردیف دوره‌ها — با CSS-RTL خودش قرینه می‌شود */
 const ChevronIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
 );
 
-/* بلوک سکشن با تیتر چرخیدهٔ نئوبروتالیست */
+/* ---- تبدیل اعداد فارسی برای فیلتر/مرتب‌سازی ---- */
+const faToNum = (s) =>
+  Number(
+    String(s)
+      .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+      .replace(/[^\d.]/g, "")
+  ) || 0;
+
+/* بلوک سکشن با تیتر و کلمهٔ تاکیدی رنگ دپارتمان */
 const SectionHead = ({ pre, accent, sub }) => (
   <div className="dp-sec-head">
-    <div>
-      <h2 className="dp-sec-title">
-        {pre} <span className="dp-sec-accent">{accent}</span>
-      </h2>
-      {sub && <div className="dp-sec-sub">{sub}</div>}
-    </div>
+    <h2 className="dp-sec-title">
+      {pre} <span className="dp-sec-accent">{accent}</span>
+    </h2>
+    {sub && <div className="dp-sec-sub">{sub}</div>}
   </div>
 );
 
-/* ---- کارت دوره (مشترک بین ردیف محبوب و جدیدترین) ---- */
+/* ---- کارت دوره (مشترک بین ردیف و گرید) ---- */
 const CourseCard = ({ c, rot }) => (
   <a className="dp-course" href="#courses-index" style={{ "--rot": `rotate(${rot}deg)` }}>
     {c.tag && <span className="dp-course-tag">{c.tag}</span>}
@@ -83,7 +93,7 @@ const CourseCard = ({ c, rot }) => (
         <span>{c.inst}</span>
       </div>
       <div className="dp-course-meta">
-        <span className="dp-rate">★ {c.rating}</span>
+        <span className="dp-rate"><StarIcon /> {c.rating}</span>
         <span><ClockIcon /> {c.hours}</span>
         <span><UsersIcon /> {c.students}</span>
       </div>
@@ -176,6 +186,23 @@ function CourseRow({ label, children }) {
   );
 }
 
+/* ---- آیتم آکاردئونی سوالات متداول ---- */
+function FaqItem({ item, open, onToggle }) {
+  return (
+    <div className={`dp-faq-item${open ? " open" : ""}`}>
+      <button type="button" className="dp-faq-q" onClick={onToggle} aria-expanded={open}>
+        <span>{item.q}</span>
+        <span className="dp-faq-ic"><CourseIcon id="plus" size={14} /></span>
+      </button>
+      <div className="dp-faq-a">
+        <div className="dp-faq-a-clip">
+          <p>{item.a}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const DEPT_ICONS = {
   languages: { hero: "globe", cta: "translate" },
   business: { hero: "rocket", cta: "briefcase" },
@@ -188,11 +215,57 @@ const ALL_DEPTS = [
   { id: "languages", name: "زبان‌های خارجی", color: "var(--teal-alt)" },
 ];
 
+/* فیلترها و مرتب‌سازی بخش «همهٔ دوره‌ها» */
+const RATING_FILTERS = [
+  { id: 0, label: "همهٔ امتیازها" },
+  { id: 4.8, label: "۴.۸ به بالا" },
+  { id: 4.5, label: "۴.۵ به بالا" },
+];
+const DUR_FILTERS = [
+  { id: "all", label: "هر طولی" },
+  { id: "short", label: "زیر ۲۰ ساعت" },
+  { id: "long", label: "۲۰ ساعت به بالا" },
+];
+const TYPE_FILTERS = [
+  { id: "all", label: "همه" },
+  { id: "free", label: "رایگان" },
+  { id: "off", label: "تخفیف‌دار" },
+];
+const SORTS = [
+  { id: "default", label: "پیشفرض" },
+  { id: "popular", label: "محبوب‌ترین" },
+  { id: "rating", label: "بالاترین امتیاز" },
+  { id: "cheap", label: "ارزان‌ترین" },
+];
+
 export default function DepartmentPage({ deptId }) {
   const currentId = departments[deptId] ? deptId : "languages";
   const persona = DEPT_PERSONA[currentId] || DEPT_PERSONA.languages;
   const dept = departments[currentId] || departments.languages;
-  const icons = DEPT_ICONS[currentId] || DEPT_ICONS.languages;
+
+  /* تب ردیف دوره‌های پیشنهادی: محبوب‌ترین / جدیدترین */
+  const [tab, setTab] = useState("popular");
+
+  /* فیلترها و مرتب‌سازی همهٔ دوره‌ها */
+  const [ratingF, setRatingF] = useState(0);
+  const [durF, setDurF] = useState("all");
+  const [typeF, setTypeF] = useState("all");
+  const [sort, setSort] = useState("default");
+  const [sortOpen, setSortOpen] = useState(false);
+  const sortRef = useRef(null);
+
+  /* آکاردئون سوالات متداول */
+  const [openFaq, setOpenFaq] = useState(0);
+
+  /* بستن منوی مرتب‌سازی با کلیک بیرون */
+  useEffect(() => {
+    if (!sortOpen) return;
+    const onDoc = (e) => {
+      if (sortRef.current && !sortRef.current.contains(e.target)) setSortOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [sortOpen]);
 
   /* لینک لنگری معمولی هش را عوض می‌کرد و روت #dept/<id> می‌شکست؛
      اینجا فقط اسکرول نرم می‌کنیم */
@@ -207,216 +280,363 @@ export default function DepartmentPage({ deptId }) {
     "--dp-dark": persona.darkVar,
   };
 
-  const popularCourses = dept.popular.map((c, i) => (
-    <CourseCard c={c} rot={[-1, 1, -0.5, 0.5][i % 4]} key={i} />
-  ));
+  /* ---- همهٔ دوره‌های دپارتمان: فیلتر + مرتب‌سازی ---- */
+  const allCourses = useMemo(() => {
+    let list = [...dept.popular, ...dept.newest];
+    if (ratingF) list = list.filter((c) => faToNum(c.rating) >= ratingF);
+    if (durF === "short") list = list.filter((c) => faToNum(c.hours) < 20);
+    if (durF === "long") list = list.filter((c) => faToNum(c.hours) >= 20);
+    if (typeF === "free") list = list.filter((c) => c.free);
+    if (typeF === "off") list = list.filter((c) => c.old);
+    if (sort === "popular") list.sort((a, b) => faToNum(b.students) - faToNum(a.students));
+    if (sort === "rating") list.sort((a, b) => faToNum(b.rating) - faToNum(a.rating));
+    if (sort === "cheap") list.sort((a, b) => faToNum(a.price) - faToNum(b.price));
+    return list;
+  }, [dept, ratingF, durF, typeF, sort]);
+
+  const activeFilterCount = (ratingF ? 1 : 0) + (durF !== "all" ? 1 : 0) + (typeF !== "all" ? 1 : 0);
+  const resetFilters = () => {
+    setRatingF(0);
+    setDurF("all");
+    setTypeF("all");
+    setSort("default");
+  };
+
+  const tabList = tab === "popular" ? dept.popular : dept.newest;
+
+  const quickLinks = [
+    { id: "dp-suggest", label: "دوره‌های پیشنهادی" },
+    { id: "dp-topics", label: "موضوعات پرطرفدار" },
+    { id: "dp-all", label: "همهٔ دوره‌ها" },
+    { id: "dp-paths", label: "مسیرهای یادگیری" },
+    { id: "dp-insts", label: "مدرسان برتر" },
+    { id: "dp-faq", label: "سوالات متداول" },
+  ];
 
   return (
     <div className="dp-page" style={styleVars} data-dept={currentId} key={currentId}>
-      {/* ---------- HERO ---------- */}
+      {/* ---------- سوییچر دپارتمان‌ها (فقط موبایل) ---------- */}
+      <div className="dp-mbar container">
+        {ALL_DEPTS.map((d) => (
+          <a
+            key={d.id}
+            href={`#dept/${d.id}`}
+            className={`dp-mbar-pill${d.id === currentId ? " active" : ""}`}
+            style={d.id === currentId ? { background: d.color, color: d.id === "it" ? "#fff" : "var(--ink)", borderColor: "var(--ink)" } : {}}
+          >
+            {d.name}
+          </a>
+        ))}
+      </div>
+
+      {/* ---------- HERO (مثل مکتب‌خونه: تیتر + لید + نوار آمار) ---------- */}
       <header className="dp-hero">
         <PatternLayer rotate={0} />
         <div className="container dp-hero-inner">
-          <div className="dp-hero-copy">
-            {/* بریدکرامب + سوییچر دپارتمان‌ها */}
-            <div className="dp-top-row">
-              <nav className="dp-crumb" aria-label="مسیر">
-                <a href="#">خانه</a>
-                <span className="sep">›</span>
-                <a href="#departments">دپارتمان‌ها</a>
-                <span className="sep">›</span>
-                <span className="cur">{dept.name}</span>
-              </nav>
+          <nav className="dp-crumb" aria-label="مسیر">
+            <a href="#">خانه</a>
+            <span className="sep">›</span>
+            <a href="#departments">دپارتمان‌ها</a>
+            <span className="sep">›</span>
+            <span className="cur">{dept.name}</span>
+          </nav>
 
-              {/* سوییچر سریع بین دپارتمان‌ها */}
-              <div className="dp-switcher" role="tablist">
-                {ALL_DEPTS.map((d) => (
-                  <a
-                    key={d.id}
-                    href={`#dept/${d.id}`}
-                    className={`dp-switch-pill${d.id === currentId ? " active" : ""}`}
-                    style={d.id === currentId ? { background: d.color, color: d.id === "it" ? "#fff" : "var(--ink)", borderColor: "var(--ink)" } : {}}
-                  >
-                    {d.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="dp-badge">
-              <span className="dot" />
-              {dept.crumb}
-            </div>
-
-            <h1 className="dp-hero-title">
-              {dept.headline[0]}{" "}
-              <span className="dp-hero-accent">{dept.headline[1]}</span>
-            </h1>
-            <p className="dp-hero-lead">{dept.lead}</p>
-            <div className="dp-hero-actions">
-              <a className="dp-btn dp-btn-primary" href="#dp-popular" onClick={(e) => scrollToSection(e, "dp-popular")}>
-                مشاهدهٔ دوره‌ها
-                <ArrowIcon />
-              </a>
-              <a className="dp-btn dp-btn-ghost" href="#dp-paths" onClick={(e) => scrollToSection(e, "dp-paths")}>مسیر یادگیری</a>
-              <a className="dp-btn dp-btn-consult" href="#consult">
-                مشاوره رایگان
-                <ArrowIcon />
-              </a>
-            </div>
-            <div className="dp-stats">
-              {dept.stats.map((s) => (
-                <div className="dp-stat" key={s.lab}>
-                  <div className="dp-stat-ic"><BookIcon /></div>
-                  <div className="dp-stat-num">{s.num}</div>
-                  <div className="dp-stat-lab">{s.lab}</div>
-                </div>
-              ))}
-            </div>
+          <div className="dp-badge">
+            <span className="dot" />
+            {dept.crumb}
           </div>
 
-          <div className="dp-hero-visual">
-            <div className="dp-hero-card">
-              {/* پترن پس‌زمینه بافت‌دار همرنگ دپارتمان */}
-              <img
-                src={persona.pattern}
-                alt=""
-                aria-hidden="true"
-                className="dp-hero-card-pattern"
-              />
-              <div className="dp-hero-card-ic">
-                <CourseIcon id={icons.hero} size={34} />
+          <h1 className="dp-hero-title">
+            دوره‌های {dept.name} —{" "}
+            <span className="dp-hero-accent">{dept.headline[1]}</span>
+          </h1>
+          <p className="dp-hero-lead">{dept.lead}</p>
+
+          <div className="dp-hero-actions">
+            <a className="dp-btn dp-btn-primary" href="#dp-all" onClick={(e) => scrollToSection(e, "dp-all")}>
+              مشاهدهٔ دوره‌ها
+              <ArrowIcon />
+            </a>
+            <a className="dp-btn dp-btn-ghost" href="#dp-paths" onClick={(e) => scrollToSection(e, "dp-paths")}>
+              مسیر یادگیری
+            </a>
+            <a className="dp-btn dp-btn-consult" href="#consult">
+              مشاورهٔ رایگان
+              <ArrowIcon />
+            </a>
+          </div>
+
+          {/* نوار آمار — الگوی مکتب‌خونه */}
+          <div className="dp-hero-stats">
+            {dept.stats.map((s) => (
+              <div className="dp-hstat" key={s.lab}>
+                <b>{s.num}</b>
+                <span>{s.lab}</span>
               </div>
-              <h3>{dept.heroCard.title}</h3>
-              <p>{dept.heroCard.text}</p>
-              <div className="dp-hero-chips">
-                {dept.heroCard.chips.map((c) => (
-                  <span className="dp-chip" key={c}>{c}</span>
-                ))}
-              </div>
-            </div>
-            <div className="dp-float dp-float-tl">★ ۴.۹ رضایت هنرجویان</div>
-            <div className="dp-float dp-float-br">{dept.stats[1].num} هنرجو</div>
+            ))}
           </div>
         </div>
       </header>
 
-      {/* ---------- پرطرفدارترین دوره‌ها ---------- */}
-      <section className="dp-block" id="dp-popular">
-        <div className="container">
-          <SectionHead pre="پرطرفدارترین" accent="دوره‌ها" sub="دوره‌هایی که بیشترین هنرجو و بالاترین رضایت را دارند" />
-          <CourseRow label={`پرطرفدارترین دوره‌های ${dept.name}`}>{popularCourses}</CourseRow>
-          <div className="dp-more">
-            <a href={`#courses-index/${currentId}`} className="dp-btn dp-btn-ghost">
-              همهٔ دوره‌های {dept.name}
+      {/* ---------- چیدمان دو ستونه: سایدبار چسبان + محتوا ---------- */}
+      <div className="container dp-layout">
+        {/* ----- سایدبار ----- */}
+        <aside className="dp-side">
+          <div className="dp-side-card">
+            <div className="dp-side-title">دپارتمان‌ها</div>
+            <div className="dp-side-depts">
+              {ALL_DEPTS.map((d) => {
+                const active = d.id === currentId;
+                return (
+                  <a key={d.id} href={`#dept/${d.id}`} className={`dp-side-dept${active ? " active" : ""}`}>
+                    <span
+                      className="dp-side-ic"
+                      style={active ? { background: d.color, color: d.id === "it" ? "#fff" : "var(--ink)" } : {}}
+                    >
+                      <CourseIcon id={DEPT_ICONS[d.id].hero} size={17} />
+                    </span>
+                    <span className="dp-side-dept-name">{d.name}</span>
+                    {active && <span className="dp-side-dot" />}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="dp-side-card">
+            <div className="dp-side-title">دسترسی سریع</div>
+            <nav className="dp-side-links">
+              {quickLinks.map((l) => (
+                <a key={l.id} href={`#${l.id}`} onClick={(e) => scrollToSection(e, l.id)}>
+                  {l.label}
+                  <ArrowIcon />
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          <div className="dp-side-card dp-side-cta">
+            <div className="dp-side-cta-t">هنوز مطمئن نیستی؟</div>
+            <p>یک مشاورهٔ رایگان بگیر و مسیرت را با کارشناسان دپارتمان بچین.</p>
+            <a href="#consult" className="dp-btn dp-btn-ink dp-btn-sm">
+              مشاورهٔ رایگان
               <ArrowIcon />
             </a>
           </div>
-        </div>
-      </section>
+        </aside>
 
-      {/* ---------- جدیدترین دوره‌ها (پس‌زمینه تینت) ---------- */}
-      <section className="dp-block dp-tint">
-        <div className="container">
-          <SectionHead pre="جدیدترین" accent="دوره‌ها" sub="تازه‌ترین دوره‌هایی که به دپارتمان اضافه شده‌اند" />
-          <CourseRow label={`جدیدترین دوره‌های ${dept.name}`}>
-            {dept.newest.map((c, i) => (
-              <CourseCard c={c} rot={[0.5, -0.5, 1, -1][i % 4]} key={i} />
-            ))}
-          </CourseRow>
-        </div>
-      </section>
-
-      {/* ---------- مسیرهای یادگیری ---------- */}
-      <section className="dp-block" id="dp-paths">
-        <div className="container">
-          <SectionHead pre="مسیرهای" accent="یادگیری" sub="نقشهٔ راه ساختاریافته برای رسیدن به هدف حرفه‌ای" />
-          <div className="dp-paths">
-            {dept.paths.map((p) => (
-              <article className="dp-path" key={p.num}>
-                <span className="dp-path-num">{p.num}</span>
-                <h4>{p.title}</h4>
-                <p>{p.text}</p>
-                <a href={`#courses-index/${currentId}`} className="dp-path-link">
-                  شروع مسیر
-                  <ArrowIcon />
-                </a>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------- مدرسان برتر (پس‌زمینه تینت) ---------- */}
-      <section className="dp-block dp-tint">
-        <div className="container">
-          <SectionHead pre="مدرسان" accent="برتر" sub="از افراد باتجربه و شاغل در صنعت آموزش ببینید" />
-          <div className="dp-insts">
-            {dept.instructors.map((t) => (
-              <article className="dp-inst" key={t.name}>
-                <div className="dp-av-lg">{t.name.charAt(0)}</div>
-                <h5>{t.name}</h5>
-                <div className="dp-inst-role">{t.role}</div>
-                <div className="dp-inst-meta">
-                  <span><BookIcon /> {t.courses}</span>
-                  <span><UsersIcon /> {t.students}</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------- تجربهٔ هنرجویان ---------- */}
-      <section className="dp-block">
-        <div className="container">
-          <SectionHead pre="تجربهٔ" accent="هنرجویان" sub={`آنچه هنرجویان دپارتمان ${dept.name} گفته‌اند`} />
-          <div className="dp-tests">
-            {dept.testimonials.map((t) => (
-              <article className="dp-test" key={t.name}>
-                <p>{t.text}</p>
-                <div className="dp-test-who">
-                  <div className="dp-av">{t.name.charAt(0)}</div>
-                  <div>
-                    <div className="dp-test-name">{t.name}</div>
-                    <div className="dp-test-role">{t.role}</div>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---------- CTA دپارتمان (طرح تیکت کالج) ---------- */}
-      <section className="dp-block dp-cta-block">
-        <div className="container">
-          <div className="dp-cta">
-            <img
-              src={persona.pattern}
-              alt=""
-              aria-hidden="true"
-              className="dp-cta-pattern"
-            />
-            <div className="dp-cta-copy">
-              <h2>{dept.cta.title}</h2>
-              <p>{dept.cta.text}</p>
-              <div style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}>
-                <a href="#consult" className="dp-btn dp-btn-ink">
-                  دریافت مشاورهٔ تخصصی {dept.name}
-                  <ArrowIcon />
-                </a>
-                <a href={`#courses-index/${currentId}`} className="dp-btn dp-btn-ghost">
-                  مشاهده تمام دوره‌های {dept.name}
-                </a>
+        {/* ----- محتوای اصلی ----- */}
+        <main className="dp-main">
+          {/* دوره‌های پیشنهادی — با تب محبوب‌ترین/جدیدترین (الگوی مکتب‌خونه) */}
+          <section className="dp-block" id="dp-suggest">
+            <div className="dp-suggest-head">
+              <SectionHead
+                pre="دوره‌های پیشنهادی برای شروع"
+                accent={dept.name}
+                sub="انتخاب ما برای شروع مسیر شما در این دپارتمان"
+              />
+              <div className="dp-tabs" role="tablist">
+                <button type="button" role="tab" aria-selected={tab === "popular"} className={`dp-tab${tab === "popular" ? " active" : ""}`} onClick={() => setTab("popular")}>
+                  محبوب‌ترین
+                </button>
+                <button type="button" role="tab" aria-selected={tab === "newest"} className={`dp-tab${tab === "newest" ? " active" : ""}`} onClick={() => setTab("newest")}>
+                  جدیدترین
+                </button>
               </div>
             </div>
-            <div className="dp-cta-visual">
-              <CourseIcon id={icons.cta} size={96} />
+            <CourseRow key={tab} label={`دوره‌های پیشنهادی ${dept.name}`}>
+              {tabList.map((c, i) => (
+                <CourseCard c={c} rot={[-1, 1, -0.5, 0.5][i % 4]} key={i} />
+              ))}
+            </CourseRow>
+            <div className="dp-more">
+              <a href="#dp-all" onClick={(e) => scrollToSection(e, "dp-all")} className="dp-btn dp-btn-ghost">
+                همهٔ دوره‌های {dept.name}
+                <ArrowIcon />
+              </a>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
+
+          {/* موضوعات پرطرفدار */}
+          <section className="dp-block dp-card-block" id="dp-topics">
+            <SectionHead pre="موضوعات" accent="پرطرفدار" sub={`پرجستجوترین موضوعات دپارتمان ${dept.name}`} />
+            <div className="dp-topics">
+              {dept.topics.map((t, i) => (
+                <a key={t} href={`#courses-index/${currentId}`} className="dp-topic" style={{ "--rot": `rotate(${i % 2 ? 1 : -1}deg)` }}>
+                  {t}
+                </a>
+              ))}
+            </div>
+          </section>
+
+          {/* همهٔ دوره‌ها — فیلتر + مرتب‌سازی + گرید */}
+          <section className="dp-block" id="dp-all">
+            <SectionHead pre="همهٔ" accent="دوره‌ها" sub="بر اساس هدف و سطح خودتان فیلتر کنید" />
+
+            <div className="dp-toolbar">
+              <div className="dp-fchips">
+                {RATING_FILTERS.map((f) => (
+                  <button key={f.id} type="button" className={`dp-fchip${ratingF === f.id ? " on" : ""}`} onClick={() => setRatingF(f.id)}>
+                    {f.label}
+                  </button>
+                ))}
+                <span className="dp-fsep" />
+                {DUR_FILTERS.map((f) => (
+                  <button key={f.id} type="button" className={`dp-fchip${durF === f.id ? " on" : ""}`} onClick={() => setDurF(f.id)}>
+                    {f.label}
+                  </button>
+                ))}
+                <span className="dp-fsep" />
+                {TYPE_FILTERS.map((f) => (
+                  <button key={f.id} type="button" className={`dp-fchip${typeF === f.id ? " on" : ""}`} onClick={() => setTypeF(f.id)}>
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="dp-sort" ref={sortRef}>
+                <span className="dp-sort-lab">ترتیب:</span>
+                <button type="button" className="dp-sort-btn" onClick={() => setSortOpen((v) => !v)} aria-haspopup="listbox" aria-expanded={sortOpen}>
+                  {SORTS.find((s) => s.id === sort)?.label} <span className="caret">▼</span>
+                </button>
+                {sortOpen && (
+                  <ul className="dp-sort-menu" role="listbox">
+                    {SORTS.map((s) => (
+                      <li key={s.id}>
+                        <button
+                          type="button"
+                          role="option"
+                          aria-selected={sort === s.id}
+                          className={sort === s.id ? "active" : ""}
+                          onClick={() => {
+                            setSort(s.id);
+                            setSortOpen(false);
+                          }}
+                        >
+                          {s.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+
+            {activeFilterCount > 0 && (
+              <button type="button" className="dp-reset" onClick={resetFilters}>
+                پاک کردن {activeFilterCount} فیلتر ×
+              </button>
+            )}
+
+            {allCourses.length === 0 ? (
+              <div className="dp-empty">دوره‌ای با این فیلترها پیدا نشد. فیلترها را تغییر دهید.</div>
+            ) : (
+              <div className="dp-grid">
+                {allCourses.map((c, i) => (
+                  <CourseCard c={c} rot={[-0.5, 0.5, -0.25, 0.25][i % 4]} key={i} />
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* مسیرهای یادگیری */}
+          <section className="dp-block dp-card-block" id="dp-paths">
+            <SectionHead pre="مسیرهای" accent="یادگیری" sub="نقشهٔ راه ساختاریافته برای رسیدن به هدف حرفه‌ای" />
+            <div className="dp-paths">
+              {dept.paths.map((p) => (
+                <article className="dp-path" key={p.num}>
+                  <span className="dp-path-num">{p.num}</span>
+                  <h4>{p.title}</h4>
+                  <p>{p.text}</p>
+                  <a href={`#courses-index/${currentId}`} className="dp-path-link">
+                    شروع مسیر
+                    <ArrowIcon />
+                  </a>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* مدرسان برتر */}
+          <section className="dp-block" id="dp-insts">
+            <SectionHead pre="مدرسان" accent="برتر" sub="از افراد باتجربه و شاغل در صنعت آموزش ببینید" />
+            <div className="dp-insts">
+              {dept.instructors.map((t) => (
+                <article className="dp-inst" key={t.name}>
+                  <div className="dp-av-lg">{t.name.charAt(0)}</div>
+                  <h5>{t.name}</h5>
+                  <div className="dp-inst-role">{t.role}</div>
+                  <div className="dp-inst-meta">
+                    <span><BookIcon /> {t.courses}</span>
+                    <span><UsersIcon /> {t.students}</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* تجربهٔ هنرجویان */}
+          <section className="dp-block dp-card-block">
+            <SectionHead pre="تجربهٔ" accent="هنرجویان" sub={`آنچه هنرجویان دپارتمان ${dept.name} گفته‌اند`} />
+            <div className="dp-tests">
+              {dept.testimonials.map((t) => (
+                <article className="dp-test" key={t.name}>
+                  <p>{t.text}</p>
+                  <div className="dp-test-who">
+                    <div className="dp-av">{t.name.charAt(0)}</div>
+                    <div>
+                      <div className="dp-test-name">{t.name}</div>
+                      <div className="dp-test-role">{t.role}</div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* دربارهٔ دپارتمان (متن معرفی) */}
+          <section className="dp-block" id="dp-about">
+            <SectionHead pre="دربارهٔ دپارتمان" accent={dept.name} />
+            <div className="dp-about">
+              <p>{dept.about.p1}</p>
+              <p>{dept.about.p2}</p>
+            </div>
+          </section>
+
+          {/* سوالات متداول — آکاردئون */}
+          <section className="dp-block dp-card-block" id="dp-faq">
+            <SectionHead pre="سوالات متداول" accent={dept.name} sub="پاسخ پرتکرارترین سوالات هنرجویان این دپارتمان" />
+            <div className="dp-faq">
+              {dept.faqs.map((f, i) => (
+                <FaqItem key={i} item={f} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? -1 : i)} />
+              ))}
+            </div>
+          </section>
+
+          {/* CTA دپارتمان */}
+          <section className="dp-block dp-cta-block">
+            <div className="dp-cta">
+              <img src={persona.pattern} alt="" aria-hidden="true" className="dp-cta-pattern" />
+              <div className="dp-cta-copy">
+                <h2>{dept.cta.title}</h2>
+                <p>{dept.cta.text}</p>
+                <div style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center" }}>
+                  <a href="#consult" className="dp-btn dp-btn-ink">
+                    دریافت مشاورهٔ تخصصی {dept.name}
+                    <ArrowIcon />
+                  </a>
+                  <a href="#dp-all" onClick={(e) => scrollToSection(e, "dp-all")} className="dp-btn dp-btn-ghost">
+                    مشاهدهٔ همهٔ دوره‌ها
+                  </a>
+                </div>
+              </div>
+              <div className="dp-cta-visual">
+                <CourseIcon id={DEPT_ICONS[currentId].cta} size={96} />
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }

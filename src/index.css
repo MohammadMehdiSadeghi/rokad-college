@@ -851,7 +851,7 @@ ul { list-style: none; }
 /* CTA pill (navy — DS spec, rotated 1deg) */
 .cta-pill {
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--navy);
+  background: var(--teal);
   color: var(--white, #fff);
   padding: 11px 22px;
   border-radius: 12px;
@@ -859,18 +859,17 @@ ul { list-style: none; }
   transform: rotate(1deg);
   transition: transform 0.2s ease-out, background 0.2s ease, color 0.2s ease;
   border: 2px solid var(--ink);
-  box-shadow: 3px 3px 0 var(--college);
+  box-shadow: 3px 3px 0 var(--teal-dark);
   text-decoration: none;
   white-space: nowrap;
 }
 .cta-pill:hover {
   transform: rotate(0) scale(1.05);
-  background: var(--college);
-  color: var(--navy);
+  background: var(--teal-dark);
+  color: var(--white, #fff);
   border-color: var(--ink);
-  box-shadow: 3px 3px 0 var(--navy);
+  box-shadow: 3px 3px 0 var(--teal);
 }
-.cta-pill:hover svg { color: var(--navy); }
 .cta-pill svg { width: 14px; height: 14px; stroke-width: 2.5; }
 
 /* Mobile menu button — hamburger v1 */
@@ -1221,8 +1220,10 @@ ul { list-style: none; }
   padding: 14px;
   font-weight: 900;
   font-size: 13px;
-  color: var(--college);
-  background: var(--navy);
+  color: var(--white);
+  background: var(--teal);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--teal-dark);
   border-radius: 10px;
   text-align: center;
   text-decoration: none;
@@ -1399,26 +1400,24 @@ ul { list-style: none; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--navy);
-  color: var(--white);
-  padding: 10px 16px;
-  border-radius: 12px 0 12px 0;
+  color: var(--navy);
   font-weight: 900;
   font-size: 18px;
   transform: rotate(-2deg);
   margin-bottom: 16px;
-  border: 2px solid var(--navy-hover);
 }
+/* باکس لوگو مطابق هدر: کهربایی بدون پس‌زمینهٔ سرمه‌ای پشت آن */
 .f5-logo-mark {
   display: inline-grid;
   place-items: center;
   width: 34px;
   height: 34px;
-  padding: 6px;
+  padding: 5px;
   border-radius: 10px 0 10px 0;
-  background: linear-gradient(135deg, var(--college) 0%, var(--college-dark) 100%);
+  background: var(--college);
   border: 2px solid var(--ink);
   box-shadow: 2px 2px 0 var(--ink);
+  transform: rotate(-3deg);
 }
 .f5-logo-mark img {
   width: 100%;
